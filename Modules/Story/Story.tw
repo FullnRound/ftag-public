@@ -81,6 +81,8 @@ And then... you wake up...
 <<set $p.Mouth = $p.mouth.toUpperFirst()>>
 <<set $p.Tail = $p.tail.toUpperFirst()>>
 
+<<set $firstTimeSwamp = true>>
+
 
 :: BottomBar {"position":"2825,800","size":"200,100"}
 $status.description
@@ -4520,6 +4522,19 @@ $itemUsed.itemUse
 	minorRate: 2,
 }>>
 <<set $forestSpecialRandomization = [0,0,0,0]>>
+
+
+<<set $swampRandomization = {
+	special: 0,
+	specialRate: 1,
+	combat: 0,
+	combatRate: 2,
+	leave: 0,
+	leaveRate: 0.4,
+	minor: 0,
+	minorRate: 2,
+}>>
+<<set $swampSpecialRandomization = [0,0,0,0]>>
 
 
 <<set $grasslandsRandomization = {

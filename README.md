@@ -3,6 +3,7 @@
 * If you have added any new .tw files, Run the twList.js script to get an output list of all .tw files. This list will be placed into twFilesList.txt.
 * Copy the list onto the command below, replacing everything after "tweego -o Output/main.html"
 * Run the Compile command from the top level folder of the project in the command line
+* Open Output/main.html in a browser to run the current project
 
 # Compile
 

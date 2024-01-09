@@ -958,6 +958,7 @@
 <<case "spells">>[img[icon/spellsIcon.png]]
 <<case "store">>[img[icon/storeIcon.png]]
 <<case "surrender">>[img[icon/surrenderIcon.png]]
+<<case "swamp">>[img[icon/swampIcon.png]]
 <<case "tailor">>[img[icon/tailorIcon.png]]
 <<case "talk">>[img[icon/appearanceIcon.png]]
 <<case "time">>[img[icon/waitIcon.png]]
