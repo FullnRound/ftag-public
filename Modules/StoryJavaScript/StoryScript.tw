@@ -1,0 +1,2348 @@
+:: StoryScript [script]
+$(document).on(":passageend", function (ev) {
+	setTimeout(function () { window.scrollTo(0, 0); }, 20);
+});
+
+postrender["Associate Special Passages"] = function (content, taskName) {
+	setPageElement("story-title", "StoryTitle", Story.title);
+	setPageElement("story-banner","StoryBanner");
+	setPageElement("story-subtitle","StorySubtitle");
+	setPageElement("story-author","StoryAuthor");
+	setPageElement("story-caption","StoryCaption");
+	setPageElement("rightBar","rightBar Passage");
+	setPageElement("bottom-bar","BottomBar");
+}
+
+//Removes the ability to go backwards in time
+Config.history.maxStates = 5;
+
+//Makes every passage ignore line breaks
+Config.passages.nobr = true;
+
+
+
+
+window.createConversation = function(character) {
+	console.log(State.variables.chats[character])
+	const chatList = document.querySelector('.chatlist');
+	const npc1 = State.variables.npc1;
+
+	if (State.variables.chats[character] == undefined) {
+		State.variables.chats[character] = [];
+		State.variables.chats[character].push({ 'role': 'assistant', 'content': 'The bloated ' + npc1.species + ' lies there, seemingly unaware of your presence, ' + npc1.his + ' eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...' });
+	}
+
+	// Create input bubble for each message in chat arr
+	for (const chat of State.variables.chats[character]) {
+		const chatBubble = document.createElement('li');
+
+		if (chat.role == 'user') {
+			chatBubble.classList.add('user_input');
+		} else {
+			chatBubble.classList.add('bot_output');
+		}
+
+		chatBubble.innerHTML = chat.content;
+		chatList.appendChild(chatBubble);
+	}
+}
+
+window.getPlayerContext = function() {
+	const player = State.variables.p;
+	// Provide a context for describing the player character to the chatbot
+	const paragraph = [];
+	paragraph.push(`The player is a ${player.male} ${player.species}. They are a ${State.variables.bodyFatTier} weight with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
+}
+
+
+window.makeOpenAIRequest = async function(character, promptText) {
+    const apiKey = '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'; 
+    const endpoint = 'https://api.openai.com/v1/chat/completions';
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "model": "gpt-3.5-turbo",
+				// Send the current character context and the the chat history to the server
+				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
+				"user": character,
+				"temperature": 0.9,
+				"frequency_penalty": 0.2
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+		if (data) {
+			addChat(character, data.choices[0].message);
+		} else {
+			addChat(character, {"role": "assistant","content": "An error occurred."});
+		}
+    } catch (error) {
+        console.error('Request failed:', error);
+        return null;
+    }
+};
+
+window.addChat = function(character, messageObj) {
+	State.variables.chats[character].push(messageObj);
+	createBubble(messageObj.content, messageObj.role == 'user');
+
+	console.log(State.variables.chats[character])
+}
+
+window.createBubble = function(inputText, user = true) {
+	const chatList = document.querySelector('.chatlist');
+
+	//create input bubble
+	const chatBubble = document.createElement('li');
+	user ? chatBubble.classList.add('user_input') 
+	: chatBubble.classList.add('bot_output');
+
+	//adds input of textarea to chatbubble list item
+	chatBubble.innerHTML = inputText;
+
+	//adds chatBubble to chatlist
+	chatList.appendChild(chatBubble)
+}
+
+setup.toggleDarkMode = function(){
+	document.body.classList.add('dark-theme')
+}
+setup.toggleLightMode = function(){
+	document.body.classList.remove('dark-theme')
+}
+
+//Returns stamina cost
+setup.staminaCost = function(time){
+	var _cost = time * Math.pow(0.8,State.variables.end/40)
+	return _cost;
+}
+
+//Calculates waist diameter
+setup.waistDiameter = function(){
+	var _waist = 2*Math.pow( ( (90 *(State.variables.ate + State.variables.inf + ((State.variables.fat + State.variables.tfat) * .21) ) )/(4*Math.PI) ),(1/3) ) - 5;
+	if(_waist < 0){_waist = 0;}
+	return _waist;
+}
+
+//Returns the character's weight
+setup.weight = function(){
+	var _weight = (State.variables.bstr * 3) + State.variables.fat + State.variables.ate + State.variables.infMass + 40;
+	return _weight
+}
+
+//Returns a random herbivore
+/*
+setup.randomHerbivore = function(){
+	var _random = Math.floor(Math.random() * State.variables.herbivores.length);
+	var _creature = State.variables.herbivores[_random];
+	return _creature;
+}*/
+
+//Returns a random carnivore
+/*
+setup.randomCarnivore = function(){
+	var _random = Math.floor(Math.random() * State.variables.carnivores.length);
+	var _creature = State.variables.carnivores[_random];
+	return _creature;
+}*/
+
+//Returns a random species
+/*
+setup.randomSpecies = function(){
+	
+	if(Math.random() > 0.5){
+		var _creature = setup.randomCarnivore();
+	}
+	else{
+		var _creature = setup.randomHerbivore();
+	}
+	return _creature;
+}*/
+
+
+//Returns index of input item, or -1 if item is not owned
+setup.hasItem = function (item) {
+	var _itemIndex = -1;
+	if(item == null){return _itemIndex;}
+	for(var i = 0;i < State.variables.inventory.length;i++){
+		if(State.variables.inventory[i].name == item.name){
+				_itemIndex = i;
+		}
+	}
+	return _itemIndex;
+}
+
+//Returns index of input item, or -1 if item is not owned
+setup.numOwned = function (item) {
+	var _owned = 0;
+	if(item == null){return _owned;}
+	for(var i = 0;i < State.variables.inventory.length;i++){
+		if(State.variables.inventory[i].name == item.name){
+				_owned = State.variables.inventory[i].stack;
+		}
+	}
+	return _owned;
+}
+
+//Returns index of input spell, or -1 if item is not owned
+setup.spellIndex = function (spell) {
+	var _spellIndex = -1;
+	
+	for(var i = 0;i < State.variables.spells.length;i++){
+		if(State.variables.spells[i].name == spell.name){
+				_spellIndex = i;
+		}
+	}
+	return _spellIndex;
+}
+
+//Returns index of input quest, or -1 if quest is not taken
+setup.questIndex = function (quest) {
+	var _questIndex = -1;
+	for(var i = 0;i < State.variables.quests.length;i++){
+		if(State.variables.quests[i].name == quest.name){
+				_questIndex = i;
+		}
+	}
+	return _questIndex;
+}
+
+//Returns wether player has started a quest
+setup.questStarted = function (quest) {
+	var _questStarted = false;
+	
+	if (setup.questIndex(quest) >= 0){
+			_questStarted = true;
+	}
+	
+	return _questStarted;
+}
+//Returns wether player has completed a quest
+setup.questCompleted = function (quest) {
+	var _questDone = false;
+	
+	if (setup.questIndex(quest) >= 0){
+		if(State.variables.quests[setup.questIndex(quest)].completed){
+				_questDone = true;
+			 }
+	}
+	
+	return _questDone;
+}
+
+//Returns whether play has a quest ready to be completed
+setup.questReady = function (quest) {
+	var _questReady = false;
+	
+	if (setup.questIndex(quest) >= 0){
+		if(State.variables.quests[setup.questIndex(quest)].ready){
+				_questReady = true;
+			 }
+	}
+	
+	return _questReady;
+}
+
+//Returns if the player is doing the quest
+setup.questActive = function (quest) {
+	var _questActive = false;
+	if(setup.questStarted(quest) && !setup.questReady(quest) && !setup.questCompleted(quest)){
+		_questActive = true;
+	}
+	return _questActive;
+}
+
+//Returns what stage a quest is at
+setup.questStage = function (quest) {
+	var _questStage = -1;
+	
+	if (setup.questIndex(quest) >= 0){
+		var _testQuest = State.variables.quests[setup.questIndex(quest)];
+		if(_testQuest.progress != undefined){
+				_questStage = _testQuest.progress;
+			 }
+	}
+	
+	return _questStage;
+}
+
+//Returns wether your character is immobile or not
+setup.testImmobile = function(){
+	var _immobile = false;
+	if(State.variables.fat + (State.variables.ate * 2) > (State.variables.str * 12)){_immobile = true;}
+	return _immobile;
+}
+
+//Returns index of input spell, or -1 if spell is not known
+setup.hasSpell = function (spell) {
+	var _spellIndex = -1;
+	for(var i = 0;i < State.variables.spells.length;i++){
+		if(State.variables.spells[i].name == spell.name){
+				_spellIndex = i;
+		}
+	}
+	return _spellIndex;
+}
+
+setup.dodge = function(){
+	var _player = State.variables.agi + State.variables.int + State.variables.dodge;
+	
+	var _enemy = State.variables.e.agi + State.variables.e.int;
+	
+	var _dodged = setup.skillTestRange(_player, _enemy, 5, 75);
+	
+	return _dodged;
+}
+
+setup.dodgeInstaDeath = function(){
+	var _player = State.variables.agi + State.variables.int + State.variables.dodge;
+	
+	var _enemy = State.variables.e.agi + State.variables.e.int;
+	
+	var _dodged = setup.skillTestRange(_player, _enemy, 5, 95);
+	
+	return _dodged;
+}
+
+//Rolls X die with Y sides and returns the total
+setup.xdy = function (dice, sides){
+	var _roll = 0;
+	
+	for(var i=1;i<=dice;i++){
+			_roll +=  Math.floor(Math.random() * sides) + 1;
+	}
+	
+	return _roll;
+}
+
+/*Tests a skill*/
+setup.skillTest = function(player, enemy){
+	
+	if((Math.random()*100) <= (player - enemy)){return true;}
+	else{return false;}
+	
+}
+
+/*Tests skills within a certain range of success chance*/
+setup.skillTestRange = function(player, enemy, min, max){
+	var successChance = player - enemy;
+	if(successChance < min){successChance = min;}
+	if(successChance > max){successChance = max;}
+	return setup.skillTest(successChance,0);
+}
+
+/*Attempts to dodge instant death*/
+setup.dodgeInstantDeath = function(){
+	var _dodged = false;
+	var _int = State.variables.int;
+	var _agi = State.variables.agi;
+	
+	var _eint = State.variables.eint;
+	var _eagi = State.variables.eagi;
+	
+	_dodged = setup.skillTestRange((_int+_agi),(_eint+_eagi),5,95);
+	return _dodged;
+}
+
+// Autosaves every passage
+//Config.saves.autosave = true;
+
+
+(function () {
+    'use strict';
+    // meters.js, by Chapel; for SugarCube 2
+    // v1.0.1
+
+    var options = {
+        tryGlobal : true, // attempt to send `Meter` to the global scope?
+        allowClobbering : false, // allow a new meter to replace a previously defined meter with the same name instead of throwing
+        IAmAGrownUp : false // make sure you have enough rope to hang yourself
+    };
+
+
+    var defaultSettings = {
+        full : '#2ECC40', // color when the bar is full
+        empty : '#FF4136', // color when the bar is empty
+        back : '#DDDDDD', // color of the backing
+        height : '12px', // height of the bar
+        width : '180px', // width of the bar
+        animate : 1000, // ms
+        easing : 'swing', // animation easing
+        text : '#111111', // label text color
+        label : '', // label text
+        align : 'center' // label alignment
+    };
+
+    var _validAlignments = ['center', 'left', 'right'];
+    var _validEasing = ['swing', 'linear'];
+
+    function _handleString (str, def) {
+        if (str && typeof str === 'string') {
+            str = str.toLowerCase().trim();
+            if (str) {
+                return str;
+            }
+        }
+        return def || '';
+    }
+
+    function _colorEasing (t) {
+        // from: https://gist.github.com/gre/1650294
+        return (t < 0.5) ? 2 * t * t : -1 + (4 - 2 * t) *t;
+    }
+
+    function Meter (opts, value) {
+        if (!(this instanceof Meter)) {
+            return new Meter(opts, value);
+        }
+
+        var defs = clone(defaultSettings);
+
+        this.settings = Object.assign(defs, opts);
+
+        // default malformed settings
+
+        this.settings.align = _handleString(this.settings.align);
+        this.settings.easing = _handleString(this.settings.easing);
+
+        if (!_validAlignments.includes(this.settings.align)) {
+            this.settings.align = 'center';
+        }
+
+        if (!_validEasing.includes(this.settings.easing)) {
+            this.settings.easing = 'swing';
+        }
+
+        // set the value, or default to 1
+
+        value = Number(value);
+        if (Number.isNaN(value)) {
+            value = 1;
+        }
+        value = Math.clamp(value, 0, 1);
+        this.value = value;
+
+        // the backing of the meter, and the container
+        var $wrapper = $(document.createElement('div'))
+            .addClass('chapel-meter')
+            .attr({
+                'data-val' : value,
+                'data-label' : this.settings.label
+            })
+            .css({
+                'position' : 'relative',
+                'background-color' : this.settings.back,
+                'height' : this.settings.height,
+                'width' : this.settings.width,
+                'overflow' : 'hidden'
+            });
+
+        // the meter's label
+        var $label = $(document.createElement('div'))
+            .addClass('meter-label')
+            .css({
+                'top' : 0,
+                'right' : 0,
+                'font-size' : this.settings.height,
+                'font-weight' : 'bold',
+                'line-height' : '100%',
+                'width' : '100%',
+                'height' : '100%',
+                'vertical-align' : 'middle',
+                'text-align' : this.settings.align,
+                'color' : this.settings.text,
+                'z-index' : 1,
+                'position' : 'relative',
+                'bottom' : '100%'
+            })
+            .wiki(this.settings.label)
+            .appendTo($wrapper);
+
+        // this is just here to give the bar a smooth transitioning coloration
+        var $barTop = $(document.createElement('div'))
+            .addClass('meter-top')
+            .css({
+                'background-color' : this.settings.full,
+                'opacity' : _colorEasing(this.value),
+                'width' : '100%',
+                'height' : '100%',
+                'z-index' : 0
+            });
+
+        // this actually holds the value and the 'real' bar color
+        var $barBottom = $(document.createElement('div'))
+            .addClass('meter-bottom')
+            .css({
+                'position' : 'absolute',
+                'top' : 0,
+                'left' : 0,
+                'background-color' : this.settings.empty,
+                'opacity' : 1,
+                'width' : (this.value * 100) + '%',
+                'height' : '100%',
+                'z-index' : 0
+            })
+            .append($barTop)
+            .appendTo($wrapper);
+
+        this.$element = $wrapper;
+        this.$bars = { // undocumented
+            top : $barTop,
+            bottom : $barBottom
+        };
+        this.$label = $label; // undocumented
+
+        // mostly a reminder
+        $label.css('font-size', (parseInt($wrapper.css('height'), 10) < parseInt($('.passage').css('font-size'), 10)) ? 
+            $wrapper.css('height') : $('.passage').css('font-size'));
+        $label.css('line-height', $wrapper.css('height'));
+    }
+
+    Object.assign(Meter, {
+        _list : new Map(), // undocumented; meter data dump
+        is : function (thing) { // see if passed "thing" is a meter instance
+            return thing instanceof Meter;
+        },
+        has : function (name) { // does the named meter exist?
+            return Meter._list.has(name) && Meter.is(Meter._list.get(name));
+        },
+        get : function (name) { // return the meter instance
+            if (Meter.has(name)) {
+                return Meter._list.get(name);
+            }
+            return null;
+        },
+        del : function (name) { // delete the meter with the indicated name
+            if (Meter.has(name)) {
+                Meter._list.delete(name);
+            }
+        },
+        add : function (name, opts, value) { // add a new meter; the constructor should not be used
+            if (Meter.has(name) && !options.allowClobbering) {
+                console.error('Meter "' + name + '" already exists.');
+                return;
+            }
+            Object.assign(opts, { id : name });
+            var meter = new Meter(opts, value);
+            Meter._list.set(name, meter);
+            return meter;
+        },
+        _emit : function (inst, name) { // undocumented; emit an event on the given meter
+            if (!Meter.is(inst)) {
+                return;
+            }
+            inst.$element.trigger({
+                type : ':' + name,
+                meter : inst
+            });
+        }
+    });
+
+    Object.assign(Meter.prototype, {
+        constructor : Meter,
+        _label : function (wait) { // undocumented; reprocess the meter label and set the sizes
+            // THE LABEL IS AN ACTUAL NIGHTMARE
+            var self = this;
+            function process () {
+                self.$label.empty().wiki(self.settings.label);
+                self.$label.css('font-size', (parseInt(self.$element.css('height'), 10) < parseInt(self.$element.parent().css('font-size'), 10)) ? 
+                    self.$element.css('height') : self.$element.parent().css('font-size'));
+                self.$label.css('line-height', self.$element.css('height'));
+            }
+            if (wait) {
+                setTimeout(process, Engine.minDomActionDelay);
+            } else {
+                process();
+            }
+            return this;
+        },
+        _width : function () { // undocumented; change the meter width
+            var self = this;
+            this.$bars.bottom.animate({
+                'width' : (this.value * 100) + '%'
+            }, this.settings.animate, this.settings.easing, function () {
+                Meter._emit(self, 'meter-animation-complete');
+            });
+            return this;
+        },
+        _color : function () { // undocumented; blend the full and empty meter colors
+            this.$bars.top.animate({
+                'opacity' : _colorEasing(this.value)
+            }, this.settings.animate, this.settings.easing);
+            return this;
+        },
+        animate : function () { // animate bar changes
+            Meter._emit(this, 'meter-animation-start');
+            return this._color()._width()._label();
+        },
+        val : function (n) { // set and get bar value
+            if (n !== undefined) {
+                n = Number(n);
+                if (Number.isNaN(n)) {
+                    n = 1;
+                }
+                n = Math.clamp(n, 0, 1);
+
+                this.value = n;
+                this.animate();
+            }
+            return this.value;
+        },
+        options : function (opts) {
+            // set or get bar settings
+            if (opts && typeof opts === 'object') {
+                Object.assign(this.settings, opts);
+            }
+            return this.settings;
+        },
+        unwrap : function () {
+            // return unwrapped container element
+            return this.$element[0];
+        },
+        place : function ($target, options) { // put the bar in a known element, with a wrapper
+            var $wrapper = $(document.createElement('span'));
+            if (!($target instanceof jQuery)) {
+                $target = $($target);
+            }
+            if (!$target[0]) {
+                console.warn('meter#place() -> no valid target');
+            }
+            if (options && typeof options === 'object') {
+                // options can contain classes or attributes for the wrapper
+                if (options.classes && (Array.isArray(options.classes) || typeof options.classes === 'string')) {
+                    $wrapper.addClass(options.classes);
+                }
+                if (options.attr && typeof options.attr === 'object') {
+                    $wrapper.attr(options.attr);
+                }
+            }
+            $target.append($wrapper.append(this.$element));
+            // make sure to process the label
+            this._label(true);
+            return this;
+        },
+        // event methods for meters
+        on : function (eventType, cb) {
+            if (typeof cb !== 'function') {
+                return this;
+            }
+            if (!eventType || typeof eventType !== 'string' || !eventType.trim()) {
+                return this;
+            }
+            eventType = eventType.split(' ').map( function (type) {
+                type = type.split('.')[0];
+                return type + '.userland';
+            }).join(' ');
+            this.$element.on(eventType, cb);
+            return this;
+        },
+        one : function (eventType, cb) {
+            if (typeof cb !== 'function') {
+                return this;
+            }
+            if (!eventType || typeof eventType !== 'string' || !eventType.trim()) {
+                return this;
+            }
+            eventType = eventType.split(' ').map( function (type) {
+                type = type.split('.')[0];
+                return type + '.userland';
+            }).join(' ');
+            this.$element.one(eventType, cb);
+            return this;
+        },
+        off : function (eventType) {
+            if (eventType && typeof eventType === 'string' && eventType.trim()) {
+                eventType = eventType.split(' ').map( function (type) {
+                    type = type.split('.')[0];
+                    return type + '.userland';
+                }).join(' ');
+            } else {
+                eventType = '.userland'; // remove all user events
+            }
+            this.$element.off(eventType);
+            return this;
+        },
+        // ariaClick-style setup
+        click : function (options, cb) {
+            // let SugarCube handle the errors
+            this.$element.ariaClick(options, cb);
+            return this;
+        },
+        // for completeness and in case a meter winds up in the state
+        clone : function () {
+            return new Meter(this.settings, this.value);
+        },
+        toJSON : function () {
+            return JSON.reviveWrapper('new setup.Meter(' + JSON.stringify(this.settings) + ', ' + this.value + ')');
+        }
+    });
+
+    // setup-spaced API
+    setup.Meter = Meter;
+
+    if (options.tryGlobal) { // global API, if undefined
+        window.Meter = window.Meter || Meter;
+    }
+
+    // <<newmeter '$variable' [optional: starting value (between 0 and 1)]>>...<</newmeter>>
+    // optional child tags: <<metercolors full [empty] [backing]>>, <<metersizing height [width]>>, <<meteranimation timeOrBool [easing]>>, <<meterlabel labelText [textColor] [alignment]>>
+    Macro.add('newmeter', {
+        tags : ['colors', 'sizing', 'animation', 'label'],
+        handler : function () {
+
+            if (State.length > 0 && !options.IAmAGrownUp) {
+                // you are not a grown up
+                return this.error('The `<<newmeter>>` macro must be called in your `StoryInit` special passage. Seriously. No excuses. --Love, Chapel');
+            }
+
+            if (this.args.length < 1) {
+                return this.error('The `<<newmeter>>` macro requires at least one argument: a meter name.');
+            }
+
+            var meterName = this.args[0], 
+                colorsTag = null, 
+                sizeTag = null, 
+                animTag = null,
+                labelTag = null;
+
+            if (typeof meterName !== 'string') {
+                return this.error('Invalid meter name.');
+            }
+
+            meterName = meterName.trim();
+
+            if (Meter.has(meterName) && !options.allowClobbering) {
+                return this.error('Cannot clobber the existing meter "' + meterName + '".');
+            }
+
+            if (this.payload.length) {
+                // get each child tag for processing
+                colorsTag = this.payload.find( function (pl) {
+                    return pl.name === 'colors';
+                });
+                sizeTag = this.payload.find( function (pl) {
+                    return pl.name === 'sizing';
+                });
+                animTag = this.payload.find( function (pl) {
+                    return pl.name === 'animation';
+                });
+                labelTag = this.payload.find( function (pl) {
+                    return pl.name === 'label';
+                });
+            }
+
+            var opts = {};
+
+            if (colorsTag) {
+                // process the colors tag
+                if (!colorsTag.args.length) {
+                    return this.error('No arguments passed to the `<<colors>>` tag.');
+                }
+
+                switch (colorsTag.args.length) {
+                    case 1:
+                        opts.empty = colorsTag.args[0];
+                        opts.full = 'transparent'; // make the meter one solid color
+                        break;
+                    case 2:
+                        opts.full = colorsTag.args[0];
+                        opts.empty = colorsTag.args[1];
+                        break;
+                    default:
+                        opts.full = colorsTag.args[0];
+                        opts.empty = colorsTag.args[1];
+                        opts.back = colorsTag.args[2];
+                }
+            }
+
+            if (sizeTag) {
+                // process the sizin tag
+                if (!sizeTag.args.length) {
+                    return this.error('No arguments passed to the `<<sizing>>` tag.');
+                }
+
+                opts.width = sizeTag.args[0];
+
+                if (sizeTag.args[1]) {
+                    opts.height = sizeTag.args[1];
+                }
+
+            }
+
+            if (animTag) {
+                // process the animations tag
+                if (!animTag.args.length) {
+                    return this.error('No arguments passed to the `<<animation>>` tag.');
+                }
+
+                if (typeof animTag.args[0] === 'boolean' && !animTag.args[0]) {
+                    opts.animate = 0; // functionally no animation--we still want the event, though, so we'll just 0 it out
+                } else if (typeof animTag.args[0] === 'string') {
+                    opts.animate = Util.fromCssTime(animTag.args[0]);
+                } else {
+                    return this.error('The argument to the `<<animation>>` tag should be `true`, `false`, or a valid CSS time value.');
+                }
+
+                if (animTag.args[1] && ['swing', 'linear'].includes(animTag.args[1])) {
+                    opts.easing = animTag.args[1];
+                }
+            }
+
+            if (labelTag) {
+                // process the label tag
+                var text = labelTag.args[0];
+                if (text && typeof text === 'string') {
+                    opts.label = text.trim();
+                } else {
+                   return this.error('The labelText argument for the `<<label>>` tag is required.');
+                }
+
+                if (labelTag.args[1] && typeof labelTag.args[1] === 'string') {
+                    opts.text = labelTag.args[1];
+                }
+                if (labelTag.args[2] && typeof labelTag.args[2] === 'string') {
+                    opts.align = labelTag.args[2];
+                }
+            }
+
+            Meter.add(meterName, opts, this.args[1]);
+
+        }
+    });
+
+    // <<showmeter '$variable' [value]>>
+    Macro.add('showmeter', {
+        handler : function () {
+
+            if (this.args.length < 1) {
+                return this.error('This macro requires at least one argument: the meter\'s name.');
+            }
+
+            // get the meter
+            var meterName = this.args[0];
+
+            if (typeof meterName !== 'string') {
+                return this.error('Invalid meter name.');
+            }
+
+            meterName = meterName.trim();
+
+            var meter = Meter.get(meterName);
+
+            if (!meter || !Meter.is(meter)) {
+                return this.error('The meter "' + meterName + '" does not exist.');
+            }
+
+            // set the meter, if necessary
+            if (typeof this.args[1] === 'number') {
+                meter.val(this.args[1]);
+            }
+
+            // render the meter
+            meter.place(this.output, {
+                classes : 'macro-' + this.name,
+                attr : { id : 'meter-' + Util.slugify(meterName) }
+            });
+
+        }
+    });
+
+    // <<updatebar '$variable' value>>
+    Macro.add('updatemeter', {
+        handler : function () {
+
+            if (this.args.length < 2) {
+                return this.error('This macro requires two arguments: the meter\'s name and a value.');
+            }
+
+            // get the meter
+            var meterName = this.args[0];
+
+            if (typeof meterName !== 'string') {
+                return this.error('Invalid meter name.');
+            }
+
+            meterName = meterName.trim();
+
+            var meter = Meter.get(meterName);
+
+            if (!meter || !Meter.is(meter)) {
+                return this.error('The meter "' + meterName + '" does not exist.');
+            }
+
+            // set it
+            meter.val(this.args[1]); // if it's on the page, should update and animate auto-magically.
+
+        }
+    });
+
+}());
+
+/* DOWNTIME MOD EDIT - START */
+
+// Calculates the daily downtime food volume based on the player's selections
+setup.downtime_getPlannedEat = function() {
+	let _option = State.variables.downtime_optionsSelected.eating
+	
+	if ( isNaN(_option) ) { // If it's not a number, that means the player has chosen a fixed-size option
+		// Fixed values are all stored in an object in the mod's tuning section
+		let _tuningValue = State.variables.downtime_fixedEatAmounts[_option]
+		
+		if ( _tuningValue ) {
+			return _tuningValue
+		} else {
+			// Should probably error...
+			return 0
+		}
+		
+	} else { // If it's numerical, it means the player's selected stomach scaling ones
+		let _multiplier = State.variables.downtime_optionsSelected.eating / 100 // (wait why don't I have the values in this form from the start? eh, whatever)
+		let _baseStomachStat = State.variables.bsto // Want to use the base stat rather than the temporarily modified version, as effects will expire during the downtime
+		
+		return Math.floor(_baseStomachStat * _multiplier) // Rounding down because this stat should be a hard maximum
+	}
+}
+
+// Returns daily cost in gold for player's chosen eating amount
+setup.downtime_getDailyEatCost = function() {
+	let _goldPerEat = State.variables.downtime_eatCost
+	let _eatAmount = setup.downtime_getPlannedEat()
+	
+	return Math.ceil(_goldPerEat * _eatAmount) // rounded up because half-gold doesn't exist
+}
+
+// Returns true if the player has selected any form of training for their downtime
+setup.downtime_isTraining = function() {
+	let _trainingSelections = State.variables.downtime_optionsSelected.training
+	
+	for (const [stat, isTraining] of Object.entries(_trainingSelections)) {
+		if ( isTraining == true ) {
+			return true
+		}
+	}
+	
+	// If we get here, we're not training anything
+	return false
+}
+
+setup.downtime_isEating = function() {
+	return setup.downtime_getPlannedEat() > 0
+}
+
+
+setup.downtime_getTrainingFatPerDay = function(){
+	return State.variables.downtime_trainMinutes * State.variables.downtime_trainFatLoss
+}
+
+setup.downtime_getMetabolismFatPerDay = function(){
+	return State.variables.downtime_metabolismRate * (60 * 24)
+}
+
+
+// Returns how many days the player could possibly train for given their fat stores
+// Warning: can be a negative number of days if given negative fat!
+/*
+setup.downtime_getTrainingDaysPossible = function(_fat, _fullDaysOnly = false) {
+	let _fatLossPerDay = setup.downtime_getTrainingFatPerDay() + setup.downtime_getMetabolismFatPerDay()
+	
+	let _days = _fat / _fatLossPerDay
+	
+	if ( _fullDaysOnly ) {
+		return Math.floor(_days)
+	} else {
+		return _days
+	}
+}
+*/
+
+// Calculates the highest number of training days possible with the given fat amount
+// If it could go on forever, a high number is returned instead (which will be longer than the built-in cap for downtimes)
+setup.downtime_getTrainingDaysPossible = function(_startingFat = 0, _fullDaysOnly = false) {
+	let _dailyFatLossToTraining = setup.downtime_getTrainingFatPerDay()
+	let _dailyCalories = setup.downtime_getDailyCalories()
+	
+	let _dailyFatChange = _dailyCalories - _dailyFatLossToTraining
+	
+	// I am too dumb to do this algorithmically, so it's looping time
+	let _remainingFat = _startingFat
+	let _days = 0
+	
+	if ( _dailyFatChange >= 0 ) { /* Can train forever */
+		return 9999
+	}
+	
+	while (true) {
+		let _newFat = _remainingFat + _dailyFatChange
+		
+		if ( _newFat >= 0 ) {
+			_days += 1
+			_remainingFat = _newFat
+		} else {
+			_days += _remainingFat / Math.abs(_dailyFatChange)
+			break
+		}
+	}
+	
+	if ( _fullDaysOnly ) {
+		return Math.floor(_days)
+	} else {
+		return _days
+	}
+}
+
+
+// Returns how many days the player could possibly eat for given their gold balance
+setup.downtime_getEatingDaysPossible = function(_gold, _fullDaysOnly = false) {
+	let _goldLossPerDay = setup.downtime_getDailyEatCost()
+	
+	let _days = _gold / _goldLossPerDay
+	
+	if ( _fullDaysOnly ) {
+		return Math.floor(_days)
+	} else {
+		return _days
+	}
+}
+
+// Returns calories per Eat for the player's chosen diet
+setup.downtime_getDietCalories = function() {
+	return State.variables.downtime_dietCalories[State.variables.downtime_optionsSelected.diet]
+}
+
+setup.downtime_isStomachTraining = function() {
+	return setup.downtime_getPlannedEat() > State.variables.bsto
+}
+
+// Returns how many calories the player would be gaining from their diet per day, also accounting for the loss of fat to metabolism
+setup.downtime_getDailyCalories = function() {
+	let _intake = 0
+	let _metabolismLoss = State.variables.downtime_metabolismRate * (60 * 24)
+	
+	_intake += setup.downtime_getPlannedEat() * setup.downtime_getDietCalories()
+	
+	return _intake - _metabolismLoss
+}
+
+// Returns the number of training options selected
+// (can then be used as a divisor for experience rates)
+setup.downtime_getTrainingAmount = function(_trainingSelections) {
+	let _trainingsSelectedCount = 0
+	
+	for (const [stat, isTraining] of Object.entries(_trainingSelections)) {
+		if ( isTraining == true ) {
+			_trainingsSelectedCount += 1
+		}
+	}
+	
+	return _trainingsSelectedCount
+}
+
+// Returns the number of days the player entered (which may not end up being the ultimate number of days)
+// A sanity check is applied to avoid entries of days less than 1
+setup.downtime_getIntendedDays = function() {
+	let _enteredDays = State.variables.downtime_optionsSelected.days
+	
+	if ( _enteredDays < 1 ) {
+		return 1
+	} else {
+		return _enteredDays
+	}
+}
+
+
+// Returns the amount of stat increase that would be earned from training + losing this amount of fat
+setup.downtime_getStatIncreaseFromFat = function(_fat, _focusType = "primary") {
+	/* Both of these values are for changes per minute of training, so we'll have to convert that into stats per fat*/
+	let _fatRate = State.variables.downtime_trainFatLoss
+	let _statRate
+	
+	if ( _focusType == "primary" ) {
+		_statRate = State.variables.downtime_trainPrimaryRate
+	} else {
+		_statRate = State.variables.downtime_trainSecondaryRate
+	}
+	
+	return (_statRate / _fatRate) * _fat
+}
+
+// Returns an object containing the skill changes based on what's being trained
+setup.downtime_calculateTrainingResults = function(_fatSpentOnTraining, _trainingSelections) {
+	let _results = {
+		strength: 0,
+		agility: 0,
+		endurance: 0,
+		intelligence: 0,
+	}
+	
+	let _divisor = setup.downtime_getTrainingAmount(_trainingSelections)
+	
+	if ( _trainingSelections.strength == true ) {
+		let _strengthEarned = setup.downtime_getStatIncreaseFromFat(_fatSpentOnTraining , "primary")
+		let _enduranceEarned = setup.downtime_getStatIncreaseFromFat(_fatSpentOnTraining , "secondary")
+		
+		_results.strength += _strengthEarned / _divisor
+		_results.endurance += _enduranceEarned / _divisor
+	}
+	
+	if ( _trainingSelections.agility == true ) {
+		let _agilityEarned = setup.downtime_getStatIncreaseFromFat(_fatSpentOnTraining , "primary")
+		let _enduranceEarned = setup.downtime_getStatIncreaseFromFat(_fatSpentOnTraining , "secondary")
+		
+		_results.agility += _agilityEarned / _divisor
+		_results.endurance += _enduranceEarned / _divisor
+	}
+	
+	if ( _trainingSelections.intelligence == true ) {
+		let _intelligenceEarned = setup.downtime_getStatIncreaseFromFat(_fatSpentOnTraining , "primary")
+		
+		_results.intelligence += _intelligenceEarned / _divisor
+	}
+	
+	return _results
+}
+
+
+// Returns an array. First value is the change in stomach stat, second value is the remaining $status.stomachStretch level
+setup.downtime_calculateStomachStretch = function(_minutes, _stomachStretchValue){
+	// Have to convert stomachStretch from its weirdo value into something usable. Which won't accurately reflect things if this is the first time the player is stretching their stomach, but we'll have to live with it, because it's weird.
+	let _actualStomachStretchMinutes = _stomachStretchValue + State.variables.downtime_stretchMinutes
+	
+	let _minutesStretched = _minutes + _actualStomachStretchMinutes
+	
+	// Work out the results
+	let _increases = Math.floor(_minutesStretched / State.variables.downtime_stretchMinutes)
+	let _remainingMinutes = _minutesStretched % State.variables.downtime_stretchMinutes
+	
+	// Convert remaining minutes back into the $status.stomachStretch format
+	let _newStomachStretch = State.variables.downtime_stretchCap - State.variables.downtime_stretchMinutes + _remainingMinutes
+	
+	return [_increases, _newStomachStretch]
+}
+
+setup.downtime_roundToDecimalPlace = function(_number, _decimalPlaces = 0) {
+	return +_number.toFixed(_decimalPlaces)
+}
+
+// Used to reset all the daily quests. If more daily quests are added, be sure to include them here.
+setup.downtime_resetDailyQuests = function(){
+	$.wiki('<<removeQuest $washedDishes>>')
+	$.wiki('<<removeQuest $cookedFood>>')
+	$.wiki('<<removeQuest $smithedArmor>>')
+}
+
+// 
+setup.downtime_doDowntime = function() {
+	
+}
+
+/* DOWNTIME MOD EDIT - END */
+
+
+/* FIXES AND EDITS - Add quick action shortcuts - START */
+
+$(document).keydown( function (event) {
+	// Avoid listening to inputs when the player is typing things in to a text / number box
+	if ( document.activeElement != null && (document.activeElement.type == "text" || document.activeElement.type == "number") ) {
+		return
+	}
+	
+	// Also avoid listening to inputs if a Dialog is open
+	if ( Dialog.isOpen() ) {
+		return
+	}
+	
+	const actionKeymaps = {
+		Digit1: "#northwest-action button",
+		Digit2: "#north-action button",
+		Digit3: "#northeast-action button",
+		Digit4: "#west-action button",
+		Digit5: "#center-action button",
+		Digit6: "#east-action button",
+		Digit7: "#southwest-action button",
+		Digit8: "#south-action button",
+		Digit9: "#southeast-action button",
+		Numpad7: "#northwest-action button",
+		Numpad8: "#north-action button",
+		Numpad9: "#northeast-action button",
+		Numpad4: "#west-action button",
+		Numpad5: "#center-action button",
+		Numpad6: "#east-action button",
+		Numpad1: "#southwest-action button",
+		Numpad2: "#south-action button",
+		Numpad3: "#southeast-action button",
+	}
+	
+	if ( actionKeymaps[event.code] ) {
+		$(actionKeymaps[event.code]).trigger("click")
+	}
+})
+
+/* FIXES AND EDITS - Add quick action shortcuts - END */
+
+/* FIXES AND EDITS - Alter Devour option availability - START */
+
+// Returns the amount of stuffing required to reach bursting from the player's current state (reimplemented from widgets, but without the argument stuff)
+setup.findBursting = function(){
+	return setup.findMaxStuffing() - setup.getCurrentStuffing()
+}
+
+// Returns the highest amount of stuffing (in volume) the player can handle. Subtract 1 from the value to get their highest survivable limit
+// (the rounding feature of the new max health calculation might mean this isn't entirely accurate, but if the base game does it, so shall we)
+setup.findMaxStuffing = function(){
+	return (State.variables.maxFul/100) * State.variables.sto
+}
+
+// Returns the player's current fullness in volume
+setup.getCurrentStuffing = function() {
+	return State.variables.ate + State.variables.inf
+}
+
+// Returns whether or not the "Devour" action should be displayed for the current enemy, accounting for options
+setup.shouldShowDevour = function(_enemy) {
+	// Option for the enemy's script to custom-handle if the devour option should be available, regardless of settings. (could be force always available, or force never available)
+	if ( _enemy.showDevour != null ) {
+		return _enemy.showDevour
+	}
+	
+	// Obviously don't consider showing the option if they can't be vored at base
+	// If you want to dynamically change whether an enemy can be vored, use the previous variable (showDevour) instead!
+	if ( _enemy.voreable != true ) {
+		return false
+	}
+	
+	/* Option Modes:
+		1 - The Devour option should always be available if the creature is one that can be eaten
+		2 - The Devour option should only appear if the player could feasibly stomach it on empty (original game's function)
+		3 - The Devour option should only appear if the player could currently stomach it with the space they have remaining.
+	*/
+	switch( State.variables.options.devourShowMode ) {
+		case 1:
+			return true
+		
+		case 2:
+			if ( _enemy.weight != null && setup.findMaxStuffing() > _enemy.weight ) {
+				return true
+			} else {
+				return false
+			}
+			
+		case 3:
+			if ( _enemy.weight != null && (setup.findBursting() - 1) >= _enemy.weight) {
+				return true
+			} else {
+				return false
+			}
+	}
+}
+
+/* FIXES AND EDITS - Alter Devour option availability - END */
+
+
+
+
+/* FIXES AND EDITS - Restructure Fixed NPC Data - START */
+
+// Adds the gender descriptors to the given NPC, based on the provided gender
+// _genderInfo can be either a gender object, or the variable name of a global key (though only a top-level one, so probably of very limited usefulness)
+setup.appendNPCGenderInfo = function(_npc, _genderInfo) {
+	// _genderInfo could either be an object (what we want), or the global key for that object (which we'll have to fetch)
+	_genderInfo = setup.getGenderData(_genderInfo)
+
+	// Set gender descriptors
+	_npc.He = _genderInfo.He
+	_npc.he = _genderInfo.he
+	_npc.Him = _genderInfo.Him
+	_npc.him = _genderInfo.him
+	_npc.His = _genderInfo.His
+	_npc.his = _genderInfo.his
+	_npc.Himself = _genderInfo.Himself
+	_npc.himself = _genderInfo.himself
+	_npc.Man = _genderInfo.Man
+	_npc.man = _genderInfo.man
+	_npc.Boy = _genderInfo.Boy
+	_npc.boy = _genderInfo.boy
+	_npc.Male = _genderInfo.Male
+	_npc.male = _genderInfo.male
+	_npc.Sir = _genderInfo.Sir
+	_npc.sir = _genderInfo.sir
+	_npc.Mister = _genderInfo.Mister
+	_npc.mister = _genderInfo.mister
+	_npc.Brother = _genderInfo.Brother
+	_npc.brother = _genderInfo.brother
+	_npc.Guy = _genderInfo.Guy
+	_npc.guy = _genderInfo.guy
+	_npc.Fella = _genderInfo.Fella
+	_npc.fella = _genderInfo.fella
+	_npc.Buddy = _genderInfo.Buddy
+	_npc.buddy = _genderInfo.buddy
+	_npc.Gentleman = _genderInfo.Gentleman
+	_npc.gentleman = _genderInfo.gentleman
+	_npc.Lad = _genderInfo.Lad
+	_npc.lad = _genderInfo.lad
+	_npc.Laddie = _genderInfo.Laddie
+	_npc.laddie = _genderInfo.Laddie
+	_npc.Sport = _genderInfo.Sport
+	_npc.sport = _genderInfo.sport
+	
+	// Also include the gender object itself
+	_npc.gender = _genderInfo
+	
+	// Don't actually need to return this since we've modified the object itself, but we'll do it any way
+	return _npc
+}
+
+// Same as `appendNPCGenderInfo`, but for species descriptors
+setup.appendNPCSpeciesInfo = function(_npc, _speciesInfo) {
+	_speciesInfo = setup.getSpeciesData(_speciesInfo)
+	_speciesInfo = setup.validateSpecies(_speciesInfo)
+	
+	// Set species descriptors
+	_npc.speciesType = _speciesInfo.id
+	_npc.species = _speciesInfo.species
+	_npc.Species = _speciesInfo.species.toUpperFirst()
+	_npc.FurBack = _speciesInfo.furBack.toUpperFirst()
+	_npc.furBack = _speciesInfo.furBack
+	_npc.FurBelly = _speciesInfo.furBelly.toUpperFirst()
+	_npc.furBelly = _speciesInfo.furBelly
+	_npc.FurHead = _speciesInfo.furHead.toUpperFirst()
+	_npc.furHead = _speciesInfo.furHead
+	_npc.Feet = _speciesInfo.feet.toUpperFirst()
+	_npc.feet = _speciesInfo.feet
+	_npc.Foot = _speciesInfo.foot.toUpperFirst()
+	_npc.foot = _speciesInfo.foot
+	_npc.Hand = _speciesInfo.hand.toUpperFirst()
+	_npc.hand = _speciesInfo.hand
+	_npc.Hands = _speciesInfo.hands.toUpperFirst()
+	_npc.hands = _speciesInfo.hands
+	_npc.Fur = _speciesInfo.fur.toUpperFirst()
+	_npc.fur = _speciesInfo.fur
+	_npc.Furred = _speciesInfo.furred.toUpperFirst()
+	_npc.furred = _speciesInfo.furred
+	_npc.Furry = _speciesInfo.furry.toUpperFirst()
+	_npc.furry = _speciesInfo.furry
+	_npc.Hair = _speciesInfo.hair.toUpperFirst()
+	_npc.hair = _speciesInfo.hair
+	_npc.Tail = _speciesInfo.tail.toUpperFirst()
+	_npc.tail = _speciesInfo.tail
+	_npc.Teeth = _speciesInfo.teeth.toUpperFirst()
+	_npc.teeth = _speciesInfo.teeth
+	_npc.Mouth = _speciesInfo.mouth.toUpperFirst()
+	_npc.mouth = _speciesInfo.mouth
+	_npc.Angry = _speciesInfo.angry.toUpperFirst()
+	_npc.angry = _speciesInfo.angry
+	_npc.speciesHeight = _speciesInfo.speciesHeight
+	_npc.speciesStats = _speciesInfo.speciesStats
+	_npc.article = _speciesInfo.article
+	_npc.Article = _speciesInfo.article.toUpperFirst()
+	
+	// Also mess with some species stuff
+	_npc.nspecies = _speciesInfo.species
+	_npc.fspecies = _speciesInfo.fname
+	_npc.mspecies = _speciesInfo.mname
+	
+	// Include newly added properties
+	_npc.adjective = _speciesInfo.adjective
+	_npc.Adjective = _speciesInfo.adjective.toUpperFirst()
+	
+	if ( _speciesInfo.plural ) {
+		_npc.plural = _speciesInfo.plural
+		_npc.Plural = _speciesInfo.plural.toUpperFirst()
+	} else {
+		_npc.plural = _speciesInfo.species + "s"
+		_npc.Plural = _speciesInfo.species.toUpperFirst() + "s"
+	}
+	
+	// Also include the species object itself. Yeah it kinda defeats the point, but it's required for some stuff!
+	_npc.speciesObject = _speciesInfo
+	
+	return _npc
+}
+
+// Returns the species data object for the given species. If it's already an object, it'll return that with the assumption it already is a species object
+setup.getSpeciesData = function(_species) {
+	if ( typeof _species == "string" ) { // ID of species, that we'll need to lookup
+		return State.variables.speciesList[_species]
+	} else { // Was already a species object
+		return _species
+	}
+}
+
+// as `getSpeciesData` but for gender stuff
+setup.getGenderData = function(_gender) {
+	if ( typeof _gender == "string" ) { // ID of gender, that we'll need to lookup
+		return State.variables[_gender]
+	} else { // Was already a gender object
+		return _gender
+	}
+}
+
+// Returns the gendered version of a name from an NPC data object
+setup.getNPCGenderedName = function(_npcData, _gender) {
+	if ( _gender == "male" && _npcData.mname ) {
+		return _npcData.mname
+	} else if ( _gender == "female" && _npcData.fname ) {
+		return _npcData.fname
+	} else {
+		return _npcData.name
+	}
+}
+
+// Places an already formed NPC into one of the game's NPC slots
+setup.setNPCToSlot = function(_npc, _slot) {
+	let _slotCode = "npc" + _slot
+	
+	State.variables[_slotCode] = _npc
+}
+
+// Merges an NPC object onto another object
+// The main use is to add the NPC detail onto already loaded Enemy, for when fighting fixed NPCs
+// The return value has to be used to replace the existing object manually - this function can't do that (it doesn't actually append!)
+setup.appendNPCInfo = function(_objectToAddTo, _npc) {
+	return {
+		..._objectToAddTo,
+		..._npc
+	}
+}
+
+// Creates an NPC object for the given NPC
+setup.createFixedNPC = function(_npcData) {
+	// _npcData could be the NPC's ID instead of their object.
+	if ( typeof _npcData == "string" ) {
+		_npcData = State.variables.npcs[_npcData] // note the hardcoded location
+	}
+	
+	let _npc = {..._npcData} // Start off by cloning the _npcData. Most of it will later get replaced, but this way we can maintain some data unique to the NPC where needed.
+	
+	// GENDER
+	// Account for options that could change the NPC's gender
+	let _gender = _npcData.gender
+	
+	switch (State.variables.options.fixedNPCGenders) {
+		case "male":
+			_gender = "male"
+			break
+		case "female":
+			_gender = "female"
+			break
+		case "swap":
+			// Intentionally hardcoded to only swap male and female - NPCs with custom-defined genders will be unaffected
+			if ( typeof _npcData.gender == "string" ) {
+				if ( _npcData.gender == "male" ) {
+					_gender = "female"
+					break
+				} else if ( _npcData.gender == "female" )  {
+					_gender = "male"
+					break
+				}
+			} else {
+				if ( _npcData.gender.male == "male" ) {
+					_gender = "female"
+					break
+				} else if( _npcData.gender.male == "female" ) {
+					_gender = "male"
+					break
+				}
+			}
+		
+		default:
+			_gender = _npcData.gender
+	}
+	
+	setup.appendNPCGenderInfo(_npc, _gender)
+	
+	// SPECIES
+	setup.appendNPCSpeciesInfo(_npc, _npcData.species)
+	
+	// Record the neutral species name in case we want it
+	_npc.nspecies = _npc.species
+	_npc.nSpecies = _npc.species.toUpperFirst()
+	
+	// Replace species with the correct gendered version (if possible)
+	if ( _npc.male == "male" && _npc.mspecies ) {
+		_npc.species = _npc.mspecies
+		_npc.Species = _npc.mspecies.toUpperFirst()
+	} else if ( _npc.male == "female" && _npc.fspecies ) {
+		_npc.species = _npc.fspecies
+		_npc.Species = _npc.fspecies.toUpperFirst()
+	}
+	
+	// NAME
+	let _name = setup.getNPCGenderedName(_npcData, _npc.male)
+	_npc.name = _name
+	_npc.Name = _name.toUpperFirst()
+	
+	return _npc
+}
+
+// Reimplementation of base game's `createNPC` widget. Used for "random" NPCs, as opposed to fixed ones
+// Note: Unlike original, this doesn't then automatically assign the NPC to a slot!
+setup.createNPC = function(_speciesInfo = "none", _genderInfo = "random") {
+	let _npc = {}
+	
+	// Do species
+	let _species
+	
+	switch( _speciesInfo ) {
+		// Check if it's a string code with a specific function
+		case "random":
+			_species = setup.randomSpecies(false)
+			break
+		case "randomAll":
+			_species = setup.randomSpeciesAll()
+			break
+		case "herbivore":
+			_species = setup.randomHerbivore()
+			break
+		case "carnivore":
+			_species = setup.randomCarnivore()
+			break
+		case "dinosaur":
+			_species = setup.randomDinosaur()
+			break
+		case "none": // Tradition dictates defaulting to lion, but it shouldn't really matter what gets picked, as an npc marked with a species of "none" likely isn't using any species-specific narration.
+			_species = setup.randomSpeciesAll()
+			break
+		default: // must be a species or species ID
+			_species = setup.getSpeciesData(_speciesInfo)
+	}
+	
+	setup.appendNPCSpeciesInfo(_npc, _species)
+	
+	// Do genders
+	let _gender
+	
+	// Do gender rules
+	// You can bypass the random rules by providing a gender object as _genderInfo
+	let _randomMalesAllowed = State.variables.options.males
+	let _randomFemalesAllowed = State.variables.options.females
+	
+	switch(_genderInfo) {
+		case "male":
+			if ( _randomMalesAllowed ) {
+				_gender = setup.getGenderData("male")
+			} else if ( _randomFemalesAllowed ) {
+				_gender = setup.getGenderData("female")
+			} else {
+				_gender = setup.getGenderData("neuter")
+			}
+			break
+		case "female":
+			if ( _randomFemalesAllowed ) {
+				_gender = setup.getGenderData("female")
+			} else if ( _randomMalesAllowed ) {
+				_gender = setup.getGenderData("male")
+			} else {
+				_gender = setup.getGenderData("neuter")
+			}
+			break
+		
+		case "random":
+			let randomOptions = []
+			
+			if ( _randomMalesAllowed ) {
+				randomOptions.push(setup.getGenderData("male"))
+			}
+			if ( _randomFemalesAllowed ) {
+				randomOptions.push(setup.getGenderData("female"))
+			}
+			
+			if ( randomOptions.length > 0 ) {
+				_gender = either(randomOptions)
+			} else {
+				_gender = setup.getGenderData("neuter")
+			}
+			break
+		
+		case "none":
+			_gender = setup.getGenderData("thing")
+			break
+		default:  // Assume was given a gender object / nonstandard gender code
+			_gender = setup.getGenderData(_genderInfo)
+	}
+	
+	setup.appendNPCGenderInfo(_npc, _gender)
+	
+	// Record the neutral species name in case we want it
+	_npc.nspecies = _npc.species
+	_npc.nSpecies = _npc.species.toUpperFirst()
+	
+	// Replace species with the correct gendered version (if possible)
+	if ( _npc.male == "male" && _npc.mspecies ) {
+		_npc.species = _npc.mspecies
+		_npc.Species = _npc.mspecies.toUpperFirst()
+	} else if ( _npc.male == "female" && _npc.fspecies ) {
+		_npc.species = _npc.fspecies
+		_npc.Species = _npc.fspecies.toUpperFirst()
+	}
+	
+	return _npc
+}
+
+// Add an NPC to the NPCs list
+// Also used for editing existing NPCs - provided data will be merged on top of existing data.
+setup.registerNPC = function(_npcId, _npcData) {
+	if ( State.variables.npcs[_npcId] ) { //npc already exists
+		State.variables.npcs[_npcId] = {
+			...State.variables.npcs[_npcId],
+			..._npcData
+		}
+	} else {
+		State.variables.npcs[_npcId] = clone(_npcData) // don't know if clone is necessary or not
+	}
+}
+
+/* FIXES AND EDITS - Restructure Fixed NPC Data - END */
+
+
+
+/* FIXES AND EDITS - Allow custom titles - START */
+
+// Flush the previous title
+$(document).on(':passageinit', function (ev) {
+	State.variables.passageTitle = ""
+});
+
+/* FIXES AND EDITS - Allow custom titles - END */
+
+
+
+
+/* FIXES AND EDITS - Restructure Species - START */
+// (NOTE: Reliant on other functions declared as part of other edits)
+
+// Adds a species to the species pool
+// We funnel everything through this so that in the event we get around to changing how species are stored, no other code needs to change ;p
+// This is also used to edit existing species - any data provided will be merged on top of what's already there, adding and/or replacing properties
+setup.registerSpecies = function(_speciesData, _speciesId) {
+	let _id
+	if ( _speciesId ) { // species id is optional - otherwise it's taken from _speciesData
+		_id = _speciesId
+	} else {
+		_id = _speciesData.id
+	}
+	
+	// This function is sneakily not only a register, but a patcher, also
+	// If a species with the same ID already exists, anything that's part of _speciesData will be added on top of what's already there (either adding new fields, or overwriting existing ones with new data)
+	
+	if ( State.variables.speciesList[_id]  ) { // species already exists
+		State.variables.speciesList[_id] =	{
+			...State.variables.speciesList[_id],
+			..._speciesData
+		}
+	} else {
+		// First time registers will be run through validation
+		let validSpecies = setup.validateSpecies(_speciesData)
+		
+		State.variables.speciesList[_id] = clone(validSpecies) /* Not sure how _speciesData is actually handled, but we'll clone just to make sure nothing ends up editing the original */
+	}
+	
+	// Safety checker, which is partially down to having made mistakes with previous versions...
+	// Prevent species from having an `option` value if it's `core`
+	if ( State.variables.speciesList[_id].core && State.variables.speciesList[_id].option ) {
+		delete State.variables.speciesList[_id].option
+	}
+	
+	// Pluraliser
+	if ( State.variables.speciesList[_id].plural == null ) {
+		State.variables.speciesList[_id].plural = State.variables.speciesList[_id].species + "s"
+	}
+	State.variables.speciesList[_id].Plural = State.variables.speciesList[_id].plural.toUpperFirst()
+}
+
+// We'll confusingly re-introduce some new versions of base game functions here
+
+// Returns an array of all active species that have a truthy value for a given property
+setup.getSpeciesPoolWithFlag = function(_property) {
+	let pool = []
+	
+	for ( const [id, species] of Object.entries(State.variables.speciesList) ) {
+		// Skip species that require an option to be enabled, when that option isn't
+		if ( species.option && State.variables.options[species.option] == false ) {
+			continue
+		}
+		
+		// Add to options if has property, and the property is truthy
+		if ( species[_property] ) {
+			pool.push(species)
+		}
+	}
+	
+	return pool
+}
+
+// Returns an array of species objects that are both available to the player, and active
+setup.getPlayableSpecies = function(){
+	let pool = []
+	
+	for ( const [id, species] of Object.entries(State.variables.speciesList) ) {
+		// Skip species that require an option to be enabled, when that option isn't
+		if ( species.option && State.variables.options[species.option] == false ) {
+			continue
+		}
+		if ( species.hidden || species.noPlayer ) { // flag was originally `hidden`, but is now `noPlayer` for species that the player shouldn't have access to
+			continue
+		}
+		
+		pool.push(species)
+	}
+	
+	return pool
+}
+
+// Takes an array of species objects and sorts into alphabetical order
+setup.sortSpeciesPool = function(pool){
+	return pool.sort((a, b) => { // copypasting examples to the rescue!
+		const nameA = a.species.toUpperCase(); // ignore upper and lowercase
+		const nameB = b.species.toUpperCase(); // ignore upper and lowercase
+		if (nameA < nameB) {
+			return -1;
+		}
+		if (nameA > nameB) {
+			return 1;
+		}
+
+		// names must be equal
+		return 0;
+	})
+}
+
+setup.getSortedPlayableSpecies = function() {
+	let pool = setup.getPlayableSpecies()
+	setup.sortSpeciesPool(pool)
+	return pool
+}
+
+// Returns a random species with the given flag
+setup.getRandomSpeciesWithFlag = function(_property) {
+	return either(setup.getSpeciesPoolWithFlag(_property))
+}
+
+// Returns a random herbivore species object
+setup.randomHerbivore = function() {
+	let herbivores = setup.getSpeciesPoolWithFlag("herbivore")
+	
+	// For back-compatibility's sake, we'll update the old $herbivores list with this, just in case something is still relying on that list directly
+	State.variables.herbivores = herbivores
+	
+	return either(herbivores)
+}
+
+// Returns a random carnivore species object
+setup.randomCarnivore = function() {
+	let carnivores = setup.getSpeciesPoolWithFlag("carnivore")
+	
+	// For back-compatibility's sake, we'll update the old $carnivores list with this, just in case something is still relying on that list directly
+	State.variables.carnivores = carnivores
+	
+	return either(carnivores)
+}
+
+// Returns a random dinosaur species object
+setup.randomDinosaur = function() {
+	let dinosaurs = setup.getSpeciesPoolWithFlag("dinosaur")
+	
+	return either(dinosaurs)
+}
+
+// Returns a random flight-capable species object
+setup.randomFlying = function() {
+	let fliers = setup.getSpeciesPoolWithFlag("flying")
+	
+	return either(fliers)
+}
+
+// Returns a random dragon species object
+setup.randomDinosaur = function() {
+	let dragons = setup.getSpeciesPoolWithFlag("dragon")
+	
+	return either(dragons)
+}
+
+// Returns a random human species object
+setup.randomHuman = function() {
+	let human = setup.getSpeciesPoolWithFlag("human")
+	
+	return either(human)
+}
+
+// Returns a random species based on the original implementation (aka, not actually random, rather one from the curated lists of carnivore / herbivore / dino)
+setup.randomSpecies = function(_yesDino = false, _yesHuman = State.variables.options.humans, _humanCount = 4) { // won't include an `_includeNoRandom` check like with `randomSpeciesAll` because `herbivore` `carnivore` and `dinosaur` are currently all intentionally opt-in flags specifically for including in random tables
+	let options = [setup.randomHerbivore, setup.randomCarnivore]
+	
+	if ( _yesDino ) {
+		options.push(setup.randomDinosaur)
+	}
+  
+  	if ( _yesHuman ) {
+      for (let i = 0; i < _humanCount; i++) {
+      	options.push(setup.randomHuman)
+      }
+    }
+	
+	return either(options)()
+}
+
+// Returns an array of ALL available species objects, as opposed to from curated lists like `setup.randomSpecies`. Mostly for use with `setup.randomSpeciesAll`
+setup.randomSpeciesPoolAll = function(_includeNoRandom = false) {
+	// We'll do something lazy and hacky and use `setup.getSpeciesPoolWithFlag` with the "flag" being `id`, which should be truthy for all species, as that property is present for all of them
+	let options = setup.getSpeciesPoolWithFlag("id")
+	
+	// Optionally filter out the species that have been specifically flagged to not be available for randomisation
+	if ( _includeNoRandom == false ) {
+		options = setup.scrubNoRandom(options)
+	}
+	
+	return options
+}
+
+// Returns a random species object from ALL available options, as opposed to from curated lists like setup.randomSpecies
+setup.randomSpeciesAll = function(_includeNoRandom = false) {
+	return either(setup.randomSpeciesPoolAll(_includeNoRandom))
+}
+
+// Removes any species objects from a pool if they have a given property.
+// Returns a new array with them filtered - doesn't operate on the original
+setup.scrubSpeciesWithFlag = function(_pool, _property) {
+	return _pool.filter((_species) => _species[_property] == null)
+}
+
+// Removes any species labelled with `noRandom` from a species pool.
+// Returns a new array with them filtered - doesn't operate on the original
+setup.scrubNoRandom = function(_pool) {
+	return setup.scrubSpeciesWithFlag(_pool, "noRandom")
+}
+
+// Runs through all core species and makes a copy of them available as a global variable, to replicate how the original game system worked for backwards compatibility
+// I don't know how object referencing works with twine, so I'd advise running this after any changes have been made to a species
+setup.populateCoreGlobalSpecies = function(){
+	for ( const [id, species] of Object.entries(State.variables.speciesList) ) {
+		if ( species.core ) {
+			State.variables[id] = species
+		}
+	}
+}
+
+// Ensures species has all the required values. Will return a validated version
+setup.validateSpecies = function(_speciesObject) {
+	let base = {
+		article: "a",
+		species: "lion",
+		angry: "roar",
+		furBack: "golden", furBelly: "white", furHead: "brown",
+		foot: "paw", feet: "paws",
+		hand: "paw", hands: "paws",
+		fur: "fur", furred: "furred", furry: "furry",
+		hair: "mane",
+		tail: "long tail",
+		teeth: "fangs",
+		mouth: "muzzle",
+		speciesHeight: 71,
+		speciesStats: [5,5,5,0,10,4],
+		adjective: "animalistic",
+	}
+	
+	let validSpecies = {
+		...base,
+		..._speciesObject
+	}
+	
+	if ( validSpecies.mname == null ){
+		validSpecies.mname = validSpecies.species
+	}
+	if ( validSpecies.fname == null ){
+		validSpecies.fname = validSpecies.species
+	}
+	if ( validSpecies.plural == null ){
+		validSpecies.plural = validSpecies.species + "s"
+	}
+	
+	return validSpecies
+}
+
+
+/* FIXES AND EDITS - Restructure Species - END */
+
+
+
+
+
+/* FIXES AND EDITS - Automatic mod updater - START */
+/* Passages might attempt to use these before they're declared, so declare them here, even though we'll ignore anything done to them */
+setup.modUpdated = false
+setup.modUpdatedList = []
+
+Save.onLoad.add(function (save) {
+	// When a save is being loaded, we want to queue up the update checks.
+	// We can't do the changes now (well, we can but it'd require different patching methods),
+	// so we'll leave it until the first passage is starting to load
+	$(document).one(':passageinit', function (ev) {
+		// Prepare some variables that'll be used
+		setup.modUpdated = false // If a mod patcher successfully updates, it'll set this to true to let us know
+		setup.modUpdatedList = [] // Names of mods that have updated 
+		
+		// Run the updates passages. They will check if they need updating, and set $modUpdated to let us know an update happened.
+		$.wiki('<<include "mods patch and update">>')
+		
+		// Notify the player if something's been updated
+		if ( setup.modUpdated == true ) {
+			// Remove the flag
+			setup.modUpdated = false
+			
+			// Cause the mod updated popup to show
+			Dialog.setup("Mod Patches Applied!");
+			
+			let text = ""
+			text += "Required patches for newly updated mods have been automatically applied!"
+			
+			if ( setup.modUpdatedList.length > 0 ) {
+				text += " The following mods have been updated:<ul>"
+				for (const modName of setup.modUpdatedList) {
+					text += `<li>${modName}</li>`
+				}
+				text += "</ul>"
+			} else {
+				text += "<br><br>"
+			}
+			
+			text += `Be aware that if you use the back function now, the changes will be undone, and you'll have to manually update your mods via the "Game fixes" menu.`
+			
+			Dialog.wiki(text);
+			Dialog.open();
+		}
+	});
+})
+/* FIXES AND EDITS - Automatic mod updater - END */
+
+
+
+
+/* FIXES AND EDITS - Restructure Spells - START */
+
+/* First of the items that I'm actually moving out of globals */
+setup.spells = {} /* Patchers will fill these with spells */
+
+setup.registerSpell = function(spell, spellId) {
+	let id
+	if ( spellId ) {
+		id = spellId
+	} else {
+		id = spell.id
+	}
+	
+	if ( setup.spells[id] ) { // Already exists, so merge with existing
+		setup.spells[id] = {
+			...setup.spells[id],
+			...spell
+		}
+	} else {
+		setup.spells[id] = clone(spell) // still unsure if clone is necessary...
+	}
+}
+
+// Gets spell object for given spell.
+setup.getSpell = function(spell) {
+	if ( typeof spell == "string" ) { // ID of spell, that we'll need to lookup
+		return setup.spells[spell]
+	} else { // Was already a spell object
+		return spell
+	}
+}
+
+// Returns true if the player knows the spell.
+setup.knowsSpell = function (spell) {
+	spell = setup.getSpell(spell)
+	
+	for (let currentSpell of variables().spells) {
+		currentSpell = setup.getSpell(currentSpell) // Doing this makes this compatible with the old spellbook format (spell objects) and the newer format (string ids)
+		
+		if ( spell.id == currentSpell.id ) {
+			return true
+		}
+	}
+	
+	return false
+}
+
+// returns an array with the reasons why the player can't learn the given spell. Will be an empty array if there's no reason they can't
+setup.spellLearnFailReasons = function(spell){
+	spell = setup.getSpell(spell)
+	let reasons = []
+	
+	if ( spell.str > 0 && variables().bstr < spell.str ) {
+		reasons.push(`${spell.str} strength`)
+	}
+	
+	if ( spell.agi > 0 && variables().bagi < spell.agi ) {
+		reasons.push(`${spell.agi} agility`)
+	}
+	
+	if ( spell.end > 0 && variables().bend < spell.end ) {
+		reasons.push(`${spell.end} endurance`)
+	}
+	
+	if ( spell.int > 0 && variables().bint < spell.int ) {
+		reasons.push(`${spell.int} intelligence`)
+	}
+	
+	if ( spell.sto > 0 && variables().bsto < spell.sto ) {
+		reasons.push(`${spell.sto} stomach`)
+	}
+	
+	return reasons
+}
+
+setup.canLearnSpell = function(spell){
+	spell = setup.getSpell(spell)
+	
+	// We'll be lazy, since we've already got a function to work out the reasons
+	//  - if there's no reasons the player can't learn, then they must be able to learn it!
+	return setup.spellLearnFailReasons(spell).length == 0
+}
+
+// Returns list of reasons why player can't cast a given spell, due to lacking resources
+setup.spellCastFailReasons = function(spell){
+	spell = setup.getSpell(spell)
+	let reasons = []
+	
+	if ( spell.cost && variables().mana < spell.cost ) {
+		reasons.push("mana")
+	}
+	
+	let stamina = false
+	if ( spell.staminaFixedCost && variables().sta < spell.staminaFixedCost ) {
+		stamina = true
+	}else if ( spell.staminaCost && variables().sta < setup.staminaCost(spell.staminaCost) ) {
+		stamina = true
+	}
+	
+	if ( stamina ) {
+		reasons.push("stamina")
+	}
+	
+	if ( spell.healthCost && variables().hea <= Math.round(spell.healthCost) ) { /* Use of <= is intended here, because even if the player has the exact amount, they shouldn't be able to cast, because that'll kill them!*/
+		reasons.push("health")
+	}
+	
+	if ( spell.goldCost && variables().gld < Math.round(spell.goldCost) ) {
+		reasons.push("gold")
+	}
+	
+	return reasons
+}
+
+
+// Uses up the required resources for the spell
+setup.consumeSpellCosts = function(spell) {
+	spell = setup.getSpell(spell)
+	
+	/* Consume mana */
+	if ( spell.cost ) {
+		$.wiki(`<<spendMana ${spell.cost}>>`) // We'll be lazy and use the actual official thing for it
+	}
+	
+	/* Consume stamina */
+	if ( spell.staminaFixedCost ) {
+		variables().sta -= spell.staminaFixedCost
+	}else if ( spell.staminaCost ) {
+		variables().sta -= setup.staminaCost(spell.staminaCost)
+	}
+	variables().sta = Math.clamp(variables().sta, 0, 100)
+	
+	/* Consume health */
+	if ( spell.healthCost ) {
+		$.wiki(`<<damage ${spell.healthCost}>>`) // Will this report the health loss or not? (don't want it to)
+	}
+	
+	/* Consume gold */
+	if ( spell.goldCost ) {
+		$.wiki(`<<doGld ${-spell.goldCost}>>`)
+	}
+	
+	$.wiki("<<updateStats>>")
+}
+
+setup.canCastSpell = function(spell) {
+	spell = setup.getSpell(spell)
+	
+	return setup.spellCastFailReasons(spell).length == 0
+}
+
+// Returns an object that details whether or not a spell should be available to cast
+setup.spellIsAvailable = function(spell) {
+	spell = setup.getSpell(spell)
+	
+	/* Custom checkers trump regular checks */
+	if ( spell.availableCheck ) {
+		return setup[spell.availableCheck](spell)
+	} else {
+		/* In combat, and spell isn't usable there */
+		if ( variables().inCombat == true && !spell.combat ) {
+			return {result: false, reason: "in combat"}
+		}
+		if ( variables().inCombat == false && !spell.ooc ) {
+			return {result: false, reason: "not in combat"}
+		}
+	}
+	
+	return {result: true}
+}
+
+
+setup.getSpellCosts = function(spell) {
+	spell = setup.getSpell(spell)
+	let costs = []
+	
+	if ( spell.cost ) {
+		costs.push(`${spell.cost} mana`)
+	}
+	
+	if ( spell.staminaFixedCost ) {
+		costs.push(`${spell.staminaFixedCost} stamina`)
+	}else if ( spell.staminaCost ) {
+		costs.push(`${spell.staminaCost} stamina`) // Don't adapt the displayed stamina costs
+	}
+	
+	if ( spell.healthCost ) {
+		costs.push(`${Math.round(spell.healthCost)} health`)
+	}
+	
+	if ( spell.goldCost ) {
+		costs.push(`${Math.round(spell.goldCost)} gold`)
+	}
+	
+	return costs
+}
+
+// Sorts player's spellbook into alphabetical order
+setup.sortSpellbook = function(){
+	variables().spells.sort((a, b) => {
+		let spellA = setup.getSpell(a)
+		let spellB = setup.getSpell(b)
+		
+		let nameA = spellA.name.toUpperCase()
+		let nameB = spellB.name.toUpperCase()
+		
+		if (nameA < nameB) {
+			return -1;
+		}
+		if (nameA > nameB) {
+			return 1;
+		}
+
+		// names must be equal
+		return 0;
+	})
+}
+
+// Replaces spells in the old format (objects) with their updated forms (spell IDs)
+// Provide an array of spells to replace, or use the string "all" to update every spell regardless of its source (will default to "all" behaviour if an array isn't provided)
+setup.patchOldSpellbook = function(spellList = "all"){
+	/* Handle all */
+	if ( spellList == "all" ) {
+		spellList = []
+		
+		for ( const [id, spell] of Object.entries(setup.spells) ) {
+			spellList.push(id)
+		}
+	}
+	
+	/* Get the names and IDs of the spells we're supposed to be updating */
+	let lookup = {} /* Will store the names of the related spells, and what their IDs are */
+	for (let currentSpell of spellList) {
+		currentSpell = setup.getSpell(currentSpell)
+		
+		lookup[currentSpell.name] = currentSpell.id
+	}
+	
+	/* Now loop through the player's spellbook, and find the old versions of spell objects that we need to update */
+	let toUpdate = {} /* key is index in spellbook, value is string ID of the spell */
+	for (let [index, currentSpell] of variables().spells.entries()) {
+		/* Skip if is already in new format */
+		if ( typeof currentSpell == "string" ) { 
+			continue
+		}
+		
+		currentSpell = setup.getSpell(currentSpell)
+		
+		/* Skip if spell is flagged as `unique` (i.e, is INTENDED to be a spell object in the spellbook) */
+		if ( currentSpell.unique ) {
+			continue
+		}
+		
+		/* Otherwise, get to it */
+		if ( lookup[currentSpell.name] ) {
+			toUpdate[index] = lookup[currentSpell.name]
+		}
+	}
+	
+	/* Finally, make the actual replacements */
+	/* (if you're not sure why I did this separately rather than in the previous loop - I wasn't sure if it was safe to modify an array while also looping through it :p) */
+	for ( const [index, id] of Object.entries(toUpdate) ) {
+		variables().spells[index] = id
+	}
+}
+
+// Sets up core spells to have global variables, in order to provide backwards compatibility
+setup.populateCoreGlobalSpells = function(){
+	for ( const [id, spell] of Object.entries(setup.spells) ) {
+		if ( spell.core ) {
+			State.variables[id] = spell
+		}
+	}
+}
+
+/* Returns the % multiplier for the player's spellcast. Spell scaling is adjusted by weapon scaling when wielding and INT weapon. */
+setup.getPlayerSpellScaling = function(){
+	let scaling = setup.tuning("spellBonusDamageScalingBase")
+	
+	let weapon = variables().wea
+	
+	if ( weapon.stat == "int" && weapon.scaling > scaling ) {
+		scaling = weapon.scaling
+	}
+	
+	return scaling
+}
+
+/* Returns the amount of bonus damage a player should be dealing when casting spells, given their intelligence level and INT scaling */
+setup.getPlayerSpellBonusDamage = function(){
+	let scaling = setup.getPlayerSpellScaling()
+	
+	return Math.round(variables().int * scaling)
+}
+
+/* FIXES AND EDITS - Restructure Spells - END */
+
+
+
+
+/* FIXES AND EDITS - Enemy etc. code - START */
+
+setup.enemyHasWeakness = function(damageType = "notype", enemy = variables().e){
+	// Special effect of soak
+	if ( enemy.soak > 0 && damageType == "lightning"){
+		return true
+	}
+	if ( enemy.icyspells_greased > 0 && damageType == "fire"){
+		return true
+	}
+	
+	if ( enemy.damageWeakness && enemy.damageWeakness.includes(damageType) ) {
+		return true
+	} else {
+		return false
+	}
+}
+
+setup.enemyHasResistance = function(damageType = "notype", enemy = variables().e){
+	if ( enemy.damageResistance && enemy.damageResistance.includes(damageType) ) {
+		return true
+	} else {
+		return false
+	}
+}
+
+setup.getEnemyDamageTypeMultiplier = function(damageType = "notype", enemy = variables().e){
+	/* This is going to slightly change how damage stuff works, but screw it */
+	let weak = setup.enemyHasWeakness(damageType, enemy)
+	let resists = setup.enemyHasResistance(damageType, enemy)
+	
+	if (weak && resists) {
+		return 1
+	} else if (weak) {
+		return setup.tuning("damageWeaknessMultiplier")
+	} else if (resists) {
+		return setup.tuning("damageResistanceMultiplier")
+	} else {
+		return 1
+	}
+}
+
+/* FIXES AND EDITS - Enemy etc. code - END */
+
+
+
+
+/* FIXES AND EDITS - Utilise tuning variables for major variables - START */
+/* Note: This is very much indev and not fully realised */
+
+/* First time setup for main tuning values on game initialisation (will run once whenever the game is opened - not per game load) */
+if ( setup.globalTuning == null ) {
+	setup.globalTuning = {
+		playerHeightMin: 48,
+		playerHeightMax: 144,
+		absoluteHeightMin: 6,
+		absoluteHeightMax: 576,
+		speciesStatsPoints: 25,
+		speciesStartStatMin: 0,
+		speciesStartStatMax: 25,
+		speciesStartFatMin: 0,
+		speciesStartFatMax: 30,
+		baseStatMain: 15,
+		baseStatStomach: 20,
+		startingFat: 5,
+		
+		damageWeaknessMultiplier: 1.5,
+		damageResistanceMultiplier: 1/1.5,
+		
+		burnProcDamageModifier: 0.2, /* When burn procs, the burn damage is set to the damage dealt multiplied by this number */
+		
+		spellBonusDamageScalingBase: 0.4,
+		
+		stretchFruitRescueInterval: 40,
+		stoRescueInterval: 40,
+	}
+}
+// Add a tuning variable to the global tuning
+setup.registerTuning = function(id, value) {
+	setup.globalTuning[id] = value
+}
+
+// Alter a tuning value for the current save
+setup.registerSaveTuning = function(id, value) {
+	// Ensure save tuning exists
+	if ( State.variables.tuning == null ) {
+		State.variables.tuning = {}
+	}
+	
+	State.variables.tuning[id] = value
+}
+
+// Removes changes to the tuning at a local level
+setup.unregisterSaveTuning = function(id) {
+	// Ensure save tuning exists
+	if ( State.variables.tuning == null ) {
+		State.variables.tuning = {}
+	}
+	
+	delete State.variables.tuning[id]
+}
+
+// Returns the value of the given tuning variable. Prioritises the tuning values in save files
+setup.getTuningValue = function(id) {
+	if ( State.variables.tuning != null && State.variables.tuning[id] != null  ) {
+		return State.variables.tuning[id]
+	} else {
+		return setup.globalTuning[id]
+	}
+}
+
+// aliases
+setup.tuning = setup.getTuningValue
+setup.tune = setup.registerTuning
+setup.tuneSave = setup.registerSaveTuning
+
+/* FIXES AND EDITS - Utilise tuning variables for major variables - END */
+
+

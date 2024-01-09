@@ -1,0 +1,610 @@
+:: bubble orca ai {"position":"5150,625","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a bloated looking blue $npc1.species – $npc1.he has a magical aura around $npc1.him, and bubbles are constantly leaking from $npc1.his mouth. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $grapple > 0>>
+	<li>Inflate</li>
+	$npc1.He takes in another breath and puffs again, continuing the assault on your stomach’s capacity. 
+	<<inflate 5 -8>>
+<<else>>
+	<<if random(1,3) == 1>>
+		<li>Grab</li>
+		The $npc1.species suddenly surges forward, grasping you with $npc1.his fins. 
+		<<switch setup.dodge()>>
+			<<case true>>
+				Fortunately you manage to wriggle free before $npc1.he can get a good grip on you. 
+				
+			<<default>>
+				$npc1.He abruptly plants $npc1.his lips on yours and begins to exhale air directly into your stomach, making it bulge further. 
+				<<inflate 5 -8>>
+				<<set $grapple = $e.str * 3>>
+				
+		<</switch>>
+	<<else>>
+		<li>Inflate</li>
+		The $npc1.species rears back, takes in a gulp of water, and lets out the converted air as a stream of missile-like bubbles directed straight at your face. You fail to dodge out of the way, and several of the bubbles force their way into your mouth, streaming down your throat and making your belly swell outwards. 
+		<<inflate 5 -8>>
+	<</if>>
+<</if>>
+
+<<if setup.weight() <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn tail and attempt to flee from the battle. The $npc1.species blinks in confusion, and then tries to pursue you. However, $npc1.he begins to fall behind and eventually runs out of puff, drooping down and panting, letting out clouds of bubbles with every exhale. 
+<<endCombat>>
+<hr>
+<<include "ocean randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You turn tail and attempt to flee from the battle. The $npc1.species blinks in confusion and then tries to pursue you. The vast amount of activity however strains you and gives you a cramp, forcing you to stop and the $npc1.species quickly catches up to you. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $grapple > 0>>
+	Be it through losing the will to fight, or through you enjoying the ordeal, you stop fighting against the $npc1.species and loosen up somewhat, and $npc1.he notices your submission. $npc1.He breaks off the kiss, seeing if this is some sort of trick, but soon catches on and tugs you close and rears $npc1.his head back, drinking down several mouthfuls of water, it hissing and turning into air within $npc1.his body. $npc1.He grins mischievously at you before locking lips with you once more and puffing hard. Your belly swells out further and further, and you can feel the buoyancy within you making your entire body want to float to the surface. The $npc1.species senses this, and swims as best it can to the surface. $npc1.He puffs into you a few more times, before letting go and watching you glide away through the air. $npc1.He rolls onto $npc1.his belly and waves with $npc1.his tail as you drift away. 
+	<<inflateToFloating>>
+	<hr>
+	<<defeated "floating">>
+<<else>>
+	<<if random(1,2) == 1>>
+		You lower your $wea.name, conveying you no longer want to fight. You would expect $npc1.him to pounce on you and start making you more spherical, but a loud rumble from $npc1.him indicates that $npc1.his hunger is winning out over $npc1.his inflation lust. $npc1.He still pounces, but outstretched jaws instead of outstretched arms. You have second thoughts and try to swim off, but as you do you feel $npc1.his jaws fix themselves around your ankles. You violently flail with your arms to try and escape, but you feel the $npc1.species let go before $npc1.he thrusts forward, biting further up your gut, before doing it again, and again. You can already feel your legs in $npc1.his stomach, and realise that escape is impossible, and give up once more. The $npc1.species works $npc1.his way over your chest, licking at your head before sucking it in and swallowing. You flop into $npc1.his rather spacious gut, which is surprisingly dry and somewhat comfortable. The $npc1.species lets out a burp and swims away back into the depths, and it’s a long while before your consciousness wanes. 
+		<hr>
+		<<defeated "devoured">>
+	<<else>>
+		You lower your $wea.name, conveying you no longer want to fight. The $npc1.species descends on you, blowing more bubbles into your mouth before $npc1.he even realises you’ve given up the fight. $npc1.He smiles, and gently bites your leg, pulling you down to the ocean floor before lying down on you, pinning you to the sandy floor. $npc1.He pins your arms down with $npc1.his fins, before rearing back and taking a huge intake of water. The lasting effects of the pills turn it into air as soon as it enters $npc1.his body, and you can see and hear $npc1.his middle swell up with air before $npc1.he locks lips with you, puffing air into your mouth like the most overenthusiastic act of CPR ever practiced, and your middle springs out with light gas. As your midriff becomes wider and wider, $npc1.he eventually doesn’t need to hold you down, due to the air pushing its way into your arms, making them unbendable and useless. You can see $npc1.him being lifted up by your rising stomach, eventually becoming vertical. $npc1.He’s so lost in $npc1.his enjoyment of the situation that $npc1.he’s rather startled when you become too big and $npc1.he rolls off of you. Unfortunately, $npc1.he was the only thing that was holding you down, and you begin to float up. $npc1.He quickly recovers and grabs you but your momentum towards the surface makes $npc1.his attempts to stop you futile. You break the surface, and the warm air within you catapults you into the air and makes you begin to drift back towards the shore. The $npc1.species surfaces, looking up at you drifting away, and you can see $npc1.him waving at you happily. There’s no malice or mocking in it – $npc1.he evidently thinks you enjoyed this as much as $npc1.he did. You feel pretty helpless as you’re carried away by the tidal breeze. 
+		<<inflateToFloating>>
+		<hr>
+		<<defeated "floating">>
+	<</if>>
+<</if>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The constant pressure on your stomach is getting far too much to bear, becoming quite painful, but that’s the least of your concerns right now – You’re floating to the surface of the water and try as you might, you can’t swim back down. The $npc1.species giggles and swims over to you, either uncaring or unaware that you’re quite panicked by this lack of mobility, and locks lips with you, puffing a bit more air into your already overstretched body. $npc1.His contact with you only breaks when you’re lifted off the surface of the water completely and begin to drift off. The $npc1.species smiles, before diving back off into the water, treating this like the end of a game you two were playing and not an actual victory against you. 
+<<inflateToFloating>>
+<hr>
+<<defeated "floating">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The $npc1.species spins through the water from your last hit, rolling onto $npc1.his back and bobbing to the surface in a daze. You take this opportunity to quickly swim away, looking behind you for a moment to see the unconscious $npc1.species still burping out bubbles which float off into the sky. 
+<<include "Victory">>
+<hr>
+<<include "ocean randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "eater" false "ocean randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: hydra ai {"position":"5025,625","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your enemy is a giant three headed serpent the colour of sand. Each head stares at you as their tongues flick up and down, tasting the air. It seems hungry, waiting to add you to the list of victims in its cauldron-like belly. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $grapple > 0>>
+	<li>Devour</li>
+	<<switch $e.special>>
+		<<case 2>>
+			You attempt to crawl back out from the $npc1.species's stifling throat, but can't quite manage to get out. A second gulp pulls you farther down the $npc1.species's muscular throat. 
+			<<set $e.special-->>
+			
+		<<case 1>>
+			Your attempts to escape are in vain, as a third gulp sets you sliding into the $npc1.species’s stomach below. You fall into a surprisingly roomy cavern, where the others that were eaten earlier are unconscious. The oppressive heat of your surroundings causes your senses to dull, but you could still escape, if you move quickly. 
+			<<set $e.special-->>
+			
+		<<case 0>>
+			Trying to ignore the heat, you look up at the hole you entered from, and run up the slope to try and escape. You snatch for the edge, but slip and fall, sliding back down. The heat of the area causes your head to swim and your body to continue to weaken. 
+			<<set _damage = $maxHea * 0.15>>
+			<<damage _damage>>
+			
+	<</switch>>
+<<else>>
+	<<switch random(1,5)>>
+		<<case 1>>
+			<li>Devour</li>
+			<<switch setup.dodgeInstaDeath()>>
+				<<case true>>
+					The middle head lunges at you, maw agape. You jump to dodge but the heads work together as a second head waits for your next move. With its maw agape, you unintentionally fall into the waiting jaws of the left head. You brace for pain, but nothing happens. As you scramble out of its mouth, it closes quickly as it realised it missed its cue. The right head stares disdainfully as the middle one screeches in fury at it. 
+					
+				<<default>>
+					The middle head lunges at you, maw agape. You jump to dodge, but the heads work together as a second head waits for your next move. With its maw agape, you unintentionally fall into the waiting jaws of the right head. The jaws slam shut behind you and a loud gulp sends you down. 
+					<<set $e.special =  2>>
+					<<set $grapple = $e.str * 3>>
+					
+			<</switch>>
+			
+		<<default>>
+			<<switch random(1,3)>>
+				<<case 1>>
+					<li>Attack</li>
+					One of the heads lunges at you, maw agape. You manage to dodge and avoid being eaten whole, but you are injured for $edmg damage by $npc1.his teeth. 
+					<<damage $edmg>>
+					
+				<<case 2>>
+					<li>Sweep</li>
+					The beast crouches somewhat, bringing its tail around and sweeping it at you – it catches you off guard and slams into you, dealing $edmg damage and winding you. 
+					<<if $end > 13>>
+						<<set _debuff = random(-8,-12)>>
+						<<tempBuff "end" _debuff>>
+					<</if>>
+					<<damage $edmg>>
+					
+				<<case 3>>
+					<li>Sand Attack</li>
+					The $npc1.species rears back, smashing the ground with $npc1.his forepaws and knocking sand into the air, blowing it at you with a gust of wind. The sand gets in your eyes and irritates your wounds, making it hard to focus. 
+					<<if $end > 7>>
+						<<set _debuff = random(-4,-6)>>
+						<<tempBuff "end" _debuff>>
+					<</if>>
+					<<if $agi > 7>>
+						<<set _debuff = random(-4,-6)>>
+						<<tempBuff "agi" _debuff>>
+					<</if>>
+					<<set $edmg = Math.round($edmg*0.2)>>
+					<<damage $edmg * 0.2>>
+					
+			<</switch>>
+			
+	<</switch>>
+<</if>>
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+The $npc1.species looks around at the rest of the beach, thinking that the people around $npc1.him are too far away to bother with, and it’s about to retreat into the water before the middle mouth gags. The other two look at it before it retches and brings you up onto the sand. You’re dazed and confused by the impact and light, but get back up and yell at the $npc1.species defiantly. The middle head roars in rage, while the right one looks on in a mix of bemusement and genuine admiration. 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+Your resolve falters and you quickly turn tail on the fight, running as fast as you can. The $npc1.species smashes $npc1.his tail down on the ground, hoping to incapacitate you or stop your retreat, but $npc1.he’s too slow and $npc1.his tail crashes into the ground behind you. By the time $npc1.he pulls it back up, you’re too far away for $npc1.him to catch. The element of surprise was all $npc1.he had, so now that there’s no one within range $npc1.he slips back into the water. 
+<<endCombat>>
+<hr>
+<<include "beach randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+Your resolve falters and you quickly turn tail on the fight, running as fast as you can. The $npc1.species smashes $npc1.his tail down on the ground, hoping to incapacitate you or stop your retreat. You stop yourself just in time to avoid being made into a pancake against the sand and look away from the impassable wall of flesh in front of you. You have no choice but to return to the fight. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $grapple > 0>>
+	For whatever reason, be it fatigue or the acceptance of fate, you flop down against the walls of your prison, the dizzying heat making you drift off. Your digestion is painless. 
+<<else>>
+	You throw yourself on the $npc1.species’s mercy. They stop their assault and look at you inquisitively. You get on your knees and ask the $npc1.species to return the others it ate in return for yourself. One head stares blankly at you, another hisses in annoyance and the last one seems to consider the offer. They quickly exchange words in a strange, hiss and snarl-based language. The left and right heads come to an agreement, as the middle one rolls its eyes. All three of them move to the ground and spit out the three they had eaten. As soon as their previous victims are released, the middle one darts forward and catches you in $npc1.his jaws before you have any chance to back out. $npc1.He flings her head back and swallows, sending you into a long trip down into the cavernous pit below. You give up midway through the journey down, drifting into a sleep before you reach your journey’s end. 
+<</if>>
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $grapple > 0>>
+	After sliding down the wall again, you feel what little energy you have left get sapped away by the encroaching heat. Knowing you won’t have the energy for another run-up, you try crawling up to freedom, but your consciousness flickers and fails before you get even halfway up. 
+<<else>>
+	You drop to the ground as you pant from over exertion. Your vision blurs as you watch in vain as one of the heads lunges towards you. You fall into darkness as you feel the walls of the $npc1.species's throat work your way down into its stomach before you drop into an open space, the heat feeling like a sauna as you land in a deep pool. Your body begins to tingle almost immediately, before you succumb to your exhaustion and fall unconscious. 
+<</if>>
+<hr>
+<<defeated "devoured">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The $npc1.species recoils, all heads screeching in pain. The outer two stop, but the middle one continues screeching in rage, and while you can’t understand the word, you understand it’s yelling at the other two. They share a gaze, then both headbutt the middle one, knocking it unconscious. The two look at you, obviously conceding defeat, lower their heads and spit out the others they ate. The $npc1.species turns and leaves, glaring back at you. It might try to strike again while you’re not around. As the medical services arrive to tend to the vomited anthros, a female from the crowd walks over to you, thanking you for saving her husband and emptying her purse into your hands while all the while thanking you and wishing she had more to give. 
+<<include "Victory">>
+<hr>
+<<include "beach randomization">>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: sand snake ai {"position":"4900,625","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a large, <<if $npc1.name == "sand snake">>orange, $npc1.species<<else>>$npc1.species<</if>> – Only the first five feet of it are poking out of the sand, and you have no idea how long it really is. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $grapple > 0>>
+	<li>Poison</li>
+	As you move around in the vice-like wrap of the $npc1.species, you feel a spreading warmth from the bitemark. Your confines are getting tighter, but the $npc1.species isn’t gripping harder – you’re getting bigger! 
+	<<set _cram = random(5,8)>>
+	<<set _calories = _cram * 0.6>>
+	<<set _debuff = _cram * -0.5>>
+	<<consume _cram _calories>>
+	<<tempBuff "int" _debuff>>
+	
+<<else>>
+	<<switch random(1,3)>>
+		<<case 1>>
+			<li>Attack</li>
+			The $npc1.species lunges at you and bites you, dealing $edmg damage. You quickly pry $npc1.him off before he can inject you with any venom. 
+			<<damage $edmg>>
+			
+		<<case 2>>
+			<li>Hypnotize</li>
+			<<switch setup.skillTest($int,$e.int + 35)>>
+				<<case true>>
+					The $npc1.species falls oddly still as it locks eyes with you. It grins as it tries to put you under a hypnotic stare, but it doesn’t manage to get proper eye contact. Looking at it blankly, you reach over and gently poke it as a general message for the $npc1.species to cut it out. It blinks as the hypnotic glimmer in its eyes disappears, scowling at you. 
+					
+				<<default>>
+					The $npc1.species falls oddly still as it locks eyes with you. You go to attack once more, but can’t bring yourself to strike. You stare back into the $npc1.species’s eyes, and you find something utterly entrancing about them. Time seems to slow as $npc1.his tongue flickers slower than it did before. 
+					<<set _debuff = random(-4,-6)>>
+					<<tempBuff "int" _debuff>>
+					<<if $int > 0>>
+						You find yourself slowly pacing towards the $npc1.species, arm outstretched towards it, but something in your mind makes you snap out of it and break your gaze. You didn’t fall entirely under $npc1.his spell, but your head hurts and your mind feels unhinged from it. 
+					<</if>>
+					
+			<</switch>>
+			
+		<<case 3>>
+			<li>Grab</li>
+			The $npc1.species rushes forward and coils around you, trapping you within its thick, <<if $npc1.name == "sand snake">>orange<<else>>$npc1.furBack<</if>> grasp. 
+			<<switch setup.dodge()>>
+				<<case true>>
+					You pull the $npc1.species’s grasp off you and slap it away, the disorientation making its grip loosen, and you jump out of its coils! 
+					
+				<<default>>
+					It opens its mouth wide and bites deep into your belly. 
+					<<set $grapple = $e.str * 3>>
+					<<enemyAction "attack">>
+					
+			<</switch>>
+			
+	<</switch>>
+<</if>>
+
+
+<<if !$alive or $int < 0>>
+	You stagger and fall to the ground, to weak to carry on fighting. As you look up at your victorious enemy, you can't help but fall into its gaze. You stare back into the $npc1.species’s eyes, and you find something utterly entrancing about them. Time seems to slow as $npc1.his tongue flickers slower than it did before. 
+	<<set $int = 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You decide to try to run, be it through cowardice or unwillingness to fight. You quickly begin to charge at $npc1.him, but rather than attacking, you vault over one of its coils and flee. The $npc1.species blinks, confused, and then realises it should give chase, and dives back under the sand. You hear tunnelling below you, and it bursts out of the sand and flies out with its mouth outstretched... right into a nearby coconut tree. The impact knocks a coconut out, and it falls right onto the $npc1.species’s head, dazing it. By the time it’s stopped seeing stars, you’re already gone. 
+<<endCombat>>
+<hr>
+<<include "beach randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You decide to try to run, be it through cowardice or unwillingness to fight. You quickly begin to charge at $npc1.him, but rather than attacking you vault over one of its coils and flee. The $npc1.species blinks, confused, then realises it should give chase and dives back under the sand. You hear tunnelling below you, and it bursts out of the sand and flies out with its mouth outstretched. You duck and it misses you by millimeters. It burrows down in front of you, its head resurfacing and facing you again, and it’s on the offensive before you can react. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $grapple > 0>>
+	You shrug and decide not to fight any more, going limp against the coils. The $npc1.species smirks, and proceeds to pump more and more venom into you, and the warmth and continues to build. Eventually, it’s becoming a bit too much to bear, and you feel yourself almost ready to fall asleep. As your awareness flickers, the $npc1.species looks at you, before uncoiling itself from you and moving back to see how big you’ve become. The $npc1.species opens $npc1.his mouth, measuring you against it, and it realises that it bloated you a little TOO big, to the point where $npc1.he doesn’t think you’re edible. It sighs with self-disdain as it burrows back into the sand, leaving you alone. The venom is still working on your system, however, and the feeling of bloating continues to grow, which eventually makes you pass out in something rather akin to a food coma. 
+	<<stuffToBursting>>
+	<hr>
+	<<defeated "overeating">>
+<<else>>
+	You sigh from exhaustion, putting any weapons you have away. The $npc1.species latches onto your arm, biting you, before it realises you aren’t retaliating. It rears back a little, flashing its fangs at you, before opening its mouth wide and chomping down over your head. You hear movement outside before you feel the impact of $npc1.his tail sweeping your legs from under you and knocking you to the floor. Helpless, you feel the $npc1.species work its way over you, with long, deep gulps, and feel the wet, muscular grip of its throat working you down further into $npc1.his body.
+	<hr>
+	<<defeated "devoured">>
+<</if>>
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $grapple > 0>>
+	The warmth continues to spread through you, and you’re feeling extremely bloated and tired. The fight finally goes out of you and you can’t struggle any more. You wiggle like the overstuffed meal that you now are, and the $npc1.species proceeds to treat you as such. $npc1.He opens wide, easing $npc1.his jaws over you, wriggling $npc1.his way down you. It isn’t long before you’re in $npc1.his tight, wet insides, and $npc1.he lets out a satisfied burp. There’s a large pause after that though, when it dawns on the $npc1.species – by moving down over you while still in a coil, it’s effectively tied itself in a knot. It lets out more aggravated hisses, and you smirk a little as your consciousness fades, glad to see you’re not the only one suffering. 
+	<hr>
+	<<defeated "devoured">>
+<<else>>
+	You find yourself slowly pacing towards the $npc1.species, arm outstretched towards it, totally and utterly enraptured by $npc1.him, and even though a tiny voice in your mind knows that it’s completely and utterly stupid to feel like this, you feel totally enamoured with the $npc1.species. It smiles at you, staring deep into your eyes before moving down to your belly and gently, almost tenderly, planting $npc1.his fangs into you. You wince a little, but you can’t bring yourself to object to it. With the $npc1.species deeply biting you, you feel a spreading warmth flowing through you. The $npc1.species brings $npc1.his tail up to you, caressing your gut, which you realise is growing wider and wider. Evidently the venom of the $npc1.species is doing this, but you don’t care. The warmth coupled with the love of the $npc1.species is enthralling. You lean your cheek into the $npc1.species’s, nuzzling it in total, dopey bliss, and the feelings overwhelm you and you drift off to sleep. You awake from your long rest, and stretch a little, blinking the sleep out of your eyes... before you realise you can’t see anything – it’s totally dark. A small inspection of your surroundings confirms your suspicions – the $npc1.species fattened you up and ate you. At first, you feel kind of pleased about it, feeling glad $npc1.he’s happy, but this soon devolves into feelings of regret and sadness at $npc1.him betraying you like this. You begin to cry... before you feel something snap in your mind, and your senses come back. Your feelings of love for the $npc1.species and the memories of the last few minutes instantly vanish. You look around, and realise what happened again without the filter of the hypnosis clouding your judgement. You swear loudly at how easily you were duped, and try to wriggle free, but the long tube shape of the $npc1.species’s insides leave you unsure if you’re going towards or away from $npc1.his mouth. Eventually, you give up and stop fighting. Unconsciousness takes you soon after. 
+	<<stuffToBursting>>
+	<hr>
+	<<defeated "devoured">>
+<</if>>
+
+
+/*===You win!===*/
+<<case "victory">>
+Your final hit knocks the serpent back. It rocks back and forth in a stunned daze, before flopping over onto the ground, unconscious. <<include "Victory">>
+<hr>
+<<include "beach randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "beach randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: spherical shark ai {"position":"5275,625","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a $npc1.male $npc1.species, almost ball-shaped from its colossal girth. $npc1.He stares at you with a glint in its eyes, making $npc1.his intentions of using you to make $npc1.himself even wider very clear indeed. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if random(1,5) == 1 and $hea/$maxHea < .25>>
+	<li>Devour</li>
+	<<switch setup.dodgeInstaDeath()>>
+		<<case true>>
+			The $npc1.species attacks, spinning in the water and trying to smack you with $npc1.his tail. You quickly duck down and it sails past your head harmlessly. 
+			
+		<<default>>
+			The $npc1.species attacks, spinning in the water and trying to smack you with $npc1.his tail. Although you move back in the water, you feel a small sting of pain and realise you were still hit by just the tip of $npc1.his tail, leaving you with a small cut. You and the $npc1.species ready yourselves to clash again, but notice the tiny cloud of blood in the water. Both of you share a quick glance of dread, but for different reasons; you, for the fact it’ll attract more wildlife, and $npc1.him for the fact $npc1.he might lose the meal $npc1.he’s been fighting for. Sure enough, a few moments later, another $npc1.species suddenly barges into the one you were fighting - The blood in the water acted like a $npc1.species magnet, and the two of them are squabbling with each other over you. Two $npc1.plural becomes four, then six, all ramming, fin-slapping and generally fighting over you in a manner that could only be more comical if there was a dust cloud building in the fight. You decide to take the chance to slink off, but as soon as you turn, you're greeted by the sight of a colossal, many-fanged mouth before everything goes black. Evidently, yet another $npc1.species noticed your predicament and went in for an easy meal. You would ordinarily struggle, but the rows of backwards-facing teeth put you off that idea, because they would slice you to ribbons if you tried to back out. The $npc1.species chomps its way over you, sucking in your legs and swallowing, burping in satisfaction as it quickly swims off before the others notice. 
+			<hr>
+			<<defeated "devoured">>
+			
+	<</switch>>
+<<else>>
+	<<if random(1,2) == 1>>
+		<li>Bite</li>
+		The $npc1.species surges forwards, biting at you and dealing $edmg damage. You manage to punch $npc1.him in the gills and $npc1.he lets go before $npc1.he draws blood. 
+	<<else>>
+		<li>Charge</li>
+		The $npc1.species pulls back then charges, crashing into your gut and dealing $edmg damage. 
+		<<if $hea > 0>>
+			It winds you, and you expend time and effort getting a breath of air from the surface, and you’re left sore and rattled by the experience. 
+			<<if $end > 3>><<tempBuff "end" -3>><</if>>
+			<<stamina -10>>
+		<</if>>
+	<</if>>
+	<<damage $edmg>>
+<</if>>
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You swim under the $npc1.species and then over it, in an attempt to confuse it to give you time to escape. It tries to follow you with its eyes by turning around in the water, and the momentum of its weight makes it spin feebly in the water, flailing a little. By the time $npc1.he's righted itself and shaken off the dizziness, you’re already gone. 
+<<endCombat>>
+<hr>
+<<include "ocean randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You swim under the $npc1.species and then over it, in an attempt to confuse it and give you time to escape. It quickly rears downwards and slaps you with $npc1.his tail, knocking you away and winding you, making you have to go up for air. By the time you’ve done so the $npc1.species’s already righted itself and is back within attacking distance. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You don’t like the idea of continuing the fight and giving the $npc1.species more reason to bite and otherwise harm you, so you hold out your hand in a halting hand-sign, trying to stop the $npc1.species, wordlessly conveying that you no longer want to fight. The $npc1.species practically screeches to a halt, but bumps into you from $npc1.his inertia. $npc1.He pauses and looks at you, seeing if this is some sort of ploy, but soon opens its mouth wide, swims above you and darts down at you, getting to your waist before it stops, spins in the water so it’s facing up, and swallowing you as best it can. The teeth are thankfully not painful, due to them being backward-facing – They’d only hurt if you tried to tug yourself out. You enter the $npc1.species’s stomach, and soon the gentle sway of the $npc1.species swimming off on its way is enough to rock you to sleep. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The last hit from the $npc1.species takes the last of your strength from you, and you float to the surface of the water and pass out, with your head mercifully above water. 
+<hr>
+<<defeated "battle">>
+
+/*===You win!===*/
+<<case "victory">>
+Your final attack sends the $npc1.species reeling backwards, rolling in the water so it ends belly up. $npc1.He flaps $npc1.his fin at you a few times in stunned desperation before it falls unconscious. 
+<<include "Victory">>
+<hr>
+<<include "ocean randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "ocean randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: water elemental ai {"position":"4775,625","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This strange creature appears to be a blob of water, approaching you with crudely-shaped limbs. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<switch random(1,3)>>
+	<<case 1>>
+		<li>Punch</li>
+		The elemental pummels you with its fist, knocking you for a loop! 
+		<<doEdmg>>
+		<<damage $edmg>>
+		
+	<<default>>
+		<li>Water Blast</li>
+		The water elemental points it's dribbling arm towards you face. With a sudden rush of bubbles it fires a blast of water towards your mouth, much of it forcing it's way down your throat as the rest of it soaks into your $p.fur. You feel your stomach rapidly expand with, thankfully, the cleanest water you've ever tasted. 
+		<<set _cram = random(4,8)>>
+		<<eDamage _cram>>
+		<<consume _cram 0>>
+		
+<</switch>>
+
+<<if $e.hea <= 0 and $alive>>
+	The final blast fires what little remains of the water elemental down your throat. You're left standing there soaking wet but with no enemy left to fight. It appears you've won...? 
+	<<include "Victory">>
+	<hr>
+	<<include "beach randomization">>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You quickly turn and flee, the creature unable to keep up with you as it staggers in pursuit. Within a minute it's totally out of sight. <<endCombat>>
+<hr>
+<<include "beach randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You kneel on the ground and open your mouth wide for the bubbling water elemental. It wastes no time as it draws in upon itself and fires a watery whirlwind down your waiting throat. You stomach rapidly fills and expands with water. 
+<<consume $e.hea 0>>
+<<if $alive>>
+	You rapidly gulp down the remaining elemental and over time the deluge of water coursing down your throat slows to a trickle and eventually stops as you consume your opponent entirely. 
+	<<include "Victory">>
+	<hr>
+	<<include "beach randomization">>
+<<else>>
+	Your stomach gurgles and groans as it swiftly approaches and passes it's maximum capacity. You flop over onto your back, causing your stomach to painfully slosh back and forth as it continues to swell outwards. 
+	<<if $options.popping>>
+		The water elemental slaps your belly to cause it to continue to slosh back and forth as it fills you tighter and tighter. Finally your belly ''bursts'' like a water balloon, spraying water all around. 
+		<hr>
+		<<defeated "exploded">>
+	<<else>>
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+<</if>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+As you collapse to your knees in pain, the water elemental grabs you and forces its arm into your mouth, beginning to fill your stomach with itself. You can hear your belly bubbling and creaking as gallon after gallon of water is forced into it...
+<<consume $e.hea 0>>
+
+
+<<if $ful > $maxFul>>
+	<<if $options.popping>>
+		The water elemental begins punching your belly as it fills, the watery fist squishing in less and less until your water balloon of a belly can't handle the blows anymore and ''bursts'' open, showering the sand around you. 
+		<hr>
+		<<defeated "exploded">>
+	<<else>>
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+<<else>>
+	<<if $options.popping>>
+		The water elemental slaps your belly to cause it to continue to slosh back and forth as it fills you tighter and tighter. Finally your belly ''bursts'' like a water balloon, spraying water all around. 
+		<hr>
+		<<defeated "exploded">>
+	<<else>>
+		<hr>
+		<<defeated "battle">>
+	<</if>>
+<</if>>
+
+
+<hr>
+
+
+/*===You win!===*/
+<<case "victory">>
+With your last attack, the elemental splashes violently apart, sinking into the ground. Nothing remains except a large puddle. 
+<<include "Victory">>
+<hr>
+<<include "beach randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<if $feeder_itemFed.flavors != null and $feeder_itemFed.flavors.includes("water")>>
+		You ready your $feeder_itemFed.name but hesitate for a moment when you realise that the water elemental doesn't really have a mouth to insert it into. Just then, a tendril of water shoots from the elemental, sucking up the whole contents of the $feeder_itemFed.name and incorporating the water into its form.
+		<<eHealth $feeder_fedAmount>>
+		<<feeder_tryRemoveFedItem>>
+		
+	<<elseif $feeder_itemFed.flavors != null and $feeder_itemFed.flavors.includes("drink")>>
+		You ready your $feeder_itemFed.name but hesitate for a moment when you realise that the water elemental doesn't really have a mouth to insert it into. Just then, a tendril of water shoots from the elemental, sucking up the whole contents of the $feeder_itemFed.name. The colors of the liquid slowly fade as it's incorporated into the elemental's form.
+		<<eHealth $feeder_fedAmount * 0.5>>
+		<<feeder_tryRemoveFedItem>>
+	<<else>>
+		You cram $feeder_itemFed.article $feeder_itemFed.name into the water elemental. It floats harmlessly within the creature's watery body, before slopping back out onto the floor. You grab the now soggy $feeder_itemFed.name before the elemental retaliates - can't let good food go to waste!
+		<<enemyAction "attack">>
+	<</if>>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+

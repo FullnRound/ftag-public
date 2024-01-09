@@ -1,0 +1,565 @@
+:: Boat Captain Island {"position":"775,1850","size":"100,100"}
+<<setPopupTitle "Talk to the boat captain">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"This island is inhabited mostly by the dinosaur folk, who I trade with. They've got excellent steel here, and I'm told it's thanks to their connection with the earth. You ask me, that big volcano's got something to do with it, too."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Be polite around the really important folks here. The leader's got a bit of a temper, but if you're smart, you can make friends pretty easy."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"I've heard the jungle's getting worse thanks to some things going on around here. Me, I plan to stick with the sea anyways."
+<<set $eventCounterB++>>
+
+<<default>>
+"The fish out here are just slightly different than those back by the mainland. A little more robust, a little more flavorful. Couldn't tell you why."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Broken Greatsword {"position":"75,1575","size":"100,100"}
+<<if !setup.questStarted($swordQuest)>>
+	"Ah, the sword. That weapon, honestly, frightens me somewhat. According to my master's notes, $npc1.he did not actually forge this weapon, merely found and repaired it $npc1.himself long ago. The weapon is a single piece of obsidian, and even shattered, it is home to a powerful, angry spirit. If I am to make it whole, I will need a sample of the obsidian near the volcano. A great power dwells there, and may be enough to reform this weapon. Follow this map if you wish, but I won't be upset if you don't."
+	<<getItem $swordMap>>
+	<<getQuest $swordQuest>>
+	
+<<elseif !setup.questReady($swordQuest)>>
+	"Ah, the sword. That weapon, honestly, frightens me somewhat. According to my master's notes, $npc1.he did not actually forge this weapon, merely found and repaired it $npc1.himself long ago. The weapon is a single piece of obsidian, and even shattered, it is home to a powerful, angry spirit. If I am to make it whole, I will need a sample of the obsidian near the volcano. A great power dwells there, and may be enough to reform this weapon. Follow the map I gave you if you wish, but I won't be upset if you don't."
+	
+<<else>>
+	You place a sample of the magical obsidian you found before $npc1.him, and $npc1.he examines it thoroughly, nodding slowly. Carefully, $npc1.he wraps the fractured sword in cloth and brings it over, setting the pieces directly onto the hot coals. Placing the obsidian you brought on top of the pile, $npc1.he grabs a small knife and makes a small cut on $npc1.his palm, not even wincing before dripping some of $npc1.his blood onto the fire. The flames suddenly roar to immense size, and $npc1.he quickly rushes over and grabs a totem, placing it before the forge. $npc1.He yells a phrase in a language you can't understand and the totem begins to glow as $npc1.he repeats it again and again. Slowly, the fires die down, and when its blinding light fades, in place of fragmented obsidian is an enormous black blade. $npc1.He lifts it out with tongs, places a hand near it, then hesitantly offers it to you. "This wicked sword is remade. Though I fear I curse you with it, it is yours to wield. Be safe, adventurer." As you take it, the sword isn't even hot from the inferno it made. 
+	<<removeItem $magicalObsidian>>
+	<<removeItem $swordMap>>
+	<<questReward $swordQuest>>
+<</if>>
+
+<<if setup.questCompleted($spearQuest) and setup.questCompleted($hammerQuest) and setup.questCompleted($swordQuest)>>
+	<<addPretext "I believe I've learned the lessons my master wanted me to, adventurer, and I thank you for your assistance. I'm going to begin work on some new items using all that I've learned.">>
+<</if>>
+
+<<action "c" "next" "Return" "Island Smithee">><</action>>
+
+
+:: Chief {"position":"200,1725","size":"100,100"}
+<<createFixedNPC "chief">>
+
+You head into a building decorated with bright plants and a couple small, intricate totems that glow with a soft light. Inside, you see a large $npc1.species dressed in an intricate, feathered robe and wearing a crown of feathers and gemstones. $npc1.He is slouching in an ornate stone seat and deep in thought before perking up at your presence. "Outsider," $npc1.he rumbles, "I am the leader of these people. State your business."
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Tyrannosaurus chief says">><br>
+
+<<if !setup.questCompleted($defeatShaman)>>
+	<<action "c" "quest" "Quest" "Defeat the shaman">><</action>>
+<</if>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You $walk through the village. ">>
+<</action>>
+
+
+:: Defeat the shaman {"position":"200,1825","size":"100,100"}
+<<if !setup.questStarted($defeatShaman)>>
+You inquire about how you might help, and $npc1.he leans back, crossing $npc1.his short arms over $npc1.his chest. "If you've got the stomach, I'd like to ask you for your help in dealing with our problem directly," $npc1.he growls out. "This whole mess started when several shaman started trying to convince everyone that the oddities happening in the world were a result of shifting spiritual power," $npc1.he explains. "Declaring that the spirits had spoken and that we should listen, they took offense when I tried to get them to listen to reason." A snarl crosses $npc1.his face as $npc1.he gets visibly angry. "A shaman's job is to maintain balance, not mindlessly follow the spirits!" $npc1.he nearly roars, then pauses to compose $npc1.himself. "Go. Out into the jungle. Find them. Beat the sense back into them. Then return to me. You will be rewarded."
+<<getQuest $defeatShaman>>
+<<action "c" "next" "You got it" "Island Town">><</action>>
+
+<<else>>
+<<if setup.questReady($defeatShaman)>>
+You report that you have bested several of the shaman, at which the chief nods approvingly. "That simplifies things a little," $npc1.he grumbles. "You've made this at least a bit easier on us, adventurer, so as I promised, I shall make this worth your while." $npc1.He tosses a heavy sack of gold at your feet, which makes a lovely clattering thud. 
+<<questReward $defeatShaman>>
+<<action "c" "next" "Quest completed" "Island Town">><</action>>
+
+<<else>>
+"I can tell just by looking at you that you haven't beaten enough of the shaman yet. What exactly are you waiting for?" $npc1.His mouth curls up slightly, exposing teeth in a barely-subdued snarl. 
+<<action "c" "next" "I'll get right on it" "Island Town">><</action>>
+
+<</if>>
+
+<</if>>
+
+
+:: Headless giant mace {"position":"75,1475","size":"100,100"}
+<<createFixedNPC "starShaman" 2>>
+
+<<if !setup.questStarted($hammerQuest)>>
+	"This great mace once used a massive chunk of star metal as its head. However, the last one to wield this was lost in the jungle, and I am told that the head has since been found. Unfortunately, it was found by one of the rebelling shaman, who now uses it as a potent focus for $npc2.his magics. $npc2.He's not being very subtle about $npc2.his location, so if you follow this map, you are sure to find $npc2.him. Please be careful."	
+	<<getItem $hammerMap>>
+	<<getQuest $hammerQuest>>
+	
+<<elseif !setup.questReady($hammerQuest)>>
+	"This great mace once used a massive chunk of star metal as its head. However, the last one to wield this was lost in the jungle, and I am told that the head has since been found. Unfortunately, it was found by one of the rebelling shaman, who now uses it as a potent focus for $npc2.his magics. $npc2.He's not being very subtle about $npc2.his location, so if you follow the map I gave you, you are sure to find $npc2.him. Please be careful."
+	
+<<else>>
+	You set down the huge hunk of star metal with a thud, and $npc1.he gives it a looking over before nodding approvingly. Taking it to the forge, $npc1.he carefully heats it, the metal glowing but not melting. Using tongs, $npc1.he removes a small piece that looks to be where it broke free from the shaft, then sets to work reforging the hilt itself. While the pieces of metal are still glowing hot, $npc1.he fits the shaft into the fallen star, hammering it home a few times before dousing it in water. With a violent hiss, a great gout of steam rushes up through the air and out of the building. After a few more moments, $npc1.he removes it and presents it to you. "This has taught me much, and I thank you," $npc1.he says, bowing her head humbly. "May this weapon serve you well."
+	<<removeItem $hammerMap>>
+	<<removeItem $fallenStar>>
+	<<questReward $hammerQuest>>
+<</if>>
+
+<<if setup.questCompleted($spearQuest) and setup.questCompleted($hammerQuest) and setup.questCompleted($swordQuest)>>
+	<<addPretext "I believe I've learned the lessons my master wanted me to, adventurer, and I thank you for your assistance. I'm going to begin work on some new items using all that I've learned.">>
+<</if>>
+
+<<action "c" "next" "Return" "Island Smithee">><</action>>
+
+
+:: Island Docks {"position":"775,1750","size":"100,100"}
+<<createFixedNPC "captain">>
+
+You head away from the village and onto the dock. The $npc1.species $npc1.man and $npc1.his boat are waiting there. Noticing you, $npc1.he calls out, "Hello again, $p.sir! You need a ride back to the mainland?" 
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Boat Captain Island">>
+
+<<action "e" "ocean" "Sail East">><</action>>
+
+<<action "w" "leave" "Go back" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You $walk through the village. ">>
+<</action>>
+
+
+:: Island Shaman {"position":"525,1500","size":"100,100"}
+<<createFixedNPC "shaman">>
+
+You $walk into a building decorated by many different totems that run the gamut from almost imperceptibly glowing to radiating magic visibly. Within, $npc1.article $npc1.species garbed in wildly colored, feathered robes busies $npc1.himself before a totem. $npc1.He mutters quietly in a language you don't understand before turning about to face you, at which point the oddity of $npc1.his action becomes clear, as both $npc1.his eyes are white with blindness. "You have the adventurer's spirit," $npc1.he intones. "What can this friend of spirits do for you?"
+
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Shaman says">><br>
+
+<<action "w" "spells" "Study with shaman">><</action>>
+
+<<vendor "Island shaman">>
+<<action "c" "spells" "Learn spells" "Learn spells from shaman">>
+<</action>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You $walk through the village. ">>
+<</action>>
+
+
+:: Island Smithee {"position":"275,1475","size":"100,100"}
+<<createFixedNPC "jungleSmith">>
+<<createFixedNPC "sampson" 2>>
+
+<p>You head into the smithery, a small, cramped building with a hole in the center of the roof that allows the heat and smoke of the forge to escape. A lightly-garbed, stocky $npc1.species $npc1.gentleman is examining several odd looking ingots of metal carefully. On noticing you, $npc1.he looks up and says, "Welcome, traveller. I have some stock you can buy, but most of my goods are made to order."
+</p>
+
+<<set _questsDone = 0>>
+<<if setup.questCompleted($spearQuest)>><<set _questsDone++>><</if>>
+<<if setup.questCompleted($hammerQuest)>><<set _questsDone++>><</if>>
+<<if setup.questCompleted($swordQuest)>><<set _questsDone++>><</if>>
+<<switch _questsDone>>
+<<case 0>>You can see three curious, intricately designed weapons hanging on a wall, but they appear to be broken. 
+<<case 1>>Two weapons still hang on the wall, incomplete. 
+<<case 2>>Only one more weapon hangs on the wall in disrepair. 
+<</switch>>
+
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Island smithee says">><br>
+
+<<if setup.questCompleted($spearQuest) and setup.questCompleted($hammerQuest) and setup.questCompleted($swordQuest)>>
+	<<vendor "Island smithee special">>	
+<<else>>
+	<<vendor "Island smithee">>
+<</if>>
+<<action "c" "store" "Trade" "Island smithee store">><</action>>
+
+/*Option for the Smithee's quest*/
+<<if !setup.questCompleted($spearQuest) or !setup.questCompleted($hammerQuest) or !setup.questCompleted($swordQuest)>>
+<<action "w" "quest" "Quest" "Island smithee quest">><</action>>
+<</if>>
+
+/*Option for Sampson's quest. Could be cleaned up*/
+<<if setup.questStage($horseQuestArmor) >= 0 and setup.questStage($horseQuestArmor) <= 3>>
+<<action "sw" "quest" "Repair $npc2.Name's chainmail" "Repair Sampson's chainmail">>
+	<<set $eventCounterA = setup.questStage($horseQuestArmor)>>
+<</action>>
+<</if>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You $walk through the village. ">>
+<</action>>
+
+
+:: Island Town [jungle] {"position":"525,1725","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+<<switch $daytime>>
+<<case "night">>
+The village is quiet, lit by starlight and serenaded by nocturnal insects' calls. 
+
+<<default>>
+Various reptillian folk garbed in simple leathers decorated by feathers and colored leaves going about their daily business. 
+
+/*Create dinosaur npcs*/
+<<createNPC "dinosaur" "random" 1>>
+<<createNPC "dinosaur" "random" 2>>
+
+<<switch random(1,4)>>
+<<case 1>>$npc1.Article $npc1.species walks by carrying a bowl full of exotic fruits. 
+
+<<case 2>>You can see $npc1.article $npc1.species and $npc2.article $npc2.species wearing shamanistic garb having a discussion. 
+
+<<case 3>>You see what appears to be a warrior $npc1.species checking her heavy weapon and pleated armor before heading toward the jungle. 
+
+<<case 4>>You spot $npc1.article $npc1.species carrying an intricate magical totem. 
+
+<</switch>>
+
+<</switch>>
+
+<<if $sta > 0>>
+
+<<action "e" "ocean" "Docks" "Island Docks">>
+	<<set $travel = 1>><</action>>
+	
+<<action "nw" "store" "Island Smithee">>
+	<<set $travel = 1>><</action>>
+	
+<<action "s" "forest" "Jungle">>
+	<<set $travel = 5>><</action>>
+	
+<<action "se" "inn" "Jungle Inn">>
+	<<set $travel = 1>><</action>>
+	
+<<action "sw" "house" "Chief">>
+	<<set $travel = 1>><</action>>
+	
+<<action "w" "spells" "Island Shaman">>
+	<<set $travel = 1>><</action>>
+	
+<<else>>
+<p>''You're too tired to move''</p>
+
+<</if>>
+
+<<action "c" "rest" "Rest" "Island Town">>
+	<<set $eventCounterB = "rest">><</action>>
+
+
+:: Island smithee quest {"position":"175,1475","size":"100,100"}
+You ask about the broken weapons, and a frown creases $npc1.his face as $npc1.he launches into an explanation. "My master left those for me before disappearing to parts unknown. Unfortunately, they all require different materials for the repairs to be complete, and the only thing they have in common is that they're hard to get. I know of some locations that have what I need, but they're dangerous. If you can help me complete them, you can have them. All I need from them is the experience of rebuilding them, you see." $npc1.He gestures at them and asks, "Do you have one you'd like to know more about?" 
+
+<<if !setup.questCompleted($spearQuest)>>
+	<<action "w" "quest" "Ornate spear shaft">><</action>>
+<</if>>
+<<if !setup.questCompleted($hammerQuest)>>
+	<<action "c" "quest" "Headless giant mace">><</action>>
+<</if>>
+<<if !setup.questCompleted($swordQuest)>>
+	<<action "e" "quest" "Broken Greatsword">><</action>>
+<</if>>
+
+
+:: Island smithee says {"position":"175,1575","size":"100,100"}
+<<setPopupTitle "Talk to the smith">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"My name is $npc1.Name, and I run this smithery. Pleasure to meet you, adventurer."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Weapons are the specialty of this shop, but I can assure you that I'm no slouch when it comes to armors either. Can't fight when your bits are exposed, right?"
+<<set $eventCounterB++>>
+
+<<case 2>>
+"I'm afraid that I'm not quite as good as my master was yet. $npc1.He was famous throughout the island and made some truly superb weapons."
+<<set $eventCounterB++>>
+
+<<default>>
+"My master disappeared some time ago."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Island smithee store {"position":"275,1375","size":"100,100"}
+"I don't have too much on hand, but if any of these are to your liking, let me know."
+
+
+<<store>>
+<<action "c" "leave" "Done" "Island Smithee">><</action>>
+
+
+:: Jungle Inn {"position":"675,1525","size":"100,100"}
+<<createFixedNPC "jungleInnkeeper">>
+<<createFixedNPC "jungleSmith" 2>>
+
+You $walk into a cozy looking inn warmed by an open fire pit that several reptillian folks are gathered around, chatting amiably as they cook meats over it. A $npc1.species $npc1.man ornamented in brightly colored garb waves at you from a seat nearby. It seems that the beds in the back are open to any who need them. 
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Raptor innkeeper says">>
+
+<<action "c" "rest" "Sleep" "Jungle Inn sleep">><</action>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You head back out to the village. ">>
+<</action>>
+
+
+:: Jungle Inn sleep {"position":"675,1425","size":"100,100"}
+<<setPassageTitle "Sleep">>
+
+You take one of the empty beds for your own and drift off to sleep, the fire keeping you warm and the bed keeping you cozy. 
+<<sleep>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You head back out to the village. ">>
+<</action>>
+
+<<action "c" "rest" "Sleep" "Jungle Inn sleep">><</action>>
+
+
+:: Learn spells from shaman {"position":"425,1400","size":"100,100"}
+<<teach>>
+
+<<action "c" "leave" "Leave" "Island Shaman">><</action>>
+
+
+:: Ornate spear shaft {"position":"75,1375","size":"100,100"}
+<<if !setup.questStarted($spearQuest)>>
+	"According to my master's notes, that spear once had the power of lightning in its golden point. Unfortunately, as you can see, the spear's head is no more. I believe I can rebuild it, but I will need you to find a deposit of 'white gold.' There is one in the jungle, but it's within the domain of a particularly dangerous serpent. I can give you a map to the location for when you're ready. " 
+	<<getItem $spearMap>>
+	<<getQuest $spearQuest>>
+	
+<<elseif !setup.questReady($spearQuest)>>
+	"According to my master's notes, that spear once had the power of lightning in its golden point. Unfortunately, as you can see, the spear's head is no more. I believe I can rebuild it, but I will need you to find a deposit of 'white gold.' There is one in the jungle, but it's within the domain of a particularly dangerous serpent. "
+	
+<<else>>
+	You hand over the white gold you recovered, and $npc1.he immediately sets to work, pumping the bellows to raise the furnace to something approaching an inferno. You stand well clear and watch as $npc1.he melts it down, casts it into a rough tip, and hammers it into a fine, shining blade. With care, $npc1.he binds the spearhead to the shaft, and as $npc1.he does, it glows radiantly for a moment. Somehow, the weapon not only looks whole, but invigorated and alive. With a nod, $npc1.he hands the weapon to you. "I've learned from this," $npc1.he says, bowing $npc1.his head humbly, "and I thank you. May this weapon serve you well."
+	<<removeItem $spearMap>>
+	<<removeItem $whiteGoldChunk>>
+	<<questReward $spearQuest>>
+<</if>>
+
+<<if setup.questCompleted($spearQuest) and setup.questCompleted($hammerQuest) and setup.questCompleted($swordQuest)>>
+	<<addPretext "I believe I've learned the lessons my master wanted me to, adventurer, and I thank you for your assistance. I'm going to begin work on some new items using all that I've learned.">>
+<</if>>
+
+<<action "c" "next" "Return" "Island Smithee">><</action>>
+
+
+:: Raptor innkeeper says {"position":"775,1525","size":"100,100"}
+<<setPopupTitle "Talk to the innkeeper">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Greetings, traveller. Name is $npc1.Name. This is the hunter's hut, but you are welcome to use a bed."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Careful out in the jungle. With the ferals and the cult, hunting is not safe anymore."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Get a good weapon from $npc2.Name in the smithery before you go. $npc2.He is humble, but better than $npc2.he says $npc2.he is." 
+<<set $eventCounterB++>>
+
+<<default>>
+"Do excuse me, I am better with island language than mainland. Chief tells us all to learn, though, so we are not mute off the island."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Repair Sampson's chainmail {"position":"175,1375","size":"100,100"}
+<<setPassageTitle "Repair $npc2.Name's chainmail">>
+
+<<switch $eventCounterA>>
+
+<<case 0>>
+<p>You proffer the ruined set of chainmail, and a strange, reverent expression crosses $npc1.Name's face even before $npc1.he takes it from you. $npc1.He holds it up to the light, and sighs. "Yes, this is the work of my Master, no doubt- I never saw $npc1.him make such armour, but $npc1.he spoke to me of it once- Myst Mail. $npc1.He said the links were spun from an unbroken strand of metal, and so unbreakable- from without, at least- and were also imbued with the charging spirit of swiftness itself to speed the wearer in combat. The enchantment is no more, its secret is gone with my Master, but I believe I can reforge these links for you, almost as strong as they ever were." </p>
+
+<p>When you explain that you wish for $npc1.his Master's creation to be resized 'for its current owner', and hand over the measurements, $npc1.Name at first looks as though $npc1.he suspects a bad joke, but then smiles. </p>
+
+"In that case perhaps I should enchant this armour with the spirit of the Giant Python, to stretch around the wearer regardless of their... hearty appetite." //Good idea!// "You will need to fetch three vials of sand-snake venom, and then you will need to travel deep into the sacred volcano and fight with the Fire Serpant therein to bring me one of her eggs before it- I am joking with you" $npc1.he says patiently as $npc1.he sees your mortified expression. "If you can bring me, say... three sets of ordinary chain mail, I should be able to weave them with my Master's well enough to produce one whole set of the size your friend now requires, with almost as much strength as it had before, and perhaps more... elasticity. But from the sound of it any supernatural swiftness is now... irrelevant." You are forced to agree with a wry smile. 
+
+/*Advances quest*/
+<<advanceQuest $horseQuestArmor>>
+<<set $quests[setup.questIndex($horseQuestArmor)].description = ["Get ", $npc2.Name, " the ",  $npc2.species, "'s chainmail resized to fit ", $npc2.him, "! You need to get three sets of chainmail to ", $npc1.Name, " the Smithie."].join("")>>
+
+<<action "c" "next" "I'm on it" "Island Smithee">><</action>>
+
+<<case 1>>
+
+/*If you don't have any chainmail armor*/
+<<if setup.hasItem($chainmailArmor) < 0>>
+Right as you're about to ask $npc1.Name to repair $npc2.Name's armor, you remember you don't actually have any chainmail armor for $npc1.him to use. 
+<<action "c" "next" "Oh, right" "Island Smithee">><</action>>
+
+/*Expends chainmail and advances quest*/
+<<else>>
+"Thank you. This will be very helpful, but I will still need two more sets."
+<<removeItem $chainmailArmor>>
+<<advanceQuest $horseQuestArmor>>
+<<action "c" "next" "I'm on it" "Island Smithee">><</action>>
+
+<</if>>
+
+<<case 2>>
+/*If you don't have any chainmail armor*/
+<<if setup.hasItem($chainmailArmor) < 0>>
+Right as you're about to ask $npc1.Name to repair $npc2.Name's armor, you remember you don't actually have any chainmail armor for $npc1.him to use. 
+<<action "c" "next" "Oh, right" "Island Smithee">><</action>>
+
+/*Expends chainmail and advances quest*/
+<<else>>
+"Thank you. This will be very helpful, but I will still need one more set."
+<<removeItem $chainmailArmor>>
+<<advanceQuest $horseQuestArmor>>
+<<action "c" "next" "I'm on it" "Island Smithee">><</action>>
+
+<</if>>
+
+<<default>>
+/*If you don't have any chainmail armor*/
+<<if setup.hasItem($chainmailArmor) < 0>>
+Right as you're about to ask $npc1.Name to repair $npc2.Name's armor, you remember you don't actually have any chainmail armor for $npc1.him to use.
+<<action "c" "next" "I'm on it" "Island Smithee">><</action>>
+
+/*Expends chainmail and advances quest*/
+<<else>>
+<p>$npc1.Name smiles as you hand over the third and final set of chain-mail, and places it alongside the others on the forge, either side of the ruined Myst-Mail. "Excellent. I am purified in mind and body for this task, and can begin straight away. But I cannot say how long this will take." You elect to wait, although outside, given the heat of the forge and the constant, near-deafening hammering, not to mention the bouts of ritual chanting. </p>
+
+<p>More quickly than you were expecting the noise ceases, and $npc1.Name appears in the doorway to beckon you back in. Folded over the anvil is an exceptionally large set of silvery chainmail, looking like the sail from some metal ship. It's still quite hot to the touch, so you pick it up by two corners. You find that it is lighter, and- you give it an experimental tug- far stretchier than most chain-mail, in your experience. </p>
+
+$npc1.Name smiles at your surprise. "I shall call it Stretch Mail: I suspect that it may become quite popular when people hear of it. There is no charge- I am grateful to have been allowed to see my Master's work again, and for the knowledge I was able to gain by studying it. And I now have a secret technique that is my OWN invention. Do call again- I will work on that snake enchantment, I promise." You notice that $npc1.he has even managed to re-assemble the gold $npc2.nspecies emblem on the chest- though somehow the process has resulted in a far chunkier-looking beast being portrayed. 
+<<removeItem $chainmailArmor>>
+<<removeItem $horseArmorBroke>>
+<<advanceQuest $horseQuestArmor>>
+<<getItem $horseArmorFixed>>
+<<action "c" "next" "I'm on it" "Island Smithee">><</action>>
+
+<</if>>
+
+<</switch>>
+
+
+:: Sail East {"position":"900,1750","size":"100,100"}
+<p><<if setup.weight() > 600>>You cautiously step aboard the vessel, your heavy body causing it to sway deeply when you do so. After a moment it settles back to a light sway. Fortunately, the $npc1.species doesn't seem bothered by this. 
+<<else>>You step aboard onto the lightly swaying vessel. 
+<</if>></p>
+
+<p>"The boat's loaded up and we're set to head off," $npc1.he says chipperly. "Take a load off, friend, and I'll get us under way!" $npc1.He weighs the anchor and shoves off, and you're out onto the open sea again. </p>
+
+<<switch random(1,8)>>
+
+<<case 1>>You spend the trip fishing, but the captain takes what you catch as a fare. 
+<<case 2>>The trip is spent singing progressively more outlandish songs about things that almost certainly never happened. 
+<<case 3>>The captain spends the entire time regaling you with facts about fishing that you will never, ever use. 
+<<case 4>>The captain talks about the dozens of ways you can prepare a fish. $npc1.He never seems to run out. 
+<<case 5>>The trip is a little worrying as the captain somehow takes a nap that lasts the duration. Fortunately, $npc1.he wakes up in time to dock safely. 
+<<case 6>>You manage to get a view of a pod of <<=$dolphin.plural>> swimming by. One of them waves at you cheerfully. 
+<<default>><<switch random(1,4)>>
+<<case 1>>The captain spends the trip weaving consecutively bigger lies about the loves $npc1.he's had and lost. You call $npc1.him out around the time $npc1.he tries to convince you $npc1.he picked a flower from the moon to swoon some damsel or another. The rest of the trip is spent with awkward silence and sheepish expressions from $npc1.him. 
+<<case 2>>The captain regales you with a certainly-false tale of $npc1.his chance encounter with a <<=$brownBear.species>>-maid, a mystical creature with the upper body of a beautiful lady <<=$brownBear.species>> and the lower body of a $dolphin.species. $npc1.He looks a bit dismayed when you just shake your head at $npc1.his nonsense. 
+<<case 3>>The captain spends the entire trip spinning tales of great sea monsters, claiming that a giant, three-headed sea snake is the reason why there aren't very many ships. $npc1.He seems put off when you bring up the point that there just isn't all that much else out there so far as anyone knows. 
+<<case 4>>The captain spends a great deal of time telling you about a poem that $npc1.he received from another sea farer in $npc1.his travels. Specifically, about the lengths $npc1.he's gone to to try to understand it. When you ask for a look, you can't make too much of it either, but it's got something to do with a poet eating <<=$lion.plural>>. 
+<</switch>>
+
+<</switch>>
+
+<<action "e" "next" "To port" "West Town">><</action>>
+
+
+:: Shaman says {"position":"425,1500","size":"100,100"}
+<<setPopupTitle "Talk to the shaman">>
+<<createFixedNPC "chief" 2>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"My name is $npc1.Name, and it is my duty to create the wards that keep this place safe, as well as train those interested in calling upon the spirits."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"It pains me that so many of my students have left the path of balance, but I do understand their confusion. The spirits are in turmoil, and the ethereal world groans with the pain of this shifting."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Our leader is temperamental, true, but $npc2.his anger is only for that which would do harm to us all. $npc2.He has our best interests at heart, though I do still strive to help $npc2.him calm $npc2.his inner fires, lest $npc2.he get burned." 
+<<set $eventCounterB++>>
+
+<<default>>
+"My eyes? I traded my vision of this world for true sight long ago... Though perhaps it is more accurate to say that gaining such sight was a cost more than a trade. Tread lightly around powerful spirits, adventurer."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Study with shaman {"position":"525,1400","size":"100,100"}
+<<doTime 30>>
+
+<<if $fat >= 5>>
+You spend some time under the tutelage of the head shaman. You feel wiser in the ways of the natural world, but the study has taken its toll on your body. 
+<<changeStats "fat" -5>>
+<<changeStats "int" 0.5>>
+<<updatePanels>>
+
+<<else>>
+You spend some time under the tutelage of the head shaman, but can't quite get into the mindset to learn in your current state. 
+
+<</if>>
+
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Shaman says">><br>
+
+<<action "w" "spells" "Study with shaman">><</action>>
+
+<<vendor "Island shaman">>
+<<action "c" "spells" "Learn spells" "Learn spells from shaman">>
+<</action>>
+
+<<action "s" "leave" "Leave" "Island Town">>
+	<<set $travel = 1>>
+	<<addPretext "You $walk through the village. ">>
+<</action>>
+
+
+:: Tyrannosaurus chief says {"position":"100,1725","size":"100,100"}
+<<setPopupTitle "Talk to the chief">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"My name is $npc1.fullName. Outsiders tend to have trouble with that, so you can call me $npc1.Name." 
+<<set $eventCounterB++>>
+
+<<case 1>>
+"You might notice, outsider, that the people here have not fallen entirely to gluttony. That is because those that have did so quite vocally, and have left this place. They believe that the changes to the world mark a change in spiritual balance that is to be followed, not opposed."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"We are dealing with handling this conflict, but outside assistance would not be refused. If you are strong of arm and brave of heart, you might be of use to us."
+<<set $eventCounterB++>>
+
+<<default>>
+"I swear, the next one of you mainlanders that calls me 'Rex' is getting eaten. I don't even care."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+

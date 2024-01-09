@@ -1,0 +1,1438 @@
+:: An Equine Adventurer [nobr] {"position":"1550,2675","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "A Grand Adventurer">>
+
+<<set _tasteStarted = setup.questStarted($uncommonTaste)>>
+<<set _tasteComplete = setup.questCompleted($uncommonTaste)>>
+
+/*If you haven't started the quest yet*/
+<<if !_tasteStarted>>
+<<set _tempQuest = clone($uncommonTaste)>>
+<<if !$options.males>>
+	<<set _tempQuest.gender = $female>>
+<</if>>
+
+<<set _tempItem = either($bloatedBlueberry, $outrageousOrange, $plentifulPeach, $ridiculousRaspberry, $sizableStrawberry, $giganticGrape)>>
+<<set _tempQuest.target = clone(_tempItem)>>
+
+<<set _tempQuest.description = ["Bring ", _tempItem.article, " ",  _tempItem.name.toLowerCase(), " to the ex-adventurer ", $npc1.species, " hanging out at the dairy farm. The ", $npc1.species, " says they saw some growing out in the grasslands."].join(" ")>>
+
+/*
+<<switch _tempItem.name>>
+<<case $bloatedBlueberry.name>>
+<<set _tempQuest.description = "Bring a bloated blueberry to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $ampleApple.name>>
+<<set _tempQuest.description = "Bring an ample apple to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $outrageousOrange.name>>
+<<set _tempQuest.description = "Bring an outrageous orange to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $plentifulPeach.name>>
+<<set _tempQuest.description = "Bring a plentiful peach to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $ridiculousRaspberry.name>>
+<<set _tempQuest.description = "Bring a ridiculous raspberry to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $sizableStrawberry.name>>
+<<set _tempQuest.description = "Bring a sizable strawberry to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<<case $giganticGrape.name>>
+<<set _tempQuest.description = "Bring a gigantic grape to the ex-adventurer $npc1.species hanging out at the dairy farm. The $npc1.species says they saw some growing out in the grasslands." >>
+
+<</switch>>
+*/
+
+/*<<createNPC $horse _tempQuest.gender>>*/
+
+<p>From behind round, bloated cheeks, $npc1.his eyes open, and $npc1.he spots you staring at $npc1.him. $npc1.He smiles, face growing even rounder. </p>
+
+<p>"Well hi there! Guess you're an adventurer, huh?" $npc1.He chuckles, causing $npc1.his behemoth body to wobble. "Yeah, I used to be one myself, but... uh..." $npc1.he smiles sheepishly and slaps a hand as bloated as a baseball mitt against $npc1.his deeply doughy side, a ripple travelling slowly through that ocean of belly-blubber, "...Guess success has kinda slowed me down. Not that I'm complaining!" $npc1.He chuckles again, hand rubbing at $npc1.his enormous gut contentedly. "I was pretty famous back in the day, you ever heard of me?" You've never heard of $npc1.him. $npc1.He looks a little disappointed, but shrugs $npc1.his bloated shoulders, shaking a couple of apples loose from the tree. $npc1.He catches one expertly, without even looking. "Well hey, never mind, I don't miss fame. I've got it pretty good these days. I'm kind of a tourist attraction here on the farm. All I got to do is sit around all day and I get all the fruit I can eat and all the milk I can drink!" It shows, it really does. At the mention of food, $npc1.his stomach lets out a cavernous gurgle, and $npc1.he absent-mindedly bites into the apple, nearly cutting it in half. </p>
+
+<p>"'Course," $npc1.he says with $npc1.his mouth full, "I do kinda miss city life. Especially some of the ''FOOD''. I think about going sometimes, but..." $npc1.he swallows the rest of the apple whole and then you watch $npc1.his attempts to stand, $npc1.his huge butt lifting about foot off the ground, quivering, before plopping back down with a THUD that shakes MORE apples from the tree. The big $npc1.fella puffs and pants, grinning sheepishly, "...it seems a whole lot further away these days." $npc1.His eyes brighten. "Say, you wouldn't do me a favour, would you? Only I've got this real ''CRAVING'' for _tempQuest.target.article _tempQuest.target.name." $npc1.He winks and pats the sack by $npc1.his side. "I'll trade you what you want for it, don't worry. And no need to rush..." $npc1.he smiles again and sighs sleepily, settling back, a gigantic, increasingly immobile mountain of a $npc1.species "I'm not going anywhere in a hurry..." </p>
+<<getQuest _tempQuest>>
+<<action "c" "fenceGate" "Dairy Farm">><</action>>
+
+/*After you've started the quest*/
+<<else>>
+<<set _tempQuest = $quests[setup.questIndex($uncommonTaste)]>>
+/*<<createNPC $horse _tempQuest.gender>>*/
+
+<p>Peering over the curve of $npc1.his hugely obese belly, $npc1.his round face brightens as $npc1.he catches sight of you. "Well hello again!" $npc1.he rumbles happily- or possibly that's just $npc1.his appetite talking. "Did you manage to find me _tempQuest.target.article _tempQuest.target.name yet?" </p>
+
+/*If you don't have the item*/
+<<if setup.hasItem(_tempQuest.target) < 0>>
+
+<p>$npc1.He looks a little disappointed when you shake your head apologetically, but $npc1.he smiles all the same. "Heck, that's no problem, little $p.fella, I guess I can wait a little longer." </p>
+
+If $npc1.he 'weights' much more $npc1.he might burst before you've found $npc1.him $npc1.his _tempQuest.target.name- or $npc1.he might wind up eating YOU! 
+<<action "c" "fenceGate" "Dairy Farm">><</action>>
+
+/*If you do have the item*/
+<<else>>
+<p>$npc1.His fat face breaks into a big smile when you reply in the affirmative. "Oh boy, that's ''GREAT''!" That vast monster of a middle growls in anticipation, and you hurriedly hand over the _tempQuest.target.name, your supersized friend grasping for it eagerly and immediately tucking in. While $npc1.he does so, you surreptitiously count your fingers to make sure you didn't lose any. </p>
+
+<p>Almost before you know it your offering has been inhaled, and the gargantuan beast sinks back with a contented sigh, one hand on a belly that seems bigger than ever. "Man, that really hit the spot! I'm not complaining, but an all-apple diet can get kind of dull." Even as $npc1.he says it, $npc1.he reaches out and plucks another apple from the tree, chomping into it automatically. </p>
+
+<p>"So," $npc1.he looks down at you with a smile, "I guess I owe you one." With laborious slowness $npc1.he leans over and hauls a large brown sack up from $npc1.his side, setting it onto $npc1.his stomach. "This is the stuff I collected when I was famous. Now there's gotta be something in here that you'd take as payment. Anything take your fancy?" </p>
+<<removeItem _tempQuest.target 9>>
+
+<<action "1" "weapon" "A warhammer" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 1>>
+<</action>>
+
+<<action "2" "armor" "Splint Armor" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 2>>
+<</action>>
+
+<<action "3" "other" "Spectrum Gem" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 3>>
+<</action>>
+
+<<action "4" "spells" "Book of crystals" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 4>>
+<</action>>
+
+<<action "5" "weapon" "Light lance" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 5>>
+<</action>>
+
+<<action "6" "food" "Box of donuts" "Uncommon Taste Reward">>
+	<<set $eventCounterA = 6>>
+<</action>>
+
+<</if>>
+
+<</if>>
+
+
+:: Back away from the milking shed {"position":"975,2550","size":"100,100"}
+You decide that this needs some more thinking about before you take action. Making sure that the doors are secured, you back away and hurriedly beat a strategic withdrawal. 
+
+<<action "c" "next" "Dairy Farm">><</action>>
+
+
+:: Barn [nobr] {"position":"975,2775","size":"100,100"}
+<<set _barnState = "nothing">>
+
+<<if setup.questCompleted($horseQuestFreedom)>>
+	<<set _barnState = "sampson sleeping">>
+<</if>>
+
+<<if !setup.questCompleted($eatingContest) and  setup.questStarted($eatingContest)>>
+	<<set _barnState = "eating contest">>
+<</if>>
+
+<<switch _barnState>>
+
+<<case "eating contest">>
+The contest is packed not only full of competitors, but of onlookers too, all eager to see who can stuff themselves silly the most. The excitement is buzzing around the place, milk and sweets are being passed around to the spectators and people lining up for bids on who'd eat how much and what place they'd get. You look for your spot and take a seat on the supplied haystack. 
+<<action "c" "next" "Wait" "Wait for eating contest to start">><</action>>
+
+<<case "sampson sleeping">>
+You hear some distinct, loud snoring coming from inside the barn. 
+<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+
+<<default>>
+You walk over to the large red barn. You try to pull the large doors open, but they're locked from the other side. 
+<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+
+<</switch>>
+
+
+:: Come out of retirement {"position":"1225,3000","size":"100,100"}
+<<createFixedNPC "tailor" 3>>
+
+<p>"You're RIGHT!" your enormous new friend exclaims, $npc1.his eyes gleaming. Glancing at the apple core in $npc1.his fat $npc1.hand, $npc1.he curls it into a fist, stretches $npc1.his flabby arm back and FLINGS the core through the open window. By the time you lose sight of it over the horizon it's still going upwards, whistling through the air. Woah, $npc1.he's stronger than you thought! "Yeah! Look out, World! $npc1.Name Shire the Mighty is back in town!" </p>
+
+<p>$npc1.Name the Mighty then looks down at $npc1.himself, and adds, "But I sure as sweet apples can't march into town like THIS!" $npc1.He grabs two handfuls of $npc1.his vast stomach and heaves, hefting it before letting it BLOOMP back onto the table-top with a wobble. "I've gotta put on some PANTS, at least!" $npc1.He rummages in the brown sack stashed by $npc1.his side, then proudly pulls out an old, voluminous, heavily-worn and much-stretched pair of pants. $npc1.He holds them up in front of $npc1.him, and $npc1.his wide smile slowly fades as $npc1.he sees your expression. </p>
+
+<p>"Uhm... ok, I guess I HAVE put on a little weight since I last wore these..." Despite their tentlike quality, you don't think $npc1.he'll even get one thigh through the waistband any more. $npc1.His fat face brightens. "You wouldn't be able to do me a favour, would you? Is that tailor still in town? You couldn't take these along to $npc3.him and get $npc3.him to fix them up for me, could you? Just tell $npc3.him to put it on 'ole $npc1.Name's tab! I'd be really, REALLY grateful. I'll... uh..." $npc1.his eyes stray back towards the dining table, "...Stay here and build up my strength..." </p>
+
+You think to take a few measurements before you go- you suspect that description alone is going to be wholly inadequate for this job. Making those measurements it somewhat difficult, but with the aid of a coil of rope you're at least able to estimate $npc1.his vital statistics before setting out for the city. 
+<<getItem $horsePantsBroke>>
+<<getQuest $horseQuestClothes>>
+
+<<action "c" "leave" "Head out" "Dairy Farm">><</action>>
+
+
+:: Complete Sampson's quest [nobr] {"position":"1425,2875","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "Complete $npc1.Name's quest">>
+
+<<switch $eventCounterA>>
+
+<<case "give pants">>
+<<removeItem $horsePantsFixed>>
+<p>$npc1.Name's face lights up. "That'sh GREAT!" $npc1.he exclaims, spraying you with apple-bits. "Aww, shucks, sorry about that," $npc1.he says, hurriedly swallowing $npc1.his mouthful, still grinning. </p>
+
+<p>It takes the sumo-sized $npc1.Name quite some time to stand and try on the pants. $npc1.He winces slightly at the gaudy patterns, but then shrugs. "Kinda too fancy for my tastes, but it's not like I'M gonna have to see them." $npc1.He finally manages to wriggle into them, hauling the waistband up over $npc1.his barn-sized backside. "Guhh... kinda SNUG, but I guess they'll do for now. That darned tailor NEVER manages to make things fit me properly!" </p>
+
+<p>Finally 'decent', $npc1.Name sits right back down at the table and gives you a big, friendly smile as $npc1.he reaches for another mouthful. "Thanks li'l $p.buddy, guess I owe you again! Reaching down with $npc1.his free $npc1.hand $npc1.he pats $npc1.his traveller's sack, stashed under the table. "Anything in here you'll take as payment?" </p>
+
+/*Apparently I never did the real rewards for this quest*/
+<<questReward $horseQuestClothes>>
+<<action "c" "next" "Thanks!" "Complete Sampson's quest">>
+	<<set $eventCounterA = "start armor">>
+<</action>>
+
+<<case "start armor">>
+<p>"Say, li'l $p.buddy, I've just thought of something- pants are all very well, but I guess out in the wilderness you still need armour these days." $npc1.He shrugs, and smiles roundly. "Good job I've still got my... trusty..." $npc1.His eyes meet yours as $npc1.he fingers the burst and ruined fringe of chainmail links framing $npc1.his rolling, corpulent chest. </p>
+
+<p>"Aww... shucks." With a little help $npc1.he squirms out of $npc1.his thoroughly-burst armour and holds it up for inspection. "Ok, so MAYBE it needs some work to get it back into fighting shape..." It's not the ONLY thing around here that needs that. The enormous doughball $npc1.adjective plops slowly back down onto the bench with a wheeze, and glances at you hopefully. "Another favour? Know any good armourers these days? Think you could, uhhh...?" </p>
+
+<p>You nod, a little resignedly. $npc1.Name looks relieved. That vast gut of $npc1.his lets out another deep rumble, and $npc1.he grabs another handful of food from the table without even seeming to notice. Whilst $npc1.he's at the table eating you take measurements of $npc1.his chest and torso, having to estimate a couple of times when the rope won't reach and adding on a bit more anyway to take account of 'growing room'. </p>
+
+"Shucks, I always DID have a big chest," $npc1.Name comments cheerfully through a shower of crumbs. You refrain from mentioning that these days $npc1.he has a big EVERYTHING. 
+<<getItem $horseArmorBroke>>
+<<getQuest $horseQuestArmor>>
+<<action "c" "leave" "Leave" "Dairy Farm">><</action>>
+
+<<case "give armor">>
+<p>You produce the Stretch-Mail and $npc1.Name looks delighted. $npc1.He's so keen to try it on, $npc1.he even puts down $npc1.his current <<=$npc1.hand>>ful of food! One of the biggest struggles is getting the mail over $npc1.his head, as the neck-hole seems a tad tight,but $npc1.he finally manages to squeeze through and tug the mail over $npc1.his chest and stomach. Well, SOME of the way, at least. It does look rather like someone has armoured the top half of a dirigible balloon, but $npc1.he seems happy enough with the results. </p>
+
+<p>"Thanks, little $p.buddy! Guess I owe you once again! Now, how can I repay you THIS time?" With something of a struggle, $npc1.he manages to reach $npc1.his bag and drag it out for you to investigate. "Anything you want in there, it's yours." </p>
+
+/*Apparently I never did the real rewards for this quest*/
+<<questReward $horseQuestArmor>>
+<<removeItem $horseArmorFixed>>
+<<action "c" "next" "Thanks!" "Complete Sampson's quest">>
+	<<set $eventCounterA = "start weapon">>
+<</action>>
+
+<<case "start weapon">>
+<p>"Well, I think that's everything!" $npc1.Name says happily, wiping $npc1.his lips and with obvious effort slowly hauling $npc1.himself to $npc1.his overburdened $npc1.feet. $npc1.His huge belly hangs above the tabletop, casting the remains of $npc1.his meal into shadow. "Pants, armour, my trusty weap... Aww... SHUCKS!" $npc1.Name plops back down onto the bench with a BOOMPH, making the wood bend alarmingly beneath $npc1.his enormous bulk. </p>
+<<set _donkey = $donkey.species.toUpperFirst()>>
+<p>"Hrrrmphh... I've just remembered, I traded my weapon a _donkey's Age ago to this peddler who was selling the most AMAZING apple-filled doughnuts ...!" The swollen $npc1.species's mouth starts watering at the mere memory, and $npc1.he absent-mindedly grabs a handful of food from the table and stuffs it into $npc1.his mouth. "Mpsh... but I gotta have SOME kind of weapon to go out adventuring. What kind of hero would I be if I didn't have a weapon? I mean," $npc1.he swallows $npc1.his mouthful and reaches for another, "without a weapon I may as well just stay here eating!" $npc1.His eyes fall on you, and $npc1.his fat features register hope, as well as some mutual embarrassment. </p>
+
+"Uh, sorry li'l $p.buddy, but I couldn't ask you for ANOTHER favour, could I?" $npc1.Name pulls out a small money-pouch on a cord sandwiched between $npc1.his meaty pecs. It makes a satisfying chink in your palm. "Go buy me a replacement? I don't need my EXACT old weapon back, no sir, but something big and heavy to swing would sure be appreciated. An axe would be perfect but, uhh..." $npc1.he gestures down at $npc1.his oversized body and shrugs, a gesture that causes $npc1.his chest and stomach to ripple sluggishly. "They might be a little SMALL for me these days..."
+<<doGld 50>>
+<<getQuest $horseQuestWeapon>>
+<<action "c" "leave" "Leave" "Dairy Farm">><</action>>
+
+<<case "give weapon">>
+/*If you only have a regular axe*/
+<<if setup.hasItem($giantAxe) < 0>>
+<p>$npc1.Name's face brightens further as you produce an axe. "Hey, an axe! That's great!" $npc1.He takes it from you, but it sits in $npc1.his large, fat hand like something out of a My Little Adventuring Warhorse play-set. After a few unsuccessful attempts to grip it in more than thumb and forefinger $npc1.he reluctantly hands it back, shrugging and letting out a disappointed $npc1.angry. </p>
+
+"Hrrrrrmph... I'm sorry, but I'd feel like a complete idiot trying to swing THAT in a fight. Shucks, it'd be like poking someone with one of those toothpicks with a bit of pineapple on the end of it. They sure make axes SMALLER than they did in my day." 
+<<action "c" "leave" "Leave" "Dairy Farm">><</action>>
+
+/*If you have a great axe*/
+<<else>>
+<<removeItem $giantAxe>>
+<p>$npc1.Name's face brightens further as you produce an axe
+<<if $str < 20>>, your arms quaking under the oversized article's great weight<</if>>. "Hey, an axe! That's great!" $npc1.He takes it from you, and holds it up to admire it, lifting it easily with one fat hand. "Say, this is PERFECT!" $npc1.He takes it in both hands and gives a couple of experimental swings, the last of which accidentally cut through the cord holding up one of the lamps. "Whoops! Heh, guess I can't see over my shoulder as well as I used to! $npc1.he cranes $npc1.his bloated neck for a moment, thick rolls of flab bunching around it and $npc1.his chunky shoulder. "But thanks li'l $p.buddy, this is JUST what I need!" </p>
+
+The uber-hefty $npc1.species brings $npc1.his new axe down blade first onto the table, cleaving a large apple pie in two with a furniture-juddering WHACK. Grabbing one half $npc1.he begins to munch on it happily. Already $npc1.he's reaching down to haul out $npc1.his travelling sack. "I guess I owe you again."
+<<questReward $horseQuestWeapon>>
+<<action "c" "next" "Thanks!" "Complete Sampson's quest">>
+	<<set $eventCounterA = "start strength">>
+<</action>>
+<</if>>
+
+<<case "start strength">>
+<p>"Hrmmmphhhh... That's DEFINITELY everything, this time!" $npc1.Name $npc1.whickers, hurriedly gulping down $npc1.his latest mouthful, and then shamelessly reaching for a couple more 'for the road'. "Pants, armour, blade... Yep! Look out World! Here... hoof... Here I... gluh!..." You watch as the hugely hefty $npc1.species's thunderously fat thighs bulge and quiver, trying to haul $npc1.his ponderous, pants-stretching butt into the air. It rises by about an inch, underside still resting on the wooden bench beneath them. $npc1.He grunts and redoubles $npc1.his efforts, grimacing with exertion. That big, soft backside begins to lift from its bench with tectonic slowness, jiggling slowly. </p>
+
+<p>"H-here I... gnhh!... World!... H-HERE... I... COME-urgghhhh...!" $npc1.Name sinks back right down again with a groan, sweating profusely. The bench groooooans with $npc1.him as $npc1.his vast weight settles back down onto it, whilst $npc1.his enormous stomach smooshes back across the tabletop. $npc1.He puffs and pants, clapping a hand against that gigantic gut incredulously, as if seeing it for the first time. Yup, It looks like $npc1.Name Shire has, finally, grown too fat to stand. 
+</p>
+
+<<set _HORSE = $npc1.nspecies.toUpperCase()>>
+
+<p>"Aww, SHUCKS! This... this is ridiculous!" $npc1.he puffs. "I've... I've always been as strong as a _HORSE! I've got to shift some of this poundage, and soon. Hrrmphhh...." $npc1.his hand pats again at the curving horizon of $npc1.his middle, making it ripple slightly. $npc1.His eyes glaze over slightly. "On... the OTHER hand..." $npc1.he says slowly, spare hand reaching to rub the other side of $npc1.his stomach, "It'd be a whole lot faster and just downright EASIER if I had a spectrum gem to hand! I figure one of THOSE'd be enough to... uhh..." $npc1.he blushes slightly, "get me back on my $npc1.feet." The superfattened $npc1.species turns to look at you imploringly, has hand having already snagged a toffee-apple from the table. </p>
+
+"One last favour, li'l $p.buddy? The last one, I promise! C-could you get me a spectrum gem from somewhere? Just in case? I'll... I'll probably not need it in the end, of course. Ain't no way $npc1.Name Shire's too big a fat-ass to stand up! I've just gotta... catch my breath, that's all...." As you leave you hear the loud 'scrunch' of toffee being bitten into.
+<<getQuest $horseQuestStrength>>
+<<action "c" "leave" "Leave" "Dairy Farm">><</action>>
+
+<<case "give gem">>
+<<removeItem $spectrumGem>>
+<p>"That's- URRP!- that's GREAT!\" the humungous $npc1.species huffs, grinning widely and holding out a fat mitt in expectation. A little reluctantly, you hand it over. </p>
+
+<p>As $npc1.Name's chubby fist clenches around the gem, it crackles with power, and you take a hurried step back as its energy is released into your expansive $npc1.adjective companion. $npc1.He $npc1.whinnies loudly and seems to luxuriate in the process as the bolts of light supercharge $npc1.him, $npc1.his body devouring energy as eagerly as it does food. $npc1.He stretches and arches $npc1.his back, $npc1.his huge hamlike legs quivering, and $npc1.his barn-sized backside slowly lifts from the bench, lightning still playing around $npc1.him. At the peak of $npc1.his stretch the gem's power abruptly fades and the supersized $npc1.species grunts with satisfaction. $npc1.He now stands a good <<sayDistance 180>> tall, ears tickling the rafters as $npc1.he smiles down at you. $npc1.He looks easily as wide as $npc1.he is tall, if not a little wider. </p>
+
+"Shucks, guess this place is a little CRAMPED for the likes of me these days..." $npc1.He $npc1.whickers a laugh and slaps a hand to $npc1.his gargantuan belly. "Hrrrmph... But that gem sure did the trick, huh? And none of that boring 'dieting' required!" $npc1.He snorts, chuckling to $npc1.himself, then bends down to haul $npc1.his traveller's sack out from under the table. "Guess I should show my appreciation more tangibly. Anything in here that you'll take as payment?"
+<<questReward $horseQuestStrength>>
+<<action "c" "next" "\"Thanks!\"" "Complete Sampson's quest">>
+	<<set $eventCounterA = "start freedom">>
+<</action>>
+
+<<case "start freedom">>
+<p>Fully-equipped, if nearly bursting out of $npc1.his armour, the reinvigorated $npc1.Name Shire snorts, hefts $npc1.his giant axe and declares, "Look out world, here I come! And this time I won't let NOTHING stand in my way!" The hugely hefty $npc1.species nevertheless gives the remaining food on the table a lingering look. "Uhh, what d'you say to my taking a SNACK for the road?" $npc1.His resolve stiffening, $npc1.he somewhat reluctantly turns and stomps out through the farmhouse door, $npc1.his lumbering $npc1.footsteps making the whole room shake. </p>
+
+<p>"OOF!" The room shakes again, the walls creaking, and then silence falls, a little dust settling around you. The farmhouse seems a little gloomy, all light from the doorway now being blocked by the g-g-gigantic butt firmly jammed between the doorposts. You hear a $npc1.angry from outside and that huge $npc1.species-hinder quivers, making the farmhouse shake again, but the doorframe keeps its vice-like grip. It looks like $npc1.Name the Mighty's met $npc1.his first new adventuring challenge! 
+</p>
+
+"Hrrmpphhh... You still in there, li'l $p.buddy? Nghhh...!" You watch the doorframe creak and warp in its socket as the humungous $npc1.species HEAVES, but $npc1.Name's enormously overfed backside remains completely wedged. "A-any chance of a SHOVE here?" Oh dear, this is going to be a tall order!
+<<getQuest $horseQuestFreedom>>
+<<action "c" "quest" "Push?" "Complete Sampson's quest">>
+	<<set $eventCounterA = "push sampson">>
+<</action>>
+<<action "n" "next" "I may have to come back" "Leave Sampson">>
+	<<set $eventCounterA = "no freedom">>
+<</action>>
+
+<<case "push sampson">>
+<p>You back up as far as you can to give yourself some sort of run-up, then with a count of 3 you shoulder-charge the jello-ball of a tuckus filling the doorway. At least it's an easy target. You smack against $npc1.Name's rotund rear-end with a blubbery BOOMPH (and an accompanying $npc1.angry from outside) and start to sink into the bloated blob of <<=$npc1.nspecies>>flesh, your legs still pedalling frantically. </p>
+
+/*If you can't push him out*/
+<<if $str < 120 and setup.weight() < 800>>
+You hear a creeeeeeak from the doorframe, and for a moment it looks like you might manage it, but you then feel your forward motion slow to a stop, $npc1.Name's hide quivering against you. Then, you feel $npc1.his flab starting to shove back! Rather humiliatingly, you are ignominiously shoved back out, stumbling backwards a few paces until you regain your balance. $npc1.Name, meanwhile, hasn't moved forwards an inch. You have, literally, been defeated by a $npc1.species's ass! 
+<<action "c" "next" "I may have to come back" "Leave Sampson">>
+	<<set $eventCounterA = "no freedom">>
+<</action>>
+
+/*If you can push him out*/
+<<else>>
+<p>You hear an alarming creeeeeeak from the doorframe, then feel it give an almighty ''CRACK'', the shock transmitted through all that <<=$npc1.nspecies>>flesh to ripple against you. There's a quivering shudder, then suddenly the immovable mass of blubber you're pressed against lurches forwards! You stagger after it, and almost trip head first down the porch-steps, doing an alarmingly uncontrolled little dance down them as you try frantically to keep your balance. When you finally draw to a stop, you find the supersized $npc1.Name standing in front of you, glaring over $npc1.his shoulder at $npc1.his big ole' back end, which still has the timber doorframe clamped around it like a vice. $npc1.He catches your eye and snorts, starting to blush. </p>
+
+"Shucks, why can't they just make doors sized for REALISTIC heroes?" $npc1.He $npc1.whickers and flexes $npc1.his backside- with a splintering CRACK the timbers burst apart, leaving $npc1.Name free and standing in the fresh air of the farmyard. Outside, $npc1.he manages to look even bigger than indoors! "Gee, I guess I owe you ANOTHER one, li'l $p.buddy! If you hadn't been around to help, I might have been stuck there!" $npc1.He hefts $npc1.his travelling bag and holds it out to you. "Anything you want in return?" 
+<<questReward $horseQuestFreedom>>
+<<action "c" "next" "Thanks!" "Complete Sampson's quest">>
+	<<set $eventCounterA = "pushed free">>
+<</action>>
+<</if>>
+
+<<case "pushed free">>
+<p>$npc1.Name Shire the Mighty squares $npc1.his plump shoulders beneath $npc1.his extra-stretchy armour and grins at you. "Hrrrmph... Well, Adventure's calling! Thanks again for all your help, li'l $p.buddy, I'm sure I'll bump into you again sometime. But, for now, I've gotta get back on the road!" </p>
+
+<p>$npc1.He turns and starts to lumber towards the farm gate. You watch that ponderous backside wobble and jiggle, stretching those new pants pretty fully. But before $npc1.he's even reached the gate, you spot that $npc1.Name is slowing, and starting to sweat. After a few more paces $npc1.he stops, panting, and leans against a gatepost, $npc1.his bulk threatening to uproot it. </p>
+
+<p>"Shucks... all this... is way more... EFFORT than I remember!" The super-chubby $npc1.species grabs $npc1.his belly and hefts it a couple of times. "Maybe I shouldn't have... weighed myself down!" $npc1.He looks up, and catches sight of the barn. "Hrrmpph! I might... might just... have a NAP before setting out..." And you watch $npc1.him stumble heavily for the barn- at least THESE doors $npc1.he fits through. There's an earth-shaking THUD from inside, and a few moments later you can just about detect a rumbling snore start up... </p>
+
+Obviously adventure will have to weight for another day...
+<<action "c" "next" "Good night?" "Dairy Farm">><</action>>
+
+<<case "pull Sampson">>
+Taking hold of the supersized $npc1.species's hefty $npc1.hands, you lean back on your $p.feet and HEAVE with all your might. $npc1.Name grunts and winces as $npc1.his chubby arms stretch in their sockets, the doorframe creaking loudly as you manage to drag the bulging beast a couple of inches further through... 
+
+<<if $str < 120 and setup.weight() < 800>>
+only for $npc1.him to rebound with a mighty GLOOP! You are hauled off your $p.feet and catapulted bodily against $npc1.Name's rolling chest, eliciting a grunt from the overfed $npc1.adjective. Staggering backwards, you find that, except for a few bruises on yourself, the pair of you are no further forward. 
+<<action "c" "next" "I may have to come back" "Leave Sampson">>
+	<<set $eventCounterA = "doing freedom">>
+<</action>>
+
+<<else>>
+and then with an ear-splitting CRACK and a shower of brick dust the doorframe sags slightly wider and $npc1.he begins to slide forwards under $npc1.his own weight! 
+
+<p>You stagger backwards, teetering unsteadily at the top of the porch steps, then glance back at the doorway, alerted by further rending, cracking sounds. A rotund shadow falls over you as the porch begins to shake, and you hear the $npc1.species's deep voice bellow out, "Hrrmphhh! Comin' THROUGH...!"</p>
+
+<p>Too late! A vast, curved wall of $npc1.adjective blubber slams into you and you sail backwards with it, feeling yourself hang in the air a moment before the pair of you SLAM into the ground, with you, tragically, underneath! Squashed beneath the mammoth $npc1.adjective at the bottom of the impact crater, your last woozy thought is //'Well, at least it's warm under here...'//</p>
+
+But thankfully $npc1.Name eventually manages to roll off of you and picks you back up on your feet! $npc1.He helpfully dusts you off. 
+<<questReward $horseQuestFreedom>>
+<<action "c" "next" "Thanks?" "Complete Sampson's quest">>
+	<<set $eventCounterA = "pushed free">>
+<</action>>
+<</if>>
+
+<</switch>>
+
+
+:: Dairy Farm [nobr] {"position":"1325,2500","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+<<createFixedNPC "dairyFarmer" 2>>
+<<createFixedNPC "sampson" 1>>
+
+<p>You're standing in the main hub of the farm under the branches of a large apple tree. To the east there's a large pasture filled with several large farm animals diligently mowing down the grass as fast as it can grow back. To the west there's a small whitewashed sales stand with little paintings of <<=$cattle.fname>>s over it. South of that are two large buildings, one of them a large barn and the other a small milking shed. On the southern end of the property stands a tall white farmhouse. It looks a little run down, but still seems well maintained. </p>
+
+<p><<if $hour >= 9 and $hour <= 17>>
+A $npc2.color $npc2.species stands behind a market stand. They briefly stop chugging from a glass of milk long enough to wave at you. 
+
+<<else>>
+Crickets chirp in the nearby field as the dairy farm lies dormant. 
+<</if>></p>
+
+<<vendor "milk stand">>
+<<set _horseTree = false>>
+
+/*Before you've started the horse's first quest*/
+<<if !setup.questStarted($uncommonTaste)>>
+<<set _horseTree = true>>
+<p>In the distance you spot something half-obscured in the dappled shade of an apple tree. To start with you think it's a landmark of some kind, but as you approach you realise with a start that it's nothing of the kind- it's a person! It's hard to identify which species to start with, because whoever they are, they're one of the fattest things you've ever seen! Their $npc1.coatDesc, $npc1.feetDesc and $npc1.maneDesc lead you to guess that they're a $npc1.nspecies. Nine feet tall while sitting down, they tower over you, but that's nothing compared to their girth! </p>
+
+<p>A truly colossal stomach fills the space between their spread, hamlike legs, the front of it pushing just beyond their $npc1.feet, while their backside is as broad as a barn, the trunk of the apple tree pressing between them, creaking under the strain as they doze in the shade, leaning back comfortably against it. A pile of apple cores litters the ground next to them, and a large sack rests underneath a bulging $npc1.color lovehandle. You can't tell if they're wearing anything on their humungous hindquarters, but you realise that the silvery jacket stretched around their shoulders is actually chainmail armour that burst apart! The links of metal tinkle against their mammoth, rolling chest as it slowly rises and falls. You don't think this beast will even be able to stand! </p>
+
+/*After you've started but not finished the horse's first quest*/
+<<elseif !setup.questCompleted($uncommonTaste)>>
+
+<<set _tempQuest = $quests[setup.questIndex($uncommonTaste)]>>
+/*<<createNPC $horse _tempQuest.gender>>*/
+<<set _horseTree = true>>
+
+<p>Under the apple tree there's a familiar landmark-sized figure. $npc1.He seems to have grown even heavier in your absence- that gut is definitely pushing past $npc1.his $npc1.feet, now. The pile of apple cores and discarded milk bottles has grown distinctly. As you approach the slumbering $npc1.adjective mountain, $npc1.he wakes from $npc1.his doze with a snort. </p>
+
+<<elseif !setup.questStarted($horseQuestFreedom)>>
+<p>There are lights on in the farm house to the south. </p>
+
+<<elseif !setup.questCompleted($horseQuestFreedom)>>
+<p>You see the $npc1.nspecies adventurer is still wedged into the farm house doorway. They wave at you as you approach the farm. </p>
+
+/*If you've finished the horse's quests*/
+<<else>>
+
+<p>You're standing under a tall apple tree in the approximate center of the farm. A gentle breeze softly rustles through the tree. </p>
+
+<</if>>
+
+<<action "c" "rest" "Rest" "Dairy Farm">>
+	<<set $eventCounterB = "rest">><</action>>
+	
+<<if $sta > 0>>
+<<action "ne" "road" "Western Road">><<set $travel = 5>><</action>>
+<<action "n" "store" "Milk Stand">><<set $travel = 1>><</action>>
+<<action "e" "fence" "Pasture">><<set $travel = 1>><</action>>
+<<if _horseTree>>
+	<<action "se" "quest" "A Grand Adventurer" "An Equine Adventurer">>
+		<<set $travel = 1>>
+	<</action>>
+<</if>>
+<<action "sw" "building" "Barn">><<set $travel = 1>><</action>>
+<<action "w" "building" "Milking Shed">><<set $travel = 1>><</action>>
+<<action "s" "house" "Farm House">><<set $travel = 1>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Eating contest Round 1 [nobr cutscene] {"position":"975,2975","size":"100,100"}
+<p>Once a large piece of bread, it has been cut open from the top and scooped out to allow for a thick soup dip to be poured in. You find that the only way you're going to eat this soup is to break off the bread before scooping up the soup to eat. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+You tear off hunks of bread and scoop/soak up as much soup as possible before cramming the bread into your mouth. 
+<<consume 5 3>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You continue tearing off hunks of bread, while being careful to not let any of the dip ooze out. The bread bowl stays more or less structurally stable and you manage to stuff several savory mouthfuls down your throat, only occasionaly dripping some of the dip onto your $top.name. 
+<<consume 5 3>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You've reached the home stretch and are now tearing off soggy pieces of the dip soaked bottom of the bread bowl. 
+<<consume 5 3>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+<p>You pinch the last soaking bit of bread and drop it into your mouth before swallowing it down. You belch loudly, indicating you've finished this round and are ready to decide what to do when the next one comes up. </p>
+
+/*Sets up next round*/
+<<switch random(1,3)>>
+<<case 1>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant. The assistants lift off the covers and presenting a four-layer cheeseburger for each of you. 
+<<set $eventCounterA = 21>>
+													
+<<case 2>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present a pyramid of 10 hotdogs for each of you. 
+<<set $eventCounterA = 22>>
+
+<<case 3>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present a large meat pie for each of you. 
+<<set $eventCounterA = 23>>
+
+<</switch>>
+
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 1*/
+<<if $eventCounterA < 20>>
+<<action "c" "food" "Eat!" "Eating contest Round 1">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*Start round 2*/
+<<else>>
+<<action "c" "food" "Eat!" "Eating contest Round 2">>
+	<<set $eventCounterB = 3>>
+<</action>>
+
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>You take a breather from the last bite, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the plate of cheeseburger and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+
+<<defeated "overeating">>
+
+<</if>>
+
+
+:: Eating contest Round 2 [nobr cutscene] {"position":"975,3075","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 21>>
+<p>Larger than an average cheeseburger in both height and width, this four-layered burger is a little bit bigger than your head. Each layer has two beef patties, covered with two slices of melted cheese, ketchup and two pickles. The burger sits on the plate, using up most of the room, just waiting to be eaten. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+You begin to attempt to dig into the first course, although after a few attempts it's clear a burger this large was not meant to be eaten by hand. You look around and see most of the other contestants merely sticking their face into the burger and eating it that way. You follow suit and begin swallowing down hunks of meat and cheese. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You're making good progress, although it's getting harder and harder to actually keep things neat. Your face and chest have several grease and ketchup stains. You start grabbing errant bite sized hunks of burger in your hand and start eating those as well. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You've reached the home stretch and are now scooping up the scattered remains of the burger and cramming them into your grease soaked face. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+<p>You pop the last of the cheeseburger in your mouth, sighing contently as you swallow it down. You belch loudly, indicating you've finished this round and are ready to decide what to do when the next one comes up. </p>
+
+/*Sets up next round*/
+<<switch random(1,2)>>
+<<case 1>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous chocolate cheese cake for each of you. 
+<<set $eventCounterA = 31>>
+													
+<<case 2>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous bowl of ice cream for each of you. 
+<<set $eventCounterA = 32>>
+
+<</switch>>
+
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 2*/
+<<if $eventCounterA < 30>>
+<<action "c" "food" "Eat!" "Eating contest Round 2">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*Start round 3*/
+<<else>>
+<<action "c" "food" "Eat!" "Eating contest Round 3">>
+	<<set $eventCounterB = 3>>
+<</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>You take a breather from the last bite, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the plate of cheeseburger and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+<<questReward $eatingContest>>
+
+<<defeated "overeating">>
+
+<</if>>
+
+
+
+
+<<case 22>>
+<p>The plate of hot dogs has been stacked upon each other, barely able to contain itself on the plate. Each hot dog consists of a bun, one sausage, cheese, ketchup and mustard packed to the brim. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+As this course is much easier to devour, you manage to keep a much faster pace as you chomp down several hotdogs one after the other. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You manage to keep up your pace as you swallow down each dog in two or three bites. Greasy juices burst from each one as you bite into it, the juices dripping down your chin and congealing on your chest. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You've reached the home stretch and pick up the last two hotdogs in each hand. You gulp the first one down almost without chewing and pause for a second before you bite into the final hotdog. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+<p>You toss the final bite into your mouth, sighing contently as you swallow it down. You belch loudly, indicating you've finished this round and are ready to decide what to do when the next one comes up. </p>
+
+/*Sets up next round*/
+<<switch random(1,2)>>
+<<case 1>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous chocolate cheese cake for each of you. 
+<<set $eventCounterA = 31>>
+													
+<<case 2>>
+You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous bowl of ice cream for each of you. 
+<<set $eventCounterA = 32>>
+
+<</switch>>
+
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 1*/
+<<if $eventCounterA < 30>>
+<<action "c" "food" "Eat!" "Eating contest Round 2">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*Start round 2*/
+<<else>>
+<<action "c" "food" "Eat!" "Eating contest Round 3">>
+	<<set $eventCounterB = 3>>
+<</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>You take a breather before the next bite, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the remains of the hotdog pyramid and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+<<questReward $eatingContest>>
+
+<<defeated "overeating">>
+
+<</if>>
+
+
+
+
+
+<<case 23>>
+<p>This meat pie is certainly not meant for one person, it's big, full and smells incredibly delicious. The pastry of the pie is bulging incredibly, showing that the pie has been filled to the brim. From the smell of it, it seems to be of packed with meat cooked to perfection with a hint of flavours from assorted ingredients. Upon the top of the spherical crust is a healthy dollop of barbeque sauce, swirled around in a spiral. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+They were nice enough to provide you all with forks this time around. You break through the golden crust and scoop out a forkfull of savory meat into your mouth. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You continue to dig out hunks of rich pie filling into your mouth and shovel them into your mouth. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You've reached the home stretch and scrape together the last bits of pie filling together. You pile the last mounding bite of meat and crust onto your fork. 
+<<consume 7 4>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+
+/*Sets up next round*/
+<<switch random(1,2)>>
+<<case 1>>
+<p>You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous chocolate cheese cake for each of you. </p>
+<<set $eventCounterA = 31>>
+													
+<<case 2>>
+<p>You mentally steel yourself to prepare for the oncoming gastronomical onslaught. As you wait for your food, several $npc1.species assistants each carry over a platter and puts it down in front of you and each other contestant after removing the remains of the previous round. The assistants lift off the covers and present an enormous bowl of ice cream for each of you. </p>
+<<set $eventCounterA = 32>>
+
+<</switch>>
+
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 2*/
+<<if $eventCounterA < 30>>
+<<action "c" "food" "Eat!" "Eating contest Round 2">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*Start round 3*/
+<<else>>
+<<action "c" "food" "Eat!" "Eating contest Round 3">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>You take a breather before the next bite, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the remains of the hotdog pyramid and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+<<questReward $eatingContest>>
+<<defeated "overeating">>
+
+<</if>>
+
+
+<</switch>>
+
+
+:: Eating contest Round 3 [nobr cutscene] {"position":"975,3175","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 31>>
+<p>Threatening to overflow the plate, the double layered cheesecake is packed with sugar and other filling to the point where it looks about to burst. One small slice has been cut out for you so that you can see the chocolate filling ooze out of the centre. The whole appearance of the cake makes your mouth water. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+You're given a very large spoon to thankfully aid you in the dessert course of the contest. You carve out heaping spoonfulls of chocolately cheescake and shoveling rich heavy mountfuls down. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You rotate the plate around to get at the next section of cheesecake. You attempt to scrape up any errant chocolate that's been oozing out as you gulp down more and more of the decadent dessert. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You spin the plate around to the final surviving side of the cheesecake. What remains is starting to get warm and melty as you bring together sweet sloppy scoops to your mouth. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+<p>You shove the final bite into your mouth, sighing contently as you swallow it down. You belch loudly, indicating you've finished this round and are ready to decide what to do when the next one comes up.</p>
+<<set $eventCounterA = 41>> 
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 3*/
+<<if $eventCounterA < 40>>
+<<action "c" "food" "Eat!" "Eating contest Round 3">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*End contest*/
+<<else>>
+<<action "c" "food" "Eat!" "Finish eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>
+You take a breather before the next bite, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the remains of the cheesecake and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+<<questReward $eatingContest>>
+<<defeated "overeating">>
+
+<</if>>
+
+
+
+
+
+<<case 32>>
+<p>Several large scoops of ice cream has been dropped onto the plate, still very cold and smelling absolutely delicious. There are flavours of mint, strawberry, vanilla and chocolate all covered with a caramel topping which has hardened, give the appearance of frozen beauty. </p>
+
+/*Part 1*/
+<<if $eventCounterB == 3>>
+A large metal spoon is wedged into the center of the ice cream mountain. With a couple of tugs you manage to pull it free and start carving out large frozen hunks of ice cream and start devouring them before they get too melty. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+/*Part 2*/
+<<elseif $eventCounterB == 2>>
+You start digging into the strawberry quadrant as you devour the quickly melty confection. You occasionally have to take a break so as to avoid getting a massive case of brain freeze. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+/*Part 3*/
+<<elseif $eventCounterB == 1>>
+You're reaching the home stretch and most of the ice cream has melted into a soup. You attempt to scoop up what remaining icebergs of ice cream are left and pour them into your mouth. 
+<<consume 9 6>>
+<<set $eventCounterB -=1>>
+
+<<if $alive>>
+<p>You pick up the platter and draing the remaining melted ice cream down your gullet, sighing contently as you swallow it down. You belch loudly, indicating you've finished this round and are ready to decide what to do when the next one comes up. </p>
+<<set $eventCounterA = 41>> 
+<</if>>
+
+<</if>>
+
+/*Actions*/
+<<if $alive>>
+
+/*Continue round 3*/
+<<if $eventCounterA < 40>>
+<<action "c" "food" "Eat!" "Eating contest Round 3">><</action>>
+<<action "n" "surrender" "Quit eating contest">><</action>>
+
+/*End contest*/
+<<else>>
+<<action "c" "food" "Eat!" "Finish eating contest">><</action>>
+
+<</if>>
+
+/*If not alive*/
+<<else>>
+<p>You take a breather before the next gulp, feeling that you've probably gone a little too far for even slightly feeling comfortable. Shifting on your haystack uncomfortably, you look at the remains of the ice cream and wonder if you can fit any more in before you pass out. With a small talk to yourself, you work up the courage to eat just one more bite, but find yourself in immense pain. Your stomach seems to want to fall off it's so full. You try to stay conscious, the contest round still hasn't finished, but you're unable to bear the pain for much longer. You remember reaching for one last bite before you fade into unconsciousness. </p>
+<<questReward $eatingContest>>
+<<defeated "overeating">>
+
+<</if>>
+
+
+<</switch>>
+
+
+:: Enter the milking shed [nobr] {"position":"1075,2550","size":"100,100"}
+<p>Taking a deep breath, you haul one of the doors open, then slip inside, pulling it shut behind you. Peering in the semi-gloom of the milking shed, you look around, but see nothing of particular interest. There is quite a strong, distinct smell hanging in the air, though. Then you look down at the floor and see, sitting in the centre of the shed, a large cheese about the size of a cart-wheel. You've never seen a cheese quite like this. It looks hard and crumbly, with a reddish rind and swiss-cheese type holes. It seems to be quivering slightly, with steam rising off it. It doesn't look too dangerous, although you can't help but notice a dagger sticking out of the top of it like a cheese-knife, and a number of other cut-marks in the rind. </p>
+
+You take a step towards it, then back up hurriedly as the rind cracks to reveal a kind of mouth set in a feral, hungry grin, strands of soft cheese hanging between the jaws. //Yowsa!// You've heard of over-ripe cheese trying to crawl off the plate, but this is ridiculous! 
+<<setEnemy $cheeseMonster>>
+<<startCombat>>
+
+
+:: Farm House [nobr] {"position":"1300,2750","size":"100,100"}
+<<set $eventCounterA = "no quest">>
+
+<<if setup.questCompleted($uncommonTaste)>>
+	/*<<set _gender = $quests[setup.questIndex($uncommonTaste)].gender>>
+	<<createNPC $horse _gender>>*/
+<</if>>
+
+/*Sets which quest you're on*/
+<<if setup.questCompleted($uncommonTaste) and !setup.questStarted($horseQuestClothes)>>
+<<set $eventCounterA = "start clothes">>
+
+<<elseif setup.questStarted($horseQuestClothes) and !setup.questCompleted($horseQuestClothes)>>
+<<set $eventCounterA = "doing clothes">>
+
+<<elseif setup.questStarted($horseQuestArmor) and !setup.questCompleted($horseQuestArmor)>>
+<<set $eventCounterA = "doing armor">>
+
+<<elseif setup.questStarted($horseQuestWeapon) and !setup.questCompleted($horseQuestWeapon)>>
+<<set $eventCounterA = "doing weapon">>
+
+<<elseif setup.questStarted($horseQuestStrength) and !setup.questCompleted($horseQuestStrength)>>
+<<set $eventCounterA = "doing strength">>
+
+<<elseif setup.questStarted($horseQuestFreedom) and !setup.questCompleted($horseQuestFreedom)>>
+<<set $eventCounterA = "doing freedom">>
+
+/*End setting stage quest*/
+<</if>>
+
+<<switch $eventCounterA>>
+
+<<case "no quest">>
+You walk up the creaky porch steps and knock on the front door, but there's no answer. You try the doorknob, but it's locked. 
+<<action "c" "fenceGate" "Return" "Dairy Farm">><</action>>
+
+<<case "start clothes">>
+<p>Walking up the creaky porch steps, which have obviously been bent beneath a sizeable weight in the past, you spot that the front door is slightly ajar, and you can hear sounds of a meal going on inside. </p>
+
+<p>The door swings open at your push, and you step inside the farmhouse- basically one large room with a bed at one end, a kitchen range at the other, and a big dining table in between. </p>
+
+Seated at the table, on a bench that's bending beneath $npc1.his wrecking-ball weight, is the enormously fat $npc1.adjective ex-adventurer you met earlier. $npc1.He's hungrily eating a meal, though ‘stuffing $npc1.his face' would be a more accurate description- the table is piled high with truly delicious-looking, succulent treats- many of which are apple-based- that $npc1.he's ploughing through unstoppably. In a confined space $npc1.he looks even more colossally chubby than $npc1.he did outdoors, but you decide that $npc1.he might just have got fatter since you last saw $npc1.him- that barn-sized backside of $npc1.his is practically spilling over the rear of the bench, while $npc1.his stupendous stomach presses across the table whenever $npc1.he leans forwards to grab another large mouthful. $npc1.He's obviously enjoying $npc1.his meal to the full, completely engrossed in the pleasures of the table. 
+<<action "w" "talk" "Talk to $npc1.Name" "Talk to Sampson">><</action>>
+<<action "c" "food" "Offer $npc1.Name apple" "Offer Sampson apple">><</action>>
+<<action "s" "food" "Offer $npc1.Name ample apple" "Offer Sampson ample apple">><</action>>
+<<action "e" "fenceGate" "Leave $npc1.Name" "Leave Sampson">><</action>>
+
+<<case "doing clothes">>
+Walking up the creaky porch steps, which have obviously been bent beneath a sizeable weight in the past, you spot that the front door is slightly ajar, and you can hear sounds of a meal going on inside. You enter the farmhouse to find $npc1.Name still at the dining table, still eating. It may be the same meal as when you last left, it could be that $npc1.he's started on a whole new one. Regardless, $npc1.he looks even bigger than when you were last here. As you watch $npc1.he grabs yet another hunk of food from the dwindling piles on the table and chomps down on it. 
+<<action "w" "talk" "Talk to $npc1.Name" "Talk to Sampson">><</action>>
+<<action "c" "food" "Offer $npc1.Name apple" "Offer Sampson apple">><</action>>
+<<action "s" "food" "Offer $npc1.Name ample apple" "Offer Sampson ample apple">><</action>>
+<<action "e" "fenceGate" "Leave $npc1.Name" "Leave Sampson">><</action>>
+
+<<case "doing armor">>
+Walking up the creaky porch steps, which have obviously been bent beneath a sizeable weight in the past, you spot that the front door is slightly ajar, and you can hear sounds of a meal going on inside. You enter the farmhouse to find $npc1.Name STILL at the dining table, and STILL eating. Stuffed into $npc1.his pants, if $npc1.he grows much bigger $npc1.his armour will need resizing before $npc1.he's even worn it. The bench is now bending heavily beneath $npc1.his bulging backside, $npc1.his $npc1.tail firmly squashed between $npc1.his cheeks. As you watch, oblivious to your presence the overblown $npc1.adjective continues $npc1.his stupendous intake of daily calories. 
+<<action "w" "talk" "Talk to $npc1.Name" "Talk to Sampson">><</action>>
+<<action "c" "food" "Offer $npc1.Name apple" "Offer Sampson apple">><</action>>
+<<action "s" "food" "Offer $npc1.Name ample apple" "Offer Sampson ample apple">><</action>>
+<<action "e" "fenceGate" "Leave $npc1.Name" "Leave Sampson">><</action>>
+
+<<case "doing weapon">>
+Walking up the creaky porch steps, which have obviously been bent beneath a sizeable weight in the past, you spot that the front door is slightly ajar, and you can hear sounds of a meal going on inside. You duck through the now familiar doorway and find... that $npc1.Name Shire is still eating. $npc1.His pants and armour already look a size or two too small for $npc1.him, and pretty soon you'll be surprised if $npc1.he can even fit through the DOOR, let alone take up adventuring again. The exceedingly obese $npc1.adjective doesn't notice your presence, too busy working $npc1.his way through the remaining food on the farmhouse table. As space is cleared of food, you notice that it very soon becomes re-filled with <<=$npc1.nspecies>>flesh. 
+<<action "w" "talk" "Talk to $npc1.Name" "Talk to Sampson">><</action>>
+<<action "c" "food" "Offer $npc1.Name apple" "Offer Sampson apple">><</action>>
+<<action "s" "food" "Offer $npc1.Name ample apple" "Offer Sampson ample apple">><</action>>
+<<action "e" "fenceGate" "Leave $npc1.Name" "Leave Sampson">><</action>>
+
+<<case "doing strength">>
+Walking up the creaky porch steps, which have obviously been bent beneath a sizeable weight in the past, you spot that the front door is slightly ajar, and you can hear sounds of a meal going on inside. You enter the farmhouse, and find that $npc1.Name Shire still hasn't managed to stand. Though, from the way $npc1.he's contentedly tucking into the remains of $npc1.his meal, you suspect that $npc1.he's been 'distracted' for some little while. $npc1.He's certainly absorbed in eating, paying no attention to you as $npc1.he demolishes the last few snacks that have somehow survived $npc1.his siege up until now. 
+<<action "w" "talk" "Talk to $npc1.Name" "Talk to Sampson">><</action>>
+<<action "c" "food" "Offer $npc1.Name apple" "Offer Sampson apple">><</action>>
+<<action "s" "food" "Offer $npc1.Name ample apple" "Offer Sampson ample apple">><</action>>
+<<action "e" "fenceGate" "Leave $npc1.Name" "Leave Sampson">><</action>>
+
+<<case "doing freedom">>
+<p>As you approach the farmhouse, you can make out a large figure blocking the doorway. $npc1.Name Shire is hanging half-in, half-out of the door, wedged tight! $npc1.His great big belly is jiggling inches above the floor, and the struggling $npc1.species's efforts to free $npc1.himself have only succeeded in working up a sweat. </p>
+
+As you walk up the steps, the larger-than-life adventurer catches sight of you and $npc1.whinnies in greeting, trying not to blush. "Oh, hey there, li'l $p.buddy! I t-think some old enemy of mine must have put a CURSE on this door! Nghhh! It... It's SHRUNK on me! I'm stuck!" $npc1.He tries once again to HAUL $npc1.himself forward, the doorframe bulging forwards under the pressure but resolutely refusing to release $npc1.him. Defeated, $npc1.he sags slightly in the frame and holds out $npc1.his fat arms to you helplessly. "Shucks, any chance of a PULL?"  
+<<action "w" "quest" "Pull" "Complete Sampson's quest">>
+	<<set $eventCounterA = "pull Sampson">>
+<</action>>
+<<action "e" "fenceGate" "Leave $npc1.name" "Leave Sampson">><</action>>
+
+<</switch>>
+
+
+:: Finish eating contest [nobr cutscene] {"position":"975,3275","size":"100,100"}
+<p>The assistants come to take the dishes away, but leave no further courses. The announcer comes back out and shouts "Wow, lets have a great round of applause for our remaining contestants!" You look around and notice only 2 other contestants are still sitting at the table, their food stained bellies pushing hard into the table. Strewn about on the ground are several other grease-stained furs groaning and rolling around in pain and indigestion. Gold exchanges hands among the audience as bets on the winners and losers are resolved. </p>
+
+<p>"I'd like to thank everyone for coming out tonight, now let's clear out of hear before the farmer realizes we're trashing his barn." With that the audience and the contestants who can still walk leave from the back of the barn. The remaining overstuffed competitors are heaved out by their friends and eventually the barn is left like a whirlwind had passed through. </p>
+
+<<questReward $eatingContest>>
+<<doXP 80>>
+<<doGld 120>>
+<<action "c" "quest" "Mission complete!" "Dairy Farm">><</action>>
+
+
+:: Leave Sampson [nobr] {"position":"1300,2875","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "Leave $npc1.Name">>
+
+<<switch $eventCounterA>>
+
+<<case "thinking about it">>
+The enormous $npc1.adjective rumbles out a chuckle, making $npc1.his whole huge body quiver like pudding. "Shucks, guess I can't say fairer than that. Heck, even I can't make up my mind! But..." $npc1.He flicks the apple core over one bulky shoulder and reaches for a slab of apple cake, biting deeply into it. "While I'm deciding, it can't hurt to have a li'l snack..." Once the jumbo-sized $npc1.species resumes $npc1.his meal, you can't get much more than grunts out of $npc1.him and so you decide to leave $npc1.him to it.
+
+<<case "no pants">>
+"Hey, that'sh no problem" $npc1.he says cheerfully, sitting back further on the bench, which groans beneath $npc1.his blubbersome backside's. $npc1.His eyes are already straying back to $npc1.his meal, and $npc1.he swallows the last of $npc1.his apple. "Ther'sh... *gulp* No rush..." Rather unsurprisingly, $npc1.he returns $npc1.his attention to the tableful of food, and, not being able to get further conversation out of $npc1.him, you head outside. 
+
+<<case "no armor">>
+$npc1.Name's fat face creases roundly as $npc1.he smiles down at you. "Aww, shucks. Well that's ok." A fat $npc1.hand reaches for another tasty treat, and $npc1.he bites into it, cheeks bulging. "It's not like I'm going anywhere..."
+
+<<case "no weapon">>
+The humongous $npc1.species's full features fall slightly. "Aww, shucks. Well, I guess that's ok," $npc1.he glances at the piles of food still left on the table, having to crane $npc1.his neck to see past $npc1.his colossal chest and stomach. "I guess I can wait around until after my NEXT meal before setting out..."
+
+<<case "no gem">>
+"Aww, well hey, that's no problem," $npc1.Name $npc1.whickers confidently, wiping $npc1.his lips clean "Hrmphhh... Now that I'm nearly full, I feel stronger than ever! In fact, I think... maybe THIS time... //NGHHH//!" $npc1.His entire frame wobbles with exertion as $npc1.he strains to rise to $npc1.his $npc1.feet, but $npc1.he finally sinks back again, red in the face and puffing, without $npc1.his backside having risen a single inch this time. "Puff... puff... shucks, I think we ARE gonna need that Spectrum Gem after all..."
+
+<<case "no freedom">>
+There is absolutely no chance of squeezing past $npc1.Name through the door. You might have been well and truly stuck, but fortunately you find a large window on the far side of the farmhouse. Unbolting the shutters, you 
+
+<<if setup.weight() < 250>>slip out 
+<<elseif setup.weight() < 600>>wriggle out 
+<<else>>squeeze 
+<</if>>
+through it and find yourself standing in the farmyard. 
+
+<<case "doing freedom">>
+<p>With an apology, you head off with the promise 'to go get help'. You leave the gargantuanly chubby $npc1.species stuck in the doorway. </p>
+
+"Hey, y-you can't just leave me like this!" $npc1.he calls out after you. "At least leave me a SNACK or something!"
+
+<<default>>
+With no sign of $npc1.his stopping soon, you quietly tiptoe back out, leaving the enormous $npc1.adjective to $npc1.his apparently endless meal. 
+
+<</switch>>
+
+<<action "c" "leave" "Leave" "Dairy Farm">><</action>>
+
+
+:: Leave the dairy farmer {"position":"1300,2375","size":"100,100"}
+"I'll see you around!" $npc2.he says as $npc2.he waves goodbye. As you turn to leave $npc2.he reaches below the counter and picks up another bottle of milk and starts chugging it down. 
+
+<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+
+
+:: Milk Stand [nobr] {"position":"1175,2375","size":"100,100"}
+<<if $hour >= 9 and $hour <= 17>>
+	<p>You walk up to the stand to find a tall anthro $npc2.species tending the stand. $npc2.He's wearing worn blue coveralls over $npc2.his sizeable gut while foregoing any kind of shirt, exposing his beefy $npc2.color-furred arms. $npc2.His large curved horns look like they'd make it hard for $npc2.him to stand in there. As you walk up $npc2.he quickly slams down the bottle of milk $npc2.he was chugging down and greets you as $npc2.he wipes the milk moustache off $npc2.his face. </p>
+
+	<p>"Hello there! What can I do ya' for?" $npc2.he says with a wide smile on $npc2.his face. Hanging beside $npc2.him is a sign that says: </p>
+
+	<blockquote>Milk Bottle - 1 gold<br>
+	Milk jug - 5 gold</blockquote>
+	<<store>>
+	<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+	<<include "dairy quest links">>
+
+<<else>>
+	You walk up to the stand but find it bare. There's a sign hanging up with a little painting of a $npc2.color $npc2.species saying, 
+	<blockquote>"Be back at 9 AM". </blockquote>
+	<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+<</if>>
+
+
+:: Milking Shed [nobr] {"position":"1175,2550","size":"100,100"}
+<<set _milkStarted = setup.questStarted($madMilk)>>
+<<set _milkReady = setup.questReady($madMilk)>>
+<<set _milkComplete = setup.questCompleted($madMilk)>>
+
+<<set _cheeseStarted = setup.questStarted($madCheese)>>
+<<set _cheeseReady = setup.questReady($madCheese)>>
+<<set _cheeseComplete = setup.questCompleted($madCheese)>>
+
+/*If you haven't started either quest*/
+<<if !_milkStarted and !_cheeseStarted>>
+You walk up to the milking shed. A large water wheel behind the shed rotates as it's partially submerged in the river that curves around the farm. You pull on the door, but it's locked shut. You can hear the quiet rhytmic sound of machinery from within. 
+<<action "e" "fenceGate" "Dairy Farm">><</action>>
+
+/*If milk quest is ready, but you haven't started the cheese one*/
+<<elseif _milkReady and !_cheeseStarted>>
+<p>You walk up to the milking shed. A large water wheel behind the shed rotates as it's partially submerged in the river that curves around the farm. You pull on the door, but it's locked shut. You can hear the quiet rhythmic sound of machinery from within. </p>
+
+Nailed to one of the doors is a large, freshly-painted notice which simply reads: ''"BEWARE OF THE CHEESE"''
+<<action "e" "fenceGate" "Dairy Farm">><</action>>
+
+/*If you've started but not finished cheese quest*/
+<<elseif _cheeseStarted and !_cheeseReady>>
+<p>You walk up to the milking shed. A large water wheel behind the shed rotates as it's partially submerged in the river that curves around the farm. At the door you meet the obese $npc2.species, who produces a large key from the pocket of $npc2.his overalls. As the key rattles in the lock, over the sounds of machinery you hear a sudden thudding, as though something inside had been disturbed by the noise and was moving about. Then you hear a strange noise from inside- something like a cross between a wolf-howl and a buffalo bellow, only somehow... //cheesier//. </p>
+
+<p>The $npc2.species shudders, then puts $npc2.his hands to $npc2.his horns and shakes $npc2.his head. "I knew it was a mistake to experiment with predator milks. I should never have mixed curds like that." $npc2.He raises $npc2.his hands to the sky, appealing to it. "What has lactology ''DONE''?" </p>
+
+$npc2.He hurriedly finishes turning the key in the stout lock, and slides back the bolts securing the door. $npc2.He catches your eye, looking rather nervous. "Oh, hey, look, there's uhh.. a customer over by the milk stand. I'd better go see what they want, you can take this from here, right?" Without waiting for a reply $npc2.he retreats into the distance, beefy backside bouncing with unaccustomed haste, leaving you to deal with a very different kind of 'customer'. 
+<<action "c" "building" "Enter the milking shed">><</action>>
+<<action "e" "fenceGate" "Dairy Farm">><</action>>
+
+/*If both are done*/
+<<else>>
+You walk up to the milking shed. A large water wheel behind the shed rotates as it's partially submerged in the river that curves around the farm. You pull on the door, but it's locked shut. You can hear the quiet rhytmic sound of machinery from within. 
+<<action "e" "fenceGate" "Dairy Farm">><</action>>
+
+<</if>>
+
+
+:: Offer Sampson ample apple {"position":"1600,3000","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "Offer $npc1.Name $ampleApple.article $ampleApple.name">>
+
+<<if setup.numOwned($ampleApple) < 10>>
+You rummage frantically, but you find that you're just clean out of ample apples. <<if setup.numOwned($ampleApple) > 0>>At least out of whole ones. <</if>>
+<<action "c" "next" "Return" "Dairy Farm">><</action>>
+
+/*If you do have an apple*/
+<<else>>
+<<removeItem $ampleApple 10>>
+
+/*Selects dialogue based on quest*/
+<<switch $eventCounterA>>
+
+<<case "start clothes">>
+<p>You pull out an Ample Apple and wave it within the $npc1.species's orbit. Still chewing $npc1.his last mouthful, like magic $npc1.his eyes lock onto it from behind $npc1.his bulging cheeks, and for the first time $npc1.his fat face swivels towards you, second chin wobbling. $npc1.He gulps down the food in $npc1.his mouth, and a light seems to go on in $npc1.his eyes as $npc1.he recognises you. </p>
+
+<p>"Oh, hi there, li'l $p.buddy. Wow, is that for me? Thanks!" $npc1.He takes the oversized apple in one oversized, bloated mitt and sinks $npc1.his tombstone teeth into it as greedily as if $npc1.he hadn't eaten in hours. "Mshh... It's right near impossible to find a decent-sized apple these days. Seems like the ones 'round here get smaller every year!" Looking at $npc1.his gigantic frame, you can't help but wonder how much bigger ''$npc1.he's'' been getting every year. The magically-enlarged apple looks downright normal in $npc1.his $npc1.hands. "Visiting the farm?" $npc1.He gulps down a chunk of apple. "Aww, shucks, I'd have thought you'd be far too busy adventuring to pay an old gone-to-seed horse like me a call like this. Ain't much to do around here except eat–but that suits ME just fine! Still, it's sure swell to see you!"</p>
+
+<p>$npc1.He takes another huge bite out of the huge apple, clearly enjoying the rare treat, but as $npc1.he chews, $npc1.he begins to frown a little, one fat $npc1.hand reaching to press into the huge lower hemisphere of $npc1.his belly.</p>
+
+<p>"Of course," $npc1.he gulps down $npc1.his mouthful, "I guess there IS such a thing as overdoing it–maybe I AM getting kind of plump." KIND OF? $npc1.He continues chomping away at the apple. "Now in the old days, boy, I was the best-built adventurer there was! Throw that giant boulder into the ocean from West Beach? I got that sucker clean across to Jurassic Isle!" A deep BELCH catches $npc1.him by surprise, rattling the crockery, and $npc1.he chuckles a little, jiggling $npc1.his huge doughball of a belly. "Guess I'm turning into something of a boulder myself..."</p>
+
+<<action "c" "quest" "What should $npc1.name do?" "What should Sampson do">><</action>>
+
+
+<<case "doing clothes">>
+<p>You find an ample apple on your person and wave it to attract $npc1.Name's attention. Still eating, $npc1.his fat $npc1.hand whips out and catches hold of the massive apple before $npc1.he's even looked up. $npc1.He blinks when $npc1.he recognises you and swallows $npc1.his mouthful with a loud gulp. "Hrrmphhh... Sorry about that li'l $p.buddy, just... umm... practicing my reflexes, and... uhh..." $npc1.he glances guiltily at the diminished piles of food on the table, "...keeping my strength up." If $npc1.he gets much 'stronger' that bench will collapse underneath $npc1.him. $npc1.His face breaks into a broad smile as $npc1.he notices the size of the apple. $npc1.He opens $npc1.his mouth wide, showing off $npc1.his huge, razor-sharp teeth and takes a tremendous bite out of the apple with a loud CRUNCH. $npc1.He chews blissfully, relishing what is probably the first proper apple bite $npc1.he's had in quite a while. "So," $npc1.he mumbles through $npc1.his mouthful of apple, "Did you... mmsh... did you managshe to get my old pantsh fixshed up yet?"</p>
+
+<<if setup.hasItem($horsePantsFixed) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give pants">>
+	<</action>>
+<</if>>
+
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no pants">>
+<</action>>
+
+
+<<case "doing armor">>
+<p>You find an Ample Apple on your person and hold it out towards the $npc1.species just as $npc1.he munches into a pie larger than $npc1.his head, eyes shut in bliss. In the same motion, $npc1.his head swings around, eyes still closed, and CHOMPS into the apple as well, taking a huge bite out of it and narrowly missing your fingers. Only THEN does $npc1.he open $npc1.his eyes to see you wiggling your fingertips to make sure they're still there, just millimeters away from the missing chunk.</p>
+
+<p>"Whoops, ehe... shorry li'l $p.buddy, guesh I jusht don'tsh know my own shtrengsh shesh daysh..." $npc1.He starts grinning from ear to ear as $npc1.he surveys the giant apple, and without further delay, $npc1.he eagerly grabs it from you and starts taking giant-sized bites out of it. "'Course, you must be pretty strong yourself to be picking apples like this! I've gotta get me some of these when I go out adventuring again!" $npc1.He pauses to swallow with a loud gulp and pats $npc1.his enormous, soft stomach, which is now covering even more of the table's surface. "Hrrrmphhh... Anyway, did you manage to get my armour fixed up?"</p>
+
+<<if setup.hasItem($horseArmorFixed) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give armor">>
+	<</action>>
+<</if>>
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no armor">>
+<</action>>
+
+
+<<case "doing weapon">>
+<p>You produce an ample apple that you had handy and wave it at $npc1.Name, but $npc1.he's too busy eating to notice. So instead you hold the oversized apple up to your mouth and take a comparatively tiny bite out of it. The SCRUNCH cuts through the air like a knife, and immediately $npc1.Name's ears stiffen. $npc1.His fat arm whips out to grab the apple and $npc1.he spins around (well, turns a little, at any rate), a thunderous look on $npc1.his fat face.</p>
+
+<p>"HEY, that's MI–! Oh..." $npc1.He sees who it is and stops, blushing slightly. "Shucks, sorry about that, li'l $p.buddy, but for a second I thought some varmint was trying to STEAL some of MY food..." $npc1.He keeps hold of your apple, though, as $npc1.he eyes it contemplatively and then scrunches into it. $npc1.He $npc1.whinnies contentedly as juice runs down $npc1.his chin. "'Course, I could only dream of getting my $npc1.hands on apples like this 'round here..." $npc1.He sighs longingly at the thought. "Guess that's just another reason to go out adventuring again, eh?" You're not sure how much more adventuring $npc1.he'll be doing if $npc1.he keeps eating like this. "Hrrrmphh... So did you manage to find me a weapon, then? If I don't get to adventuring soon, I won't be back in time for dinner."</p>
+
+<<if setup.hasItem($axe) >= 0 or setup.hasItem($giantAxe) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give weapon">>
+	<</action>>
+<</if>>
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no weapon">>
+<</action>>
+
+
+<<case "doing strength">>
+<p>You're tempted to just bounce the Ample Apple off $npc1.Name's stupendous stomach, but instead you proffer it, holding it out rather gingerly for $npc1.him to see from the corner of $npc1.his eye. Even with $npc1.his cheeks jammed full of food, $npc1.his fat face still swings towards it hungrily. $npc1.His eyes light up, and without even questioning where the titanic fruit came from, $npc1.he begins taking tremendous bites out of it. Only after $npc1.he's devoured a considerable portion of the apple does $npc1.he notice your head peeking out from behind its remains. </p>
+
+<p>"Well hi there, li'l $p.buddy! Did you find that just for me? Thanks! You wouldn't believe how hard it is to find a proper-sized apple 'round these parts!" You politely refrain from questioning how "proper" $npc1.his own size is. "Good thinking–s'HEALTHY, right?" $npc1.he says around a bulging mouthful. Much "healthier" and $npc1.Name's going to pop. $npc1.He swallows and says, "So did you manage to get a Spectrum Gem yet?"</p>
+
+<<if setup.hasItem($spectrumGem) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give gem">>
+	<</action>>
+<<else>>
+	<<action "n" "leave" "Not yet." "Leave Sampson">>
+		<<set $eventCounterA = "no gem">>
+	<</action>>
+<</if>>
+
+<</switch>>
+
+<</if>>
+
+
+:: Offer Sampson apple [nobr] {"position":"1475,3000","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "Offer $npc1.Name $apple.article $apple.name">>
+
+<<if setup.hasItem($apple) < 0>>
+You rummage frantically, but you find that you're just clean out of apples. 
+<<action "c" "next" "Return" "Dairy Farm">><</action>>
+
+/*If you do have an apple*/
+<<else>>
+<<removeItem $apple>>
+
+/*Selects dialogue based on quest*/
+<<switch $eventCounterA>>
+
+<<case "start clothes">>
+<p>You pull out an apple, <<if $top.name != $shirtless.name>>
+buff it rather self-consciously on your $top.name, <</if>>and wave it within the $npc1.species's orbit. Still chewing $npc1.his last mouthful, like magic $npc1.his eyes lock onto it from behind $npc1.his bulging cheeks, and for the first time $npc1.his fat face swivels towards you, second chin wobbling. $npc1.He gulps down the food in $npc1.his mouth and a light seems to go on in $npc1.his eyes as $npc1.he recognises you. </p>
+
+<p>"Oh, hi there, li'l $p.buddy. Thanks!" $npc1.He takes the apple in one bloated mitt and sinks $npc1.his tombstone teeth into it as greedily as if $npc1.he hadn't eaten in hours. "Mshh... Visiting the farm?" $npc1.He gulps down a chunk of apple, "Aww, shucks, I'd have thought you'd be far too busy adventuring to pay an old gone-to-seed $npc1.species like me a call like this. Ain't much to do around here except eat- but that suits ME just fine! Still, it's sure swell to see you!"
+</p>
+
+<p>$npc1.He takes another bite from the apple, practically halving it, but as $npc1.he chews $npc1.he frowns a little, one fat $npc1.hand reaching to press into the huge lower hemisphere of $npc1.his belly. </p>
+
+<p>"Of course," $npc1.he gulps down $npc1.his mouthful, "I guess there IS such a thing as overdoing it- maybe I AM getting kind of plump." //KIND OF?// $npc1.He takes a last bite out of the apple. "Now in the Old Days, boy, I was the best-built adventurer there was! Throw that giant boulder into the ocean from West Beach? I got that sucker clean across to Jurassic Isle!" a deep ''BELCH'' catches $npc1.him by surprise, rattling the crockery, and $npc1.he chuckles a little, jiggling $npc1.his huge doughball of a belly. "Guess I'm turning into something of a boulder myself..." </p>
+
+<<action "c" "quest" "What should $npc1.Name do?" "What should Sampson do">><</action>>
+
+<<case "doing clothes">>
+You find an apple on your person and wave it to attract $npc1.Name's attention. Still eating, $npc1.his fat hand whips out and catches hold of the apple before $npc1.he's even looked up. $npc1.He blinks when $npc1.he recognises you, and swallows $npc1.his mouthful with a loud gulp. "Hrrmphhh... Sorry about that li'l $p.buddy, just... umm... practicing my reflexes, and... uhh..." $npc1.he glances guiltily at the diminished piles of food on the table, "...keeping my strength up." If $npc1.he gets much ‘stronger' that bench will collapse underneath $npc1.him. "So," $npc1.he smiles broadly, chomping into the apple with a loud CRUNCH. "Did you... mmsh... did you managshe to get my old pantsh fixshed up yet?" 
+
+<<if setup.hasItem($horsePantsFixed) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give pants">>
+	<</action>>
+<</if>>
+
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no pants">>
+<</action>>
+
+<<case "doing armor">>
+<p>You find an apple on your person and hold it out towards the $npc1.species just as $npc1.he munches into a pie larger than $npc1.his head, eyes shut in bliss. "In the same motion $npc1.his head swings around, eyes still closed, and CHOMPS into the apple as well, neatly slicing it in half with $npc1.his huge teeth. Only THEN does $npc1.he open $npc1.his eyes, to see you staring at the halved apple in your fingertips. </p>
+
+"Whoops, ehe... shorry li'l $p.buddy, guesh I jusht don'tsh know my own shtrengsh shesh daysh...." $npc1.he swallows $npc1.his mouthful with a loud gulp and pats $npc1.his enormous, soft stomach, now covering even more of the table's surface. "Hrrrmphhh... Anyway, did you manage to get my armour fixed up?"
+
+<<if setup.hasItem($horseArmorFixed) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give armor">>
+	<</action>>
+<</if>>
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no armor">>
+<</action>>
+
+<<case "doing weapon">>
+<p>You produce an apple that you had handy and wave it at $npc1.Name, but $npc1.he's too busy eating to notice. So instead you hold the apple up to your mouth and bite into it. The SCRUNCH cuts through the air like a knife and immediately $npc1.Name's ears stiffen. $npc1.His fat arm whips out to grab the apple and $npc1.he spins around (well, turns a little, at any rate), a thunderous look on $npc1.his fat face. </p>
+
+"HEY, that's MI-! Oh..." $npc1.He sees who it is and stops, blushing slightly. "Shucks, sorry about that, li'l $p.buddy, but for a second I thought some varmint was trying to STEAL some of MY food..." $npc1.He absent-mindedly keeps hold of your apple, though, then scrunches into it, juice running down $npc1.his chin as $npc1.he $npc1.whinnies contentedly. "Hrrrmphh.... So did you manage to find me a weapon, then? Only if I don't get to adventuring soon, I won't be back in time for dinner." 
+
+<<if setup.hasItem($axe) >= 0 or setup.hasItem($giantAxe) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give weapon">>
+	<</action>>
+<</if>>
+<<action "n" "leave" "Not yet." "Leave Sampson">>
+	<<set $eventCounterA = "no weapon">>
+<</action>>
+
+<<case "doing strength">>
+You're tempted to just bounce the apple off $npc1.Name's stupendous stomach, but instead you proffer it, holding it out rather gingerly for $npc1.him to see from the corner of $npc1.his eye. Even with $npc1.his cheeks jammed full of food, $npc1.his fat face still swings towards it hungrily. A light comes on behind $npc1.his eyes and $npc1.he focusses beyond the apple and onto you. "Well hi there, li'l $p.buddy! That for me? Thanks!" $npc1.He's taken it and bitten into it before you can even respond. "Good thinking- s'HEALTHY, right?" $npc1.he says around $npc1.his bulging mouthful. Much 'healthier' and $npc1.Name's going to pop. $npc1.He swallows and says, "So did you manage to get a Spectrum Gem yet?" 
+
+<<if setup.hasItem($spectrumGem) >= 0>>
+	<<action "c" "quest" "Complete $npc1.Name's quest" "Complete Sampson's quest">>
+		<<set $eventCounterA = "give gem">>
+	<</action>>
+<<else>>
+	<<action "n" "leave" "Not yet." "Leave Sampson">>
+		<<set $eventCounterA = "no gem">>
+	<</action>>
+<</if>>
+
+<</switch>>
+
+<</if>>
+
+
+:: Pasture {"position":"1550,2425","size":"100,100"}
+<p>You walk up to the pasture and lean on the wooden fence. Spread out in front of you is a large field several acres in size. On the distant edge of the pasture you can just barely see the $sunlight glinting off a large river. </p>
+
+<p>Standing out in the field there are several of perhaps the fattest <<=$cattle.fname>>s known in recorded history. Each of them looking like large furred barrels, their fat guts sagging almost to the ground and expanding outward making them look almost spherical. They're all sporting large udders swollen with gallons of milk that sloshes back and forth with every small step they take. </p>
+
+They're all very diligently searching out and devouring what little grass remains in the well grazed fields. If the grass in the pasture has been growing at the same rate the grass in the rest of the grasslands have been then it's pretty easy to see how the cattle are managing to stay so preposterously well fed.
+
+<<action "c" "fenceGate" "Head Back" "Dairy Farm">><</action>>
+
+
+:: Quests for the dairy farm [nobr] {"position":"1175,2250","size":"100,100"}
+<<switch $eventCounterB>>
+
+<<case "get herd quest">>
+
+"Well, now that you ask, I have been having problems with the local wildlife indulging themselves upon my livelihood. Every morning I come out here and there's some fatass $lion.species or $cheetah.species stranded with a bellyful of one of my poor defenseless <<=$cattle.fname>>s. So far I've just been rolling off into the river where they can float down stream and become somebody else's problem, but I sure would appreciate it if you go out and rough a few of them up for me and try to scare them offa' my land. I'll pay you some gold if you do!" 
+<<getQuest $defendingTheHerd>>
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "working on herd quest">>
+"I'd really appreciate it if you could take care of some of those darn predators out in the grasslands."
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "turn in herd quest">>
+"Did you finally show those dang predators what for? Thank you so much! I'd take care of them myself, but I've been so busy keeping up with my gals' milked as is that I don't have time any more. I doubt they'll stay away for long, but hopefully it'll push them back a bit. Thank you!"
+<<questReward $defendingTheHerd>>
+<<action "c" "next" "Thank you!" "Milk Stand">><</action>>
+
+<<case "get milk machine quest">>
+<p>"Since you've been such a good help roughing up the wildlife so far, I was wondering if you could help me with a slightly more dangerous target." $npc2.He looks around furtively, making sure nobody's around to hear, before $npc2.he leans in and speaks to you in hushed voice. "Between you and me I've been having some... //mechanical problems//. Namely, I had this large steam powered milking machine built to help me deal with my increased work load. Unfortunately one day it just sort of went berserk, busted out of the milk shed, and has kind of been roaming the hills ever since. Every night it comes back and milks my girls dry before rollin' out to the hills to pump random passersby full of milk just to repeat the process over and over again. It seems almost... //maniacally// driven to milk my <<=$cattle.fname>>s as much as possible. And to make room for more it 'stores' extra milk into whatever else it can get its claws on." $npc2.He looks around again to make sure nobody's snooping around. 
+</p>
+
+"Obviously this puts me in a bit of a pickle as it's sorta my fault the mad machine is out there terrorizing our fair citizens, which is obviously bad for business. Not to mention it's basically robbing me of my livelihood and redistributin' it for free! Anyways, I'd be glad if you could sorta'... disable it and come back to tell me about it. I can haul it back here myself." 
+<<getQuest $madMilk>>
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "working on milk machine quest">>
+"I'd really appreciate if you could take care of that crazed milk machine, before anybody else gets hurt." 
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "turn in milk machine quest">>
+"Did you finally disable that machine? ''Terrific!'' I knew I probably shouldn't have rerouted its milk storage into its steam engine. The //'Perpetually milk powered steam engine'// certainly seemed like a good idea at the time! I won't soon be making that mistake again... although I still think I could make it work... hmmmmmm... //yess//... heh... heh heh... ha ha ha!" $npc2.He seems lost in devious thought for several moments. "Er, oh, oops! Sorry, anyway, here's your reward. Thank you so much for your help!" 
+<<questReward $madMilk>>
+<<action "c" "next" "Thank you?" "Milk Stand">><</action>>
+												
+<<case "get cheese quest">>
+<p>"Oh, uhhhhh. I've basically got everythin' under control." $npc2.he says nervously as $npc2.he gives a sidelong glance towards the milking shed. There's a freshly painted sign tacked accross the door saying ''"BEWARE OF CHEESE"''. </p>
+
+"Uhh, oh, it's nothing. Nothing big. Ok, quite big. I'm just having a little trouble with this one particular cheese." Catching your sceptical look $npc2.he adds, "No, //seriously//, that thing is dangerous. I can't even go in there any more!" Curiouser and curiouser. The bulging $npc2.adjective scratches $npc2.his head, plainly embarrassed. "Say, you're an adventurer, right? Used to dealing with tough situations? Uhh... I'd greatly appreciate it if you could help me out." $npc2.He gives you a look that is plainly desperate. "I'd pay you plenty!" 
+<<getQuest $madCheese>>
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "working on cheese quest">>
+"So uhh, any time you feel ready to deal with our little problem," $npc2.he looks towards the milk shed which takes that opportunity to emit a rumbling bellow, "I'd greatly appreciate it."
+<<action "c" "next" "I'll see what I can do." "Milk Stand">><</action>>
+
+<<case "turn in cheese quest">>
+"You ''DID'' it?" The $npc2.species looks at you incredulously, then hurriedly corrects $npc2.himself. "I mean... you ''//DID//'' it! Wow." $npc2.He beams at you and wipes $npc2.his brow. "Thanks for that, $p.brother. I owe you one! I thought I was never going to get my milking shed back," $npc2.he chortles, hands on $npc2.his bulging stomach. "Well, I’ve learned my lesson //this// time! No more cheese-making for me! Instead, I’m gonna branch out into yoghurt and ice cream. Although... I’ve got to ask..." $npc2.His expression becomes a little vacant, and $npc2.he asks you wistfully, "What did it TASTE like?"
+<<questReward $madCheese>>
+<<action "c" "next" "Just take the money" "Milk Stand">><</action>>
+																
+<</switch>>
+
+
+:: Quit eating contest [nobr] {"position":"1100,2900","size":"100,100"}
+/*Quit before it starts*/
+<<if $eventCounterA == 0>>
+Realising that you're probably not up to eating in the upcoming round, you quietly stand up to leave your place. Having completed 0 rounds, you earn 0 gold for getting that far! You could have at least tried. 
+
+
+/*Round 1*/
+<<elseif $eventCounterA < 30>>
+
+/*If you quit at the end of a round*/
+<<if $eventCounterB == 0>>
+Realising that you're probably not up to eating in the upcoming round, you quietly stand up to leave your place. Having completed 1 round, you earn 20 gold for getting that far. At least you tried. 
+<<questReward $eatingContest>>
+<<doXP 10>>
+<<doGld 20>>
+
+
+/*If you quit mid round*/
+<<else>>
+You decide enough is enough, you are too full and feel that a humble defeat is better than an embarrassing loss. You push your plate away, bowing out from the contest. Because you didn't complete the whole round, you've been disqualified. While the loss seems to disappoint you, you feel slightly better that you can still walk away rather than having to be carted off to the hospital. 
+<<questReward $eatingContest>>
+
+<</if>>
+
+
+/*Round 2*/
+<<elseif $eventCounterA < 40>>
+
+/*If you quit at the end of a round*/
+<<if $eventCounterB == 0>>
+Realising that you're probably not up to eating in the upcoming round, you quietly stand up to leave your place. Having completed 2 rounds, you earn 40 gold for getting that far. Pretty good for a new guy. 
+<<questReward $eatingContest>>
+<<doXP 20>>
+<<doGld 40>>
+
+/*If you quit mid round*/
+<<else>>
+You decide enough is enough, you are too full and feel that a humble defeat is better than an embarrassing loss. You push your plate away, bowing out from the contest. Because you didn't complete the whole round, you've been disqualified. While the loss seems to disappoint you, you feel slightly better that you can still walk away rather than having to be carted off to the hospital. 
+<<questReward $eatingContest>>
+
+<</if>>
+
+
+/*Round 3*/
+<<else>>
+
+/*You can only quit mid-round, because at the end, you win*/
+You decide enough is enough, you are too full and feel that a humble defeat is better than an embarrassing loss. You push your plate away, bowing out from the contest. Because you didn't complete the whole round, you've been disqualified. While the loss seems to disappoint you, you feel slightly better that you can still walk away rather than having to be carted off to the hospital. 
+<<questReward $eatingContest>>
+
+
+<</if>>
+
+<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+
+
+:: Talk to Sampson {"position":"1425,2750","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "Talk to $npc1.Name">>
+
+You try to attract the big $npc1.fella's attention, but the sumo-sized $npc1.species is too engrossed in $npc1.his meal to even notice your presence. As you watch $npc1.he picks up $npc1.his next chubby handful of food and stuffs it between $npc1.his plump lips. 
+<<action "c" "fenceGate" "Leave" "Dairy Farm">><</action>>
+
+
+:: Uncommon Taste Reward [nobr] {"position":"1550,2550","size":"100,100"}
+<<set _tempQuest = $quests[setup.questIndex($uncommonTaste)]>>
+
+<<switch $eventCounterA>>
+<<case 1>><<set _tempQuest.item = $warhammer>>
+<<case 2>><<set _tempQuest.item = $splintArmor>>
+<<case 3>><<set _tempQuest.item = $spectrumGem>>
+<<case 4>><<set _tempQuest.item = $bookOfCrystals>>
+<<case 5>><<set _tempQuest.item = $lightLance>>
+<<case 6>><<set _tempQuest.item = $boxOfDonuts>>
+<</switch>>
+
+<p>"You want that? Sure thing!" Your enormously fat friend chuckles, bulk quivering as $npc1.he hands the _tempQuest.item.name over. "There’s a funny story that comes with that, it was when I-" perhaps mercifully, $npc1.his story is interrupted by a deafening, subterranean growl from $npc1.his belly. $npc1.He winces slightly, and looks at the sky. "Oof! Sorry about that, but I guess it’s time for some chow- all this jawing has really worked up an appetite! Best of luck, and make sure to look me up another time if you ever want to hear the rest of the story." </p>
+
+And with that the huge beast slowly hauls $npc1.himself to $npc1.his $npc1.feet, and with a wave $npc1.he lumbers slowly towards the farmhouse, barnlike backside swaying in $npc1.his wake. 
+
+<<questReward $uncommonTaste>>
+<<action "c" "fenceGate" "Dairy Farm">><</action>>
+
+
+
+:: Wait for eating contest to start [nobr cutscene] {"position":"975,2875","size":"100,100"}
+<<createNPC "random" "random" 1>>
+<<createNPC "random" "random" 2>>
+<<createNPC "random" "random" 3>>
+
+<p>While waiting, you look at those on either side of you. To your right, is a large $npc2.species and to your left, an even larger $npc3.species. Both have stern looks on their faces, they're very serious. You start to wonder if it was such a good idea to enter on behalf of what could be someone more experienced than you. Your doubts are pushed aside when the announcer speaks up. </p>
+
+<p>"Welcome all ladies and gentlefurs. Today is a big day for us all and a bigger day for the contestants. Each round is larger than the one before, who will be the victor?!" As he finishes, he turns his ear to the spectators as if he's unable to hear them. They shout their approval with yelling, various calls to the contestants and applause. The announcer laughs, returning to his loud voice, "It seems there's discordance between the spectators, so let's get this contest running!" </p>
+
+The announcer quickly rattles off all of the rules. First is that no extra food may be brought except for milk and water to help wash down the food. The second rule is to eat all the food per round. Those who pass out will be brought to the hospital for medical treatment and disqualified. Those who quit part way through the round are also disqualified. In general your goal is to eat through each round completely using only milk or water in case you need a bit of refreshment. With that, you feel you're ready to compete... unless you wish to give up now. 
+
+<<set $eventCounterB = 3>>
+
+<<action "c" "food" "Eat!" "Eating contest Round 1">>
+	<<set $eventCounterA = 1>>
+<</action>>
+
+<<action "n" "surrender" "Quit eating contest">>
+	<<set $eventCounterA = 0>>
+<</action>>
+
+
+:: What should Sampson do {"position":"1350,3000","size":"100,100"}
+/* FIXES AND EDITS - Modify title for gender/species change reasons */
+<<setPassageTitle "What should $npc1.Name do?">>
+
+<p>$npc1.He holds the apple core between a fat thumb and forefinger and looks at it speculatively, then looks down at you. </p>
+
+<p>"What do YOU think? Should I come out of retirement?" At that point $npc1.his gut grumbles loudly enough for you to feel it through your $p.feet. "Hrrrmphh... On the other hand..." $npc1.he casts a rather wistful look down at the table groaning under the weight of so much food, and of $npc1.his overblown belly. "... Turns out I really, really //LOVE// eating. Should I give up all of THIS, just because I've got a little... round?" </p>
+
+<<action "c" "quest" "Come out of retirement!" "Come out of retirement">>
+<</action>>
+
+<<action "n" "leave" "I'll have to think about it..." "Leave Sampson">>
+	<<set $eventCounterA = "thinking about it">>
+<</action>>
+
+
+:: dairy quest links [nobr] {"position":"1300,2250","size":"100,100"}
+<<set _herdStarted = setup.questStarted($defendingTheHerd)>>
+<<set _herdReady = setup.questReady($defendingTheHerd)>>
+<<set _herdComplete = setup.questCompleted($defendingTheHerd)>>
+
+<<set _milkStarted = setup.questStarted($madMilk)>>
+<<set _milkReady = setup.questReady($madMilk)>>
+<<set _milkComplete = setup.questCompleted($madMilk)>>
+
+<<set _cheeseStarted = setup.questStarted($madCheese)>>
+<<set _cheeseReady = setup.questReady($madCheese)>>
+<<set _cheeseComplete = setup.questCompleted($madCheese)>>
+
+/*===Herd Quest===*/
+<<if !_herdStarted>>
+	<<set $eventCounterB = "get herd quest">>
+	<<action "e" "quest" "Do you need any help?" "Quests for the dairy farm">><</action>>
+
+<<elseif _herdStarted>>
+	
+	<<if  !_herdReady and !_herdComplete>>
+		<<set $eventCounterB = "working on herd quest">>
+		<<action "e" "quest" "Still working on that quest." "Quests for the dairy farm">><</action>>
+
+	<<elseif _herdReady and !_herdComplete>>
+		<<set $eventCounterB = "turn in herd quest">>
+		<<action "e" "quest" "I finished your quest!" "Quests for the dairy farm">><</action>>
+	<</if>>
+
+<</if>>
+
+/*===Milk Machine Quest===*/
+<<if _herdComplete and !_milkStarted>>
+	<<set $eventCounterB = "get milk machine quest">>
+		<<action "e" "quest" "Do you need any more help?" "Quests for the dairy farm">><</action>>
+	
+<<elseif _milkStarted>>
+
+	<<if  !_milkReady and !_milkComplete>>
+		<<set $eventCounterB = "working on milk machine quest">>
+		<<action "e" "quest" "Still working on that quest." "Quests for the dairy farm">><</action>>
+
+	<<elseif _milkReady and !_milkComplete>>
+		<<set $eventCounterB = "turn in milk machine quest">>
+		<<action "e" "quest" "I finished your quest!" "Quests for the dairy farm">><</action>>
+	<</if>>
+<</if>>
+
+/*===Cheese Quest===*/
+<<if _milkComplete and !_cheeseStarted>>
+	<<set $eventCounterB = "get cheese quest">>
+		<<action "e" "quest" "Do you need any more help?" "Quests for the dairy farm">><</action>>
+	
+<<elseif _cheeseStarted>>	
+	<<if  !_cheeseReady and !_cheeseComplete>>
+		<<set $eventCounterB = "working on cheese quest">>
+		<<action "e" "quest" "Still working on that quest." "Quests for the dairy farm">><</action>>
+
+	<<elseif _cheeseReady and !_cheeseComplete>>
+		<<set $eventCounterB = "turn in cheese quest">>
+		<<action "e" "quest" "I finished your quest!" "Quests for the dairy farm">><</action>>
+	<</if>>
+
+<</if>>
+
+

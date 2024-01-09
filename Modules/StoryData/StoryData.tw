@@ -1,0 +1,24 @@
+:: StoryData
+{
+	"ifid": "E6BB8700-CDF1-4F0C-8375-398067E1F8E6",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "Introduction",
+	"tag-colors": {
+		"Human": "red",
+		"beach": "blue",
+		"cutscene": "red",
+		"downtime-mod": "blue",
+		"feeder-expansion": "yellow",
+		"fixes-and-edits": "orange",
+		"forest": "green",
+		"grasslands": "yellow",
+		"jungle": "green",
+		"mod-support": "red",
+		"pokemod": "blue",
+		"widget": "purple"
+	},
+	"zoom": 0.6
+}
+
+

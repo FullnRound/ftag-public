@@ -1,0 +1,360 @@
+:: Swamp [swamp] {"position":"3675,1775","size":"200,200"}
+
+<<set _species = either($tiger, $fox, $rabbit)>>
+<<createFixedNPC "Elara" 1>> 
+
+<p>As you make your way through the dense, murky swampland, the air is heavy with the scent of damp earth and decaying vegetation. The thick canopy above filters the sunlight into a greenish haze, casting eerie shadows on the waterlogged ground below. The swamp is alive with the sounds of distant animal calls and the occasional splash of water, hinting at the presence of unseen creatures lurking beneath the surface.</p>
+
+<p>In this almost otherworldly setting, a peculiar and startling sight interrupts your path. Lying just off the trail is a figure so unusual it takes a moment for your mind to make sense of it. It's a $npc1.species, but $npc1.his condition defies natural explanation. $npc1.He's been massively swollen, $npc1.his body bloated to a size that seems impossible. You assume this must be the effects of the infamous Puff Fungus of this area.</p>
+
+<p>As you approach cautiously, the details of $npc1.his transformation become more apparent.The $npc1.species's waist is gargantuan, measuring around four feet in circumference. It's as if $npc1.his body has been inflated to the limits of its skin, stretched smooth and shiny like the surface of a balloon. $npc1.His once sleek and agile form is now a spherical mass, anchored to the ground by its own weight.</p>
+
+<p>$npc1.His arms and legs, swollen to extreme proportions, jut out from $npc1.his round body. They resemble less the limbs of a $npc1.species and more like plump, overstuffed sausages, devoid of their usual dexterity. $npc1.His limbs twitch and wiggle feebly, the only movement $npc1.he seems capable of in $npc1.his inflated state.</p>
+
+<p>Suddenly, there's a noticeable shift in $npc1.his condition. $npc1.He lets out a deep, resonating burp, and a puff of green gas escapes $npc1.his lips. It's a small but visible release, and you watch in surprise as $npc1.his body deflates slightly with the expulsion of the gas. The swelling in $npc1.his waist reduces just a bit, the skin loosening ever so slightly from its previously taut state.</p>
+
+<p>The bloated $npc1.species lies there, seemingly unaware of your presence, $npc1.his eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...</p>
+
+<<action "4" "forest" "Talk" "Talk to Swollen Adventurer">><</action>>
+
+/* <<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>></p>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($fatWolf, $obeseBear, $lemonSlime, $syrupVines, $fruitDryad)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+		<<startCombat>>
+	<<else>>
+		<<include "Ambient swamp">>
+		<<include "swamp randomization">>
+	<</if>>
+	
+<<else>>
+<p>The local swamp has provided a constant supply of wood and game for the local populace as well as being quite serene and beautiful to travel through. Lately the swamp has become a somewhat more abundant place. Trees creak under the weight of their fruit and the swamp creatures have been gorging themselves on the increasingly lush swamp. It's as though all the animals are fattening themselves up for a winter that never comes. The predators too are taking advantage of this bounty and have been devouring their fatter slower prey indiscriminately. The predators have even become so bold as to start attacking people who venture into the swamp. More worrisome than the common predators are stories of practitioners of dark magic hiding out in the woods, kidnapping random passers by. There's also tales of strange creatures never before seen by any person alive. </p>
+
+<<include "Ambient swamp">>
+<<include "swamp randomization">>
+
+<</if>> */
+
+
+:: Talk to Swollen Adventurer [swamp] {"position":"3525,1875","size":"100,100"}
+<<set $request = "">>
+<<set $hasRun = false>>
+<<set $character = "Elara">>
+
+Chat with the swollen adventurer:
+<div class="block--background">
+	<div class="chatbot__overview">
+		<ul class="chatlist"/>
+	</div>
+	<div class="chatbox-area">
+		<form action="" id="chatform">
+			<<textbox "$request" "">>
+			<<link "Send">>
+				<<run 
+					addChat($character, {"role": "user","content": $request});
+					makeOpenAIRequest($character, $request);
+					>>
+			<</link>>
+		</form>
+	</div>
+</div>
+
+<<script>>
+console.log(State.variables.npcs.Elara);
+postdisplay['createConversation'] = function (taskName) {
+    if (!State.variables.hasRun) {
+        var character = State.variables.character;
+        createConversation(character);
+        State.variables.hasRun = true;
+    }
+};
+<</script>>
+
+<<action "4" "forest" "Return to Swamp" "Forest">><</action>>
+
+:: Ambient swamp [nobr swamp] {"position":"3675,1675"}
+<<switch $daytime>>
+
+<<case "night">>
+<<switch random(1,6)>>
+<<case 1>>
+The moon rises, and its shine along with that of starlight seeps through the silver-tinted canopy leaves and scantly illuminates the mysterious nightly happenings of the swamp, that include far more than just nocturnal hunting and gurgling of both carnivorous and ruminant bellies filled during midday and twilight. 
+
+<<case 2>>
+As the rustle of elusive, yet hefty <<=$bat.plural>> and likewise well-fed night time birds fills the air above, hisses and rattling start coming from the underbrush, and strange, bizarrely moving silhouettes can be spotted against the eldritch glow coming from the heart of the swamp.
+
+<<case 3>>
+Unsettling whispers come from everywhere, resonating from tree to tree and floating through the bushes and grass, and the eerie shapes are moving ever closer to your hiding place that doesn't feel so secure now, and the plants themselves seem to move subtly on their own accord without any wind prompting them. 
+
+<<case 4>>
+Chittering and clicking come from inside the mossy tree stumps, and the branches above bend with creaking effort, as though reaching for something, and the ghostly murmurs around you seems so obnoxiously mocking that you cannot help feeling that those thing are making fun of you. 
+
+<<case 5>>
+As the night draws nearer the end, the frightening whispers abate and withdraw back into the sylvan depths, leaving in their place the terrible hungry noises from nocturnal beasts on the prowl, and at times you could swear you heard screams for help coming from some unlucky traveller too far away to locate, let alone lend a hand. 
+
+<<default>>
+The creatures of the deep woods have not all gone away, but are steadily retreating, lurching past the trees on the edges of your sight, and the swamp air is unmistakably frosty with a promise of timely sunrise, with no other creature allowing itself to be heard or seen as the first calls of the daytime birds greet the coming morning.
+
+<</switch>>
+
+<<case "morning">>
+<<switch random(1,6)>>
+<<case 1>>
+Even the wild things consider this crispy cold hour early, and it's eerily quiet under the treecover, seeing as most of the nocturnal beasts have already crawled into their dens to sleep, and the daylight critters are still shy about leaving their dens. 
+								
+<<case 2>>
+The milky white light of the setting sun starts making its way through the dense canopy, banishing the last night birds and beasts and driving the rest to start their early foraging and hunting. 
+								
+<<case 3>>
+A hodgepodge chorus of small birds fills the morning air, and life awakens on the swamp's shadowy floor, with little creatures scurrying around and larger forms rustling the bushes and cracking dry branches under their feet and paws. 
+								
+<<case 4>>
+As more light drains through the tangle of leaves and branches overhead, the most of the daylight-loving inhabitants of the woods emerge from their dense and start their food chain interplay, and you start hearing the warning cries of prey creatures and the growls of those preying on the former. 
+								
+<<case 5>>
+Even though it is still significantly shady under the tree crowns, the illumination is enough to let you see the incredible diversity of the waking wildlife from your hideout, and both the cunning, social $wolf.species packs and the jumpy $deer.species show clear signs of benefiting from the land's recent abundance, flaunting heavy bellies and jiggling rumps. 
+								
+<<default>>
+The sundry fluttering and twittering birds above gradually lose their caution as the day unfolds, sometimes darting by so low you could try and catch one, especially since the recent diets of the local aviary have made it harder for their plump rounded bodies to defy gravity. 
+								
+<</switch>>
+
+
+<<case "day">>
+<<switch random(1,6)>>
+<<case 1>>
+The swamp is bustling with all sorts of activities this time of day, and the strange things one would never even associate with the sylvan habitat roam the limited spaces between the treetrunks and dangling vines, while the more conventional beasts and birds practically have to wait in line of their beastly cousins in order to follow the trail of their choosing. 
+								
+<<case 2>>
+The hunt is on in the darkened environment of arching branches, and you don't have to wait for too long before a fat feral $rabbit.species or an overweight wild $pig.species rushes past, followed by a $wolf.species equally encumbered by jiggling flab, and the traditionally swift and tense contest of speed quickly devolves into an arduous panting clash of endurances, with the victorious predators often collapsing right by their prey, unable to start feasting until they've had a good long rest. 
+								
+<<case 3>>
+Although the most prevalent representatives of the swamp bestiary tend to be stout $brownBear.plural or portly $wolf.plural hunting fleshy $deer.plural and blubbery wood $pig.plural, with $badger.plural, $weasel.plural, $rat.plural, $shrew.plural, $rabbit.plural and $fox.plural in varying stages of obesity creeping, crawling and leaping between the roots, an occasional call can be heard from some of the sentient woodland explorers. 
+								
+<<case 4>>
+Not even the bushy mesh of the tall treetops can deter the sun beating down from above, although the rays sifting down only reach the swamp floor as a multitude of tiny glowing dots and blotches, and the commotion of the wildlife has abated for a time being, and a kind of informal truce is proclaimed by the distant rumbling sounds of full bellies and sated belches of the predators. 
+								
+<<case 5>>
+With most of the successful hunters fed and safely docile for a while, the herbivores of all shapes and sizes cast off their morning fretfulness and start roaming and foraging in larger groups, stuffing themselves with lush foliage, berries and fruit that grow and ripen too quickly and abundantly for this biome. 
+								
+<<default>>
+An occasional sleepy $brownBear.species with a bloated midsection might be seen waddling by your observation every now and then, but the visible and audible fauna is firmly dominated by the herds and flocks prey species that don't stop their dedicated banqueting even when one of their number becomes a filling breakfast for one of the less fortunate morning hunters before their very eyes. 
+								
+<</switch>>
+
+
+<<case "evening">>
+<<switch random(1,6)>>
+<<case 1>>
+For a while, everything is quiet in the woods, with most of its inhabitants sated and at leisure, even the birds that have ceased their persistent twittering and feasting, now weighting down the tree branches with their hefty frames and lazily monitoring the dull motionless swamp floor. 
+								
+<<case 2>>
+Still largely in the grasp of contented silence, the swamp starts showing signs of entering its dusky phase with urgent rustling in the underbrush, wary scuttling of the $deer.species and the yawning calls of predators awakening from their siestas and getting up for the evening hunt. 
+								
+<<case 3>>
+Neither the hunter nor their quarry could be seen in the gathering dark, but the ruckus of growls, yelps, chirps and hisses permeates passages between the trees, and much stranger things crawl into view, some lacking any distinguishable limbs and flowing forwards with dogged determination, the others seemingly flowing from one tree trunk and into the other. 
+								
+<<case 4>>
+The evening birds start with their maddening symphony of trills and clicks, accompanied by the less diverse, but more relentless hum of insects that fill the gloom among the trees, and a triumphant belch of the evening hunter that has just dined rocks the air every few minutes. 
+								
+<<case 5>>
+Although it is too dark to see clearly past the nearest trees, the fireflies and some stranger, peculiar sources of luminescence can be seen flickering against the leaves and the bark, and uncanny, echoing whispering is heard above the din of the feathered and chitinous musicians of the dark. 
+								
+<<default>>
+The avian chorus has died down slightly, switching from the incessant chirping to more elaborate songs of the nightly species, with the crooning howling of the $wolf.plural entering the ensemble from far away, and despite the noisy background and rare tardy beasts rushing towards their holes and dens, the woodlands are at peace. 
+								
+<</switch>>
+
+
+<<default>>
+**Error in ambient swamp**
+
+<</switch>>
+
+
+:: Swamp ambush [nobr] {"position":"3625,1975","size":"100,100"}
+<<if $swampEnemies == undefined or $swampEnemies.length == 0>>
+	<<set $swampEnemies = ["wolf", "bear", "lemon", "vines", "dryad"]>>
+<</if>>
+<<set _enemy = $swampEnemies.pluck()>>
+
+<<switch _enemy>>
+
+<<case "wolf">>
+<<setEnemy $fatWolf>>
+As you come around a tree you nearly run into an obese $npc1.species, who's nearly as surprised, and much more angry, than you are.
+
+<<case "bear">>
+<<setEnemy $obeseBear>>
+You walk past a suspiciously fuzzy $npc1.furBelly boulder. Before you can reflect any further, the boulder stands up, revealing itself to be a //very// enormous $npc1.species!
+
+<<case "lemon">>
+<<setEnemy $lemonSlime>>
+With an unmistakable //shlorping// sound, a lemon colored slime pounces at you from behind a tree!
+
+<<case "vines">>
+<<setEnemy $syrupVines>>
+As you're walking through the swamp, you start to notice the vines are growing strangely thick. Especially since this type of swamp isn't supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
+
+<<case "dryad">>
+<<setEnemy $fruitDryad>>
+Your hear a strange melody being sung nearby. As you approach the voice, you find the source is actually a woody dryad. And they have a wicked gleam in their eye. 
+
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: swamp randomization [swamp] {"position":"3875,1875"}
+
+/*Ticks up random events counters*/
+<<set $swampRandomization.combat += $swampRandomization.combatRate>>
+<<set $swampRandomization.special += $swampRandomization.specialRate>>
+<<set $swampRandomization.leave += $swampRandomization.leaveRate>>
+<<set $swampRandomization.minor += $swampRandomization.minorRate>>
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+<<if $swampRandomization.special > $swampRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+<<if $swampRandomization.minor > $swampRandomization.special>>
+	<<set _randomEvent = "minor">>
+<</if>>
+<<if $swampRandomization.leave > $swampRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+<<set $swampRandomization.combat = 0>>
+<<set _event = "Swamp ambush">>
+
+/*A special event*/
+<<case "special">>
+<<set $swampRandomization.special = 0>>
+<<set _specialEvent = 0>>
+<<for _i=0; _i<$swampSpecialRandomization.length; _i++>>
+	<<set $swampSpecialRandomization[_i]++>>
+	<<if $swampSpecialRandomization[_i] >
+		$swampSpecialRandomization[_specialEvent]>>
+		<<set _specialEvent = _i>>
+	<</if>>
+<</for>>
+
+<<set $swampSpecialRandomization[_specialEvent] = 0>>
+<<switch _specialEvent>>
+	<<case 0>>
+	<<set _event = "Gingerbread House">>
+	<<case 1>>
+	<<set _event = "Wolf pack">>
+	<<case 2>>
+	<<set _event = "Storeroom">>
+	<<case 3>>
+	<<set _event = "Mysterious feast">>
+	<<default>>
+	''Error in special event randomization!''
+<</switch>>
+
+/*A random minor scene*/
+<<case "minor">>
+<<set $swampRandomization.minor = 0>>
+<<set _event = "Minor swamp events">>
+
+/*Opportunity to leave the swamp*/
+<<case "leave">>
+<<set $swampRandomization.leave = 0>>
+<<set _event = "Path out of the swamp">>
+
+<<default>>
+''Error in swamp randomization!!!''
+
+<</switch>>
+
+<<action "c" "rest" "Rest" "Swamp">>
+	<<set $eventCounterB = "rest">><</action>>
+<<if $sta > 0>>
+<<action "4" "swamp" "Swamp" _event>><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+
+:: Minor swamp events [nobr] {"position":"3725,1975","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+<<switch random(1,8)>>
+<<case 1>>
+As you travel through the swamp, you come across a small tree bearing fruit. You each up and pick the only ripe looking fruit. 
+<<if random(1,2) == 1>><<getItem $apple>>
+<<else>><<getItem $orange>>
+<</if>>
+				
+<<case 2>>
+<p>As you travel through the swamp you come across a massive apple tree. All of the branches appear to have been bent under a massive bounty of fruit, but they've been picked almost completely bare. Laying on the ground around the tree are several of the fattest $deer.species, <<=$raccoon.plural>>, <<=$squirrel.species>> and other swamp animals you've seen. Each of them has a bulging stomach and they are all surrounded by the chewed up remains of apples. </p>
+
+You $walk up and poke a $deer.species in the gut, eliciting an annoyed grunt from the blob-like creature. It stretches its neck out and picks up the nearest remains of an apple and starts chewing it again as it goes back to sleep. You look up and see there's one remaining apple that the other animals couldn't reach and pluck it. 
+<<getItem $apple>>
+						
+<<case 3>>	
+<p>As you travel through the swamp you hear the faint sound of trickling water. As you follow the sound, you find a small waterfall pouring from a cliff above. At the base of the waterfall you find a small pile of flasks. Most of them are broken, but one of them is still in pristine condition. </p>
+
+You look around and it doesn't seem like anyone's been here recently. Whoever owned these left them here long ago. You pick up the flask and fill it up from the waterfall.
+<<getItem $waterFlask>>
+	
+<<case 4>>		
+<p>You wander into a small clearing, in the middle of which you see a large stump. You cross the clearing and approach the stump, upon which you find a small wooden box. It looks rather simple, but has a few strange words carved into the top in some language you cannot decipher. </p>		
+
+You open the lid and find a small strange diamond shaped cookie with white frosting on top, while a few crumbs lie about it from where others must have once been. You take it, and replaced the box where you found it. 
+<<getItem $oddCookie>>
+
+<<case 5>>
+<<createNPC "random" "random">>
+<p>As you $walk through the swamp, you start to faintly hear the sounds of a struggle. As you stealthily make your way through the underbrush towards the noise, you come across a $npc1.species entangled in the tendrils of a mass of syrupy vines. </p>
+
+<p>$npc1.He's quite clearly fighting a losing battle as $npc1.he's become hopelessly entangled in the vines' grasp with several of them crammed in $npc1.his mouth. $npc1.His $npc1.furBelly $npc1.furred belly has shredded through $npc1.his leather armor as $npc1.his stomach has been inflated to a ludicrous size. The syrup soaked $npc1.species's movements become more and more frantic as $npc1.he approaches $npc1.his bursting point. </p>
+
+<<if $options.popping>>
+<p>You can almost see $npc1.his enormously bloated stomach stretch fuller and fuller as syrup is pumped into the helpless $npc1.species. With a final loud gurgle, the poor $npc1.species explodes in a shower of syrup. You duck for cover and when you stand back up you find nothing left behind of the $npc1.species. You pause in surprise for a moment before you carefully creep forward and survey the scene. After poking the limp vines a few times, you confirm that it's been entirely drained of syrup and merely hang limply from the tree. </p>
+
+<<else>>
+<p>There's a creaking noise which you first attribute to the $npc1.species's overstretched stomach, but soon afterwards there's a snapping noise as the vines break under $npc1.his weight. $npc1.He falls on the ground roughly and slowly rolls onto $npc1.his back with $npc1.his sticky belly sloshing back and forth. </p>
+
+<p>Before you have a chance to come out from your hiding spot, a large feral $wolf.species leaps out from some bushes on the opposite side from you. Apparently the $wolf.species had been lying in wait for its opportunity at a free meal, because before the $npc1.species realizes $npc1.he's under attack again, the $wolf.species already has $npc1.his legs in his mouth. The $npc1.species puts up a weak struggle, evidently far too painfully inflated with syrup to put up much of a fight. Before you can react, the previously slim-gutted $wolf.species has swallowed the syruped $npc1.species down and is already waddling his way back into the swamp. </p>
+<</if>>
+
+Now that the maelstrom of activity is over, you leave your hiding spot in the bushes and survey the combat zone. 
+<<if random(1,2) == 1>>
+Searching the syrupy ground, you manage to find something! 
+
+<<set _randomItem = random(1,100)>>
+<<if _randomItem > 90>><<getItem $trident>>
+<<elseif _randomItem > 75>><<getItem $apple>>
+<<elseif _randomItem > 40>><<getItem $sHealthPotion>>
+<<else>><<getItem $cheeseburger>>
+<</if>>
+
+<<else>>
+Searching the syrupy ground, you manage to find a small bag of gold! 
+<<set _goldFound = random(26,33)>>
+<<doGld _goldFound>>
+<</if>>
+
+<<default>>
+<<include "Ambient swamp">>
+
+<</switch>>
+
+<<include "swamp randomization">>

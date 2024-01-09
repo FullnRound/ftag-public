@@ -1,0 +1,1316 @@
+:: anaconda boss ai {"position":"5400,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This $npc1.species is a bit different from other jungle snakes, bearing strikingly colored patterns, numerous scars on its head and torso, and the fact that it's longer than you can readily see and its gigantic body rises up as big as the buildings in the city when flat along the ground. It's encircled you and is preparing to make you into a light lunch. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+
+<<if $grapple > 0>>
+	<<if $hea > $maxHea * 0.6 and !$e.special>>
+		<li>Squeeze</li>
+		The snake squeezes at you with incredible strength, like being crushed by a mountain. 
+		<<set $edmg *= 1.1>>
+		<<damage $edmg>>
+		<<if $hea <= $maxHea * 0.6>>
+			Deciding that you've weakened enough, the snake opens its jaws and engulfs you from the head down. Everything goes dark as you find yourself in the long belly of the beast! 
+			<<set $e.special = true>>
+		<</if>>
+		
+	<<else>>
+		<li>Squeeze</li>
+		The walls of the snake's long stomach squeezes down around you! 
+		<<set $edmg *= 1.3>>
+		<<damage $edmg>>
+		
+	<</if>>
+<<else>>
+	<<switch random(1,3)>>
+		<<case 1>>
+			<<if random(1,3) == 3>>
+				<li>Earthquake</li>
+				The giant snake suddenly rears up high, then comes crashing back to the ground. The earth shakes violently beneath your feet, knocking you to the ground! 
+				<<set $edmg *= 1.5>>
+				<<damage $edmg>>
+				<<if random(1,100) < 40>>
+					<<tempBuff "stun" 2>>
+					You are disoriented by the intense shaking! 
+				<</if>>
+				
+			<<else>>
+				<li>Timber</li>
+				<<if setup.dodge()>>
+					The enormous snake's entire body writhes, causing trees to collapse around you. You are able to avoid being hit by them through equal parts speed and luck. 
+					
+				<<else>>
+					The enormous snake's entire body writhes, and the trees all around you begin to collapse. You are caught under several that fall upon you. 
+					<<set $edmg *= 1.3>>
+					<<damage $edmg>>
+						
+				<</if>>
+				
+			<</if>>
+			
+		<<case 2>>
+			<li>Acid spray</li>
+			<<if setup.dodge()>>
+				The giant serpent rears back and opens its mouth, suddenly spraying out foul-smelling bile, but you manage to put some trees between you and it and stay unmelted. 
+				
+			<<else>>
+				The giant serpent rears back and opens its mouth, suddenly spraying out foul-smelling bile all over you! 
+				<<set $edmg *= 1.3>>
+				<<damage $edmg>>
+					
+			<</if>>
+			
+		<<case 3>>
+			<li>Grab</li>
+			<<if setup.dodge()>>
+				The giant snake constricts its thick and muscular torso, but you leap well clear of it before it can grab you. 
+				
+			<<else>>
+				The giant snake constricts its thick and muscular torso, clamping down tight around you as it tries to crush you into submission! 
+				<<set $grapple = $e.str * 3>>
+				
+			<</if>>
+			
+	<</switch>>
+	
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+Something snaps inside your mind, and you decide that this seemingly endlessly long, tremendously thick-bodied beast would be just perfect for a snack. You give its head a solid bashing, dazing it for a moment while you set about the task of finding a part small enough to start eating it. Fortune smiles on your insane endeavor, and you chance upon the very tail end of the creature. Without a moment's hesitation, you shove it into your mouth, bite down, and begin to suck it down your throat. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	Once you've started, you simply can't bring yourself to stop. Even as the tail thickens out to the creature's full girth, you keep gulping it down, swallow after swallow of a creature large enough to eat an entire house in one gulp slides down your massively stretched throat and into your rapidly ballooning belly. It curls up in a ball inside you, writhing and slithering over itself in a futile attempt to escape your hunger, but it simply cannot. Your belly grows tremendous with the body of the centuries-old predator, and it just doesn't seem to stop. But you don't even mind. The immense filling is just what you wanted, and when it finally ends, the hissing serpent's head passing down your throat, the intense fullness has long since become nothing but pleasant, your massive belly serving as a gigantic monument to your bottomless gluttony. You can't even reach around it, but you rub what you can of it, relishing this moment. After a few minutes, you remember that there was a reason you came out here, and go into the beast's layer, recovering a chunk of White Gold. 
+	<<include "Victory">>
+	<<advanceQuest $spearQuest>>
+	<hr>
+	<<include "jungle randomization">>
+	
+<<else>>
+	You manage to suck down a few hundred feet of it before a part of you starts to wonder if this was a bad idea. A few dozen more, and reality suddenly crashes down upon you, the immense stretching of your belly suddenly agonizing and disabling. You stop dead in your tracks, slack-jawed around the body of the biggest creature you have ever encountered and unable to do anything at all as it slithers back out of you. It brings its head around to look at you, and you think you see respect in its eyes before it turns away, slithering off to leave you there on the ground. You attempted something that, in hindsight, you should have known was impossible, but what the heck? It was worth a try. You tell yourself this as you lose consciousness, and it doesn't seem so bad. 
+	<hr>
+	<defeated "battle">>
+	
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+<<if $e.special>>
+You wriggle and writhe, forcing yourself against the slippery snake's insides and are ejected out of the snake's mouth! 
+<<set $e.special = false>>
+<<else>>
+You pry at the snake's tremendous body and just manage to wriggle out of its grip! 
+<</if>>
+
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+<<if $e.special>>
+	You struggle and strain, but can't manage to free yourself from the snake's squeezing stomach! 
+<<else>>
+	You pry at the snake's tremendous body, but can't manage to loosen it! 
+<</if>>
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Run failed!</li>
+You try to get away, but as far as you go, you only find more giant snake barring your path! 
+<<enemyAction "attack">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You try to get away, but as far as you go, you only find more giant snake barring your path! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You stop your struggles, unwilling to fight this gigantic creature any more. The enormous creature crushes you with its body, and you swiftly lose consciousness as your strength is squeezed out of you. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The intense battering the enormous $npc1.species has delivered to you proves to be too much, and your body goes limp, unresponsive to your commands. You are just another tiny meal to the giant snake, but are fortunate enough to lose consciousness before things can get any worse. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You win!===*/
+<<case "victory">>
+Letting out a hissing roar, the enormous snake rears up, then collapses to the ground, still. You celebrate your victory for a moment, then search the hole it emerged from. Sure enough, the White Gold that you were sent to find is in there, and in great quantities. You grab a hunk of it and pull it free, taking it with you. 
+<<include "Victory">>
+<<advanceQuest $spearQuest>>
+<hr>
+<<include "jungle randomization">>
+
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: dinosaur rider ai {"position":"5275,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+<<if $e.hea/$e.maxhea <= 0.7>>
+	The tyrannosaurus rider has been knocked unconcious by your attacks, but that's not stopping the tyrannosaurus from continuing its last orders to stomp you into the ground! 
+<<else>>
+	You are up against a tyrannosaurus being ridden by $npc1.article $npc1.species. The tyrannosaurus is moving to squash you flat, and the $npc1.species has a bundle of javelins that $npc1.he's obviously just itching to introduce you to. 
+<</if>>
+
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if random(1,3) == 3 and $e.hea/$e.maxhea > 0.7>>
+	<li>Javelin Toss</li>
+	<<if setup.dodge() and setup.dodge()>>
+		The tyrannosaurus postures at you, but you manage to keep sight of the rider and evade the javelin $npc1.he throws at you. 
+		
+	<<else>>
+		The tyrannosaurus postures at you, distracting you just long enough for the rider to nail you with a javelin! 
+		<<damage $edmg>>
+		
+	<</if>>	
+<<else>>
+	<<if random(1,2) == 1>>
+		<li>Tail Whack</li>
+		<<if setup.dodge()>>
+			The tyrannosaurus lets out a grunt and whips around, but you dodge with it, and its tail harmlessly swipes through the air where you once were. 
+			
+		<<else>>
+			The tyrannosaurus lets out a grunt, its body whipping around, sending its massive tail crashing into you! 
+			<<set $edmg *= 1.3>>
+			<<damage $edmg>>
+			
+		<</if>>
+		
+	<<else>>
+		<li>Stomp</li>
+		<<if setup.dodge()>>
+			With a growl, the tyrannosaurus lifts up a foot, but you manage to narrowly avoid getting stomped as the ground shudders from the impact. 
+			
+		<<else>>
+			With a growl, the tyrannosaurus lifts up a foot and brings it down on top of you with earth-shaking force! 
+			<<set $edmg *= 1.3>>
+			<<damage $edmg>>
+			
+		<</if>>
+	<</if>>
+
+<</if>>
+
+/*===Vore actions===*/
+<<case "vore">>
+<<if $e.hea/$e.maxhea > 0.7>>
+	You manage to cause the tyrannosaurus to lose its balance for a moment with a sudden attack to its leg, sending the $npc1.species plummetting off its back and to the ground, where you are more than ready to meet $npc1.him. As $npc1.he tries to collect $npc1.his senses, you dive on top of $npc1.him, eliciting a surprised grunt from $npc1.him as you pull $npc1.his head into your maw and rapidly devour $npc1.him. Quickly shoving the $npc1.species down your throat, you flip $npc1.him into the air, sending $npc1.him on a gravity-assisted trip to your $waist belly. 
+	<<set _eat = $e.weight + $npc1.speciesStats[5] * 5>>
+	<<consume  _eat>>
+	<<if $alive>>
+		Gulping feverishly, you force $npc1.him into a ball in your stomach as $npc1.his fat body gives you a fair filling. You barely have time to enjoy it, however, as the massive tyrannosaurus is still right on top of you! 
+		<<set $e.hea = $e.maxhea * 0.7>>
+		<<set $cal += _eat * 0.6>>
+		<<set $e.weight = 6000>>
+		<<enemyAction "attack">>
+	<<else>>
+		Your rapid eating proves to be foolhardy, though, as the $npc1.species squirms about inside your pained, overfilled belly, proving to be just a bit too much for you. Unable to stop $npc1.him from sliding down into your stomach, you are quickly confronted with immense pain and forced to a seat. The $npc1.species looks on confused for a few moments, then turns to stomp away, leaving you alone to rub at your belly in a futile attempt to stop it from hurting. Soon, the pressure and pain in your belly cause you to lose consciousness. 
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+	
+<<else>>
+	You look at the enormous tyrannosaurus and find yourself thinking of very little aside from what an excellent meal it would make. Giving in to what can only be called complete madness, you give the creature a strike to the leg, causing it to let out a roar as it topples over. Before it can right itself, you are already at its thick tail and shoving it in your hungering maw. Somewhere inside your mind, the tiny voice of sanity reminds you that this is completely crazy, but you're too hungry to care, and your powerful throat is already sucking down dinosaur tail. Letting out a confused grunt, the tyrannosaurus turns on the ground to face you, its face clearly displaying its complete shock. Down your throat it goes, and you refuse to stop until you physically can't go on. 
+	<<consume $e.weight 0>>
+	<<if $alive>>
+		Tail gives way to massive rump, and massive rump gives way to enormous torso flanked by enormous legs. Your hunger is endless and your belly is bottomless, and you know it full well when you swallow up this massive beast. Its upper half writhes, unable to free itself from your inescapable vacuum of a gullet. By the time you've reached its chest, it is letting out terrified roars, and when you swallow down its throat and head, it has given up and gone silent. With a few more swallows, the creature is nothing but a massive bulge in your $waist belly. Leaning forward onto it, you give it a loving stroke, feeling immensely satisfied with yourself. 
+		<<set _calories = $e.weight*.6>>
+		<<set $cal += _calories>>
+		<<include "Victory">>
+		<hr>
+		<<include "jungle randomization">>
+	<<else>>
+		It takes approximately seven seconds for your sanity to kick back in, but that's just long enough for the massive beast's tail to reach your stomach. It wriggles around a bit, stretches you far fuller than any $p.species was meant to be, and your body simply shuts off, going limp as you loosely slide back off of the tyrannosaurus. Completely confused by what just happened, the tyrannosaurus slowly gets back to its feet and wanders off, seemingly trying to forget this ever happened. You, meanwhile, lie on the ground for a little while. It hurt an unbelievable amount, and your body didn't have any of it, but for a brief moment, you were in bliss. The same part of you that made you want to eat that thing in the first place urges you to try again some day. The rest of you tells you that it's time to take a nap. You concur. 
+		<hr>
+		<<defeated "battle">>
+	<</if>>
+	
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You decide that it's time to leave, and flee as quickly as you can into the jungle. The sound of thundering footfalls and crashing trees eventually fades as you go far and fast in the direction of Anywhere Else. 
+<<endCombat>>
+<hr>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower yourself to the ground in submission, not wanting to fight anymore. The $npc1.species calls out a command, and the tyrannosaurus gives you one last stomping for good measure. You are driven hard into the ground and every part of you hurts as the world spins around you. You can feel a shuffling, and can just make out that the $npc1.species has attached some kind of harness to you, and soon you are dragged off, pulled by the enormous tyrannosaurus to destinations unknown. Eventually, you are placed before a robed shaman. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 600>>Four reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 1000>>Half a dozen reptillian bystanders haul you haphazardly onto an altar. 
+<<else>>What feels like an entire village of reptillian bystanders struggle to haul your massive body onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The last attack causes you to stagger and drop to the ground, barely capable of holding yourself upright anymore. As you look up, you see the tyrannosaurus's foot coming down on top of you again, and you are smashed into the ground. The earth shakes around you as the tyrannosaurus stomps away, leaving every part of you in immense pain. You figure that this is as good a time for a nap as any, and slip into unconsciousness. 
+<hr>
+<<defeated "battle">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The tyrannosaurus staggers, letting out a pained roar from your last attack, and crashes to the ground with an earth-shaking thud. You take some time to revel in your victory before continuing on through the jungle. 
+<<include "Victory">>
+<hr>
+<<include "jungle randomization">>
+
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: fat jaguar ai {"position":"4900,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This husky, <<if $npc1.nspecies == "jaguar">>spotted <</if>>$npc1.species appears to have been quite successful in its recent hunts, sporting a thick body and an impressively fat gut. Now it looks like it wants to add you to its list of accomplishments. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $grapple > 0>>
+	<<switch $e.special>>
+		<<case 2>>
+			The $npc1.species opens its mouth surprisingly wide, engulfing your head in its maw. 
+			<<set $e.special-->>
+			
+		<<case 1>>
+			Biting down on you, it pulls at you, forcing you deeper into its surprisingly flexible throat and down towards its stomach. 
+			<<set $e.special-->>
+			
+		<<case 0>>
+			Scooping you up in its jaws, it swallows you down bit by bit, eventually making you an oversized lump in its gigantic stomach. You can hear it rumble as it lays down, overburdened by the meal it's made of you and taking a rest. Between your injuries and its stomach squeezing at you, you slip into unconsciousness. 
+			<<defeated "devoured">>
+			
+	<</switch>>
+<<else>>
+	<<if random(1,3) == 3 and $hea/$maxHea <= 0.25>>
+		<li>Pounce</li>
+		<<if setup.dodge()>>
+			The $npc1.species jumps at you, but you narrowly avoid it. 
+		<<else>>
+			The $npc1.species jumps on you, knocking you to the ground under it. It's going to eat you! 
+			<<set $grapple = $e.agi * 3>>
+			<<set $e.special =  2>>			
+		<</if>>
+	<<else>>	
+		<<if random(1,2) == 1>>
+			<li>Maul</li>
+			<<if setup.dodge()>>
+				The large $npc1.adjective swipes at you with its claws, but you jump back to avoid it. 
+			<<else>>
+				The large $npc1.adjective swipes you with its claws, giving you a lovely matching set of scratches! 
+				<<damage $edmg>>				
+			<</if>>			
+		<<else>>
+			<li>Bite</li>
+			<<if setup.dodge()>>
+				The $npc1.species lunges at you, its jaws snapping, but you keep it from biting you with some deft maneuvering. 
+			<<else>>
+				The $npc1.species lunges at you and crunches into you with its powerful jaws! 
+				<<set $edmg *= 1.2>>
+				<<damage $edmg>>				
+			<</if>>
+												
+		<</if>>		
+	<</if>>							
+<</if>>
+
+/*===Vore actions===*/
+<<case "vore">>
+You decide to make the $npc1.species your meal, and clamp down on its face with your $p.hand, keeping its dangerous maw shut. It swipes a clawed paw at you, but you grasp it, pinning it to its side as you shove its face into your mouth. Muffled growls emanate from your throat as you pull at the big $npc1.adjective, its hind legs flailing as you pin its front legs together. Your jaw unhinging, you shove the $npc1.species roughly down your throat, ravenously forcing it down to inevitably fill your belly. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	Pulling and swallowing again and again, the $npc1.species's big belly soon squishes against your maw, the entirety of its front half squeezed into your throat. Grasping its rump, you pull hard, your throat stretching wider around the bulbous stomach. Pinning its legs, you lift it upwards, using gravity as an aid to slurp down its hind quarters, legs, and tail. With a few more swallows, the predator has become your prey, and your belly has become $waist for it. You give it a pat and a rub, and move on. 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<hr>
+	<<include "jungle randomization">>
+	
+<<else>>
+	You swallow it down as best you can, your stomach already groaning even before you've gotten to its oversized midsection. Unwilling and unable to stop now, you pull the creature into your maw, forcing its bulbous stomach to slip down your throat. Swallowing again and again, your stomach grows taut, the immense fullness quickly growing painful. As the beast's hind quarters slip into your belly, you lower yourself to a seat, rubbing your $waist stomach gently and letting out a groan. Knowing full well that it was too much, you lay back and slowly drift into unconsciousness. 
+	<hr>
+	<<defeated "overeating">>
+	
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+With a solid shove, you force the $npc1.species off of you, escaping being the big $npc1.adjective's next meal! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You try to shove it off of you, but it's too determined for you to move! 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You get away from the $npc1.species and run through the trees to put some distance between the two of you. Ill suited for chasing, the $npc1.species only follows you for a short ways before stopping to skulk in the shadows again. 
+<<endCombat>>
+<hr>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You decide to stop fighting and lower yourself to the ground in submission. The $npc1.species seizes the opportunity, and opens its mouth surprisingly wide, engulfing your head in its maw. Biting down on you, it pulls at you, forcing you deeper into its surprisingly flexible throat and down towards its stomach. Scooping you up in its jaws, it swallows you down bit by bit, eventually making you an oversized lump in its gigantic stomach. You can hear it rumble as it lays down, overburdened by the meal it's made of you and taking a rest. Between your injuries and its stomach squeezing at you, you slip into unconsciousness. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The $npc1.species's last attack proves too much for you, and you collapse in a heap. Unable to fight back, you can only watch as the $npc1.species opens its mouth surprisingly wide, engulfing your head in its maw. Biting down on you, it pulls at you, forcing you deeper into its surprisingly flexible throat and down towards its stomach. Scooping you up in its jaws, it swallows you down bit by bit, eventually making you an oversized lump in its gigantic stomach. You can hear it rumble as it lays down, overburdened by the meal it's made of you and taking a rest. Between your injuries and its stomach squeezing at you, you slip into unconsciousness. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You win!===*/
+<<case "victory">>
+With a groaning growl, the $npc1.species staggers for a moment, then flops onto its side, chest gently heaving with deep, pained breaths. 
+<<include "Victory">>
+<hr>
+<<include "jungle randomization">>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "jungle randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: glutton seperatist ai {"position":"5025,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This fat-bellied $npc1.species is wearing segmented armor marked with the sigil of the Glutton Separatists of the island and wielding a metal spear decorated with feathers near its tip, which is currently pointing in your direction. Looks like $npc1.he has some nasty ideas in mind for what he wants to do with you. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<switch random(1,3)>>
+	<<case 1>>
+		<li>Jab</li>
+		<<if setup.dodge()>>
+			$npc1.He jabs at you with $npc1.his spear, but you deftly evade.
+			
+		<<else>>
+			$npc1.He jabs at you with $npc1.his spear, catching you with the pointed tip! 
+			<<set $edmg *= 1.2>>
+			<<damage $edmg>>
+			
+		<</if>>
+		
+	<<case 2>>
+		<li>Stick Beat</li>
+		<<if setup.dodge()>>
+			$npc1.He suddenly swipes $npc1.his spear at you, intending to bash you with the shaft, but you carefully duck out of the way. 
+			
+		<<else>>
+			$npc1.He suddenly swipes $npc1.his spear at you, the shaft of it making a solid thwack as it slaps hard into you! 
+			<<damage $edmg>>
+			
+		<</if>>
+		
+	<<case 3>>
+		<li>Body Slam</li>
+		<<if setup.dodge()>>
+			Suddenly the fat $npc1.species rushes at you and jumps into the air, but you keep well clear as $npc1.he crashes down onto the ground! $npc1.He slowly gets back up to face you again, clearly worse for wear after that. 
+			<<if random(1,100) < 33>>
+				Looks like $npc1.he is a bit dizzy, to boot. 
+				<<eBuff "stun" 1>>
+			<</if>>
+			
+		<<else>>
+			Suddenly the fat $npc1.species rushes at you and jumps into the air, $npc1.his weight crashing down on you as you are both sent sprawling! 
+			<<damage $edmg>>
+			<<if random(1,100) < 33>>
+				The impact makes your head spin! 
+				<<tempBuff "stun" 1>>
+			<</if>>
+				
+		<</if>>
+		
+<</switch>>
+
+/*===Vore actions===*/
+<<case "vore">>
+You tackle the $npc1.species to the ground, a flick of your $p.hand knocking $npc1.his spear away to roll off into the jungle. You lick your chops hungrily as $npc1.he starts yelling complaints in a language you don't understand below your $fatness body. The complaints soon become muffled cries as you shove $npc1.his head into your gaping maw. Pulling at the leather straps on the sides of $npc1.his armor, you peel it off, revealing $npc1.his rotund midsection. Clearly the separatists take their beliefs quite seriously, as $npc1.he has obviously been quite the glutton. Pinning $npc1.his arms to the side, you pull hard, swallowing as you do to force $npc1.him on a one-way trip to your belly. 
+<<set _eat = $e.weight + $npc1.speciesStats[5] * 5>>
+<<consume  _eat>>
+<<if $alive>>
+	Slurping and gulping, you feel your throat stretch around the struggling $npc1.species, $npc1.his body writhing inside you as your mouth stretches wide, jaw unhinged to accomodate $npc1.his thick, fatty torso. It gently squishes around your mouth before sliding into your throat, and with a few more swallows, your belly begins to stretch and shudder, filling with the pudgy $npc1.species. With a few more gulps, $npc1.his hips have passed into your gullet and you are slurping up $npc1.his legs and tail. You pick yourself up and dust yourself off as the $npc1.species is forced into a gently-struggling wad in your $waist belly, giving it a good pat and a hum. When your belly grows still, you set off, $hungry and ready to move on. 
+	<<set $cal += _eat * .6>>
+	<<include "Victory">>
+	<hr>
+	<<include "jungle randomization">>
+<<else>>
+	Slowly, you gulp down the $npc1.species, feeling your throat stretch around $npc1.his writhing body. As you approach $npc1.his fatty midsection, you already know that you've overstepped your limits, but it's too late to stop now. Unable to do anything but keep swallowing and rub at your achingly-full belly, $npc1.his hips soon pass into your gullet and $npc1.his legs and tail dangle from your mouth. Swallowing hard, you slurp down the last of $npc1.him, resting on your $waist belly and rubbing it as it shakes and buckles, the $npc1.species still struggling inside you. Letting out a groan, you find yourself unable to do anything but pant for breath and rub your overstuffed belly, and soon, the painful pressure causes you to lose consciousness. 
+	<hr>
+	<<defeated "overeating">>
+		
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn tail and flee, not wanting to be stuck in this fight anymore. The $npc1.species chases you for a short ways, yelling tauntingly in a language you don't understand, but only just far enough to see that you're well and truly gone. You escape with no further injury but to your ego. 
+<<endCombat>>
+<hr>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower yourself to the ground, submitting before your opponent. $npc1.He grumbles angrily and bashes the back of your head with the butt of $npc1.his spear, sending you sprawling to the ground and the world spinning. 
+<<set _damage = $maxHea * 0.25>>
+<<if _damage >= $hea>><<set _damage = $hea - 1>><</if>>
+<<damage _damage>>
+You are dragged off, eventually placed before a robed shaman. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<else>>Four reptillian bystanders haul you onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The $npc1.species's last attack sends you to the ground hard, and try as you might, you can't pick yourself back up. The painful beating causes you to lose consciousness, with the last thing you feel being a sense of being dragged somewhere. When you awaken later, you are somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You win!===*/
+<<case "victory">>
+Your last attack sends the $npc1.species flopping onto $npc1.his side groaning in pain. Looks like you showed $npc1.him whatfor. 
+<<include "Victory">>
+<hr>
+<<include "jungle randomization">>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "eater" false "jungle randomization">>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: glutton seperatist boss ai {"position":"5150,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This fat-bellied $npc1.species is wearing segmented armor marked with the sigil of the Glutton Separatists of the island and wielding a metal spear decorated with feathers near its tip, which is currently pointing in your direction as you have just intruded on $npc1.his territory with malicious intent. Judging by the snarl on $npc1.his face, you feel pretty certain that the malice is mutual. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<switch random(1,3)>>
+	<<case 1>>
+		<li>Jab</li>
+		<<if setup.dodge()>>
+			$npc1.He jabs at you with $npc1.his spear, but you deftly evade.
+			
+		<<else>>
+			$npc1.He jabs at you with $npc1.his spear, catching you with the pointed tip! 
+			<<set $edmg *= 1.2>>
+			<<damage $edmg>>
+			
+		<</if>>
+		
+	<<case 2>>
+		<li>Stick Beat</li>
+		<<if setup.dodge()>>
+			$npc1.He suddenly swipes $npc1.his spear at you, intending to bash you with the shaft, but you carefully duck out of the way. 
+			
+		<<else>>
+			$npc1.He suddenly swipes $npc1.his spear at you, the shaft of it making a solid thwack as it slaps hard into you! 
+			<<damage $edmg>>
+			
+		<</if>>
+		
+	<<case 3>>
+		<li>Body Slam</li>
+		<<if setup.dodge()>>
+			Suddenly the fat $npc1.species rushes at you and jumps into the air, but you keep well clear as $npc1.he crashes down onto the ground! $npc1.He slowly gets back up to face you again, clearly worse for wear after that. 
+			<<if random(1,100) < 33>>
+				Looks like $npc1.he is a bit dizzy, to boot. 
+				<<eBuff "stun" 1>>
+			<</if>>
+			
+		<<else>>
+			Suddenly the fat $npc1.species rushes at you and jumps into the air, $npc1.his weight crashing down on you as you are both sent sprawling! 
+			<<damage $edmg>>
+			<<if random(1,100) < 33>>
+				The impact makes your head spin! 
+				<<tempBuff "stun" 1>>
+			<</if>>
+				
+		<</if>>
+		
+<</switch>>
+
+/*===Vore actions===*/
+<<case "vore">>
+You tackle the $npc1.species to the ground, a flick of your $p.hand knocking $npc1.his spear away to roll off into the jungle. You lick your chops hungrily as $npc1.he starts yelling complaints in a language you don't understand below your $fatness body. The complaints soon become muffled cries as you shove $npc1.his head into your gaping maw. Pulling at the leather straps on the sides of $npc1.his armor, you peel it off, revealing $npc1.his rotund midsection. Clearly the separatists take their beliefs quite seriously, as $npc1.he has obviously been quite the glutton. Pinning $npc1.his arms to the side, you pull hard, swallowing as you do to force $npc1.him on a one-way trip to your belly. 
+<<set _eat = $e.weight + $npc1.speciesStats[5] * 5>>
+<<consume  _eat>>
+<<if $alive>>
+	Slurping and gulping, you feel your throat stretch around the struggling $npc1.species, $npc1.his body writhing inside you as your mouth stretches wide, jaw unhinged to accomodate $npc1.his thick, fatty torso. It gently squishes around your mouth before sliding into your throat, and with a few more swallows, your belly begins to stretch and shudder, filling with the pudgy $npc1.species. With a few more gulps, $npc1.his hips have passed into your gullet and you are slurping up $npc1.his legs and tail. You pick yourself up and dust yourself off as the $npc1.species is forced into a gently-struggling wad in your $waist belly, giving it a good pat and a hum. When your belly grows still, you set off, $hungry and ready to move on. 
+	<<set $cal += _eat * .6>>
+	<<include "Victory">>
+	<<action "c" "next" "Enter the cultist village" "Got inside cultist village">><</action>>
+<<else>>
+	Slowly, you gulp down the $npc1.species, feeling your throat stretch around $npc1.his writhing body. As you approach $npc1.his fatty midsection, you already know that you've overstepped your limits, but it's too late to stop now. Unable to do anything but keep swallowing and rub at your achingly-full belly, $npc1.his hips soon pass into your gullet and $npc1.his legs and tail dangle from your mouth. Swallowing hard, you slurp down the last of $npc1.him, resting on your $waist belly and rubbing it as it shakes and buckles, the $npc1.species still struggling inside you. Letting out a groan, you find yourself unable to do anything but pant for breath and rub your overstuffed belly, and soon, the painful pressure causes you to lose consciousness. 
+	<hr>
+	<<defeated "overeating">>
+		
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You escaped! 
+<<endCombat>>
+<hr>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower yourself to the ground, submitting before your opponent. $npc1.He grumbles angrily and bashes the back of your head with the butt of $npc1.his spear, sending you sprawling to the ground and the world spinning. 
+<<set _damage = $maxHea * 0.25>>
+<<if _damage >= $hea>><<set _damage = $hea - 1>><</if>>
+<<damage _damage>>
+You are dragged off, eventually placed before a robed shaman. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<else>>Four reptillian bystanders haul you onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<<defeated "transformed">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The $npc1.species's last attack sends you to the ground hard, and try as you might, you can't pick yourself back up. The painful beating causes you to lose consciousness, with the last thing you feel being a sense of being dragged somewhere. When you awaken later, you are somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<<defeated "transformed">>
+
+
+/*===You win!===*/
+<<case "victory">>
+Your last attack sends the $npc1.species flopping onto $npc1.his side groaning in pain, leaving you free to march on past and see what's inside.
+<<include "Victory">>
+<<action "c" "next" "Enter the cultist village" "Got inside cultist village">><</action>>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "eater" true>>
+    /* Custom ending */
+	<<if $e.ate > $e.sto>> /* defeated */
+		<<action "c" "next" "Enter the cultist village" "Got inside cultist village">>
+	<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: golem boss ai {"position":"5775,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Looks like the obsidian deposit you were looking for has decided to come to you, and has risen up into the form of a <<sayDistance 180>> tall anthropomorphic monstrosity. It's also decided to pound you into the ground like a tent stake, so it might be a good idea to do something about that. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $e.hea < $e.maxhea * 0.5 and $e.special < $e.hea>>
+	<li>Shard shatter</li>
+	<<set _damage = Math.round($edmg * 0.4)>>
+	Your attack causes the golem to shatter, sending viciously sharp shards at you for _damage damage! 
+	<<damage _damage>>
+	<<set $e.special = $e.hea>>
+<</if>>
+
+<<switch random(1,3)>>
+	<<case 1>>
+		<li>Heavy blow</li>
+		<<if setup.dodge()>>
+			The obsidian golem swings its arms in an unnatural sweep, but you are quick enough to avoid getting smashed! 
+		<<else>>
+			The obsidian golem swings its arms in an unnatural sweep, catching you in the side with a tremendous blow and doing $edmg damage! 
+			<<damage $edmg>>
+		<</if>>
+		
+	<<case 2>>
+		<li>Shockwave</li>
+		<<if setup.dodge() and setup.dodge()>>
+			The giant obsidian creature clasps its 'hands' together above its 'head' and smashes them downward to the ground, sending a magical shockwave at you, but you are ready for it, and dodge to the side! 
+		<<else>>
+			The giant obsidian creature clasps its 'hands' together above its 'head' and smashes them downward to the ground, sending a magical shockwave at you that catches you off-guard, crashing into you and doing $edmg damage! 
+			<<damage $edmg>>
+		<</if>>
+		
+	<<case 3>>
+		<li>Magma call</li>
+		<<if setup.dodge() or setup.dodge()>>
+			The obsidian golem seems to lower its body and force its 'hands' into the side of the volcano. The ground begins to rumble, and a few moments later, spouts of molten rock burst forth around you! Fortunately, they're far enough away that you don't get burned! 
+		<<else>>
+			The obsidian golem seems to lower its body and force its 'hands' into the side of the volcano. The ground begins to rumble, and a few moments later, spouts of molten rock burst forth around you! You are painfully close to the superheated earth and take $edmg damage! 
+			<<if random(1,100) < 50>>
+				Just being this close is enough to cause painful burns! 
+				<<set _burn = $edmg * 0.5>>
+				<<tempBuff "burn" _burn>>
+			<</if>>
+			<<damage $edmg>>
+		<</if>>
+		
+<</switch>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Run failed!</li>
+You try to escape, but the magical barrier has you completely encircled! 
+<<enemyAction "attack">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You try to escape, but the magical barrier has you completely encircled! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Unwilling to fight further, you lower yourself to the ground, hoping that this creature understands what submission is. The golem stops for a moment, then picks you up with surprising gentleness in its stone hand as a deep, growling voice rumbles through it: "FOR YOUR OWN SAKE, DO NOT SEEK THE SWORD." With this warning, the world is replaced by a brilliant white flash, and you find yourself back in the eastern island village, none the worse for wear. 
+<<endCombat>>
+<<action "c" "next" "Get up" "Island Town">><</action>>
+
+/*===You lose===*/
+<<case "defeat">>
+You fall to your knees, thoroughly battered by the large obsidian golem. It picks you up, holding you in one 'hand' as a deep, growling voice seems to rumble through it: "DO NOT SEEK THE SWORD." With this warning, the world is replaced by flaring white, and you find yourself back in the eastern island village, battered and bruised, but still intact. 
+<<endCombat>>
+<<set $hea = 1>>
+<<set $alive = true>>
+<<action "c" "next" "Get up" "Island Town">><</action>>
+
+
+/*===You win!===*/
+<<case "victory">>
+The golem's body groans, shudders violently, and finally collapses into a pile of rocks. Victorious, you take one of the chunks with you. 
+<<include "Victory">>
+<<advanceQuest $swordQuest>>
+<<include "jungle randomization">>
+
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: massive anaconda ai {"position":"4775,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This huge snake is roughly two feet thick and approxiately Very Very Long, its body disappearing behind the jungle foliage in a way that makes it nearly impossible to tell where it ends. Where it begins is more obvious: The hungry snake head that's hissing at you and preparing to make you its lunch. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $grapple <= 0>>
+	<li>Coil</li>
+	<<if setup.dodge()>>
+		The huge snake constricts its thick and muscular torso, but you leap well clear of it before it can grab you. 
+	<<else>>
+		The huge snake constricts its thick and muscular torso, clamping down tight around you as it tries to crush you into submission! 
+		<<set $grapple = $e.str * 3>>
+		<<enemyAction "attack">>
+	<</if>>
+<<else>>
+	<li>Squeeze</li>
+	<<if !$e.special>>
+		The snake squeezes you with incredible strength. You can feel your bones creaking in protest! 
+		<<damage $edmg>>
+		<<if $hea <= $maxHea * 0.6 and !$e.special>>
+			Deciding that you're weakened enough, the snake opens its jaws and engulfs you from the head down. Everything goes dark as you find yourself in the long belly of the beast! 
+			<<set $grapple = $e.str * 3>>
+			<<set $e.special = true>>
+		<</if>>
+		
+	/*Swallowed*/
+	<<else>>
+		The walls of the snake's long stomach squeezes down around you! 
+		<<damage $edmg>>
+		
+	<</if>>
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You grasp the $npc1.species's head, clamping its mouth shut as you open yours wide. Shoving it straight into your throat, you begin to gulp down the massive, wriggling snake. Like a tremendous noodle, you suck it into your mouth, swallowing again and again, your throat bulging around its thick body. Wherever you look, you see its torso being pulled towards you, but what you don't see is where it ends. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	You refuse to be deterred, and gulp at it again and again, the tremendous tube of snake meat piling up in your belly, stretching it fuller and fuller as it seems to incessantly stretch on. All the while you can feel the snake wriggling in your throat and tickling at your insides, helpless to stop you from devouring it. After minutes of this, the end of its tail comes into view, and with a few more hungry swallows, you have devoured it entirely, your $waist belly squirming with the snake for a few more minutes as you gently rub it. When it stops, you carry on into the jungle, looking for your next meal. 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<hr>
+	<<include "jungle randomization">>
+	
+<<else>>
+	You refuse to be deterred, and gulp at it again and again, the tremendous tube of snake meat making your belly groan as it stretches fuller and fuller with its seemingly endless body. As your belly grows painfully tight, you can feel every inch of the snake as it wriggles inside you, teasing your already strained insides. It's much too late to stop, though, and you are stuck swallowing again and again in an agonizing eternity of devouring the long snake. Its tail finally comes into view, but you know it's already too late, and when it disappears down your throat, all you can do is lie on the ground, rubbing your overstuffed belly and groaning until you lose consciousness. 
+	<hr>
+	<<defeated "overeating">>
+		
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+<<if $e.special>>
+	You wriggle and writhe, forcing yourself against the slippery snake's insides and are ejected out of the snake's mouth! 
+	<<set $e.special = false>>
+<<else>>
+	You pry at the snake's heavy body and just manage to wriggle out of its grip! 
+<</if>>
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+<<if $e.special>>
+	You struggle and strain, but can't manage to free yourself from the snake's squeezing stomach! 
+<<else>>
+	You pry at the snake's heavy body, but can't manage to loosen it at all! 
+<</if>>
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You manage to find the end of the snake's lengthy body and run around it, not stopping until you're far off into the distance and well away. 
+<<endCombat>>
+<hr>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You stop resisting, unwilling to fight any further. The snake squeezes down on you, causing you to black out in pain. As you are devoured, you quickly lose consciousness, thankfully before you become anything worse than a large bulge in the $npc1.species's belly. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+You can feel the edges of your vision begin to blur as you're squeezed into submission. The pain causes you to lose consciousness thankfully quickly. 
+<hr>
+<<defeated "devoured">>
+
+
+/*===You win!===*/
+<<case "victory">>
+With your last attack, the $npc1.species lets out a gasping hiss, its long body writhing for a moment before slowing to a near stop. 
+<<include "Victory">>
+<hr>
+<<include "jungle randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "jungle randomization">>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: shaman boss normal ai {"position":"5525,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Dressed in feathered robes that fail to cover $npc1.his round belly bearing the mark of the Glutton Separatists, this $npc1.species is wielding a totem and already chanting incantations in a tongue you don't understand. Given the way that the world itself seems to shift around $npc1.him, it's obvious that $npc1.he's not as defenseless as $npc1.his empty hands would imply. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $e.special <= 0 and !$e.attacked>>
+	<li>Thorn wrap</li>
+	The shaman chants a few words, and the ground ruptures below your feet, thorned vines erupting forth and biting into your flesh as they wrap tightly around you! 
+	<<set $e.special = 7>>
+	<<set $e.attacked = true>>
+<</if>>
+
+<<if $e.special > 0>>
+	<<set $e.special-->>
+	
+	<<if $e.special > 3>>
+		<li>Thorns</li>
+		The thorny vines dig into you. 
+		<<set _damage = random(6,10)>>
+		<<damage _damage>>
+		<<if random(1,100) < 15>><<tempBuff "stun" 1>><</if>>
+	<</if>>
+	
+	<<if $e.special <= 0>>
+		<<set $e.special = 0>>
+		The vines around you retract back into the ground, expended of their magic! 
+	<</if>>
+<</if>>
+
+<<if !$e.attacked>>
+	<<if random(1,2) == 1>>
+		<<if random(1,3) == 1 or $agi < 10 or $str < 10>>
+			<li>Geyser</li>
+			The shaman bends low to the ground, hands facing upwards before he suddenly rises, throwing $npc1.his hands up in the air. Below you, the earth rumbles, then cracks open as a geyser of water pounds into you, sending you flying into the air before you land hard on the ground. 
+			<<damage $edmg>>
+		<<else>>
+			<li>Fatten</li>
+			The shaman waves his hands, chanting curses at you in a language you don't understand. The world suddenly seems heavier, your strength leaving you as your muscles turn into thick, heavy fat on your body! 
+			<<set _buff = random(-4,-9)>>
+			<<tempBuff "str" _buff>>
+			<<set _buff = random(-4,-9)>>
+			<<tempBuff "agi" _buff>>
+			<<set _buff = random(8,18)>>
+			<<tempBuff "fat" _buff>>
+		<</if>>
+		
+	<<else>>
+		<<if $e.hea > $e.maxhea * 0.5>>
+				<li>Rock pelt</li>
+				<<if setup.dodge()>>
+					The shaman swipes $npc1.his hand at you, sending small hunks of the ground flying at you, but you neatly dodge away.
+				<<else>>
+					The shaman swipes $npc1.his hand at you, causing small hunks of the ground to fly at you, pelting you for $edmg damage!
+					<<damage $edmg>>
+				<</if>>
+			<<else>>
+				<li>Boulder smash</li>
+				<<if setup.dodge() and setup.dodge()>>
+					The shaman raises $npc1.his hand and clenches it into a fist, causing the ground around you to hurl itself at you in dozens of large chunks. Fortunately, you are able to get yourself away from its epicenter without getting crushed thanks to a quick leap to the side. 
+				<<else>>
+					The shaman raises $npc1.his hand and clenches it into a fist, causing the ground around you to hurl itself at you in dozens of large chunks, smashing into you! 
+					<<set $edmg *= 1.2>>
+					<<damage $edmg>>
+				<</if>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set $e.attacked = false>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You give the $npc1.species a shoulder check and pin $npc1.him against the stone altar, pressing your body against $npc1.him to keep $npc1.him held. $npc1.He starts to chant a spell in a loud, panicked tone, but you open your maw wide, clamping down on $npc1.his head as you voraciously begin to devour $npc1.him. You gulp $npc1.him down, going from head to neck and down to shoulders hungrily, your jaw unhinging as your throat muffles $npc1.his cries. Grabbing $npc1.him by the waist, you hoist $npc1.him up onto the altar and force yourself down upon $npc1.him, starting the $npc1.species on an inescapable path to your stomach. 					
+<<set _eat = $e.weight + $npc1.speciesStats[5] * 5>>
+<<consume  _eat>>
+<<if $alive>>
+	More and more of the fat $npc1.species's body is forced into your hungering maw and down your throat as you lower yourself down steadily further upon $npc1.him, $npc1.his arms and legs flailing below you. Ravenously, you pull $npc1.him into you again, violently shoving $npc1.his rotund midsection into your mouth as $npc1.his muffled cries begin to emanate from your $waist stomach. Swallowing with ferocious greed, you suck down $npc1.his massive belly before flipping $npc1.him up into the air, gravity assisting you with pulling $npc1.his legs and tail into your throat. With a few more gulps, the shaman is a large, struggling ball in your belly, and as you let out a contented hum and give your stretched belly a rub, it grows still. 
+	<<set $cal += _eat * .6>>
+	<<include "Victory">>
+	<<action "c" "next" "Shaman defeated">><</action>>
+<<else>>
+	You slowly swallow $npc1.him down, gravity forcing his heavy body down your throat much faster than you'd wanted, but you doubt it would've helped anyways. Forcing down its legs and tail, you fall to your knees, rubbing your $waist belly and groaning in pain, unable to do much else. As you lose consciousness, you can see a raptor looming over you, seeming to prepare for some kind of ritual. 
+	<<defeated "transformed">>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You escaped! 
+<<endCombat>>
+<<include "jungle randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower yourself to the ground, unwilling to fight any further. Seeing this, the shaman raises $npc1.his hands palm up, slowly. Below you, vines erupt forth, and you are soon bound by them, unable to move. With a gesture and a call, others begin to gather around. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 600>>Four reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 1000>>Half a dozen reptillian bystanders haul you haphazardly onto an altar. 
+<<else>>What feels like an entire village of reptillian bystanders struggle to haul your massive body onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. 
+<br><br>
+
+When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+The shaman's last attack proves too much for you, and you stumble to the ground, too injured to fight on. Seeing this, the shaman raises $npc1.his hands palm up, slowly. Below you, vines erupt forth, and you are soon bound by them, unable to move. With a gesture and a call, others begin to gather around. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 600>>Four reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 1000>>Half a dozen reptillian bystanders haul you haphazardly onto an altar. 
+<<else>>What feels like an entire village of reptillian bystanders struggle to haul your massive body onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<<defeated "transformed">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The shaman wobbles a bit on $npc1.his feet after your last attack, then crashes to the ground on $npc1.his big, round stomach, letting out a groan as $npc1.he goes. 
+<<include "Victory">>
+<<action "c" "next" "Shaman defeated">><</action>>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "eater" true>>
+    /* Custom ending */
+	<<if $e.ate > $e.sto>> /* defeated */
+		<<action "c" "next" "Shaman defeated">><</action>>
+	<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: star shaman ai {"position":"5650,1125","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This shaman is an abnormally large and heavily-muscled $npc1.species, dressed in robes that bear an unusual symbol that makes your head hurt and your eyes water when you look at it too long. $npc1.He is wielding a totem topped by the Fallen Star in $npc1.his powerful arms, and that's what you're here to get. Only one way to do so now... 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $e.specialB == 2 and $e.hea <= $e.maxhea * 0.5 and !$e.attacked>>
+	<li>Stardust</li>
+	The $npc1.species raises the totem high, looking up to the heavens and calling out in a language you don't understand. The sky streaks with falling stars, and in a few moments you are pelted with countless small, burning stones. 
+	<<damage $edmg * 1.7>>
+	<<set $e.specialB = 1>>
+	<<set $e.attacked = true>>
+<</if>>
+
+<<if $e.specialB == 1 and $e.hea <= $e.maxhea * 0.25 and !$e.attacked>>
+	<li>Dragon breath</li>
+	<<if setup.dodge()>>
+		With a bit of panic on his face, the $npc1.species begins to utter deep, rumbling words of power. As $npc1.he utters the last syllable, $npc1.he lurches forward, mouth open wide. Taking this as a sign to get out of the way, you put as many objects between $npc1.him and you as possible, and a gout of fire erupts from $npc1.his mouth, but fails to do more than cause you to sweat! 
+	<<else>>
+		With a bit of panic on $npc1.his face, the $npc1.species begins to utter deep, rumbling words of power. As $npc1.he utters the last syllable, $npc1.he lurches forward, mouth open wide as a gout of flame erupts from it, engulfing you in fire! 
+		<<damage $edmg * 1.5>>
+		<<tempBuff "burn" $edmg * 0.5>>
+	<</if>>
+	<<set $e.specialB = 0>>
+	<<set $e.attacked = true>>
+<</if>>
+
+<<if $e.specialA <= 0 and !$e.attacked>>
+	<li>Thorn wrap</li>
+	The shaman chants a few words, and the ground ruptures below your feet, thorned vines erupting forth and biting into your flesh as they wrap tightly around you! 
+	<<set $e.specialA =  5>>
+	<<set $e.attacked = true>>
+<</if>>
+
+<<if !$e.attacked>>
+	<<if random(1,2) == 1>>
+		<<if random(1,3) == 1 or $agi < 10 or $str < 10>>
+			<li>Geyser</li>
+			The shaman bends low to the ground, $npc1.hands facing upwards before $npc1.he suddenly rises, throwing $npc1.his hands up in the air. Below you, the earth rumbles, then cracks open as a geyser of water pounds into you, sending you flying into the air before you land hard on the ground. 
+			<<damage $edmg>>
+		<<else>>
+			<li>Fatten</li>
+			The shaman waves $npc1.his $npc1.hands, chanting curses at you in a language you don't understand. The world suddenly seems heavier, your strength leaving you as your muscles turn into thick, heavy fat on your body! 
+			<<set _buff = random(-4,-9)>>
+			<<tempBuff "str" _buff>>
+			<<set _buff = random(-4,-9)>>
+			<<tempBuff "agi" _buff>>
+			<<set _buff = random(8,18)>>
+			<<tempBuff "fat" _buff>>
+		<</if>>
+		
+	<<else>>
+		<li>Boulder smash</li>
+		<<if setup.dodge()>>
+			The shaman raises $npc1.his $npc1.hand and clenches it into a fist, causing the ground around you to hurl itself at you in dozens of large chunks. Fortunately, you are able to get yourself away from its epicenter without getting crushed thanks to a quick leap to the side. 
+		<<else>>
+			The shaman raises $npc1.his $npc1.hand and clenches it into a fist, causing the ground around you to hurl itself at you in dozens of large chunks, smashing into you! 
+			<<damage $edmg>>
+		<</if>>
+			
+	<</if>>
+<</if>>
+
+<<if $e.specialA > 0>>
+	<li>Thorns</li>
+	The thorny vines dig into you. 
+	<<set _damage = random(8,15)>>
+	<<damage _damage>>
+	<<if random(1,100) < 20>><<tempBuff "stun" 1>><</if>>
+	<<set $e.specialA-->>
+	<<if $e.specialA <= 0>>
+		<<set $e.specialA = 0>>
+		The vines around you retract back into the ground, expended of their magic! 
+	<</if>>
+<</if>>
+
+<<set $e.attacked = false>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+<<createNPC "dinosaur" "random" 2>>
+
+<<if $e.victims == 10>>
+	You lunge for the $npc1.species, grabbing $npc1.him in your arms and holding $npc1.him in place as you open your mouth wide. Lifting $npc1.him up, you force $npc1.him into your maw, jaw unhinging and throat stretching as you gulp $npc1.him down. 
+<<elseif $e.victims > 1>>
+	Again you manage to get a hold of the $npc1.species and cram $npc1.him into your maw, not satisfied until $npc1.he's in your belly. Swallowing furiously, you raise $npc1.him up and pull $npc1.him into you, trying to eat $npc1.him faster than last time to keep $npc1.him from escaping. 
+<<else>>
+	Once more, you get your hands on the $npc1.species and force $npc1.him into your maw, absolutely determined to devour $npc1.him once and for all. Keeping a firm grip on $npc1.him, you pull at $npc1.him, forcing $npc1.him down your stretched throat and towards your now very crowded stomach as you swallow with fervent conviction. 
+<</if>>
+<<consume $e.weight 0>>
+
+<<if $alive>>
+	<<if $e.victims == 10>>
+		About midway down $npc1.his muscular torso, something curious happens and you find that $npc2.article <<if $npc2.species == $npc1.species>>different <</if>>$npc2.species is in your mouth instead. As you gulp down its fat waist and slurp its legs down, you see that the shaman is growling and wiping some of your saliva off $npc1.his face, still wielding $npc1.his totem. A brief looking around shows that there seems to be one less person watching the battle. Looks like this is still a fight. 
+		<<set $cal += $e.weight*.6>>
+	<<elseif $e.victims > 1>>
+		Again you only make it halfway down $npc1.his body before $npc1.he is replaced by someone else. Swallowing down your unintended victim hastily, you quickly find $npc1.him again, the look on $npc1.his face one of even greater aggravation than before. You give your $hungry $waist belly a quick rub and get back to the fight again. 
+		<<set $cal += $e.weight*.6>>
+	<<else>>
+		As you watch carefully, you notice that the flailing legs and tail that stick out of your mouth do not change. Slurping them down hastily, you take a look around. The stronghold is now completely empty, it seems, as everyone else that was here is now in your $waist belly. 
+		<<set _calories = $e.weight*.6>>
+		<<consume 150 _calories>>
+		<<if $alive>>
+			Well, that's certainly one way to do it. 
+			<<include "Victory">>
+			<<advanceQuest $hammerQuest>>
+			<hr>
+			<<include "jungle randomization">>
+		<<else>>
+			As you slowly gulp $npc1.him down towards your already full stomach, you notice that the flailing legs and tail that stick out of your mouth don't change. Agonizingly, you swallow again and again, vigor renewed by the thought that, finally, you have eaten the shaman. As you sink to the ground rubbing your painfully overstretched belly, you are comforted by that thought, and as you slip into unconsciousness, you still consider it a victory. 
+			<hr>
+			<<defeated "overeating">>
+		<</if>>
+	<</if>>
+	
+<<else>>
+	<<if $e.victims == 10>>
+		You slowly swallow him down, gravity forcing $npc1.his heavy body down your throat much faster than you'd wanted, but you doubt it would've helped anyways. The pain of your stretched stomach is so great that you only barely notice that the creature you're eating doesn't seem to be the $npc1.species anymore. Forcing down its legs and tail, you fall to your knees, rubbing your $waist belly and groaning in pain, unable to do much else. As you lose consciousness, you can see the $npc1.species looming over you, seeming to prepare for some kind of ritual. 
+	<<elseif $e.victims > 1>>
+		Unfortunately, it seems that this time, you don't have it in you to eat another whole person, and when you spot that $npc1.he's been replaced, you let out a muffled groan. You were certain this time would do it, but now all you have for your trouble is the lower half of $npc2.article $npc2.species to suck down to an overfull belly. Having no choice but to swallow it down, you fall to your knees, $waist belly just too full for you to keep going. Groaning in pain and rubbing your aching stomach, you are fortunate enough to lose consciousness before the $npc1.species can perform whatever spell $npc1.he started to use as you pass out. 
+	<<else>>
+		As you slowly gulp $npc1.him down towards your already full stomach, you notice that the flailing legs and tail that stick out of your mouth don't change. Agonizingly, you swallow again and again, vigor renewed by the thought that, finally, you have eaten the shaman. As you sink to the ground rubbing your painfully overstretched belly, you are comforted by that thought, and as you slip into unconsciousness, you still consider it a victory. 
+	<</if>>
+	<hr>
+	<<defeated "transformed">>
+	
+<</if>>
+<<set $e.victims-->>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Run failed!</li>
+You try to get out, but with the gate closed, there isn't any good way to escape! 
+<<enemyAction "attack">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You try to get out, but with the gate closed, there isn't any good way to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Unwilling to fight the shaman any further, you lower yourself to the ground in submission before the $npc1.species. $npc1.He scoffs and barks out a command in the island language. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 600>>Four reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 1000>>Half a dozen reptillian bystanders haul you haphazardly onto an altar. 
+<<else>>What feels like an entire village of reptillian bystanders struggle to haul your massive body onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+/*===You lose===*/
+<<case "defeat">>
+The raptor's last spell proves to be too much, and you slump to the ground, defeated. 
+<<if setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 300>>Two reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 600>>Four reptillian bystanders haul you onto an altar. 
+<<elseif setup.weight() <= 1000>>Half a dozen reptillian bystanders haul you haphazardly onto an altar. 
+<<else>>What feels like an entire village of reptillian bystanders struggle to haul your massive body onto an altar. 
+<</if>>
+From there, the shaman begins to chant, the unfamiliar island language interspersed with unnatural sounding words that you can barely even comprehend, let alone identify. As magic flows around you, the world goes dark, the altar and village seeming to fade away, leaving you with the distinct feeling of falling. When the sensation stops, you find yourself somewhere cold and dark. All you can see is five glowing lights, like sets of eyes staring at you. A whispy, deep voice echoes around you in an unnatural tongue, and your pulse quickens, a cold feeling spreading through you. Before you can fully comprehend what is happening, your body dissipates, absorbed by something in the darkness, and you are no more. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You win!===*/
+<<case "victory">>
+With your last blow, the $npc1.species staggers backwards and falls to the ground. Crying out words in a language that makes your brain hurt just hearing them, $npc1.he is suddenly consumed by a roaring mist of horrendous purple magic. A scream escapes $npc1.him and is cut short, and just like that, $npc1.he is gone. The totem and the Fallen Star, however, are still there. You smash the totem and take the hunk of star metal with you. It's huge! 
+<<include "Victory">>
+<<advanceQuest $hammerQuest>>
+<hr>
+<<include "jungle randomization">>
+
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+

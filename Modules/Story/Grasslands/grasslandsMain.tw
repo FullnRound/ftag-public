@@ -1,0 +1,862 @@
+:: Abandon wildling captive {"position":"2500,3050","size":"100,100"}
+<p>"Huh? No, wait!" the <<if $lion.species == $npc2.species>>lardball
+<<elseif $rhino.species == $npc2.species>>rotund
+<<else>>humungous<</if>> $npc2.species  pleads desperately, "Y-you can't just LEAVE me like this! Grugh..." $npc2.He stifles a burp, and you watch with horror as $npc2.he balloons a little larger right in front of you, that huge stomach swelling outwards by a couple of inches. You start to back away. "Help me, damnit, $npc1.he could be back at any moment!" </p>
+
+Not wanting to get involved in this crazy situation, you turn and run. You can hear the $npc2.species calling after you, and catch a glimpse of $npc2.him over your shoulder. But when you turn your head back to look where you're going you're stopped dead- standing right in front of you is a wilding shaman! 
+<<setEnemy $wildlingShamanBoss>>
+
+<<startCombat>>
+
+
+:: Break the captive out yourself [nobr] {"position":"2400,3250","size":"100,100"}
+<<stamina -100>>
+<<set _playerSkill = $str * 2>>
+<<switch setup.skillTest(_playerSkill,30)>>
+
+<<case false>>
+<p>You circle the stockade, but you can't see any sign of a gate. How did they get $npc2.him IN there? Inspecting the posts more closely, you can't help but notice that they're surrounded by a faint blue glow. This barrier may not be entirely hand-made in nature. Oh well....
+</p>
+		
+<p>Cracking your knuckles, you grab hold of one of the thick wooden stakes and you haul on it, first trying to lift it out of the ground, then trying to twist it free, then trying to topple it, eventually hanging off it with all your weight. But although the post creaks and flexes slightly, you're not able to break down the barrier. This wood's stronger than iron! You back up with a groan, panting and rubbing your aching back. You look up at the bloated $npc2.species, and $npc2.he shrugs. 
+</p>
+		
+<p>"Any OTHER ideas?"</p> 
+	
+<<case true>>
+<<set $eventCounterA.freed = true>>
+
+<p>You circle the stockade, but you can't see any sign of a gate. How did they get $npc2.him IN there? Inspecting the posts more closely, you can't help but notice that they're surrounded by a faint blue glow. This barrier may not be entirely hand-made in nature. Oh well... Spitting on your hands, you grab hold of one of the thick wooden stakes surrounding the overblown captive and HAUL with all your might. You are rewarded with the post creaking alarmingly, and slowly tilting in its socket until it suddenly flips free with a great spray of earth! 
+</p>
+
+<p>Your $npc2.species friend splutters in protest as $npc2.he's showered, but you move on to the next post. One, two, three... TIMBERRR! With another colossal effort you manage to rend another stake from the ground, and now have (just) enough room to squeeze between them! Now able to really put your back into it, you set to work toppling first one heavily-embedded post, then the next, then the next! By the time you've removed enough for your corpulent compadre to get out, you're sweating buckets and going weak in the knees. You stagger away from the gap, and sit down heavily. Phew... you just need... a breather for a few moments. The <<if $lion.species == $npc2.species>>ludicrously large 
+<<elseif $rhino.species == $npc2.species>>ridiculously round
+<<else>>humungously hefty<</if>> $npc2.species squirms through the gap in $npc2.his prison, finally breaking free of its embrace with an almost audible POP. </p>
+
+<p>"Phew! Am I glad to be OUT of there! Now what?!"</p> 
+
+<</switch>>
+<<action "c" "next" "Help wildling captive">><</action>>
+
+
+:: Captured by wildlings [nobr] {"position":"2000,2925","size":"100,100"}
+/*Beginning of setup*/
+<<rest>>
+<<consumeQuiet 15 8>>
+
+/*Create second npc based on who you were fighting*/
+/*<<setNPC 2>>*/
+<<createNPC $e.species $e.gender 2>>/* FIXES AND EDITS - adjust for new system */
+
+/*Create random first NPC. I set it up this way in the original game
+I should probably change it*/
+<<createNPC "random" "random" 1>>
+/*End of setup*/
+
+<p>You wake up laying on your back and looking up at the sky. Your head throbs with pain<<if $ful > 100>> as well as your stomach<</if>>. You lean up and rub your head as you notice your stomach has gotten somewhat fuller than it was before you were knocked unconscious. 
+</p>
+
+<p>You see the $npc2.species you were fighting before having an argument with another much fatter $npc1.species wildling. Their language is unkown to you, and yet you somehow can vaguely understand what they're saying. They seem to be arguing about the fat one not bringing something. The main thing you can tell is the one you were fighting before is angrily gesticulating at you while the fat one seems to be responding defensively. The skinnier wildling says something in an annoyed tone to the fatter $npc1.species and they both head off into the tall grass as their argument continues. 
+</p>
+
+/*If you've basically exploded*/
+<<if $ful > $maxFul>>
+You start to get up, but as your headache subsides you finally realize how painfully overstuffed you are. You lay back on the ground again with a thud and rub your aching stomach. The wildlings hear you fall back to the ground and turn back towards you. The fatter wildling punches the other one in the shoulder and says something to $npc2.him with a distinctive //"I told you so"// tone. The other one just rolls $npc2.his eyes as they walk up next to you. The $npc2.species you were fighting says something dismissive back to $npc1.him before sauntering over to you and roughly planting $npc2.his $npc2.foot onto your overfed gut. The rough jolt to your gut is too much for you to withstand and you once again pass out. 
+
+<<action "c" "wait" "Sleep" "Stuffed by the wildlings">><</action>>
+
+/*If you're too big to move*/
+<<elseif setup.testImmobile()>>
+You roll back and forth in an attempt to stand, but find your $waist is so heavy it anchors you to the ground. The wildlings notice you trying to get up and start walking back towards you. The fatter wildling punches the other one in the shoulder and says something to $npc2.him with a distinctive //"I told you so"// tone. The other one just rolls $npc2.his eyes as they walk up next to you. The $npc2.species you were fighting says something dismissive back to $npc1.him before once again whacking you over the head, knocking you unconscious once again. 
+
+<<action "c" "wait" "Sleep" "Stuffed by the wildlings">><</action>>
+
+/*If you're fully able to escape*/
+<<else>>
+You finally regain your wits enough to stand up, but you wobble on your feet and stumble to your knees, as you're still woozy and light-headed from the blow to your head. By the time you've regained your senses, they've already disappeared completely into the grass. 
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+<</if>>
+
+
+:: Carried to the Wildling Village [nobr] {"position":"2000,3125","size":"100,100"}
+<<createFixedNPC "wildlingDragon">>
+<<createNPC $blackDragon "random" 3>> /* only in slot 3 rather than 3 because I'd already written most of the edits with them in slot 3 before realising they should be a random NPC :p */
+
+<p>When you regain consciousness you're kneeling on the ground, your stomach no larger than it was before although your $p.hands are still tied in front of you. A fat $npc3.species of approximately <<sayWeight 600>> stands in front of you dressed in a robe of mulitcolored cloths, thickly studded with a mismatch of expensive jewelry and trinkets. $npc3.He addresses someone next to you and you look up to see the wildlings that captured you standing with their hands on your shoulder, holding you down. The bejeweled $npc3.species says something to them in an impressed tone before writing something down on a clipboard $npc3.he's carrying. The wildlings at your shoulders nod appreciatively back to $npc3.him before walking off with grins on their faces. </p>
+
+<p>As you look back at them you finally notice that all around you there's a large village of huts with several wildlings milling about their business. It's hard to tell from where you're sitting, but the village looks to be almost as large as the city. Before you can study the village too intently your attention is drawn back to the heavy set $npc3.species as $npc3.he addresses you. </p>
+
+<p>"You'll make quite a good offering, eh $p.species?" $npc3.he says perfectly well in your common language as $npc3.he pokes you in the gut with $npc3.his quill pen. $npc3.He motions to two similarly heavy set, though much more muscular $npc3.species guards that come over and pick you up to your feet. The jeweled $npc3.species steps aside to reveal the monumentally large creature behind $npc3.him. </p>
+
+A crater larger than most houses is filled entirely by the tremendous nonanthro $npc1.furBack $npc1.furred $npc1.species sleeping within. The $npc1.species is a rippling sea of shining $npc1.furBack $npc1.fur, $npc1.his arms and legs so swaddled in fat as to render them useless, and even with the crater being at least <<sayDistance 144>> deep at the center, the $npc1.species's voluminous waist causes the $npc1.species's back to stick up another <<sayDistance 144>> above ground level. The $npc1.species is made of so many thick rolls of fat as to render $npc1.him an almost spherical ball of lard. Around the edges of the crater there are several furs with buckets of blue goo that appear to be massaging huge globs of it into the $npc1.species's belly $npc1.fur. Several other furs are dredging dirt out of the crater and adding it to the wall of dirt surrounding it, apparently attempting to make the pit deeper for the expanding $npc1.species. 
+
+<<action "c" "next" "Next" "Fed to the grasslands dragon">>
+<</action>>
+
+
+:: Dispel the captive [nobr] {"position":"2200,3150","size":"100,100"}
+<<if $mana < $antidote1.cost>>
+<p>You attempt to cast the spell... and nothing comes out. </p>
+
+It seems you're low on mana....
+<<action "c" "next" "Help wildling captive">><</action>>
+
+<<else>>
+
+<<set $eventCounterA.dispelsLeft-->>
+<<spendMana $antidote1.cost>>
+
+<<switch $eventCounterA.dispelsLeft>>
+
+<<case 2>>
+<p>The $npc2.species is bathed in a soft blue light. A strange gurgle emanates from $npc2.his gargantuan belly, and $npc2.he puts one fat $npc2.hand to it, grunting. </p>
+
+"Uff, that felt like it did SOMETHING..." $npc2.His stomach then lets out a more ominous rumble, and a smothered burp catches $npc2.him by surprise. $npc2.He starts to get even rounder! "B-but I guess it wasn't strong enough! Q-quick, can you cast it again?"
+<<action "c" "next" "Help wildling captive">><</action>>
+										
+<<case 1>>
+<p>With a wave of your arms the blue light returns, and the $npc2.species's current growth spurt falters. The faint eldritch glow around the stockade (a far less pretty blue) seems to flicker for a moment. </p>
+
+"I think it's working!" $npc2.he exclaims, only for the blue light to fade abruptly, and the weight resumes piling on. A new chin begins to form under $npc2.his jaw. "Mphh! M-maybe third time's the charm?!" 
+<<action "c" "next" "Help wildling captive">><</action>>
+
+<<case 0>>
+<<set $eventCounterA.dispelled = true>>
+<p>You cast the spell for a third time, and this time the $npc2.species's stomach lets out a deep, subterranean GURGLE that makes $npc2.him quiver! The light around the wooden posts flares abruptly, and then snuffs out. The $npc2.species's throat quivers, and $npc2.he stifles a rather loud BELCH with $npc2.his fat $npc2.hand, looking anxious. Only this time, glowing blue smoke curls out of $npc2.his nostrils. After a few tense moments where $npc2.he DOESN'T start to grow, $npc2.he lets out a deep breath of relief, puffing more blue smoke out. 
+</p>
+
+"Whew! Talk about INDIGESTION! That was some magic, thanks! Now what?"
+<<action "c" "next" "Help wildling captive">><</action>>
+<</switch>>
+
+<</if>>
+
+
+:: Escape with wildling captive [nobr] {"position":"2300,3400","size":"200,100"}
+<<set $e.runnable = false>>
+
+<<set $enemyDescription = "You face the wilding shaman, as skinny and dark as a shadow at noon, with ritualistic markings across the hatchet-like planes of $npc1.his chiselled canine features and adorned with a full ceremonial headdress and robe. Scrawny and completely unarmed, carrying only an old wooden flute,  you still feel the skin crawl on the back of your neck when those eyes fix on you. $npc1.He does not look happy to see you making off with $npc1.his captive. Sacrilige! And with your fat friend to think of, you've no chance of running. Besides which, $npc2.he's basically blocking the only other path out. You'll have to stand and fight!" >>
+
+<<set $e.special = "captive">>
+
+/*If you dispelled the captive*/
+<<if $eventCounterA.dispelled>>
+<p>You turn on your heel and run, the gigantic $npc2.species waddling right behind you! For someone who's stomach is practically dragging on the ground, $npc2.he can really MOVE! While you're pushing aside tall stands of grass, $npc2.he's ploughing a channel that several people abreast could walk down. The thudding of $npc2.his lumbering $npc2.feet makes the ground shake and knocks fruit off distant trees. You've just got to hope that nobody comes looking for you both! </p>
+
+<p>Eventually, however, you're well out of sight of the stockade, with absolutely no signs of pursuit. It looks like you've both got away with it! The vast <<if $lion.species == $npc2.species>>feline
+<<else>>pachyderm<</if>> doughball stops to rest, leaning against a tree for support as $npc2.he pants. </p>
+
+<p>"Wow, thanks for rescuing me! I really thought I was a gonner! Any longer in that and I'd have been too big to even move, let alone escape! I owe you, ''BIG''-time!" With a loud crack the tree suddenly lurches under $npc2.his weight, leaving $npc2.him wobbling unsteadily. $npc2.He grabs hold of what $npc2.he can reach of $npc2.his enormous belly and jiggles it, wincing. "Though how I'm gonna shed some of ''THIS'' I just don't know!" </p>
+
+<p>"I lost most of my gear back there-" you don't offer to go and retrieve it, and $npc2.he doesn't look surprised. "I don't even have the clothes I stand up in! But..." $npc2.he reaches up, with difficulty, around $npc2.his neck and fumbles with something, "...I can offer you THIS as a reward!" </p>
+
+<p>With a final tug, a cord hidden beneath $npc2.his juicy chins comes loose and out drops a money pouch and a shining pendant, resting between the twin mounds of $npc2.his vast chest. $npc2.He picks them up and tosses them to you. The money pouch is satisfyingly heavy, while the pendent glints in in the palm of your $p.hand. You realise that it's a genuine gem! </p>
+
+<<set _reward = random(34,47)>>
+<<doGld _reward>>
+<<getItem $unidentifiedGem>><br>
+
+<p>Just at that moment, the grossly-obese $npc2.species's stomach growls ravenously at $npc2.him. "Thanks again, $p.buddy! Now I've really got to go. There's gotta be ''SOMETHING'' to eat around here..." And with that, you watch the colossal ex-captive waddle away into the grasslands. </p>
+
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+/*If you didn't dispel the captive*/
+<<else>>
+<p>You turn on your heel and run, the gigantic $npc2.species waddling right behind you! But after a few lumbering paces you hear an ominous gastric gurgling, and turn to see that your fat friend has faltered, hands clutching at $npc2.his mammoth middle. $npc2.He huffs and tries to pick up speed, but hesitates. </p>
+
+<p>"I think..." $npc2.he pants anxiously, "I... th-think..." the gurgling intensifies, and $npc2.his eyes widen. "Oh, NOOO-urrp!" The belch catches $npc2.him by surprise, and $npc2.he clamps one $npc2.hand over $npc2.his mouth in horror. Too late- already you can see $npc2.his spectacularly superfattened bulk beginning to swell. </p>
+
+<p>"W-well don't just STAND there," the $npc2.species bellows, lumbering back into motion, "K-keep... huff... Keep g-GOING!" $npc2.He gets up to a slow, savannah-shaking jog, but with each step $npc2.he takes you can see $npc2.his stance widening as more and more subcutaneous blubber weighs $npc2.him down, $npc2.his legs having to swing around more and more stomach. $npc2.His pace quickly slows until $npc2.he's at a slow lumber, sloshing and wobbling unsteadily from foot to foot, belly swaying enormously in front of $npc2.him, ploughing a furrow in the knee-high grass. </p>
+
+<p>"K-keep... going," $npc2.he pleads with himself, panting with the effort. "C'mon... huff, huff... k-keep... huff... oorf!" As you watch, the undercarriage of $npc2.his now-mountainous middle hits solid earth, bounces, then begins to drag steadily. The outrageously obese $npc2.species lets out a groan and presses forward doggedly, but within a few more paces is piling up on top of $npc2.his own gut! $npc2.He grinds to a halt, completely immobile and beached atop $npc2.his own belly. $npc2.He struggles and wriggles, panting and sweating, then $npc2.he looks down at you and $npc2.his eyes widen in horror. </p>
+
+<p>"Oh, //noooo//...." It's only then that you realise $npc2.he's not looking AT you, but at something BEHIND you. You slowly turn, to find yourself facing what can only be the wilding shaman who put $npc2.him in that stockade in the first place. </p>
+
+<<startCombat>>
+
+<</if>>
+
+
+:: Feasting on the fruit farm [nobr] {"position":"2950,3125","size":"100,100"}
+<p><<switch $eventCounterB>>
+
+<<case 1>>
+The orange oozes its distinctly sweet juice in your $p.mouth as you take a big bite. Even the peel is tasty, and surprisingly edible. 
+<<consume 5 2>>
+
+<<case 2>>
+This peach crunches softly, its juice dribbling down your face as you eat it. 
+<<consume 5 2>>
+
+<<case 3>>
+The tremendous raspberry provides only slight resistance as you sink your $teeth into its sweet flesh. 
+<<consume 4 1>>
+
+<<case 4>>
+Your mouth and fingers stain with juice as you eat delicious and gigantic blueberry, your stomach becoming similarly shaped. 
+<<consume 4 1>>
+
+<<case 5>>
+The tiny seeds provide a small bit of hardness, but the sweetness of this massive strawberry is undeniable. 
+<<consume 4 1>>
+
+<<case 6>>
+Once you get past the outer shell, the meat of the enormous pumpkin fills your $p.mouth, stomach, and mind with the delicious Fall season. 
+<<consume 6 2>>
+
+<<case 7>>
+You get a massive chunk of watermelon and set to work getting a sticky $p.mouth and fingers and making a small mountain of spat-out seeds. 
+<<consume 6 2>>
+
+<<case 8>>
+You just manage to fit one grape into your $p.mouth as you eat it straight off the vine. It doesn't get fresher than that, or more delicious. 
+<<consume 4 1>>
+
+<</switch>></p>
+
+/*Use up one of your attempts*/
+<<set $eventCounterA-->>
+
+/*Checks to see if you can still eat*/
+<<if $alive and $eventCounterA > 0>>
+<<action "1" "food" "Orange" "Feasting on the fruit farm">>
+<<set $eventCounterB = 1>><</action>>
+<<action "2" "food" "Peach" "Feasting on the fruit farm">>
+<<set $eventCounterB = 2>><</action>>
+<<action "3" "food" "Raspberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 3>><</action>>
+<<action "4" "food" "Blueberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 4>><</action>>
+<<action "5" "food" "Strawberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 5>><</action>>
+<<action "6" "food" "Pumpkin" "Feasting on the fruit farm">>
+<<set $eventCounterB = 6>><</action>>
+<<action "7" "food" "Watermelon" "Feasting on the fruit farm">>
+<<set $eventCounterB = 7>><</action>>
+<<action "8" "food" "Grape" "Feasting on the fruit farm">>
+<<set $eventCounterB = 8>><</action>>
+<<action "9" "leave" "Leave" "Leave the fruit field">><</action>>
+
+/*Checks to see if you ran out of time*/
+<<elseif $alive and $eventCounterA <= 0>>
+<p>You catch a glimpse of the shack, and spot the door open. A short, slightly rotund $npc1.species of some sort emerges, draped in snappy wizardly finery and capped with a feathered cap. $npc1.He idly manipulates a magical wand in one hand as $npc1.he walks intently towards you. </p>
+
+<<action "w" "wait" "Wait" "Wait for the lizard wizard">><</action>>
+<<action "e" "run" "Run!" "Run from the lizard wizard">><</action>>
+
+/*Checks to see if you overate*/
+<<elseif !$alive>>
+<p>As you swallow the last bite, you come to the unfortunate conclusion that you overdid it, and slump against one of the nearby trees, slowly sinking to the ground and groaning as you rub your enormously stuffed belly. As you steadily lose the ability to move from the pressure in your stomach, you just catch the shack's door opening out of the corner of your eyes. A short, round $npc1.species in magical finery and sporting a feathered cap is marching towards you, a wicked grin showing <<if $npc1.teeth == "sharp teeth">>$npc1.his sharp-toothed smile<<else>>on $npc1.his $npc1.mouth<</if>> as $npc1.he approaches. The distinct feeling of the fruit drawing close to you comes up again, but now it's less welcoming, and more enclosing. Even if you could move, you doubt you could escape, though with the world going dark, that possibility is nothing but a happy thought... </p>
+
+<p>With your will to fight sapped to nothing, you are left at the mercy of a wizard that you have wronged. While there are concievably worse situations to be in, this is certainly near the top of the list, and the wide grin on the $npc1.species's face shows that $npc1.he means to prove it. "You wanted to eat my fruit?" $npc1.He taunts, $npc1.his plants wrapping around you and lowering you to your knees. "Well, you're going to have to eat a whole lot of it if you're going to be of use around here," $npc1.he continues, tapping your head with $npc1.his wand, then poking it into your belly. Though the pressure inside it seems to lessen, your helplessness does not fade, and the plants begin to feed you their fruit. </p>
+
+<<action "c" "wait" "Wait" "Filled with fruit">><</action>>
+							
+<</if>>
+
+
+:: Fed to the grasslands dragon {"position":"2000,3225","size":"100,100"}
+<<setPassageTitle "Fed to the grasslands $npc1.species">>
+
+<p>The guards that pulled you to your feet start pulling you towards the crater and on to a wood platform that overhangs it. One of the guards pounds $npc3.his spear on the platform twice and the $npc1.species opens $npc1.his eyes and pulls tremendous head up on the end of $npc1.his thick fat neck. The large $npc1.species looks down at you with a look of disgust before slowly shifting $npc1.his gaze up to the two quards and giving them the same look. One of the guards gestures widely from you to the $npc1.species and speaks in a loud reverent tone with a large smile on $npc3.his face. </p>
+
+The $npc1.species seems to give a bored sigh before dutifully lowering $npc1.his head to the edge of the platform, $npc1.his head dwarfing both you and the guards. The $npc1.species opens $npc1.his jaws wide and before you can react the guards heave you into the $npc1.species's waiting maw. $npc1.He swallows you down as you barely make a bulge in $npc1.his tremendous fleshy neck, sending you down a long trip to $npc1.his gargantuan stomach. 
+
+<<defeated "devoured">>
+
+
+:: Feed the wildling captive [nobr] {"position":"2300,3250","size":"100,100"}
+<<set _food = "">>
+<<for _i = 0; _i <$inventory.length; _i++>>
+	<<if $inventory[_i].effect == "Eat">>
+		<<set _food = $inventory[_i]>>
+	<</if>>
+<</for>>
+
+<<removeItem _food>>
+<<set $eventCounterA.feedsLeft-->>
+
+<<switch $eventCounterA.feedsLeft>>
+
+<<case 2>>
+<p>The supersized $npc2.species blinks incredulously as you proffer _food.article _food.name. "Huh? Are you crazy? I'm as big as a whale and you think I should take a SNACK break?" Nevertheless at the sight of food makes $npc2.his mouth water, and that gargantuan gut lets out a hungry rumble. "Well... I g-guess TECHNICALLY I've not eaten in two days..." </p>
+
+<p>$npc2.He greedily stuffs the _food.name into $npc2.his $npc2.mouth, chubby cheeks wobbling heavily as $npc2.he chews. Whether it's the effect of the spell on $npc2.him, or $npc2.he just puts on weight REALLY easily, as $npc2.he gulps the grub down the $npc2.species's belly gurgles and bulges bigger! You step back slightly, and watch that gargantuan gut swell until it presses firmly against the posts in front of $npc2.him. The $npc2.species wipes $npc2.his mouth and belches, and then $npc2.his ears wilt as $npc2.he notices $npc2.his gain. "Aww... shucks!" </p>
+
+<<case 1>>
+<p>"What, MORE?" The increasingly-spherical $npc2.species stares at you in disbelief as you proffer the _food.name. Look at me! I'm as big as a HOUSE, and you're offering me MORE?" But as you hold out the tempting treat, $npc2.his nostrils twitch and $npc2.he licks $npc2.his lips nervously. That bottomless-pit of a belly rumbles at $npc2.him hungrily. "I... I REALLY shouldn't..." $npc2.his willpower caves in almost immediately, and $npc2.he grabs the _food.name from you, chomping into it. In a couple of big bites it's gone, and with another gurgle the $npc2.species balloons even bigger. </p>
+
+<p>As $npc2.he swells, $npc2.his stomach begins to press hard against the posts of the stockade. They tremble, and a low creak emerges from them. The $npc2.species's expansion stops with another burp, and $npc2.he groans uncomfortably. "Thanks... thanks a BUNCH! Now I can... hardly BREATHE in here!" </p>
+
+<<case 0>>
+<<set $eventCounterA.freed = true>>
+<p>The mountainous $npc2.species stares at the _food.name in your $p.hand, starting to pant. The enormous creature's arms are now stuck right out, and $npc2.he resembles a $npc2.furBack $npc2.furred wrecking ball. "You're... you're as crazy as that THING is. If I eat... one more bite I'm... I'm gonna ''POP''!" That treacherous blob of a belly rumbles loudly over the creaking of the wooden posts, making $npc2.him grimace and sweat. "I... gotta... EAT! Gimme that!" $npc2.He chows down on the _food.name almost before it's left your $p.hand. $npc2.He swallows, and grows even larger, steamrollering over the stakes and toppling them. A couple even snap with a concussive CRACK from the pressure they're under, getting buried under that massively overfed middle. The now truly enormous $npc2.species BURPS and seems to wake up from $npc2.his food daze, looking around in astonishment. </p>
+
+<p>"Wha...?" With an immense effort, $npc2.he slowly hauls $npc2.himself to $npc2.his feet in the wreckage of the enclosure, wobbling unsteadily, belly almost dragging on the ground in front of $npc2.him. $npc2.He gives you a fat-faced, sweaty grin, and pants. "Ok, I'll admit it- you DO know what you're doing." $npc2.He hefts as much of $npc2.his gargantuan belly as $npc2.he can with both $npc2.hands, and grimaces. "But you're paying for my fitness classes. Now what?!" </p>
+
+<</switch>>
+
+<<action "c" "next" "Help wildling captive">><</action>>
+
+
+:: Filled with fruit [nobr] {"position":"2900,3250","size":"100,100"}
+<p><<stuffToBursting>>
+You can only watch as your belly stretches bigger and bigger, an endless stream of delicious flavors parading into your mouth. Against your desire and better judgement, you find yourself slowly chewing and swallowing down enormous fruit after enormous fruit. </p>
+
+<p>Oranges, pears, grapes, apples, watermelon, all of it is swallowed down as you are stuffed to the brim, and pushed beyond it again and again. It seems to last for days, all the while the little $npc1.species is laughing softly and playing with your oversized belly like it was $npc1.his own personal plaything. 
+<<consume 80 0>></p>
+
+<p>At length, your jaw stops moving, your body seeming to be unable to take anymore and simply halting entirely. You should have burst what seems like a few hundred gigantic feedings ago, but your tremendous gut rests on the ground now. </p>
+
+<p>Giving it a scrutinizing look and letting out an appraising hum, the $npc1.species pats it, and declares, "That'll do, I think." Gently, $npc1.he places $npc1.his wand on your head. "Now I'm going to be nice and let you sleep. Take a good rest, for your bulk will be serving me well..." </p>
+
+Your consciousness slowly fades, and your body begins to feel stiff. Where you touch the ground, you seem to sink into it, and as your vision goes dark, the last thing you see is your skin turning to bark and a leafy growth sprouting from it. 
+
+<<defeated "transformed">>
+
+
+:: Fruit farm {"position":"2825,2750","size":"100,100"}
+<<createFixedNPC "lizardWizard">>
+
+<p>As you wander about, you chance upon a small, but curious farm. There are a mixture of bushes, trees, and vines, and all of them are sporting truly enormous and especially round fruits. 
+</p>
+
+A bit away from the fields is a small, comfortable looking shack, most likely where the owner of the place is. The fruits are quite alluring, but the shack looks inviting for certain. 
+
+<<action "se" "fenceGate" "Fruit field">><</action>>
+<<action "sw" "house" "Fruit shack">><</action>>
+<<action "c" "leave" "Leave fruit farm">><</action>>
+
+
+:: Fruit feast [nobr] {"position":"2950,3000","size":"100,100"}
+<p>You just can't resist; it all looks too good to leave alone. Even better, as you head into the field proper, all the fruit seems to draw towards you, pulling away from their respective branches, vines, and bushes, their peculiar magics making them easy and safe to pluck, as well as clean and ready for eating. </p>
+
+<p><<if $eventCounterA > 16>>
+You try to find a secluded spot away from the shack so as to avoid detection by whoever set up the ward. 
+
+<<elseif $eventCounterA > 10>>
+You're still a bit suspicious of that noise you thought you heard earlier, and look for an area slightly off the path to begin your feast. 
+
+<</if>></p>
+
+You've got your pick of the lot; what will you dig into?
+
+
+<<action "1" "food" "Orange" "Feasting on the fruit farm">>
+<<set $eventCounterB = 1>><</action>>
+<<action "2" "food" "Peach" "Feasting on the fruit farm">>
+<<set $eventCounterB = 2>><</action>>
+<<action "3" "food" "Raspberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 3>><</action>>
+<<action "4" "food" "Blueberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 4>><</action>>
+<<action "5" "food" "Strawberry" "Feasting on the fruit farm">>
+<<set $eventCounterB = 5>><</action>>
+<<action "6" "food" "Pumpkin" "Feasting on the fruit farm">>
+<<set $eventCounterB = 6>><</action>>
+<<action "7" "food" "Watermelon" "Feasting on the fruit farm">>
+<<set $eventCounterB = 7>><</action>>
+<<action "8" "food" "Grape" "Feasting on the fruit farm">>
+<<set $eventCounterB = 8>><</action>>
+<<action "9" "leave" "Leave" "Leave the fruit field">><</action>>
+
+
+:: Fruit field [nobr] {"position":"2950,2875","size":"100,100"}
+<p>As you approach, the sheer size of the fruits become even more impressively clear. Tree branches are hung low with apples and oranges the size of beachballs, bushes bear strawberries, raspberries, and blueberries that are fist-sized, and the vines hold pumpkins and watermelons that could be used as low-rent housing in a pinch. As if it wasn't obvious enough that something was peculiar with them, they visibly sparkle with magic. </p>
+
+<p>Clearly, this place belongs to someone both skilled with magic, and fond of fruits. 
+<<set $eventCounterA = random(6,8)>>
+<<if $int > 70>>
+	You can barely sense a very subtle, yet distinct vibration of magic hum and reach out towards the shack. You've almost certainly just set off a magical ward, and odds are very good that whoever's in charge is about to know you're here. 
+	<<set $eventCounterA = random(17,19)>>				
+<<elseif $int > 30>>
+	You can almost hear what sounds like a soft humming noise, but as you look around you can't find the source of it. You think perhaps it was just your imagination. 
+	<<set $eventCounterA = random(11,13)>>
+<<else>>
+	Your mouth is watering just looking at those sweet delectables. But with magic involved, it might be a bad idea to eat without permission. 
+<</if>></p>
+
+<<action "c" "food" "Fruit feast">><</action>>
+<<action "w" "house" "Fruit shack">><</action>>
+<<action "n" "leave" "Leave fruit farm">><</action>>
+
+
+:: Fruit shack {"position":"2825,2875","size":"100,100"}
+<p>Pulling your longing gaze away from the scrumptious looking fruits, you stalwartly approach the shack. The small windows offer a glimpse of a densly-packed magical apparati and accessories, tomes and calcinators sitting in gently glowing magical circles. Before you can even knock, the door swings open, and a short, round little $npc1.species stands before you, decked out in cloth finery and a feathered cap. "Ah, a guest!" $npc1.he says, $npc1.his voice dancing with whimsy. 
+</p>
+
+<p>"You're quite the lucky fellow to find this place. I was just going to be moving it in a few more minutes." 
+</p>
+
+You let that last comment go, just accepting that you're dealing with the magically-inclined. With an exagerrated bow, $npc1.he continues to ask, "What can a humble wielder of the arcane do for you on this fine day?" 
+
+<<action "c" "store" "Trade" "Trade with the Lizard Wizard">>
+	<<vendor "lizard wizard">><</action>>
+<<action "n" "leave" "Leave" "Leave the Lizard Wizard">><</action>>
+
+
+:: Get captive to break themselves out [nobr] {"position":"2500,3150","size":"100,100"}
+<<if $eventCounterA.fattened>>
+<p>The huge $npc2.species looks thoughtful, and with a colossal effort hauls $npc2.himself to $npc2.his fat feet, paunch hanging way out in front of $npc2.him. "Hey, this could work." $npc2.He hefts his gigantic gut experimentally in both hands, and grins. "Yeah, I like this plan- let's USE this bulk! I'm gonna TRAMPLE the sucker!" 
+</p>
+
+<p>$npc2.He stomps $npc2.his fat $npc2.feet like a sumo squaring up for a bout, then takes a couple of slow, lumbering steps forward. Almost immediately $npc2.his vast belly hits the stakes and squashes slowly, bringing $npc2.him to a halt. Puffing, $npc2.he tries backing up to give $npc2.himself a run up, but almost at once $npc2.his massive backside bumps against the stakes behind $npc2.him. </p>
+
+<p>$npc2.He growls with frustration. "It's no good, I just don't have enough room to get any momentum! I'm too ''FAT''!" </p>
+
+<<else>>
+<<set $eventCounterA.freed = true>>
+
+<p>The huge $npc2.species looks thoughtful, and with a colossal effort hauls $npc2.himself to $npc2.his fat $npc2.feet, paunch hanging way out in front of $npc2.him. </p>
+
+<p>"Hey, this could work." $npc2.He hefts $npc2.his slightly-reduced-but-still-giant-sized gut experimentally in both $npc2.hands, and grins. "Yeah, I like this plan- let's USE this bulk! I'm gonna TRAMPLE the sucker!" $npc2.He stomps $npc2.his fat $npc2.feet like a sumo squaring up for a bout, and charges at the stockade, starting slow but managing to reach a considerable lumber before $npc2.he crashes into the stakes, belly-first. $npc2.His hugely overblown body quivers from the impact, but then so do the stakes! Puffing, $npc2.he backs up determinedly, until $npc2.his backside is pressing hard against the posts behind $npc2.him, and charges again. </p>
+
+<p>"GERONIMO!" This time $npc2.he cannons into the already-loosened stakes with an almighty BUMP, and you watch $npc2.him literally roll over the barrier, three of the posts uprooting and getting pressed flat into the earth. Your $npc2.species buddy lays beached on $npc2.his spectacular stomach for a few moments, panting, before $npc2.he struggles to $npc2.his $npc2.feet again. </p>
+
+<</if>>
+<<action "c" "next" "Help wildling captive">><</action>>
+
+
+:: Give captive an antidote [nobr] {"position":"2200,3250","size":"100,100"}
+<<removeItem $antidotePotion>>
+<<set $eventCounterA.dispelled = true>>
+<p>The <<if $lion.species == $npc2.species>>fattened feline
+<<elseif $rhino.species == $npc2.species>>rotund rhino
+<<else>>hefty $npc2.species<</if>> takes the potion from you and sniffs it suspiciously, before pulling a face. </p>
+
+<p>"Urgh! Why'd I want to drink CELERY-JUICE?" Just then, $npc2.his stomach lets out another ominous gurgle and $npc2.his body begins to bulge once again. Very hurriedly $npc2.he chugs the contents on the flask, having trouble getting it too $npc2.his lips past $npc2.his bloated chest and chins. The gurgling in $npc2.his guts increases in intensity- it sounds like a war going on in there! $npc2.His expansion falters, quivers, and then subsides! $npc2.He lets out an enormous, relieved BURRRP, an eldritch blue mist hanging in the air above $npc2.him for a moment before dissipating. </p>
+
+"Woah, does that feel BETTER!" $npc2.He grins roundly at you and slaps $npc2.his stupendous stomach. "Guess that takes care of my 'growth spurts'! Now what?" 
+<<action "c" "next" "Help wildling captive">><</action>>
+
+
+:: Give the captive a diet pill [nobr] {"position":"2200,3050","size":"100,100"}
+<<removeItem $dietPill>>
+<<set $eventCounterA.fattened = false>>
+<p>The $npc2.species looks doubtfully at the blue pill you give $npc2.him. "What, how is THIS supposed to help?" With your encouragement $npc2.he shrugs and claps $npc2.his chubby hand to $npc2.his lips, gulping the pill down laboriously. $npc2.He shudders, making $npc2.his bulk wobble. </p>
+
+"Ergh, I HATE taking pills. I... woah..." $npc2.He puts both hands to $npc2.his overblown belly, and it gurgles. "I... I feel funny..." With another gurgle his middle begins to shrink. Over a few minutes he easily loses over 200lbs- ok, $npc2.he's hardly this year's <<if $npc2.male == "male">>Mr. Hunkiverse<<else>>Ms. Beautiverse<</if>> but $npc2.he's visibly slimmer than $npc2.he was! "Heey..." $npc2.he looks himself over, now able to move more freely, too. "I gotta get me some more of THOSE!" 
+
+<<action "c" "next" "Help wildling captive">><</action>>
+
+
+:: Grasslands [grasslands] {"position":"2150,2450","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<<set $eventCounterB = "">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($wildling, $wildlingRitualist, $wildlingShaman, $gorgedCheetah, $bloatedLion, $expandedElephant)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+		<<startCombat>>
+	<<else>>
+		<<include "grasslands randomization">>
+	<</if>>
+	
+<<else>>
+	The grasslands are a large plain covered in tall grasses. The areas closer to the city are where most of the towns local farms are. The landscape is dotted by several copses of small trees and historically the grass would only come up to your shins. Lately though the grasslands have grown wilder and harder to traverse. Old footpaths have grown back over, in many places the grass grows as high as your waist, grazers have grown fatter and fatter as they keep up with the endless growing season, and the predators have become much more aggressive. There's tales of predators actively attacking and devouring people who venture too far into the grasslands. People have even reported seeing other furs out in the grasslands living like savages, as though they had returned to their primal roots. 
+	<<include "grasslands randomization">>
+
+<</if>>
+
+
+:: Grasslands ambush [nobr] {"position":"2050,2550","size":"100,100"}
+<<if $grasslandsEnemies == undefined 
+	or $grasslandsEnemies.length == 0>>
+	<<set $grasslandsEnemies = ["wildling", "ritualist", "shaman", "cheetah", "cheetah", "lion", "lion", "elephant", "elephant"]>>
+<</if>>
+<<set _enemy = $grasslandsEnemies.pluck()>>
+
+<<switch _enemy>>
+	
+<<case "wildling">>
+	<<setEnemy $wildling>>
+	You're walking through the grasslands when suddenly someone ''bursts'' through the grass in front of you! You think it's a fellow adventurer at first, but their tattered clothing and aggressive demeanour make it clear they're not here to trade stories. The fact that $npc1.he's pointing a spear at you doesn't help much either.
+	
+<<case "ritualist">>
+	<<setEnemy $wildlingRitualist>>
+	A splash of color is brought to your attention when a wildling jumps in front of you, a bag of food behind them at their disposal. 
+	
+<<case "shaman">>
+	<<setEnemy $wildlingShaman>>
+	Walking out of the long grass, you come unexpectedly upon a $npc1.adjective figure standing with their back to you, staring into the distance. A ragged loincloth and blanket makes you think that this is a wilding, and you tense to defend yourself, but you relax slightly when you observe that $npc1.he carries no weapon, and not even any food. The only thing you can see is an old, gnarled staff and a small medicine-bag at their feet. The creature slowly turns to face you- soot black, hatchet-muzzled and quite the thinnest creature you’ve seen in a long time, $npc1.his face is decorated with tribal markings that even you can interpret. A shaman! Err... whoops! $npc1.He regards you with an inscrutable, hawk-like expression for a few moments, then $npc1.his weathered muzzle breaks slowly into a fathomless, predatory smile. This doesn’t look good...
+	
+<<case "cheetah">>
+	<<setEnemy $gorgedCheetah>>
+	As you're walking through the tall grass, you suddenly hear the rapid gallop of $npc1.feet. As you turn towards the sound, a <<if $npc1.nspecies == "cheetah">>four-legged spotted<<else>>bloated<</if>> form awkwardly leaps out from the grass in front of you and awkwardly lands with a thud. The weight of it's clearly engorged stomach nearly pulls it over from the momentum, but it manages to awkwardly keep it's footing.
+	
+<<case "lion">>
+	<<setEnemy $bloatedLion>>
+	As you walking through the tall grass, you hear a low growl coming from beside you. You turn to look as a perfectly camouflaged $npc1.species leaps out at you! Although they're pulled back to the ground several feet short of you, clearly weighed down by the bloated stomach hanging beneath them. 
+	
+<<case "elephant">>
+	<<setEnemy $expandedElephant>>
+	You feel the ground shaking beneath you, making the grass around you sway sibilantly. Suddenly ahead of you out bursts a rampaging $npc1.nspecies! <<if $npc1.nspecies == "elephant">>$npc1.He is quite possibly the roundest pachyderm you’ve ever seen, stomach swollen so much that that famously wrinkled hide is stretched completely taut and smooth. You notice that their trunk is curled around peculiarly purple fruit.<<else>>$npc1.He is quite possibly the roundest creature you’ve ever seen, stomach swollen so much that it looks like a perfectly smooth sphere of $npc1.fur. You notice that $npc1.he's clutching a peculiarly purple fruit in $npc1.his grip.<</if>> As you watch, the $npc1.nspecies greedily stuffs it into $npc1.his mouth. The liberal purplish staining around $npc1.his lips suggests that they’ve already eaten far too many of those things. Even as that belly gurgles and stretches slightly larger before your very eyes, the highly elastic $npc1.nspecies advances ponderously towards you, eyes gleaming hungrily. It’s going to take more just than peanuts to fill ''THAT'' stomach now. In fact, it looks like $npc1.he thinks $npc1.he'll stretch enough to fit ''YOU'' in, as well! 
+	
+<</switch>>
+
+<<startCombat>>
+
+
+:: Help wildling captive [nobr] {"position":"2300,3050","size":"200,200"}
+A look of relief crosses the $npc2.species's fat features, but $npc2.he's still apprehensive. $npc2.His ears swivel agitatedly. 
+
+<<if !$eventCounterA.freed and !$eventCounterA.dispelled>>
+"You've got to get me out of this cage, and you've got to break this spell somehow! And ''HURRY'', $npc1.he could come back at any time!" You look blankly at $npc2.him, and $npc2.he stares back blankly at you. "I've got nothing. Any ideas?" 
+
+<<elseif $eventCounterA.freed and !$eventCounterA.dispelled>>
+"You've got to break this spell somehow! And ''HURRY'', $npc1.he could come back at any time!" You look blankly at $npc2.him, and $npc2.he stares back blankly at you. "I've got nothing. Any ideas?" 
+
+<<elseif !$eventCounterA.freed and $eventCounterA.dispelled>>
+"You've got to get me out of this cage! And ''HURRY'', $npc1.he could come back at any time!" You look blankly at $npc2.him, and $npc2.he stares back blankly at you. "I've got nothing. Any ideas?" 
+
+<<else>>
+"We've got to get out of here! And ''HURRY'', $npc1.he could come back at any time!" 
+
+<</if>>
+<hr>
+
+/*Freeing the captive*/
+<<if !$eventCounterA.freed>>
+
+<<if $sta > 0>>
+<<action "1" "next" "I'll break you out" "Break the captive out yourself">><</action>>
+<</if>>
+
+<<action "2" "next" "Break yourself out" "Get captive to break themselves out">><</action>>
+
+<<set _food = "">>
+<<for _i = 0; _i <$inventory.length; _i++>>
+	<<if $inventory[_i].effect == "Eat">>
+		<<set _food = $inventory[_i]>>
+	<</if>>
+<</for>>
+<<if _food != "">>
+	<<action "3" "food" "Feed them" "Feed the wildling captive">><</action>>
+<</if>>
+
+<<if $eventCounterA.fattened and setup.hasItem($dietPill) >= 0>>
+	<<action "4" "next" "Give a diet pill" "Give the captive a diet pill">><</action>>
+<</if>>
+
+<</if>>
+
+/*Actions for dispelling captive*/
+<<if !$eventCounterA.dispelled>>
+
+<<if setup.hasSpell($antidote1) >= 0>>
+<<action "5" "greyMagic" "Dispel the captive">><</action>>
+<</if>>
+
+<<if setup.hasItem($antidotePotion) >= 0>>
+<<action "6" "next" "Give captive an antidote">><</action>>
+<</if>>
+
+<</if>>
+
+
+<<if $eventCounterA.freed>>
+	<<action "7" "run" "Escape with them" "Escape with wildling captive">><</action>>
+<</if>>
+
+<<if !$eventCounterA.freed>>
+	<<action "8" "leave" "Abandon them" "Abandon wildling captive">><</action>>
+<</if>>
+
+
+:: Investigate the captive [nobr] {"position":"2350,2950","size":"100,100"}
+<<if $eventCounterB == "">>
+	<p>You head towards the thing, keeping cautiously to the long grass for cover. For a while whatever it is is completely obscured by a particularly dense and deep patch of grassland, but you finally break through into what looks like a clearing and stop dead, letting out a gasp of surprise. In front of you sits the biggest, fattest $npc2.species you've ever seen in your life! You can really only recognise their species by the $npc2.furBack $npc2.fur and <<if $lion.species == $npc2.species and $npc2.male == "male">>glossy mane
+<<elseif $rhino.species == $npc2.species>>large horns
+<<elseif $hippo.species == $npc2.species>>broad snout<<else>>few features that aren't wildly distorted by flab<</if>> - otherwise $npc2.he's practically just a blob. </p>
+
+	<p>Wider than $npc2.he is tall, a staggeringly huge belly and chest wobbles gently in time with $npc2.his breathing, and $npc2.his lovehandles are enormously thick and chunky. $npc2.His chubby arms stick out from $npc2.his sides, unable to rest flat against the rotund curves of $npc2.his body. Around $npc2.him you notice a solid-looking ring of outward-pointing wooden stakes, each crudely carved with symbols. They stand at about shoulder height, a little too high to climb over, ''ESPECIALLY'' for one so... famine-resistant. It looks like this Big $npc2.Boy has been penned in for some reason. The front of that gut is barely inches from the stakes in front of $npc2.him, while $npc2.his juicy lovehandles are brushing those at $npc2.his sides whenever $npc2.he breathes in. Making a slow, fascinated circuit around this gargantuan $npc2.species, you see that likewise $npc2.his titanic tuckus is also pressing on the posts behind $npc2.him. Looking closer, you note the torn remnants of pale clothing on the ground around $npc2.him, along with the remains of some armour and possibly a weapon or two, now mostly submerged under $npc2.his rolling bulk. This $npc2.guy must be a fellow adventurer of some sort. </p>
+
+	<p>$npc2.His thick double chin resting in the dent between $npc2.his pillowy <<if $npc2.male == "male">>pecs<<else>>breasts<</if>>, $npc2.he looks to be in a light doze. But as you return to $npc2.his front side $npc2.he lets out a small snort and awakens. When $npc2.he sees you $npc2.his eyes widen and with some effort $npc2.he lifts $npc2.his fat $npc2.mouth from $npc2.his chest. </p>
+
+
+	<p>"Hey, $p.buddy! Boy am I glad to see ''YOU''! You've gotta help me get outta here, before I ''BURST''!" </p>
+	
+<<elseif $eventCounterB == "burst?">>
+	<p>"I mean... nmphh..." The <<if $lion.species == $npc2.species>>wideload<<elseif $rhino.species == $npc2.species>>rippling<<else>>hugely heavy<</if>>	$npc2.species stifles a small burp, and your eyes widen as <<=$npc2.he.toUpperCase()>> does the same! That gargantuan gut bulges out a couple of inches further, some of the items scattered around $npc2.him being swallowed further by $npc2.his blubbery body. $npc2.His arms rise out a little more as they grow fatter, and $npc2.his sides stretch even more roundly. </p>
+	
+	<p>"I mean they've put some kind of spell on me so that I've spent the last two days blowing up like a ruddy ''BALLOON''!" $npc2.he roars. "If I don't manage to get out of this, and fast, who knows how much bigger they're gonna make me! I can hardly move now! Much more of this and I'm gonna ''POP''! C'mon, you've gotta ''HELP'' me!" </p>
+	
+<<elseif $eventCounterB == "why?">>
+	<p>The <<if $lion.species == $npc2.species>>fatso feline<<else>>enormous pachyderm<</if>> sighs and shakes $npc2.his head slightly. "I was taking a shortcut through the grasslands when I stumbled into this creepy canine out in the middle of nowhere. $npc1.He was all skin and bones, had some kind of weird headdress on and was carrying some kind of old rattle." With effort, $npc2.he scratches $npc2.his head with a hamlike $npc2.hand. "I don't really remember much else until I woke up in here," $npc2.he nods to the makeshift enclosure, "with that... that thing standing in front of me! $npc1.He was playing some kind of pipe, but I couldn't hear anything. That was two days ago. And since then..." $npc2.he slaps $npc2.his $npc2.hands against $npc2.his colossally corpulent body, which ripples heavily. "I mean, I know I wasn't exactly SKINNY before all of this, b-but THIS is crazy! You've gotta help me escape!" </p>
+<</if>>
+
+
+
+<<action "w" "talk" "\"Why are you in there?\"" "Investigate the captive">><<set $eventCounterB = "why?">><</action>>
+<<action "e" "talk" "\"What do you mean, 'burst'?\"" "Investigate the captive">><<set $eventCounterB = "burst?">><</action>>
+
+<<action "n" "leave" "\"I really shouldn't interfere\"" "Abandon wildling captive">><</action>>
+<<action "c" "next" "\"Sure, but how?\"" "Help wildling captive">><</action>>
+
+
+:: Leave fruit farm {"position":"2950,2750","size":"100,100"}
+<p>You decide not to explore this place, the thought that none of those fruits grow in the same climates or conditions crossing your mind for a moment as you go back to wandering. 
+</p>
+
+When you look back you see no sign of the farm, but catch a glimpse of a cart slowly pulling off into the distance. 
+<<action "c" "grasslands" "Grasslands">><</action>>
+
+
+:: Leave the Lizard Wizard {"position":"2700,3000","size":"100,100"}
+<<setPassageTitle "Leave the $npc1.Species Wizard">>
+
+You politely bid the $npc1.species fellow farewell, your curiosity satisfied. $npc1.He tilts $npc1.his head and gives a quizzical look as you walk away and return to your explorations. When you look back, the farm has vanished, and the only sign of the wizard is a cart rolling away towards the horizon. 
+
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+
+:: Leave the captive alone {"position":"2450,2850","size":"100,100"}
+With a shrug you turn away from the distant shape and head in a different direction. In a few moments you turn your head and whatever-it-was is now lost from view. 
+
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+
+:: Leave the fruit field {"position":"2825,3125","size":"100,100"}
+You pull yourself away from the delicious fruit and glance back at the shack. With no obvious activity, you decide it's safe enough and head out of there in a hurry, not wanting to face any repercussions. As you go, the fruits sag, seemingly sad that you're no longer there to eat them anymore. 
+
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+
+:: Minor Grasslands events [nobr] {"position":"2050,2450","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+<<switch random(1,4)>>
+
+<<case 1>>
+As you travel through the grasslands, you come across a bush bearing fruit. You reach and pick the only ripe looking fruit. 
+
+<<if random(1,2) == 1>><<getItem $grapes>>
+<<else>><<getItem $strawberries>>
+<</if>>
+
+<<case 2>>
+<p>As you travel through the grasslands you come across a wild watermelon patch with some of the largest watermelon you've ever seen! Unfortunately you appear to have been beaten to them as there's several hollowed out melon husks laying around. Each one houses fat <<=setup.getSpeciesData("rabbit").plural>>, <<=setup.getSpeciesData("gopher").plural>>, and <<=setup.getSpeciesData("meerkat").plural>> and other tiny animals who're fast asleep with bulging sloshing stomachs, their fur stained red with watermelon juice. 
+</p>
+
+There's only one untouched melon left. Even though it's the smallest of them all, it's still larger than most you've seen. You bend down to pick it up. 
+
+<<getItem $watermelon>>
+
+<<case 3>>
+<p>As you travel through the thick grasslands, you notice out of the corner of your eye a small blue object on the ground. You walk over and bend down to inspect it and find a small blue fruit about the size of your thumb hanging from a single tiny stalk coming out of the ground. 
+</p>
+
+You attempt to pick the fruit, but the stalk it's hanging from stretches surprisingly far before breaking away and snapping back to the ground. The tiny fruit remains in your hands and you squish it between your fingers, finding it to be surprisingly spongy. If you hadn't picked it from the ground yourself you might have thought it was a rubber ball. 
+
+<<getItem $stretchFruit>>
+
+<<case 4>>
+<<createNPC setup.randomHerbivore() "random" 2>>
+
+<<if random(1,2) == 1>><<setEnemy $bloatedLion>>
+<<else>><<setEnemy $gorgedCheetah>>
+<</if>>
+
+<p>As you are $walking through the grasslands you hear the sounds of a struggle. You trudge through the thick grass towards the sounds and find a large clearing where the grass has been flattened from an ongoing battle. You find a $npc2.species adventurer already chest deep in the jaws of a $npc1.species on the far side of the clearing. The $npc2.species curses $npc2.his enemy before finally being swallowed whole. The $npc1.species's once slim waist swiftly balloons outward as $npc1.he tries very hard to swallow the struggling adventurer down. 
+</p>
+
+<p>The $npc1.species's stomach now bulges out in a large taut sphere that practically drags on the ground. $npc1.He stops to pant from exhaustion for a moment as $npc1.his meal continues the struggle inside, causing $npc1.his already unwieldy stomach to sway back and forth underneath $npc1.him. Eventually the struggles calm down and the $npc1.species waddles off into the tall grass. $npc1.His enormous gut swaying from side to side, making it difficult to walk as $npc1.he disappears into the tall grass. 
+</p>
+
+You step out into the clearing to try and see where the $npc1.species went, but $npc1.he's completely disappeared. Looking down you find something that must have been dropped by the $npc2.species adventurer. 
+
+<<set _drop = random(1,100)>>
+<<if _drop > 90>><<getItem $rapier>>
+<<elseif _drop > 75>><<getItem $leatherArmor>>
+<<else>><<getItem $hamSandwich>>
+<</if>>
+
+<</switch>>
+
+<<include "grasslands randomization">>
+
+
+:: Path out of the Grasslands {"position":"2150,2350","size":"100,100"}
+You find a small foot path worn through some hedges. As you approach closer you find it leads to one of the city roads! 
+
+
+<<include "grasslands randomization">>
+
+<<if random(1,2) == 1>>
+	<<action "n" "road" "Western Road">><<set $travel = 5>><</action>>
+<<else>>
+	<<action "e" "road" "Southern Road">><<set $travel = 5>><</action>>
+<</if>>
+
+
+:: Run from the lizard wizard [nobr] {"position":"2775,3250","size":"100,100"}
+<<setPassageTitle "Run from the $npc1.species wizard">>
+
+<p>You try to pull yourself away from the delicious fruits, but it seems that they're rather insistant that you stay. The plants appear to shift about subtly, bending and creaking as they encircle you, forming a natural barrier that you can't escape from easily. </p>
+
+<<set _player = ($str + $agi + $int + 30) / 3>>
+
+<<if setup.skillTest(_player,0)>>
+Grunting with effort, you tear at bushes, branches, and vines, managing to make an opening just long enough to slip through. As you start running, you hear the wizard let out an angry, wordless screech of anger. Looking back, it's obvious that $npc1.he's nowhere near fast enough to catch you. 
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+<<else>>
+You pull and tear at the mass of plants in your way, but to no avail. Plant matter seem to regrow as fast as you destroy it. Panting for breath, you turn to face the owner, who's sporting a wicked<<if $npc1.teeth == "sharp teeth">>, sharp-toothed<</if>> grin, which is a disquieting deviation from $npc1.his round, pudgy, seemingly harmless form. 
+<<setEnemy $lizardWizard>>
+<<updateEnemyWithNPC "lizardWizard">>
+
+<<startCombat>>
+
+<</if>>
+
+
+:: Stuffed by the wildlings [nobr] {"position":"2000,3025","size":"100,100"}
+<<set $status.StretchFruit = 300>>
+<<set $status.StretchFruitPower = 30>>
+<<updateStats>>
+<<rest>>
+<<stuffToBursting>>
+/*End setup*/
+
+<p>You're jolted awake again as you feel yourself swaying back and forth. You blink your eyes a few times and see the ground drifting downwards in front of you. You attempt to move your arms and legs and noticed that they're tied behind you around a wooden pole. You look up and see the fat butt of the $npc1.species carrying the pole you're tied to on $npc1.his shoulders with the other wildling presumably carrying the other end. </p>
+
+<p>Looking down you notice your $waist stomach hanging down from your $fatness frame is much larger than it was before, and yet you don't feel any fuller. Another rope is tightly looped several times around the large circumference of your waist, fortunately preventing your <<sayWeight setup.weight()>> of weight from pulling entirely on your wrists and ankles even if it puts some much unwanted pressure on your achingly swollen gut. You notice that some sort of blue goo has been liberally smeared all over your $p.furBelly $p.furred belly and you smack your lips as you taste an odd rubbery grapey taste. You also notice a distinct tingling sensation wherever the blue goo touches. </p>
+
+The two wildlings are sharing some banter back and forth, each sounding proud of their new catch. You attempt to understand what they're saying, but the heavy load in your bloated tingly gut is making it hard to focus on anything. Eventually the gentle swaying combined with your tremendous meal inevitably pulls you into a food coma. 
+
+<<action "c" "wait" "Sleep" "Carried to the Wildling Village">>
+<</action>>
+
+
+:: Trade with the Lizard Wizard [nobr] {"position":"2825,3000","size":"100,100"}
+<<setPassageTitle "Trade with the $npc1.Species Wizard">>
+
+The little $npc1.species guides you outside to a cart drawn by a horse. Which would be less odd if it weren't an anthropomorphic one. You shake your head slightly, reminding yourself that there's no accounting for taste. $npc1.He displays $npc1.his cart with a flourish, a sampling of the fruits from $npc1.his farm on ready display and available for purchase. 
+
+<<store>>
+
+<<action "c" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+
+
+:: Wait for the lizard wizard {"position":"3025,3250","size":"100,100"}
+<<setPassageTitle "Wait for the $npc1.species wizard">>
+
+You cross your arms, and wait for the wizard's approach. The little $npc1.species comes up to you, twirling $npc1.his wand dextrously. $npc1.He lets out a devious giggle as $npc1.he approaches, <<if $npc1.teeth == "sharp teeth">>sharp teeth apparent in $npc1.his wide grin<<else>>grinning widely in an unnerving manor<</if>>. You steel yourself for a fight, having been caught red handed. 
+<<setEnemy $lizardWizard>>
+<<updateEnemyWithNPC "lizardWizard">>
+
+<<startCombat>>
+
+
+:: Wildling captive [nobr] {"position":"2350,2850","size":"100,100"}
+As you $walk through the long grass, you spot a large-looking shape standing out on the horizon. Curious. Do you want to approach and investigate? 
+
+<<setEnemy $wildlingShamanBoss>>
+<<set _species = either($lion, $rhino, $hippo)>>
+<<createNPC _species "random" 2>> 
+
+<<action "c" "next" "Investigate the captive">>
+	<<set $eventCounterB = "">>
+<</action>>
+<<action "n" "leave" "Leave the captive alone">><</action>>
+
+<<set $eventCounterA = {
+	dispelled: false,
+	dispelsLeft: 3,
+	feedsLeft: 3,
+	fattened: true,
+	freed: false
+}>>
+
+
+:: grasslands randomization [nobr] {"position":"2150,2650","size":"100,100"}
+/*Ticks up random events counters*/
+<<set $grasslandsRandomization.combat += $grasslandsRandomization.combatRate>>
+
+<<set $grasslandsRandomization.special += $grasslandsRandomization.specialRate>>
+
+<<set $grasslandsRandomization.leave += $grasslandsRandomization.leaveRate>>
+
+<<set $grasslandsRandomization.minor += $grasslandsRandomization.minorRate>>
+/**/
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+
+<<if $grasslandsRandomization.special > $grasslandsRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+
+<<if $grasslandsRandomization.minor > $grasslandsRandomization.special>>
+	<<set _randomEvent = "minor">>
+<</if>>
+
+<<if $grasslandsRandomization.leave > $grasslandsRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+/**/
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+<<set $grasslandsRandomization.combat = 0>>
+<<set _event = "Grasslands ambush">>
+
+/*A special event*/
+<<case "special">>
+<<set $grasslandsRandomization.special = 0>>
+
+<<switch random(1,2)>>
+	<<case 1>>
+	<<set _event = "Wildling captive">>
+	<<case 2>>
+	<<set _event = "Fruit farm">>
+	<<default>>
+	''Error in special event randomization!''
+<</switch>>
+
+/*A random minor scene*/
+<<case "minor">>
+<<set $grasslandsRandomization.minor = 0>>
+<<set _event = "Minor Grasslands events">>
+
+/*Opportunity to leave the forest*/
+<<case "leave">>
+<<set $grasslandsRandomization.leave = 0>>
+<<set _event = "Path out of the Grasslands">>
+
+<<default>>
+''Error in grasslands randomization!!!''
+
+<</switch>>
+
+<<action "c" "rest" "Rest" "Grasslands">>
+	<<set $eventCounterB = "rest">><</action>>
+<<if $sta > 0>>
+<<action "1" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "2" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "3" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "4" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "6" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "7" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "8" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<action "9" "grasslands" "Grasslands" _event>>
+	<<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+

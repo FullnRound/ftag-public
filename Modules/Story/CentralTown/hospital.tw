@@ -1,0 +1,366 @@
+:: A near bursting patient [nobr] {"position":"2275,1950","size":"100,100"}
+/*If you haven't started the quest*/
+<<if !setup.questStarted($eatingContest)>>
+
+<<set _tempQuest = clone($eatingContest)>>
+<<createNPC "random" "random">>
+<<set _tempQuest.species = $species>>
+<<set _tempQuest.gender = $gender>>
+
+<p>A large $npc1.species lies on a matress placed on the floor, $npc1.his $npc1.furBelly spherical gut swollen to a massive size. $npc1.He looks to be in constant pain as $npc1.he moves about in $npc1.his makeshift bed, obviously too big for any conventional stretcher. </p>
+
+<p>"Hello," the $npc1.species grunts in pain between short breaths, "Sorry about this, but could you please take my place?" the $npc1.species rubs $npc1.his gut to help soothe the discomfort. "I got a bit nervous before the contest, so I did some eating to relax," another groan, "I have a bet on someone else losing..." </p>
+
+<p>As you inquire further, you start to build the story up bit by bit between $npc1.his constant groans, grunts of pain and shortness of breath. There is an eating contest that happens every so often. You pay to join and if you beat the others, you get a gold prize. $npc1.He's willing to forego the prize and let you take $npc1.his place, but $npc1.he asks you to try and beat the champion. </p>
+<<getQuest _tempQuest>>
+
+<<action "w" "yes" "Accept" "A near bursting patient's request">>
+<<set $eventCounterA = true>><</action>>
+<<action "e" "no" "Decline" "A near bursting patient's request">>
+<<set $eventCounterA = false>><</action>>
+
+/*If you have started the quest*/
+<<else>>
+<<set _tempQuest = $quests[setup.questIndex($eatingContest)]>>
+<<createNPC _tempQuest.species _tempQuest.gender>>
+
+<p>The large $npc1.species still lies on a matress placed on the floor, $npc1.his $npc1.furBelly spherical gut swollen to a massive size. $npc1.He looks to be in constant pain as $npc1.he moves about in $npc1.his makeshift bed, obviously too big for any conventional stretcher. </p>
+
+/*If you haven't taken the ticket yet*/
+<<if _tempQuest.progress == 0>>
+<p>"Did... you change your mind?" $npc1.he says between groans. "Do you wanna take my spot in the eating contest?" </p>
+
+<<action "w" "yes" "Accept" "A near bursting patient's request">>
+<<set $eventCounterA = true>><</action>>
+<<action "e" "no" "Decline" "A near bursting patient's request">>
+<<set $eventCounterA = false>><</action>>
+
+/*If you have taken the ticket*/
+<<else>>
+<p>$npc1.He's finally passed out in a bloated stupor. You decide it's probably best not to disturb $npc1.him and leave $npc1.him to digest in peace. </p>
+
+<<action "e" "hospital" "Infirmary">><<set $travel = 1>><</action>>
+
+<</if>>
+
+<</if>>
+
+
+:: A near bursting patient's request [nobr] {"position":"2150,1950","size":"100,100"}
+<<if $eventCounterA>>
+<p>You don't know how you think you'll fare, but you can't help but lick your lips in anticipation of more food. And with the abundance of food this year, it's bound to be even tastier. You happily agree and $npc1.he gives you a card with the number 4 on it. </p>
+
+"This is your seat number. It's being hosted at the dairy farm, in the barn, so don't miss the contest."
+<<advanceQuest $eatingContest>>
+
+<<else>>
+<p>You don't know how you think you'll fare, so you decline $npc1.his offer. "Fair enough suit yourself, but if you change your mind I'm sure I'll still be here." $npc1.He belches and continues to rub $npc1.his taught gurgling stomach. "I'm pretty sure I won't be getting out of here for a while." </p>
+<</if>>
+
+<<action "e" "hospital" "Hospital">><<set $travel = 1>><</action>>
+
+
+:: Hospital [city] {"position":"2400,2075","size":"100,100"}
+<p>You're standing in the city's main and only hospital. Usually there wasn't much use for the place since the world had been such a calm and peaceful place, but with increasing attacks from wild animals and monster, not to mention the bizzarely increased prevelance of people gorging themselves to the literal point of bursting, there has been a marked increase in need for medical care. At all hours of the day there can be heard constant groans of pain from the rooms. Although it's hard to tell if they're in pain from actual injuries or just from rampant indigestion. 
+</p>
+
+<<createNPC "random" "random" 1>>
+<<createNPC "random" "random" 2>>
+<<if random(1,3) != 1>>
+A stuffed $npc1.species is dragged through the waiting area on a gurney. $npc1.His bloated stomach is so large four strong orderlies brace against it to prevent the unconscious fur from rolling to the floor. 
+<<else>>
+A stuffed $npc1.species is dragged through the waiting area on a gurney. $npc1.His bloated stomach is so large that eight strong orderlies brace against it to prevent the unconscious fur from rolling to the floor. With a mighty groan, the gurney collapses under the colossal weight of its rider. $npc2.Article $npc2.species orderly falls directly in the path of the overfed patient and cries out as $npc2.he’s crushed under the mountainous stomach. One of the other orderlies just sighs and throws the knocked down $npc2.species over his shoulder and follows the rest of the group as they roll the patient into one of the side rooms. 
+<</if>>
+
+<<action "n" "leave" "Central Square">><<set $travel = 5>><</action>>
+<<action "w" "hospital" "Infirmary">><<set $travel = 1>><</action>>
+<<action "e" "store" "Reception desk">><<set $travel = 1>><</action>>
+<<action "s" "down" "Restricted Area">><<set $travel = 1>><</action>>
+
+
+:: Infirmary [nobr] {"position":"2275,2075","size":"100,100"}
+<p>Several hospital beds line each wall of the long infirmary. Almost every single one has a fur in some form of distess laying upon them. Several beds appear to have been crushed under a great weight and meerly left that way, and it's easy to tell how they got that way as most of the crushed beds have an incredibly overstuffed and/or massively obese fur laying upon them. There's also a reasonable number of furs with legitimate injuries like bites and lacerations resting up with bandages covering them, although the overfed furs seem to outnumber the others just by virtue of taking up so much space. </p>
+
+<<if !setup.questCompleted($eatingContest)>>
+<p>One particularly bloated individual is sprawled out on the floor nearby. </p>
+<</if>>
+
+<<action "e" "hospital" "Hospital">><<set $travel = 1>><</action>>
+
+<<if !setup.questCompleted($eatingContest)>>
+	<<action "c" "quest" "A near bursting patient">><<set $travel = 1>><</action>>
+<</if>>
+
+
+:: Reception desk {"position":"2400,2200","size":"100,100"}
+There's a rack of potions and pills next to the reception desk with a box in front labelled, "Please pay using the honor system. We are terribly short staffed." with an arrow pointing to a conventiently coin shaped hole in the box. 
+
+<<vendor "hospital vendor">>
+<<action "c" "store" "Trade" "hospital vendor">><</action>>
+<<action "n" "hospital" "Hospital">><<set $travel = 1>><</action>>
+
+
+:: Restricted Area {"position":"2150,2075","size":"100,100"}
+<p>As you wander through the corridors of the village hospital, the sterile, antiseptic smell fills the air, mingling with the distant sounds of bustling activity and quiet conversations. The hospital seems busy, yet at this particular moment, the hallway you find yourself in is curiously devoid of employees. Your attention is drawn to a door at the end of the corridor. Unlike the other doors you've passed, this one bears a bold, red sign that reads "Restricted."</p>
+
+<p>Curiosity piques your interest. The absence of hospital staff in the vicinity adds a layer of mystery and temptation. Why is this door marked as restricted? What secrets or valuable items could be hidden behind it? The possibility of discovering something potentially valuable looms large in your mind.</p>
+
+<p>You pause, considering your options. You could respect the hospital's rules and leave the door unexplored. Or, you could seize this opportunity to sneak a peek behind the door, possibly finding something of interest or value to take with you before anyone notices.</p>
+
+<p>What will you do?</p>
+
+<<action "w" "return" "Leave" "Hospital">><<set $travel = 1>><</action>>
+<<action "e" "next" "Enter" "Hospital Office">><</action>>
+
+
+:: Hospital Office {"position":"2150,2100","size":"100,100"}
+<p>With a quiet push, the door to the restricted area opens, revealing a dimly lit office. The room is filled with the usual trappings of a hospital employee's workspace: a large desk cluttered with papers, bookshelves lined with medical journals, and filing cabinets. The air is heavy with the scent of old paper and ink. As you step inside, you sense a strange stillness, as if this space is seldom disturbed.</p>
+
+<p>Your eyes scan the room, taking in the details. It's an ordinary office, but the fact that it's marked 'Restricted' piques your curiosity further. You begin to rummage quietly, looking for anything out of the ordinary or potentially valuable.</p>
+
+<p>As you move around the room, your $p.hand accidentally brushes against a book on the shelf. To your surprise, the shelf shifts slightly, revealing a hidden mechanism. Intrigued, you investigate further and discover a secret door concealed behind the bookshelf. Your heart races with excitement and curiosity. What could be hidden behind such a secretive entrance?</p>
+
+<<action "w" "return" "Leave" "Hospital">><<set $travel = 1>><</action>>
+/* <<action "c" "return" "Steal and leave" "Hospital">><<set $travel = 1>><</action>> */
+<<action "e" "next" "Enter" "Hospital Lab">><</action>>
+
+
+:: Hospital Lab {"position":"2150,2125","size":"100,100"}
+<p>Driven by a blend of curiosity and the thrill of potential gain, you decide to risk it all. You carefully approach the restricted door, your heart pounding with a mixture of excitement and nervousness. With a quick glance over your shoulder to ensure the coast is clear, you gently push the door open and slip inside.</p>
+
+<p>The room beyond is unlike any other part of the hospital you've seen. It's a secret laboratory, filled with an array of strange equipment, bubbling flasks, and mysterious substances. Fascinated yet cautious, you step further in, your eyes scanning for anything that seems valuable or useful.</p>
+
+<p>As you move deeper into the lab, unaware of the hidden dangers, you accidentally trigger a concealed trap. A fine mist suddenly sprays from a nozzle overhead, dousing you in a cloud of unknown chemicals. Panic sets in as you frantically try to wipe the substance off, but it's too late – the chemicals have already begun to take effect.</p>
+
+<p>A strange sensation washes over you, a feeling unlike anything you've experienced before. Looking down in horror, you realize that you're shrinking! Your clothes start to hang looser, the room around you seems to grow larger, and distances seem futher than they were before. Desperate to escape this nightmare, you turn and run towards the door, but with each step, your legs grow weaker and your strides shorter.</p>
+
+<p>As you shrink further, the world around you becomes a vast, intimidating place. The once short distance to the door now feels like an endless journey. Suddenly, a wave of drowsiness engulfs you. Your steps falter, and your vision blurs. The last thing you're aware of is the cold, hard floor rushing up to meet you as you collapse, succumbing to an irresistible sleep.</p>
+
+<<action "c" "wait" "Sleep" "Shrunk in Lab">><</action>>
+
+
+:: Shrunk in Lab {"position":"2150,2150","size":"100,100"}
+
+<<createFixedNPC "scientist" 1>>
+
+<p>As consciousness slowly returns, you find yourself in an unfamiliar, surreal environment. Your vision clears, and the first thing you notice is that you're in a glass bowl sitting on a desk. Confusion washes over you as you try to make sense of your surroundings. The scale of everything around you is off – everything is enormous. That's when it hits you: you're only about 5 inches tall now, a miniature version of your former self.</p>
+
+<p>Before you can fully process this shocking revelation, a figure approaches the desk. It's a $npc1.species with a wild look in $npc1.his eyes, $npc1.his hair unkempt, giving $npc1.him the appearance of the quintessential mad scientist. $npc1.He peers into the glass bowl with a mixture of curiosity and delight.</p>
+
+<p>"Ah, you're awake!" $npc1.he exclaims with an unsettling enthusiasm. "Welcome to my little laboratory. I must say, I didn't expect to have a visitor, especially one so... diminutive."</p>
+
+<p>$npc1.He leans closer, $npc1.his eyes scrutinizing you as if you were a fascinating specimen. The realization dawns on you that to $npc1.him, that's exactly what you are.</p>
+
+<p>"I used to receive subjects from the hospital for my experiments, but they've stopped cooperating. Can you imagine that?" $npc1.he says with a manic chuckle. "But now, here you are, wandering right into my lab! Quite the fortunate turn of events, for me at least."</p>
+
+<p>$npc1.His gaze locks onto yours, and you feel a chill run down your spine. The imbalance of power in this situation is painfully evident.</p>
+
+<p>"Are you hungry, my tiny friend?" $npc1.he asks suddenly, $npc1.his tone shifting to one of mock concern.</p>
+
+<p>Despite the absurdity and fear of the situation, you realize that you are indeed hungry. Your small voice, almost a whisper compared to $npc1.his booming presence, manages to convey your affirmative answer.</p>
+
+<p>"Excellent!" $npc1.he exclaims, rubbing $npc1.his $npc1.hands together. "I have just the thing for you. You see, taking care of my subjects is of utmost importance. After all, healthy subjects make for better experiments."</p>
+
+<p>As $npc1.he turns away momentarily, presumably to fetch something for you to eat, you're left to contemplate this precarious situation. With the mad $npc1.species scientist momentarily distracted, you face a critical decision. Do you seize this chance to attempt an escape, despite your tiny size and weakened state, or do you bide your time, waiting and gathering your strength for a more opportune moment?.</p>
+
+<<action "w" "return" "Escape" "Escape Mad Scientist">><</action>>
+<<action "c" "wait" "Wait" "Wait for Mad Scientist">><</action>>
+
+
+:: Escape Mad Scientist {"position":"2100,2200","size":"100,100"}
+<p>Fueled by a desperate need for freedom, you decide to make your escape now. You look around the interior of the glass bowl, trying to gauge the best way to leverage your tiny size. The bowl is large compared to you, but not insurmountable. You decide to use your weight to tilt the bowl back and forth, building momentum.</p>
+
+<p>With determination, you start rocking the bowl. At first, the movements are small, but with each push, the bowl rocks further. The motion requires considerable effort, and you can feel your heart pounding with both exertion and anticipation. Gradually, the rocking becomes more pronounced, and you sense that you're close to tipping it over.</p>
+
+<p>Finally, with one strong push, the bowl teeters dangerously before toppling over with a resounding crash. You tumble out onto the desk, a mix of relief and adrenaline coursing through you. You quickly take stock of your surroundings, realizing you need to act fast before the scientist returns or discovers your escape.</p>
+
+/* <<action "w" "return" "Run for the exit" "Hospital">><</action
+	// TODO: Add an escape scene here
+>>  */
+<<action "c" "inventory" "Hide among beakers" "Lab hide">><</action>> 
+<<action "e" "attack" "Cause chaos" "Lab chaos">><</action>> 
+
+:: Lab hide {"position":"2100,2225","size":"100,100"}
+<p>Choosing to hide, you quickly scurry along the desk, seeking a safe spot to conceal yourself. The lab is cluttered with equipment and various containers, offering several potential hiding places. As you dash across the desk, your focus is entirely on finding shelter.</p>
+
+<p>In your haste, however, you don't notice a small, open vial of strange, luminescent liquid until it's too late. As you run past it, you accidentally brush against the vial, tipping it over. A few drops of the chemical splash onto you, immediately soaking into your skin.</p>
+
+<p>Alarm surges through you as you feel the chemical on your body. There's no telling what this substance might do, and the uncertainty sends a wave of fear through you. You quickly try to wipe it off, but it has already begun to react with your skin, leaving a tingling sensation where it touched.</p>
+
+<p>As you wait anxiously, the tingling sensation from the spilled liquid on your skin grows increasingly intense. It starts as a mild itching but soon escalates into a peculiar, effervescent feeling. Alarmingly, you notice your belly beginning to swell. A strong bloating feeling builds up in your midsection, the pressure gradually increasing as your stomach expands outward.</p>
+
+<p>At first, the swelling is slow, your belly rounding out slightly, creating a small bulge. But as moments pass, the bulge becomes more pronounced, your skin stretching to accommodate the growing pressure inside. You can feel a lightness within you, as if an invisible air tank is filling you up like a balloon.</p>
+<<inflate 10 -50>>
+<<CallAPI>>
+<<action "c" "wait" "Wait" "Lab balloon">><</action>>
+
+
+:: Lab balloon {"position":"2100,2250","size":"100,100"}
+
+<p>The expansion continues, your belly growing larger and rounder. It's an odd sensation, both weightless and unnerving. You place your hands on your inflated abdomen, feeling the tightness of your skin, stretched and filled with the mysterious gas. Your belly becomes a prominent, ballooning sphere, dominating your once proportional figure.</p>
+
+<p>As your belly swells further, you start to feel a lifting sensation. The realization hits you – the gas filling you up is making you buoyant. Panic sets in as your feet gradually lose contact with the desk's surface. You're floating, lifted skyward by your own inflating belly.</p>
+
+<p>Helplessly, you drift upwards, your inflated belly leading the way. The ceiling of the lab approaches quickly, and you brace for impact. With a soft bump, your belly makes contact with the ceiling. The sensation is surreal; you're stuck there, floating like a balloon, your feet dangling uselessly below you.</p>
+
+<p>In this bizarre state of suspension, you're acutely aware of your predicament. You've become a $p.species balloon, inflated and floating against the ceiling of the mad scientist's lab. You rub your $p.hands over your massively distended stomach in an attempt to soothe the feeling of being filled to such an extreme.  The sense of defeat is overwhelming as you realize there's no way to control your movement or escape from your inflated state.</p>
+
+<p>Trapped and floating, you're left to ponder the unexpected turn of events that led to this unusual and precarious situation. Your escape attempt has ironically resulted in a complete loss of mobility, leaving you adrift and at the mercy of the whims of the lab's environment.</p>
+<<inflateToFloating>>
+<<action "c" "wait" "Wait" "Lab balloon2">><</action>>
+
+
+:: Lab balloon2 {"position":"2100,2275","size":"100,100"}
+<<createFixedNPC "scientist" 1>>
+
+<p>As you float helplessly against the ceiling, bobbing slightly from the gentle air currents in the lab, the mad scientist finally notices your predicament. $npc1.His eyes widen in fascination as $npc1.he sees you, inflated and suspended. $npc1.He approaches with an intrigued smile, reaching up to grasp your $p.foot and pull you down from the ceiling.</p>
+
+<p>The sensation of being handled is disorienting. As the scientist grips your $p.foot, you feel a pendulum-like motion, your body swaying gently in the air. Your swollen belly, a massive, taut orb, wobbles slightly with each movement. The feeling of being so distended and light is surreal; your skin stretched smooth and tight over the vast expanse of your inflated abdomen.</p>
+
+<p>"Hmm, what an extraordinary reaction!" the scientist exclaims, examining your inflated stomach with keen interest. $npc1.He prods gently at your belly, $npc1.his fingers pressing into the firm, inflated surface. Each touch sends a ripple across your stretched skin, the sensations heightened due to your inflated state. "Fascinating... absolutely fascinating," $npc1.he mutters to $npc1.himself, $npc1.his eyes never leaving your swollen midsection.</p>
+
+<p>As $npc1.he continues $npc1.his examination, you can't help but feel like an object of curiosity, a specimen under scrutiny. $npc1.His $npc1.hands move over your belly, assessing the inflation, the tension in your skin, and the overall size of your distention.</p>
+
+<p>"Tell me, how do you feel?" $npc1.he asks, $npc1.his tone clinical yet curious. "Any discomfort? Dizziness? A sense of pressure, perhaps?"</p>
+
+<p>You try to respond, your voice echoing oddly through your belly. The physical sensations are hard to describe — a mix of tightness, fullness, and an odd buoyancy.</p>
+
+<p>The scientist nods, taking in your responses while continuing $npc1.his inspection. "Remarkable... and to think this reaction was accidental. The potential for further study is immense," $npc1.he muses, almost to $npc1.himself.</p>
+
+<p>You're left feeling vulnerable and exposed as $npc1.he scrutinizes your condition. The sensation of being so unnaturally expanded and studied so intently is both uncomfortable and humiliating. As the scientist scribbles down notes, you realize that you have become little more than an interesting phenomenon to $npc1.him, a subject for $npc1.his bizarre experiments.</p>
+
+<<action "c" "wait" "Wait" "Lab balloon3">><</action>>
+
+
+:: Lab balloon3 {"position":"2100,2300","size":"100,100"}
+<p>Your heart races as you see the scientist reaching for another spray bottle. Panic sets in as $npc1.he turns towards you, the bottle in hand. A sense of dread overwhelms you; the memory of your recent uncontrollable inflation is still fresh in your mind. You let out a faint whimper, the fear evident in your voice as you plead, "No, please, no more..."</p>
+
+<p>Despite your protests, the scientist approaches with a clinical detachment, $npc1.his curiosity overriding any empathy. $npc1.He sprays a fine mist of another chemical towards you. As the droplets settle on your already stretched skin, a new and unfamiliar sensation begins.</p>
+
+<p>At first, it's a subtle warmth spreading from the areas where the chemical touched. Then, you feel a tingling sensation in your hips and chest. Slowly, almost imperceptibly at first, these areas begin to swell. Your hips widen, expanding outward, growing fuller and rounder.</p>
+
+<p>Simultaneously, your chest starts to inflate. Your <<if $p.male=="female">>breasts, initially expanding gently, soon balloon outward at an astonishing rate. They swell into large, rounded masses,<<else>>chest, initially expanding gently, soon balloons outward at an astonishing rate. Swell into a large, rounded mass,<</if>> the skin taut and shiny from the rapid expansion. The sensation is a bizarre mix of tightness and pressure, as if each part of your body is competing for space.</p>
+
+<p>As the growth continues, you become increasingly aware of the enormity of your transformation. Your hips and <<if $p.male=="female">>breasts<<else>>chest<</if>> have grown so large that they rival the size of your inflated belly, giving you a highly exaggerated and disproportionate figure. The swelling makes every movement feel cumbersome and awkward.</p>
+
+<p>Struggling to adjust to this new, extreme shape, you find it hard to believe the extent of your expansion. Your body feels impossibly heavy in some areas yet strangely buoyant in others due to your inflated belly. The sensation of being so massively enlarged is disorienting and overwhelming.</p>
+
+<p>The scientist, meanwhile, observes with rapt attention, making notes and occasionally muttering to $npc1.himself. "Incredible... the reaction is even more pronounced than anticipated," $npc1.he remarks, almost in awe.</p>
+
+<p>As the transformation reaches its peak, leaving you massively inflated and grotesquely disproportionate, the overwhelming sensations become too much to bear. The intense pressure, the tightness of your skin stretched to its limits, and the sheer absurdity of your condition converge into a tidal wave of sensory overload. Unable to cope with the extreme stress, you feel consciousness slipping away. Your vision blurs, the lab and the looming figure of the scientist fading into darkness as you succumb to a merciful faint, overwhelmed by the enormity of your transformation.</p>
+<<consume 50 300>>
+<<defeated "transformed">>
+
+
+:: Wait for Mad Scientist {"position":"2150,2175","size":"100,100"}
+<p>Choosing to wait and gather your strength, you watch cautiously as the mad scientist returns to the desk. In $npc1.his hand is a regular-sized orange, which $npc1.he sets down on the desk with a peculiar grin. You observe curiously, wondering what $npc1.he intends to do with it.</p>
+
+<p>Without a word, $npc1.he retrieves a small spray bottle filled with a clear liquid. With a few quick spritzes, $npc1.he coats the orange in the mysterious chemical. Before your eyes, the orange begins to shrink rapidly, its size diminishing until it's no more than a tiny speck. The transformation is both fascinating and terrifying, a stark reminder of the strange power this $p.species wields.</p>
+
+<p>With a pair of tweezers, the scientist delicately picks up the minuscule orange and drops it into your glass bowl. It lands with a soft, almost inaudible sound. You approach the speck cautiously, realizing it's still an orange, just incredibly small. Looking up at the scientist, you voice your concern. "It's too small," you say, the tiny fruit dwarfed by even your reduced size.</p>
+
+<p>$npc1.He chuckles at your comment. "Just eat it," $npc1.he says with a wave of $npc1.his hand. "Once you do, I'll fetch you some more food."</p>
+
+<p>Seeing no other option, you pick up the diminutive orange and swallow the speck. You then look up at the scientist expectantly, requesting something more substantial.</p>
+
+<p>"Don't you worry about that," $npc1.he replies with a sly, knowing look. "You'll be feeling very full, very soon."</p>
+
+<p>Confused by $npc1.his cryptic response, you start to feel a strange sensation in your stomach. It begins as a faint rumble but quickly grows more pronounced. The realization of what might be happening hits you, but before you can react further, the sensation in your stomach intensifies, a clear sign that something unusual is about to occur.</p>
+<<consume 3 30>>
+<<action "c" "wait" "Wait" "Orange growth">><</action>>
+
+
+:: Orange growth {"position":"2150,2175","size":"100,100"}
+<p>As you grapple with the growing discomfort in your stomach, the scientist observes you with an unsettling air of anticipation. "You see, the shrinking effect on the orange is very short-term. It will soon return to its original size," $npc1.he explains, $npc1.his voice tinged with a disturbing glee.</p>
+
+<p>Panic surges through you at $npc1.his words. The realization that the orange, which was about as tall as your now diminutive stature, will expand inside you is terrifying. You feel the initial stirrings of growth within your stomach, a gentle stretching that rapidly escalates into a forceful swelling.</p>
+
+<p>Your middle begins to distend outward, a strong sense of bloating accompanies the sudden increase in volume. The sensation is bewildering and disorienting as your body accommodates the swelling sphere, ballooning outwards from the center where the orange resides. The pressure builds, a mix of stretching and fullness, as your middle expands in all directions.</p>
+
+<p>You place your $p.hands on your sides, feeling the tautness of your skin as it accommodates the rapidly growing orange. It's an odd sensation, like being stuffed, but even denser. Your stomach now bulges out significantly, resembling the curvature of a large ball. The expansion continues, pushing outwards relentlessly, your body rounding out in every direction, becoming increasingly spherical.</p>
+
+<p>The growth of the orange inside you shows no sign of slowing down. Your whole torso is now entirely round and still pushing outwards. Your body swells to an almost comical size, your limbs slowly being absorbed into the vast expanse of your ballooning middle. The tightness around your midsection is intense, a constant reminder of the strange, uncontrollable transformation you're undergoing.</p>
+
+<p>As you grow larger and rounder, the feeling of becoming helplessly swollen to such an extreme degree is overwhelming. You're at the mercy of the orange's relentless expansion, your body reshaping into an ever-increasing sphere. The scientist watches with an analytical eye, making notes, seemingly indifferent to your distress.</p>
+
+<p>In this bizarre and precarious situation, you're left wondering how much more your body can expand before reaching its limit. The fear of the unknown, coupled with the physical sensation of being stretched and filled, leaves you in a state of shock and disbelief.</p>
+<<consume 100 1000>>
+<<action "c" "wait" "Wait" "Orange growth2">><</action>>
+
+:: Orange growth2 {"position":"2150,2200","size":"100,100"}
+<p>As the relentless swelling of your body finally begins to slow, you find yourself transformed into a spherical shape, your limbs completely swallowed your inflated form. Only your $p.hands and feet remain visible, sticking out comically from the sides and bottom of your now massive, round body. You're now a $p.species orb, your diameter easily matching your previous height. The pressure inside you is immense, yet surprisingly not painful – it's more of a profound tightness, a sensation of being filled to the brim.</p>
+
+<p>With a mixture of fascination and clinical interest, the scientist carefully lifts you from the glass bowl. The sensation of being moved is odd; your body feels impossibly round. $npc1.He places you gently on the desk, and you feel the cool surface beneath your taut skin.</p>
+
+<p>The scientist leans in, $npc1.his eyes scrutinizing your transformed body as $npc1.he begins to poke and prod at your spherical form. "Fascinating," $npc1.he murmurs, pressing gently here and there, sending ripples through your stretched skin. "How do you feel? Any discomfort or pain?"</p>
+
+<p>You try to respond, but the feeling of $npc1.his $npc1.hands on your inflated body is overwhelming, each touch sending peculiar sensations through you.</p>
+
+<p>$npc1.He continues $npc1.his inspection, seemingly intrigued by your predicament. "Can you move at all? Try to wiggle your fingers or toes for me," $npc1.he instructs, $npc1.his tone clinical yet curious.</p>
+
+<p>You make a feeble attempt, managing only slight movements, your extremities almost fully engulfed in your swollen form.</p>
+
+<p>"Hmm, remarkable," $npc1.he notes, jotting down observations. "And how about your senses? Has your sense of touch changed with this... expansion?"</p>
+
+<p>You realize that every prod feels more intense, the stretched skin sensitive to even the slightest pressure.</p>
+
+<p>The scientist nods, seemingly satisfied with $npc1.his findings. "This is truly unprecedented. You're responding quite uniquely to the effects of the expansion. We'll need to conduct more tests, of course," $npc1.he muses, more to $npc1.himself than to you.</p>
+
+<p>Trapped in your spherical state, you're left feeling like nothing more than an object of curiosity, a subject in an experiment far beyond your control. The scientist's probing questions and clinical detachment only add to the surreal nature of your situation.</p>
+
+<p>As the scientist's curiosity about your new form grows, $npc1.he decides to test the dynamics of your spherical shape. With a slight push, $npc1.he begins to roll you across the desk. The sensation is dizzying; your world spins as you rotate helplessly, your vision blurring with each revolution. The smooth surface of the desk glides beneath you, and you feel a strange mixture of weightlessness and disorientation with each turn. The rolling motion is unnerving, making you acutely aware of your complete lack of control over the situation. You're at the mercy of the scientist's whims, a plaything being tested for $npc1.his amusement.</p>
+
+<p>Suddenly, the scientist's gentle pushes become more forceful, and your rolling speed increases. Panic sets in as you near the edge of the desk. You try to wiggle everything you can to stop yourself, but it's futile; your limbs are too absorbed into your rounded form to offer any resistance. With a final nudge from the scientist, you tumble off the edge of the desk. The fall feels like an eternity, your world a whirl of colors and shapes until you hit the floor with a soft, cushioned thud. The impact, muffled by your inflated body, is still jarring enough to disorient you further. In the aftermath of the fall, darkness creeps into the edges of your vision, and you slip into unconsciousness, the last sensations being the echoes of your rolling descent and the cold floor against your round form.</p>
+<<defeated "transformed">>
+
+
+:: Lab chaos {"position":"2150,2200","size":"100,100"}
+<p>Summoning every ounce of courage and desperation, you decide to wreak havoc in the lab, hoping the ensuing chaos will provide a chance for escape. You scan the desk, identifying several vials and containers filled with various chemicals. With a deep breath, you push the closest vial, watching as it teeters precariously before tumbling over the edge of the desk, shattering on the floor with a loud crash.</p>
+
+<p>Emboldened, you move quickly, knocking over more containers, each crash louder than the last. The noise attracts the scientist's attention immediately. $npc1.He whirls around, $npc1.his eyes widening in shock and anger. "What are you doing?!" $npc1.he yells, but $npc1.his voice is drowned out by a series of reactions initiated by the mixing chemicals.</p>
+
+<p>Explosions of color and light burst around the room, followed by a billowing cloud of green gas that rapidly fills the space. Visibility drops to nearly zero, and you find yourself enveloped in the thick, choking fog. You cough violently, the acrid air burning your throat.</p>
+
+<p>Amidst the chaos, an intense sensation grips your body. You feel your belly beginning to swell, expanding outward with alarming speed. It's a bewildering feeling, as if an invisible force is packing weight into your stomach, making it jut out heavily. Your hips and thighs quickly follow suit, bulging and widening, pushing out to the sides. The sensation is disorienting, your lower body rapidly gaining mass and becoming increasingly heavy.</p>
+
+<p>Your chest and arms are next to succumb to the rapid expansion. Your chest swells forward, feeling tight and stretched, while your arms puff up, losing their former shape and gaining an unbelievable bulk. The growth is relentless, each part of your body competing for space, ballooning outwards and adding to your overall weight.</p>
+
+<p>You struggle to maintain your balance as the combined weight of your swelling body parts anchors you in place. The weight becomes too much to bear and you plop down onto your plump backside. The sensation of being helplessly inflated with flab, your body growing heavier and rounder by the second, is both surreal and terrifying. The chaos around you fades into the background as you grapple with the reality of your rapidly changing form.</p>
+
+<p>As the green gas thickens, obscuring everything around you, you're left feeling isolated in your own inflated world, unsure of what will happen next in the midst of this unforeseen and uncontrollable transformation.</p>
+<<consume 100 700>>
+<<action "c" "wait" "Wait" "Lab fat gas">><</action>>
+
+:: Lab fat gas {"position":"2250,2250","size":"100,100"}
+<p>As the dense, green fog of the fattening gas slowly begins to dissipate, you find yourself in a drastically altered state. Immobilized, you sit on your enormously swollen butt. Your massive belly and chest dominate your field of view, vast and round, like overstuffed cushions. They rise and fall with each labored breath, a testament to your immense size.</p>
+
+<p>Struggling to move, you realize how limited your mobility has become. Your arms, now extremely chubby and heavy, resist your efforts to lift them, their newfound bulk making even the slightest movement a challenge. Your legs, similarly swollen and rounded, are splayed awkwardly in front of you, barely able to wiggle in their expanded state.</p>
+
+<p>As you attempt to grapple with your new, astonishingly engorged form, you muster the effort to try and move. The desire to regain some semblance of control over your body is overwhelming. However, your attempts are met with unexpected challenges. Your swollen limbs, now incredibly chubby and heavy, respond sluggishly to your commands, moving with great effort and little coordination.</p>
+
+<p>With a determined yet awkward push, you try to shift your weight forward, hoping to somehow leverage yourself into a more upright position. But your body, so drastically fattened, has other plans. Instead of propelling yourself up, the sheer mass of your belly and chest causes you to lean too far backward. The momentum of this shift is more than you anticipated, and with a muffled yelp of surprise, you topple over.</p>
+
+<p>The sensation of falling is brief but intense. Your back hits the floor with a soft, cushioned thud, sending waves of jiggles through your enlarged body. Every part of you seems to wobble independently, like a giant gelatin mold. The feeling is disorienting and bizarre, a stark reminder of just how much your body has expanded.</p>
+
+<p>Lying on your back, you're acutely aware of the way your massive belly and chest rise high above you, limiting your view of the world around you. Your arms and legs, splayed out to the sides, are so swollen and round that they remind you of overstuffed limbs on a plush doll. The comparison is unsettling – in your current shrunken and fattened state, you bear an uncanny resemblance to an overstuffed doll, plump and immobile.</p>
+
+<p>In the eerie quiet following the chaos, a groan echoes across the room. Turning your head with difficulty, you catch sight of the scientist, who has also fallen victim to the same fate.</p>
+
+<p>The scientist's once thin frame is now lost under layers of newfound fat. The $npc1.species's belly has grown into a massive, dome-like protrusion, spilling over $npc1.his lap and sides, resembling a giant inflated ball. The buttons of $npc1.his lab coat have popped off due to the massive bulge. $npc1.His chest, now heavily swollen, rises high, pushing against $npc1.his chin and limiting $npc1.his ability to look down. $npc1.His arms and legs are thick and swollen, resembling overstuffed sausages. $npc1.He sits there, clearly immobilized by $npc1.his massively engorged body.</p>
+
+<p>$npc1.His face, previously sharp and angular, is now soft and rounded, with chubby cheeks and a double chin that wobbles slightly as $npc1.he groans in discomfort. The transformation has left $npc1.him almost unrecognizable, $npc1.his body now a caricature of its former self.</p>
+
+<p>Both of you, rendered immobile by your sudden and extreme expansion, are left in a state of shock and disbelief. The lab, once a place of meticulous order and scientific endeavor, now resembles a scene of surreal chaos, with its two occupants transformed into oversized, helpless blobs amidst the remnants of the chemical mayhem. </p>
+
+<<defeated "transformed">>
+
+
+:: hospital vendor {"position":"2300,2200","size":"100,100"}
+<<setPassageTitle "Buy from the hospital">>
+
+There's a rack of potions and pills next to the reception desk with a box in front labelled, "Please pay using the honor system. We are terribly short staffed." with an arrow pointing to a conventiently coin shaped hole in the box. 
+
+<<store>>
+<<action "se" "hospital" "Done" "Hospital">><</action>>
+
+

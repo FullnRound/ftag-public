@@ -1,0 +1,2885 @@
+:: Widgets [widget nobr] {"position":"2075,200","size":"200,200"}
+<<widget "changeStats">> /* FIXED AND EDITS - Add option to make this silent */
+  <<set _stat = $args[0]>>
+  <<set _amount = $args[1]>>
+  <<set _text = $args[1]>>
+	
+	<<set _silent = $args[2]>>
+  <<if _amount >= 0>><<set _text = "+"+_text>><</if>>
+
+  <<switch _stat>>
+
+  <<case "str">>
+  <<set $bstr += _amount>>
+  <<if not _silent>><li>Strength _text</li><</if>>
+
+  <<case "agi">>
+  <<set $bagi += _amount>>
+  <<if not _silent>><li>Agility _text</li><</if>>
+
+  <<case "end">>
+  <<set $bend += _amount>>
+  <<if not _silent>><li>Endurance _text</li><</if>>
+
+  <<case "int">>
+  <<set $bint += _amount>>
+  <<if not _silent>><li>Intelligence _text</li><</if>>
+
+  <<case "sto">>
+  <<set $bsto += _amount>>
+  <<if not _silent>><li>Stomach capacity _text</li><</if>>
+
+  <<case "fat">>
+  <<set $fat += _amount>>
+  <<if not _silent>><li>Fat _text</li><</if>>
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<case "height">>
+	<<set $bheight += _amount>>
+	<<set _modifier = "-">>
+	<<if _amount >= 0>><<set _modifier = "+">><</if>>
+	
+	<<if not _silent>><li>Height _modifier<<sayDistance Math.abs(_amount)>></li><</if>>
+
+  <</switch>>
+
+  <<updateStats>>
+<</widget>>
+
+====
+
+<<widget "buff">>
+	<<set _type = $args[0]>>
+	<<if $args.length > 1>><<set _amount = $args[1]>><</if>>
+	<<if $args.length > 2>><<set _length = $args[2]>><</if>>
+	
+	<<switch _type>>
+	
+	<<case "str">>
+		<<set $status.str += _amount>>
+		<<set $status.strTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Strength _amount</li>
+		
+	<<case "agi">>
+		<<set $status.agi += _amount>>
+		<<set $status.agiTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Agility _amount</li>
+		
+	<<case "int">>
+		<<set $status.int += _amount>>
+		<<set $status.intTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Intelligence _amount</li>
+		
+	<<case "end">>
+		<<set $status.end += _amount>>
+		<<set $status.endTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Endurance _amount</li>
+		
+	<<case "sto">>
+		<<set $status.sto += _amount>>
+		<<set $status.stoTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Stomach capacity _amount</li>
+		
+	<<case "fat">>
+		<<set $status.fat += _amount>>
+		<<set $status.fatTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Fatness _amount</li>
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<case "height">>
+		<<set $status.height += _amount>>
+		<<set $status.heightTime += _length>>
+		<<set _modifier = "-">>
+		<<if _amount >= 0>><<set _modifier = "+">><</if>>
+		
+		<li>Height _modifier<<sayDistance Math.abs(_amount)>></li>
+		
+	<<case "mana">>
+		<<set $status.mana += _amount>>
+		<<set $status.manaTime += _length>>
+		/*Makes descriptor display appropriately*/
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Maximum mana _amount</li>
+	
+	<<case "bloat">>
+		<<set $status.bloatVenom += _amount>>
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Bloat venom _amount</li>
+	
+	<<case "poison">>
+		<<set $status.poison += _amount>>
+		<<if _amount >= 0>>
+			<<set _amount = "+"+_amount>>
+		<</if>>
+		<li>Poison _amount</li>
+	<</switch>>
+	
+	<<updateStats>>
+
+<</widget>>
+
+====
+
+<<widget "tempBuff">>
+	<<set _type = $args[0]>>
+	<<if $args.length > 1>><<set _amount = $args[1]>><</if>>
+	
+	<<switch _type>>
+	
+	<<case "str">>
+		<<set $tstr += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Strength _amount)</li>
+		
+	<<case "agi">>
+		<<set $tagi += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Agility _amount)</li>
+		
+	<<case "int">>
+		<<set $tint += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Intelligence _amount)</li>
+		
+	<<case "end">>
+		<<set $tend += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Endurance _amount)</li>
+		
+	<<case "sto">>
+		<<set $tsto += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Stomach capacity _amount)</li>
+		
+	<<case "fat">>
+		<<set $tfat += _amount>>
+		<<if _amount > 0>><<set _amount = "+"+_amount>><</if>>
+		<li>(Fatness _amount)</li>
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<case "height">>
+		<<set $theight += _amount>>
+		<<set _modifier = "-">>
+		<<if _amount >= 0>><<set _modifier = "+">><</if>>
+		
+		<li>(Height _modifier<<sayDistance Math.abs(_amount))>></li>
+		
+	<<case "stun">>
+		<<set $stun += _amount>>
+		<li>(Stunned!)</li>
+		
+	<<case "burn">>
+		<<set $burn += _amount>>
+		<li>(Burned!)</li>
+	
+	<<case "defense">>
+		<<set $tdef += _amount>>
+		<li>(Defense +_amount)</li>
+		
+	<<case "regen">>
+		<<set $regenTime = _amount>>
+		<<set $regenDamage = $args[2]>>
+		<<set $regenRange = $args[3]>>
+		<<spellDamage>>
+		<<health $dmg>>
+		<li>(Regeneration for _amount turns)</li>
+	
+	<<case "dodge">>
+		<<set $dodge += _amount>>
+		<li>(Dodge chance +_amount%)</li>
+    
+    /* ICY SPELLS - START */
+    <<case "icyspells_ward">>
+    	<<if $icyspells_ward > 0>>
+    		<<set $icyspells_ward += _amount>>
+				<li>(Ward reinforced $icyspells_ward (+_amount))</li>
+			<<else>>
+				<<set $icyspells_ward = _amount>>
+				<<set $icyspells_wardReduction = $args[2]>>
+				<li>(Ward $icyspells_ward)</li>
+			<</if>>
+    
+    /* ICY SPELLS - END */
+	
+	/*error message*/
+	<<default>>
+	''Error in the tempBuff code!!!''
+	
+	<</switch>>
+	
+	<<updateStats>>
+
+<</widget>>
+
+====
+	
+<<widget "removeStatus">>
+
+  <<set $status.str = 0>>
+  <<set $status.strTime = 0>>
+  <<set $status.agi = 0>>
+  <<set $status.agiTime = 0>>
+  <<set $status.end = 0>>
+  <<set $status.endTime = 0>>
+  <<set $status.int = 0>>
+  <<set $status.intTime = 0>>
+  <<set $status.sto = 0>>
+  <<set $status.stoTime = 0>>
+  <<set $status.mana = 0>>
+  <<set $status.manaTime = 0>>
+  <<set $status.stomachStretch = 0>>
+  <<set $status.wellFed = 0>>
+  <<set $status.wellFedTime = 0>>
+  <<set $status.dietPill = 0>>
+  <<set $status.dietPillTime = 0>>
+  <<set $status.bloatVenom = 0>>
+  <<set $status.bloatVenomTime = 0>>
+  <<set $status.poison = 0>>
+  <<set $status.poisonTime = 0>>
+  <<set $status.stretchFruit = 0>>
+  <<set $status.stretchFruitTime = 0>>
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<set $status.height = 0>>
+	<<set $status.heightTime = 0>>
+	
+	/* ICY SPELLS  - START */
+	<<set $status.levitate = 0>>
+	<<set $status.levitateTime = 0>>
+    <<set $status.enlarge = 1>>
+    <<set $status.enlargeTime = 0>>
+	/* ICY SPELLS - END */
+
+<</widget>>
+
+====
+
+<<widget "removeTempStatus">>
+	<<set $tstr = 0>>
+	<<set $tagi = 0>>
+	<<set $tint = 0>>
+	<<set $tend = 0>>
+	<<set $tsto = 0>>
+	<<set $tfat = 0>>
+	<<set $theight = 0>> /* FIXES AND EDITS - Height manipulation */
+	<<set $tdef = 0>>
+	<<set $regen = 0>>
+	<<set $dodge = 0>>
+	<<set $regenDamage = 0>>
+	<<set $regenRange = 0>>
+    
+    /* ICY SPELLS - START */
+    <<set $icyspells_ward = 0>>
+    <<set $icyspells_wardReduction = 0>>
+    /* ICY SPELLS - END */
+
+<</widget>>
+
+====
+
+<<widget "endCombat">>
+	/*Removes temporary stat changes*/
+	<<removeTempStatus>>
+	<<set $grapple = 0>>
+	<<set $stun = 0>>
+	<<set $burn = 0>>
+	
+	/*Removes combat status*/
+	<<set $inCombat = false>>
+	<<set $action = "">>
+    <<set $lastCombatSpellCast = "">> /* FIXES AND EDITS - Implement recent cast spell */
+<</widget>>
+
+====
+
+<<widget "updateStats">>
+	
+	<<set $str = Math.round($bstr + $tstr + $status.str + $status.wellFed)>>
+	<<set $agi = Math.round($bagi + $tagi + $status.agi + $status.wellFed)>>
+	<<set $int = Math.round($bint + $tint + $status.int + $status.wellFed)>>
+	<<set $end = Math.round($bend + $tend + $status.end + $status.wellFed)>>
+	<<set $sto = Math.round($bsto + $tsto + $status.sto + $status.stretchFruit)>>
+	<<if setup.questStage($foundGoldThread) > 0>>
+		<<set $sto += setup.questStage($foundGoldThread) * 5>>
+	<</if>>
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<set $p.height = Math.round($bheight + $theight + $status.height)>>
+	
+	/* ICY SPELLS - Enlarge modifications */
+	<<if $options.icyspells_enabled>>
+		<<set $p.height *= $status.enlarge>>
+		<<set _statMod = $status.enlarge * setup.tuning("icyspells_enlargeStatChangeMod")>>
+		
+		/* Note: The spell itself will handle what happens if stomach is changed too small for its current contents */
+		<<if $status.enlarge != 1>> /* It works out that the same operations are performed regardless of which direction the enlarge goes :p */
+			<<set $agi = Math.round($agi / _statMod)>>
+			<<set $sto = Math.round($sto * _statMod)>>
+			<<set $str = Math.round($str * _statMod)>>
+		<</if>>
+	<</if>>
+    
+	<<set $p.height = Math.clamp($p.height, setup.tuning("absoluteHeightMin"), setup.tuning("absoluteHeightMax"))>>
+	
+	<<set $maxMana = ($bint * 0.5) + $status.mana>>
+	<<if $wea.mana != null>><<set $maxMana += $wea.mana>><</if>>
+	<<if $arm.mana != null>><<set $maxMana += $arm.mana>><</if>>
+	<<set $maxMana = Math.round($maxMana)>>
+	<<if $mana > $maxMana>><<set $mana = $maxMana>><</if>>
+	
+	<<set $ful = (($ate + $inf) / $sto) * 100>>
+
+	
+	<<set _newMaxHea = $bmaxHea>>
+	<<if $wea.health != null>><<set _newMaxHea += $wea.health>><</if>>
+	<<if $arm.health != null>><<set _newMaxHea += $arm.health>><</if>>
+ 	<<if $ful > 100>>
+		<<set _newMaxHea *= (($maxFul - $ful)/($maxFul-100))>>
+		<<if _newMaxHea < 0>><<set _newMaxHea = 0>><</if>>
+		<<set $maxHea = Math.round(_newMaxHea)>>
+	<<else>>
+		<<set $maxHea = _newMaxHea>>
+		<<if $wea.health != null>><<set $maxHea += $wea.health>><</if>>
+		<<if $arm.health != null>><<set $maxHea += $arm.health>><</if>>
+	<</if>>
+	
+    /* FIXES AND EDITS - START */
+    /* Prevent fat from being below zero */
+    <<if $fat < 0>>
+    	<<set $fat = 0>>
+    <</if>>
+    /* FIXES AND EDITS - END */
+    
+	<<updateDescriptions>>
+	
+	<<if $hea > $maxHea>><<set $hea = $maxHea>><</if>>
+	<<if $hea <= 0>>
+		<<set $hea = 0>>
+		<<set $alive = false>>
+	<</if>>
+	
+<</widget>>
+
+=====
+
+/*Updates character description variables*/
+<<widget "updateDescriptions">>
+	/*===Sets fullness description===*/
+	<<if $ful > 130>><<set $hungry = "too full to think">>
+	  <<set $status.description = "''You're too full to even think. Your stomach throbs and groans. ''">>
+	<<elseif $ful > 120>><<set $hungry = "ready to pop">>
+	  <<set $status.description = "''You feel like you'll explode if you get any fuller. ''">>
+	<<elseif  $ful > 110>><<set $hungry = "engorged">>
+	  <<set $status.description = "Your stomach feels painfully distended. ">>
+	<<elseif  $ful > 100>><<set $hungry = "bloated">>
+	  <<set $status.description = "You're so full it hurts. ">>
+	<<elseif  $ful > 85>><<set $hungry = "overstuffed">>
+	  <<set $status.description = "You're full to the brim. ">>
+	<<elseif  $ful > 75>><<set $hungry = "stuffed">>
+	  <<set $status.description = "You're very full. ">>
+	<<elseif  $ful > 65>><<set $hungry = "pretty full">>
+	  <<set $status.description = "You've had a good meal. ">>
+	<<elseif  $ful > 55>><<set $hungry = "well fed">>
+	  <<set $status.description = "You're well fed. ">>
+	<<elseif  $ful > 45>><<set $hungry = "sated">>
+	  <<set $status.description = "You don't feel the need to eat. ">>
+	<<elseif  $ful > 25>><<set $hungry = "not very hungry">>
+	  <<set $status.description = "You could eat. ">>
+	<<elseif  $ful > 10>><<set $hungry = "hungry">>
+	  <<set $status.description = "You're pretty hungry. ">>
+	<<elseif  $ful > 0>><<set $hungry = "ravenous">>
+	  <<set $status.description = "You could really eat something. ">>
+	<<else>><<set $hungry = "starving">>
+	  <<set $status.description = "You need food badly. ">>
+	<</if>>
+	
+	
+	/*===Set's fatness description===*/
+	<<if $fat <= 1>><<set $fatness = "fatless">>
+	<<elseif $fat <= 10>><<set $fatness = "lean">>
+	<<elseif $fat <= 45>><<set $fatness = "average">>
+	<<elseif $fat <= 60>><<set $fatness = "chubby">>
+	<<elseif $fat <= 75>><<set $fatness = "pudgy">>
+	<<elseif $fat <= 90>><<set $fatness = "fat">>
+	<<elseif $fat <= 115>><<set $fatness = "doughy">>
+	<<elseif $fat <= 140>><<set $fatness = "rotund">>
+	<<elseif $fat <= 170>><<set $fatness = "squishy">>
+	<<elseif $fat <= 210>><<set $fatness = "obese">>
+	<<elseif $fat <= 270>><<set $fatness = "porcine">>
+	<<elseif $fat <= 400>><<set $fatness = "incredibly obese">>
+	<<elseif $fat <= 700>><<set $fatness = "elephantine">>
+	<<else>><<set $fatness = "whale-like">>
+	<</if>>
+	
+	/*===Set's muscle description===*/
+	<<set _definition = $str - $fat>>
+	<<if _definition <= 5>><<set $muscles = "unnoticeable">>
+	<<elseif _definition <= 10>><<set $muscles = "barely noticeable">>
+	<<elseif _definition <= 20>><<set $muscles = "average">>
+	<<elseif _definition <= 30>><<set $muscles = "well-defined">>
+	<<elseif _definition <= 40>><<set $muscles = "impressive">>
+	<<elseif _definition <= 50>><<set $muscles = "rippling">>
+	<<elseif _definition <= 60>><<set $muscles = "tremendous">>
+	<<elseif _definition <= 70>><<set $muscles = "bodybuilderesque">>
+	<<elseif _definition <= 80>><<set $muscles = "gargantuan">>
+	<<else>><<set $muscles = "mountain-like">>
+	<</if>>
+	
+	
+	/*===Set's waist description===*/
+	<<set _roundness = setup.waistDiameter()>>
+	<<if _roundness <= 1>><<set $waist = "flat">>
+	<<elseif _roundness <= 3>><<set $waist = "small">>
+	<<elseif _roundness <= 4>><<set $waist = "slightly rounded">>
+	<<elseif _roundness <= 5>><<set $waist = "rounded">>
+	<<elseif _roundness <= 6>><<set $waist = "swollen">>
+	<<elseif _roundness <= 7>><<set $waist = "portly">>
+	<<elseif _roundness <= 8>><<set $waist = "bulging">>
+	<<elseif _roundness <= 10>><<set $waist = "basketball sized">>
+	<<elseif _roundness <= 12>><<set $waist = "jumbo sized">>
+	<<elseif _roundness <= 14>><<set $waist = "rotund">>
+	<<elseif _roundness <= 17>><<set $waist = "beachball sized">>
+	<<elseif _roundness <= 20>><<set $waist = "massively swollen">>
+	<<elseif _roundness <= 23>><<set $waist = "too big to reach around">>
+	<<elseif _roundness <= 26>><<set $waist = "globular">>
+	<<elseif _roundness <= 30>><<set $waist = "person sized">>
+	<<elseif _roundness <= 35>><<set $waist = "spherical">>
+	<<elseif _roundness <= 55>><<set $waist = "mountainous">>
+	<<else>><<set $waist = "impossibly massive">>
+	<</if>>	
+	<<if _roundness > $p.height>><<set $waist = "wider than you are tall">><</if>>
+	
+	/*===Sets walking description===*/
+	<<set _walk = "walk">>
+	<<set _walking = "walk">>
+	<<set _heaviness = $ate + ($fat * 0.4)>>
+	<<if _heaviness > 100>>
+		<<set _walk = "wobble">>
+		<<set _walking = "wobbling">>
+	<<elseif _heaviness > 150>>
+		<<set _walk = "waddle">>
+		<<set _walking = "waddling">>
+	<<elseif _heaviness > 300>>
+		<<set _walk = "lumber">>
+		<<set _walking = "lumbering">>
+	<</if>>
+	<<if setup.testImmobile()>>
+		<<set _walk = "slowly roll">>
+		<<set _walking = "slowly rolling">>
+	<</if>>
+	
+	/* ICY SPELLS - Add levitation - START */
+	<<if $status.levitateTime > 0>>
+		<<set _walk = "float">>
+		<<set _walking = "floating">>
+	<</if>>
+	
+	/* ICY SPELLS - Add levitation - END */
+	
+	
+	<<set $walk = _walk>>
+	<<set $walking = _walking>>
+	<<set $Walk = $walk.toUpperFirst()>>
+	<<set $Walking = $walking.toUpperFirst()>>
+	
+<</widget>>
+
+=====
+
+<<widget "consume">>
+	<<if $args.length >= 1>><<set $ate += $args[0]>><</if>>
+	<<if $args.length >= 2>><<set $cal += $args[1]>><</if>>
+	<<updateStats>>
+	
+	<<if setup.waistDiameter() > $top.size and !$top.popped and $top.size > 0>>
+		$top.pop
+		<<set $top.popped = true>>
+	<</if>>
+	
+	<<if setup.waistDiameter() > $btm.size and !$btm.popped and $btm.size > 0>>
+		$btm.pop
+		<<set $btm.popped = true>>
+	<</if>>
+	
+	<<if $inCombat and $args[0] > 0>>
+		<<set _stuffed = Math.round($args[0])>>
+		<<print "<li>//Fullness +_stuffed//</li>">>
+	<</if>>
+	
+<</widget>>
+
+/*For not displaying extra text*/
+<<widget "consumeQuiet">>
+	<<if $args.length >= 1>><<set $ate += $args[0]>><</if>>
+	<<if $args.length >= 2>><<set $cal += $args[1]>><</if>>
+	<<updateStats>>
+<</widget>>
+
+<<widget "inflate">>
+	<<if $args.length >= 1>><<set $inf += $args[0]>><</if>>
+	<<if $args.length >= 2>><<set $infMass += $args[1]>><</if>>
+	<<updateStats>>
+	
+	<<if $inCombat and $args[0] > 0>>
+		<<set _inflated = Math.round($args[0])>>
+		<li>//Fullness +_inflated//</li>
+		<<if $args.length >= 2 and $args[1] < 0>>
+			<li>//Weight <<sayWeight $args[1]>>//</li>
+		<</if>>
+	<</if>>
+	
+<</widget>>
+
+=====
+
+<<widget "findBursting">>
+	<<set $toBurst = ((($maxFul/100) * $sto) - $ate - $inf)>>
+	<<if $args.length > 0>><<set $toBurst += $args[0]>><</if>>
+<</widget>>
+
+<<widget "stuffToBursting">>
+	<<findBursting +1>>
+	<<set _stuffing = $toBurst>>
+	<<if _stuffing < 0>><<set _stuffing = 0>><</if>>
+	
+	<<set _calories = _stuffing * 0.5>>
+	
+	<<consume _stuffing _calories>>
+<</widget>>
+
+<<widget "stuffToAlmostBursting">>
+	<<findBursting -1>>
+	<<set _stuffing = $toBurst>>
+	<<if _stuffing < 0>><<set _stuffing = 0>><</if>>
+	
+	<<set _calories = _stuffing * 0.5>>
+	
+	<<consume _stuffing _calories>>
+<</widget>>
+
+<<widget "inflateToFloating">>
+	<<set _mass = -1 * Math.ceil(setup.weight())>>
+	<<set _volume = $sto * 1.3>>
+	<<if _mass > 0>><<set _mass = 0>><</if>>
+	<<inflate _volume _mass>>
+<</widget>>
+=====
+
+<<widget "doXP">>
+	<<set $xp += $args[0]>>
+	<li>You got ''$args[0] experience.''</li>
+	
+	/*Gain a level*/
+	<<for $xp > $xpToLvl>>
+		<li>''You gained a level!''</li>
+		<<set $xp -= $xpToLvl>>
+		<<set $lvl++>>
+		<<set $lvlUp++>>
+		<<set $xpToLvl = 100 + (($lvl-1)*10)>>
+		<<set $bmaxHea += Math.floor($end * 0.1)>>
+		<<updateStats>>
+		<<health $maxHea>>
+	<</for>>
+<</widget>>
+
+=====
+
+<<widget "doGld">>
+	<<set _gold = Math.round($args[0])>>
+	
+	/*Prevents you from losing more gold than you have*/
+	<<if _gold < 0 and $gld + _gold < 0>>
+		<<set _gold = $gld>>
+	<</if>>
+	
+	<<set $gld += _gold>>
+	<<if $gld <= 0>><<set $gld = 0>><</if>>
+	
+	<<if _gold < 0>>
+		<<set _gold *= -1>>
+		<li>You lost ''_gold gold!''</li>
+	<<else>>
+		<li>You got ''_gold gold.''</li>
+	<</if>>
+	
+<</widget>>
+
+=====
+
+<<widget "digest">>
+
+	<<set _digestFor = $args[0]>>
+	<<set _digestionRate = ($sto * 0.75)/1440>>
+	<<set _digested = $ate>>
+	
+	/*Removes an amount of food you've eaten*/
+	<<set $ate -= (_digestFor * _digestionRate)>>
+	
+	/*Prevents you from being at negative food*/
+	<<if $ate < 0>><<set $ate = 0>><</if>>
+	
+	/*Burns calories from metabolism*/
+	<<set $fat -= 0.004 * _digestFor>>
+	<<if $fat < 0>><<set $fat = 0>><</if>>
+	
+	/*Deflates you*/
+	<<set _deflationRate = _digestFor * 0.01>>
+	<<set _deflatedAmount = $inf>>
+	<<set $inf -= _deflationRate>>
+	<<if $inf <= 0>>
+		<<set $inf = 0>>
+		<<set $infMass - 0>>
+	<</if>>
+	<<if _deflatedAmount != 0>>
+		<<set $infMass *= $inf/_deflatedAmount>>
+	<</if>>
+	
+	/*Converts fat to mana*/
+	<<if $mana < $maxMana>>
+	  <<set _startMana = $mana>>
+	  <<set _restoreMana = $maxMana * _digestFor * 0.00417>>
+	  <<set $mana += _restoreMana>>
+	  <<if $mana > $maxMana>><<set $mana = $maxMana>><</if>>
+	  <<set $fat -= ($mana - _startMana) * 0.25>>
+	  <<if $fat < 0>><<set $fat = 0>><</if>>
+	<</if>>
+	
+	/*Converts calories based on the percentage you've digested*/
+	<<set _digested = (_digested - $ate) / _digested>>
+	<<if Util.isNumeric(_digested)>>
+		<<set $fat += _digested * $cal>>
+		<<set $cal -= _digested * $cal>>
+	<</if>>
+	<<if $cal < 0>><<set $cal = 0>><</if>>/*this shouldn't matter*/
+	
+	<<updateStats>>
+	
+<</widget>>
+
+=====
+
+<<widget "stamina">>
+	<<if $args[0] >= 0>>
+		<<set $sta += $args[0]>>
+	<<else>>
+		<<set $sta += $args[0] * Math.pow(0.8,$end/40)>>
+	<</if>>
+	
+	
+	<<if $sta < 0>><<set $sta = 0>><</if>>
+	<<if $sta > 100>><<set $sta = 100>><</if>>
+<</widget>>
+
+====
+
+<<widget "spendMana">>
+	<<set $mana -= $args[0]>>
+	<<if $mana < 0>><<set $mana = 0>><</if>>
+	<<if $mana > $maxMana>><<set $mana = $maxMana>><</if>>
+<</widget>>
+
+====
+
+<<widget "mana">>
+	<<set $mana += $args[0]>>
+	<<if $mana < 0>><<set $mana = 0>><</if>>
+	<<if $mana > $maxMana>><<set $mana = $maxMana>><</if>>
+<</widget>>
+
+====
+
+<<widget "health">>
+	<<set $hea += $args[0]>>
+	<<if $hea < 0>><<set $hea = 0>><</if>>
+	<<if $hea > $maxHea>><<set $hea = $maxHea>><</if>>
+	<<if $inCombat>><li>//Health +$args[0]//</li><</if>>
+<</widget>>
+
+=====
+
+<<widget "damage">>
+	<<set _damage = Math.round($args[0])>>
+	
+	/* ICY SPELLS - Add ward reduction */
+	<<set _wardBroke = false>>
+	<<if $icyspells_ward > 0>>
+		<<set _warded = Math.round(_damage * $icyspells_wardReduction)>>
+		
+		<<if _warded > $icyspells_ward>> /* cap to what's remaining */
+			<<set _warded = $icyspells_ward>>
+		<</if>>
+		
+		<<set _damage -= _warded>>
+		
+		<<set $icyspells_ward -= _warded>>
+		<<if $icyspells_ward <= 0>>
+			<<set $icyspells_ward = 0>>
+			<<set $icyspells_wardReduction = 0>>
+			<<set _wardBroke = true>>
+		<</if>>
+	<</if>>
+	
+	<<set $hea -= _damage>>
+	<<if $hea < 0>>
+		<<set $hea = 0>>
+		<<set $alive = false>>
+	<</if>>
+	<<if _warded > 0>>
+		<li>//Health -_damage (Ward protected _warded)//</li>
+	<<else>>
+		<li>//Health -_damage//</li>
+	<</if>>
+	
+	<<if _wardBroke>>
+		<li>//Ward shattered!//</li>
+	<</if>>
+<</widget>>
+
+====
+
+<<widget "doDmg">>
+	/*Sets attack stats*/
+	<<set _attackStat = $str>>
+	<<set _scaling = 0.4>>
+	<<if $wea.stat == "agi">><<set _attackStat = $agi>><</if>>
+	<<if $wea.stat == "int">><<set _attackStat = $int>><</if>>
+	
+	<<if $wea.scaling > 0>>
+		<<set _scaling = $wea.scaling>>
+	<</if>>
+	
+	<<set $dmg = setup.xdy($wea.damage, $wea.range)>>
+	
+	<<set $dmg += _attackStat * _scaling>>
+	
+	<<set $dmg -= $e.def>>
+	
+    /* FIXES AND EDITS - change stuff */
+    /*
+	<<if $wea.damageType != null>>
+		<<set _multiplier = 1>>
+		<<if $e.damageResistance != null>>
+			<<if $e.damageResistance.contains($wea.damageType)>>
+				<<set _multiplier /= 1.5>>
+			<</if>>
+		<</if>>
+		<<if $e.damageWeakness != null>>
+			<<if $e.damageWeakness.contains($wea.damageType)>>
+				<<set _multiplier *= 1.5>>
+			<</if>>
+		<</if>>
+		<<set $dmg = Math.round($dmg * _multiplier)>>
+	<</if>>
+    */
+    /* Apply weakness / resistance modifications */
+    <<set _damageTypeMultiplier = setup.getEnemyDamageTypeMultiplier($wea.damageType, $e)>>
+    <<set $dmg = Math.round($dmg * _damageTypeMultiplier)>>
+	
+	<<if $dmg < 0>><<set $dmg = 0>><</if>>
+	<<set $dmg = Math.round($dmg)>>
+	
+<</widget>>
+
+====
+
+<<widget "spellDamage">>
+	
+    /* FIXES AND EDITS - change stuff */
+	/*
+    <<set _scaling = 0.4>>
+	<<if $wea.stat == "int" and $wea.scaling > _scaling>>
+		<<set _scaling = $wea.scaling>>
+	<</if>>
+	
+	<<set $dmg = setup.xdy($spellCast.damage, $spellCast.dRange)>>
+	<<set $dmg += Math.round($int * _scaling)>>
+    */
+    <<set $dmg = setup.xdy($spellCast.damage, $spellCast.dRange)>>
+    <<set $dmg += setup.getPlayerSpellBonusDamage()>>
+	
+	/* FIXES AND EDITS - change stuff */
+	/*
+	<<if $spellCast.dType != null>>
+		<<set _multiplier = 1>>
+		<<if $e.damageResistance != null>>
+			<<if $e.damageResistance.contains($spellCast.dType)>>
+				<<set _multiplier /= 1.5>>
+			<</if>>
+		<</if>>
+		<<if $e.damageWeakness != null>>
+			<<if $e.damageWeakness.contains($spellCast.dType)>>
+				<<set _multiplier *= 1.5>>
+			<</if>>
+		<</if>>
+		<<set $dmg = Math.round($dmg * _multiplier)>>
+	<</if>>
+	*/
+	/* Apply weakness / resistance modifications */
+	<<set _damageTypeMultiplier = setup.getEnemyDamageTypeMultiplier($spellCast.dType, $e)>>
+	<<set $dmg = Math.round($dmg * _damageTypeMultiplier)>>
+	
+	<<if $dmg < 0>><<set $dmg = 0>><</if>>
+	
+<</widget>>
+
+====
+
+/*Tests skill against opposition*/
+<<widget "skillTest">>
+	<<set _playerSkill = $args[0]>>
+	<<set _enemySkill = 0>>
+	<<if $args.length > 1>><<set _enemySkill = $args[1]>><</if>>
+	
+	<<set $skillCheck = false>>
+	
+	<<if random(1,100) < (_playerSkill - _enemySkill)>>
+		<<set $skillCheck = true>>
+	<</if>>
+
+<</widget>>
+
+====
+
+
+:: display widgets [widget nobr] {"position":"2075,825","size":"200,100"}
+<<widget "defeated">>
+
+<<endCombat>>
+<<set $defeatedBy = $args[0]>>
+
+<<action "c" "no" "Defeated" "Defeated">>
+<</action>>
+
+<</widget>>
+
+====
+
+<<widget "startCombat">>
+
+/*Optionally sets enemy*/
+<<if $args.length > 0>>
+	<<setEnemy $args[0]>>
+<</if>>
+
+/*Moves you to combat state*/
+<<set $inCombat = true>>
+
+<<set $lastCombatSpellCast = "">> /* FIXES AND EDITS - Implement recent cast spell */
+/* (technically this could be tracked within the enemy to not waste space, because it's only going to exist when the enemy's around... */
+
+/*Creates combat link*/
+<<action "c" "attack" "Fight!" "Combat">><</action>>
+
+<</widget>>
+
+====
+
+<<widget "icon">>
+<<switch $args[0]>>
+
+<<case "aeroPearl">>[img[icon/aeroPearl.png]]
+<<case "armor">>[img[icon/itemArmorIcon.png]]
+<<case "attack">>[img[icon/attackIcon.png]]
+<<case "appearance">>[img[icon/appearanceIcon.png]]
+<<case "beach">>[img[icon/beachIcon.png]]
+<<case "building">>[img[icon/buildingIcon.png]]
+<<case "button">>[img[icon/buttonIcon.png]]
+<<case "church">>[img[icon/churchIcon.png]]
+<<case "compass">>[img[icon/surroundingsIcon.png]]
+<<case "darkMagic">>[img[icon/darkMagicIcon.png]]
+<<case "denseTopaz">>[img[icon/denseTopaz.png]]
+<<case "devour">>[img[icon/devourIcon.png]]
+<<case "door">>[img[icon/leaveIcon.png]]
+<<case "dollar">>[img[icon/dollar sign.png]]
+<<case "down">>[img[icon/downIcon.png]]
+<<case "drink">>[img[icon/itemDrinkIcon.png]]
+<<case "fenceGate">>[img[icon/fenceGateIcon.png]]
+<<case "fence">>[img[icon/fenceIcon.png]]
+<<case "food">>[img[icon/itemFoodIcon.png]]
+<<case "forest">>[img[icon/forestIcon.png]]
+<<case "gate">>[img[icon/gateIcon.png]]
+<<case "gold">>[img[icon/storeIcon.png]]
+<<case "grasslands">>[img[icon/grasslandsIcon.png]]
+<<case "greyMagic">>[img[icon/greyMagicIcon.png]]
+<<case "healthPotion">>[img[icon/itemHealthPotionIcon.png]]
+<<case "hills">>[img[icon/hillsIcon.png]]
+<<case "hospital">>[img[icon/hospitalIcon.png]]
+<<case "house">>[img[icon/houseIcon.png]]
+<<case "inn">>[img[icon/innIcon.png]]
+<<case "inventory">>[img[icon/inventoryIcon.png]]
+<<case "jungle">>[img[icon/forestIcon.png]]
+<<case "leave">>[img[icon/leaveIcon.png]]
+<<case "left">>[img[icon/returnIcon.png]]
+<<case "mage">>[img[icon/mageIcon.png]]
+<<case "manaPotion">>[img[icon/itemManaPotionIcon.png]]
+<<case "mountain">>[img[icon/mountainIcon.png]]
+<<case "next">>[img[icon/nextIcon.png]]
+<<case "no">>[img[icon/noIcon.png]]
+<<case "ocean">>[img[icon/oceanIcon.png]]
+<<case "other">>[img[icon/itemOtherIcon.png]]
+<<case "pants">>[img[icon/pantsIcon.png]]
+<<case "quest">>[img[icon/appearanceIcon.png]]
+<<case "restaurant">>[img[icon/restaurantIcon.png]]
+<<case "rest">>[img[icon/restIcon.png]]
+<<case "return">>[img[icon/returnIcon.png]]
+<<case "right">>[img[icon/nextIcon.png]]
+<<case "road">>[img[icon/roadIcon.png]]
+<<case "run">>[img[icon/runIcon.png]]
+<<case "shirt">>[img[icon/itemTopIcon.png]]
+<<case "spectrumGem">>[img[icon/spectrumGem.png]]
+<<case "spells">>[img[icon/spellsIcon.png]]
+<<case "store">>[img[icon/storeIcon.png]]
+<<case "surrender">>[img[icon/surrenderIcon.png]]
+<<case "tailor">>[img[icon/tailorIcon.png]]
+<<case "talk">>[img[icon/appearanceIcon.png]]
+<<case "time">>[img[icon/waitIcon.png]]
+<<case "trainingGrounds">>[img[icon/trainingGroundsIcon.png]]
+<<case "up">>[img[icon/upIcon.png]]
+<<case "voidOnyx">>[img[icon/voidOnyx.png]]
+<<case "wait">>[img[icon/waitIcon.png]]
+<<case "wall">>[img[icon/wallIcon.png]]
+<<case "weapon">>[img[icon/itemWeaponIcon.png]]
+<<case "whiteMagic">>[img[icon/whiteMagicIcon.png]]
+<<case "yes">>[img[icon/yesIcon.png]]
+
+<<default>>''Icon widget error''
+
+<</switch>>
+<</widget>>
+
+====
+
+<<widget "popup">>
+
+<<link $args[0]>>
+
+  <<set _popupPassage = $args[1]>>
+  
+  <<capture _popupPassage>>
+  <<script>>
+  Dialog.setup(State.temporary.popupPassage);
+  Dialog.wiki(Story.get(State.temporary.popupPassage).processText());
+  Dialog.open();
+  <</script>>	  
+  <</capture>>
+  
+<</link>>
+
+<</widget>>
+
+====
+
+<<widget "updatePanels">>
+
+<<replace "#story-subtitle">>
+	<<display "StorySubtitle">>
+<</replace>>
+
+<<replace "#bottom-bar">>
+	<<display "BottomBar">>
+<</replace>>
+
+<</widget>>
+
+====
+
+<<widget "popupButton">>
+
+<<button $args[0]>>
+
+  <<set _popupPassage = $args[1]>>
+  
+  <<capture _popupPassage>>
+  <<script>>
+  Dialog.setup(State.temporary.popupPassage);
+  Dialog.wiki(Story.get(State.temporary.popupPassage).processText());
+  Dialog.open();
+  <</script>>	  
+  <</capture>>
+  
+<</button>>
+
+<</widget>>
+
+====
+
+<<widget "addPretext">>
+	<<set $pretext = $pretext + "<p>" + $args[0] + "</p>">>
+<</widget>>
+
+====
+<<widget sayWeight>>
+	<<switch $options.metric>>
+		<<case true>>
+			<<set _kilos = $args[0] * 0.453592>>
+			
+			<<if _kilos < 10>>
+				<<set _kilos = Math.round(_kilos * 10)/10>>
+			<<else>>
+				<<set _kilos = Math.round(_kilos)>>
+			<</if>>
+			
+			_kilos kilograms
+		<<default>>
+			<<set _pounds = Math.round($args[0])>>
+			_pounds pounds
+	<</switch>>	
+<</widget>>
+
+====
+
+<<widget sayDistance>>
+	<<set _distance = $args[0]>>
+	
+	<<switch $options.metric>>
+		<<case true>>
+			<<set _centimeters = Math.round(_distance * 2.54)>>
+			
+			<<if _centimeters >= 100>>
+				<<set _centimeters = Math.round(_centimeters/10)/10>>
+				<<if _centimeters == 1>>1 meter
+				<<else>> _centimeters meters
+				<</if>>
+			<<else>>
+				<<if _centimeters == 1>>1 centimeter
+				<<else>> _centimeters centimeters
+				<</if>>
+
+				
+			<</if>>
+		
+		<<default>>
+			<<set _distance = Math.round(_distance)>>
+			<<set _feet = Math.floor(_distance / 12)>>
+			<<set _inches = _distance % 12>>
+	
+	
+			<<if _feet > 1>>
+			_feet feet
+		
+			<<elseif _feet == 1>>
+			_feet foot
+		
+			<</if>>
+	
+			<<if _inches > 1>>
+			_inches inches
+	
+			<<elseif _inches == 1>>
+			_inches inch
+	
+			<<elseif _feet == 0>>
+			_inches inches
+	
+			<</if>>
+	<</switch>>
+	
+	
+<</widget>>
+
+====
+<<widget action container>>
+	<<set _direction = $args[0]>>
+	<<set _icon = $args[1]>>	
+	<<set _label = $args[2]>>
+	
+	<<if $args.length > 3>><<set _passage = $args[3]>>
+	<<else>><<set _passage = _label>>
+	<</if>>
+	
+	<<set _activity = _contents>>
+	
+	<<set _popup = false>>
+	<<if $args.length > 4>><<set _popup = true>><</if>>
+	  
+	<<if _direction == 1 or _direction == "nw">>
+	  <<set $northwest = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  
+	  <<if _icon != "">>
+	  <<set $northwest.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	  
+	
+	<<elseif  _direction == 2 or _direction == "n">>
+	  <<set $north = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $north.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 3 or _direction == "ne">>
+	  <<set $northeast = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $northeast.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 4 or _direction == "w">>
+	  <<set $west = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $west.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 5 or _direction == "c">>
+	  <<set $center = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $center.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 6 or _direction == "e">>
+	  <<set $east = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $east.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 7 or _direction == "sw">>
+	  <<set $southwest = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $southwest.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 8 or _direction == "s">>
+	  <<set $south = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $south.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<elseif  _direction == 9 or _direction == "se">>
+	  <<set $southeast = {
+		  icon: _icon,
+		  label: _label,
+		  passage: _passage,
+		  activity: _activity,
+		  popup: _popup,
+	  }>>
+	  <<if _icon != "">>
+	  <<set $southeast.label = "<<icon "+_icon+">>"+_label>>
+	  <</if>>
+	
+	<<else>>
+	<</if>>
+<</widget>>
+
+====
+
+<<widget clearActions>>
+	<<set $northwest = null>>
+	<<set $north = null>>
+	<<set $northeast = null>>
+	<<set $west = null>>
+	<<set $center = null>>
+	<<set $east = null>>
+	<<set $southwest = null>>
+	<<set $south = null>>
+	<<set $southeast = null>>
+<</widget>>
+
+
+:: enemy widgets [widget] {"position":"2300,450","size":"200,100"}
+====
+
+<<widget "setEnemy">>
+	<<set $e = clone($args[0])>>
+	<<set $e.hea = $e.maxhea>>
+
+	 /* FEEDER EXPANSION EDIT - START */
+    /*Prevent nulls*/
+    <<if $e.flavorWeakness == null>>
+        <<set $e.flavorWeakness = []>>
+    <</if>>
+
+    <<set $e.ate = 0>>
+    <<set $e.stuffedHalf = false>>
+    /* FEEDER EXPANSION EDIT - END */
+    
+	/*sets gender*/
+	<<if $e.gender == "random" or $e.gender == null>>
+		<<if !$options.males and $options.females>>
+			<<set $e.gender = $female>>
+		<<elseif !$options.females and $options.males>>
+			<<set $e.gender = $male>>
+		<<else>>
+			<<set $e.gender = either($male, $female)>>
+		<</if>>
+	<</if>>
+	
+	/*sets species*/
+	<<switch $e.species>>
+		<<case "random">>
+			<<set $e.species = setup.randomSpecies()>>
+			<<set $e.flavorWeakness.push(either("meat","veg","dessert"))>> /* FEEDER EXPANSION EDIT  */
+		<<case "herbivore">>
+			<<set $e.species = setup.randomHerbivore()>>
+			<<set $e.flavorWeakness.push(either("veg","veg","dessert"))>> /* FEEDER EXPANSION EDIT  */
+		<<case "carnivore">>
+			<<set $e.species = setup.randomCarnivore()>>
+			<<set $e.flavorWeakness.push(either("meat","meat","dessert"))>> /* FEEDER EXPANSION EDIT  */
+		<<case "dinosaur">>
+			<<set $e.species = either($raptor, $pterodactyl, $triceratops, $stegosaurus, $apatosaurus, $tyrannosaurus)>>
+			<<set $e.flavorWeakness.push(either("meat","veg","dessert"))>> /* FEEDER EXPANSION EDIT  */
+		<<default>> /* Fixes and edits - adjust for new method */
+        	/* Could either be that it has a species that'll be found during `createNPC`, or it was given none - we only want to make alterations if none was given */
+			<<if $e.species == null>>
+            	<<set $e.species = "none">>
+            <</if>>
+	<</switch>>
+	
+	<<createNPC $e.species $e.gender 1>>
+	
+	/*Makes sure enemy stats don't have null values*/
+	<<if $e.damageWeakness == null>>
+		<<set $e.damageWeakness = []>>
+	<</if>>
+	<<if $e.damageResistance == null>>
+		<<set $e.damageResistance = []>>
+	<</if>>
+	<<set $e.stun = 0>>
+	<<set $e.slow = 0>>
+	<<set $e.burn = 0>>
+	<<set $e.burnTime = 0>>
+	<<set $e.soak = 0>>
+   
+
+<</widget>>
+
+
+====
+
+<<widget "eHealth">>
+	<<set _healing = Math.round($args[0])>>
+	
+	/*Prevents healing above max health*/
+	<<if _healing > $e.maxhea - $e.hea>>
+		<<set _healing = $e.maxhea - $e.hea>>
+	<</if>>
+	
+	/*Displays battle text*/
+	<<if _healing > 0>>
+		<<print "<li>//Enemy health +_healing//</li>">>
+	<</if>>
+	
+	/*Changes enemy health*/
+	<<set $e.hea += _healing>>
+	
+<</widget>>
+
+====
+
+<<widget "eDamage">>
+	<<set _damage = Math.round($args[0])>>
+	
+	/*Prevents damage from being negative*/
+	<<if _damage < 0>><<set _damage = 0>><</if>>
+	
+	/*Displays battle text*/
+	<<if _damage == 0>>
+		<<print "<li>//No damage?//</li>">>
+	<<else>>
+		<<print "<li>//Enemy health -_damage//</li>">>
+	<</if>>
+	
+	/*Changes enemy health*/
+	<<set $e.hea -= _damage>>
+
+<</widget>>
+
+====
+
+<<widget "eBuff">>
+<<set _type = $args[0]>>
+<<set _amount = 1>>
+<<if $args.length > 1>><<set _amount = $args[1]>><</if>>
+
+<<switch _type>>
+	<<case "stun">>
+	//<li>(Enemy stunned)</li>//
+	<<set $e.stun += _amount>>
+	
+	<<case "slow">>
+	//<li>(Enemy slowed)</li>//
+	<<set $e.slow += _amount + 1>>
+	
+	<<case "burn">>
+	//<li>(Enemy Burnt)</li>//
+	/* FIXES AND EDITS - Modify burn to not overwrite existing burn variables if the new ones are worse */
+    <<if Math.round($dmg * setup.tuning("burnProcDamageModifier")) > $e.burn>>
+    	<<set $e.burn = Math.round($dmg * setup.tuning("burnProcDamageModifier"))>>
+    <</if>>
+    <<if _amount > $e.burnTime>>
+		<<set $e.burnTime = _amount>>
+    <</if>>
+	<<if $e.soak > 0>>
+		Which has unfortunately stopped them from being soaked. 
+		<<set $e.soak = 0>>
+		/*<<run $e.damageWeakness.pluck("lightning")>>*/ /* FIXES AND EDITS - Fix soak weakness */
+	<</if>>
+	
+	<<case "soak">>
+	//<li>(Enemy soaked)</li>//
+	<<set $e.soak += _amount + 1>>
+	/*<<run $e.damageWeakness.push("lightning")>>*/ /* FIXES AND EDITS - Fix soak weakness */
+	<<if $e.burn > 0>>
+		Which has unfortunately stopped them from burning. 
+		<<set $e.burn = 0>>
+		<<set $e.burnTime = 0>>
+	<</if>>
+	
+<</switch>>
+
+<</widget>>
+
+====
+
+<<widget "enemyAction">>
+	<<set $aiAction = $args[0]>>
+	<<if $aiAction == "attack" and $e.stun > 0>>
+		<<set $e.stun-->>
+		<li><i>Stunned</i><br>
+		Your enemy is too stunned to attack! </li>
+		<<if $e.stun <= 0>>
+		<i>Your opponent seems to be shaking off the effects of the stun though.</i>
+		<</if>>
+	<<else>>
+		<<include $e.ai>>
+	<</if>>
+<</widget>>
+
+====
+
+<<widget "doEdmg">>
+	/*Selects the enemy's highest attack stat*/
+	<<set _attackStat = $e.str>>
+	<<if $e.agi > _attackStat>><<set _attackStat = $e.agi>><</if>>
+	<<if $e.int > _attackStat>><<set _attackStat = $e.int>><</if>>
+	
+	<<if $e.attackStat != null>>
+		<<switch $e.attackStat>>
+		<<case "str">><<set _attackStat = $e.str>>
+		<<case "agi">><<set _attackStat = $e.agi>>
+		<<case "int">><<set _attackStat = $e.int>>
+		<<default>>''Error in enemy attack stat'' 
+		<</switch>>
+	<</if>>
+	
+	/*Randomizes incoming damage*/
+	<<set $edmg = random(_attackStat * 0.75, _attackStat)>>
+	
+	/*Reduces damage based on armor*/
+	<<set $edmg -= $arm.defense + $tdef>>
+	
+	/*Prevents dealing negative damage*/
+	<<if $edmg < 0>><<set $edmg = 0>><</if>>
+	
+<</widget>>
+
+=====
+
+<<widget "doEspellDmg">>
+
+<<set _spellCast = $args[0]>>
+
+<<set $edmg = setup.xdy(_spellCast.damage, _spellCast.range) + ($e.int * 0.4)>>
+
+<<set $edmg = Math.round($edmg)>>
+
+<</widget>>
+
+=====
+
+<<widget "enemyCast">>
+<<set _spell = $args[0]>>
+
+/*casts spell based on type*/
+<<switch _spell.type>>
+
+<<case "heal">>
+	<<doEspellDmg _spell>>
+	<<eHealth $edmg>>
+	
+<</switch>>
+
+<<set $e.mana -= _spell.cost>>
+
+<</widget>>
+
+====
+
+
+:: inventory widgets [nobr widget] {"position":"2075,575","size":"200,100"}
+/*===Adds the input item to your inventory===*/
+<<widget "getItem">>
+	<<set _itemGot = clone($args[0])>>
+	
+	/* FIXES AND EDITS - Allow getItem to give multiple items */
+	<<set _multiplier = 1>>
+	<<if $args.length > 1>><<set _multiplier = $args[1]>><</if>>
+	
+	<<if _itemGot.stack == null or _itemGot.stack < 1>>
+		<<set _itemGot.stack = 1>>
+	<</if>>
+	<<if _itemGot.charges != null>>
+		<<set _itemGot.stack = _itemGot.charges>>
+	<</if>>
+	
+	<<set _itemGot.stack *= _multiplier>>
+	
+	<<if _multiplier == 1>>
+		<li>You got ''_itemGot.article _itemGot.name''! </li>
+	<<else>>
+		<li>You got ''_itemGot.article _itemGot.name'' (x_multiplier)! </li>
+	<</if>>
+	
+	<<if setup.hasItem(_itemGot) >= 0>>
+	<<set $inventory[setup.hasItem(_itemGot)].stack += _itemGot.stack>>
+	<<else>>
+	<<run $inventory.push(_itemGot)>>
+	<</if>>
+	
+	/*Alphabetizes the inventory somehow?*/
+	<<run $inventory.sort((a, b) => (a.name > b.name) ? 1 : -1)>>
+<</widget>>
+
+====
+
+/*===Removes items from inventory===*/
+<<widget "removeItem">>
+	<<set _item = null>>
+	<<if setup.hasItem($args[0]) >= -1>>
+		<<set _item = $inventory[setup.hasItem($args[0])]>>
+	<</if>>
+	
+	<<set _number = 1>>
+	<<if $args.length > 1>><<set _number = $args[1]>><</if>>
+	
+	<<if _item == null>>
+		/*Do nothing*/
+	<<elseif _number == "all">>
+		<<run $inventory.deleteAt(setup.hasItem($args[0]))>>
+	<<else>>
+		<<set _item.stack -= _number>>
+		<<if _item.stack <= 0>>
+			<<run $inventory.deleteAt(setup.hasItem($args[0]))>>
+		<</if>>
+	<</if>>
+	
+<</widget>>
+
+====
+
+<<widget "describeItem">>
+<<set _item = $args[0]>>
+
+<u>
+<<if _item.icon != null>><<icon _item.icon>>
+<<else>><<icon "inventory">>
+<</if>>
+_item.Name
+</u>
+<br>_item.description
+
+/* FIXES AND EDITS - Fix: Make costs account for charges */
+/* (It would be confusing to the player to see the charge-altered value when inspecting an item, but the gold cost of an item is only ever seen in the shop purchasing menu, which side-steps this issue) */
+<<set _itemBaseValue = _item.value>>
+<<set _itemCharge = 1>>
+<<if _item.charges>>
+	<<set _itemCharge = _item.charges>>
+<</if>>
+
+<<set _itemValue = Math.round(_itemBaseValue * _itemCharge)>>
+
+<br>_itemValue gold, _item.type
+
+<<if _item.damage > 0>>
+	<<set _damage = _item.damage+"d"+_item.range>>
+	<<set _scaling = (_item.scaling*100)+"% "+_item.stat>>
+	<br>Deals _damage +_scaling _item.damageType damage. 
+<</if>>
+
+<<if _item.defense > 0>>
+	<br>Increases defense by _item.defense 
+<</if>>
+
+<<if _item.mana > 0>>Mana +_item.mana <</if>>
+<<if _item.int > 0>>Intelligence +_item.int <</if>>
+<<if _item.str > 0>>Strength +_item.str <</if>>
+<<if _item.agi > 0>>Agility +_item.agi <</if>>
+<<if _item.end > 0>>Endurance +_item.end <</if>>
+
+<<if _item.size > 0>>
+	<br>Size _item.size 
+<</if>>
+
+<<if _item.heal>0 or _item.mana>0 or _item.stamina>0>>
+	<br>Restores: 
+	<<if _item.heal > 0>>_item.heal health <</if>>
+	<<if _item.mana > 0>>_item.mana mana <</if>>
+	<<if _item.stamina > 0>>_item.stamina stamina <</if>>
+<</if>> 
+
+<</widget>>
+
+=====
+
+<<widget "store">>
+
+<<if $vendor.selling>>
+	<<if $vendor.b >= 0>>
+		<<set _tempItem = $inventory[$vendor.b]>>
+
+		<hr>
+		<u>
+		<<if _tempItem.icon != null>><<icon _tempItem.icon>>
+		<<else>><<icon "inventory">>
+		<</if>>
+		_tempItem.Name
+		</u>	
+		
+		<br>_tempItem.description
+
+		/* FIXES AND EDITS - Add buy/sell volume options */
+		<<set $vendor.amount = 1>>
+		<br><<link "Sell" $vendorLocation>>
+			<<set $vendor.a = $vendor.b>>
+			<<set $vendor.b = -2>>
+		<</link>> x <<numberbox "$vendor.amount" 1>>
+
+	/*Buys the item*/
+	<<elseif $vendor.b == -2>>
+		<hr>
+		$vendorThanks
+		
+		/* FIXES AND EDITS - Add buy/sell volume options */
+
+		<<set _amountSold = $vendor.amount>>
+		
+		/* cap actual amount to number player actually has */
+		<<if $inventory[$vendor.a].stack < _amountSold>>
+			<<set _amountSold = $inventory[$vendor.a].stack>>
+		<</if>>
+		
+		/* Ensure isn't  zero/negative */
+		<<if _amountSold < 1>>
+			<<set _amountSold = 1>>
+		<</if>>
+		
+		<<set _cost = Math.round($inventory[$vendor.a].value * _amountSold * 0.5)>>
+		<<doGld _cost>>
+		<<removeItem $inventory[$vendor.a] _amountSold>>
+
+	<</if>>
+
+<<else>>
+/*Purchase confirmation*/
+	<<if $vendor.b >= 0>>
+		<<set _tempItem = $vendorInventory[$vendor.b]>>
+
+		<hr>
+		<<describeItem _tempItem>>
+		
+		/* FIXES AND EDITS - Add buy/sell volume options */
+		<<set $vendor.amount = 1>>
+		<br><<link "Buy" $vendorLocation>>
+			<<set $vendor.a = $vendor.b>>
+			<<set $vendor.b = -2>>
+		<</link>> x <<numberbox "$vendor.amount" 1>>
+
+	/*Buys the item*/
+	<<elseif $vendor.b == -2>>
+		<hr>
+		$vendorThanks
+		/* FIXES AND EDITS - Fix: Make costs account for charges + Add buy/sell volume options*/
+		<<set _itemBaseValue = $vendorInventory[$vendor.a].value>>
+		<<set _itemCharge = 1>>
+		<<if $vendorInventory[$vendor.a].charges>>
+			<<set _itemCharge = $vendorInventory[$vendor.a].charges>>
+		<</if>>
+		<<set _itemValue = Math.round(_itemBaseValue * _itemCharge)>>
+		
+		<<set _amountBought = $vendor.amount>>
+		
+		/* Ensure isn't  zero/negative */
+		<<if _amountBought < 1>>
+			<<set _amountBought = 1>>
+		<</if>>
+		
+		/* cap to amount player can afford */
+		<<if $gld < _amountBought * _itemValue>>
+			<<set _amountBought = Math.floor($gld / _itemValue)>>
+		<</if>>
+		
+		<<set _cost = _itemValue * _amountBought * -1>>
+		<<doGld _cost>>
+		<<getItem $vendorInventory[$vendor.a] _amountBought>>
+		
+	<</if>>
+
+<</if>>
+
+/*Lists buying options*/
+<hr>
+
+/*Sell items to vendor*/
+<<if $vendor.selling>>
+	<<for _i = 0; _i < $inventory.length; _i++>>
+		<<capture _i>>
+			<<if $inventory[_i].icon != null>><<icon $inventory[_i].icon>>
+			<<else>><<icon "inventory">><</if>>
+			
+			<<set _description = 
+			$inventory[_i].Name+
+			"...">>
+			
+			<<if $inventory[_i].value != null>>
+				<<set _description += Math.round($inventory[_i].value * 0.5)+" gold">>
+				<<link  _description $vendorLocation>>
+					<<set $vendor.b = _i>>
+				<</link>>
+			<<else>>
+				<<set _description += "unsellable">>
+				_description
+			<</if>>
+			
+		<</capture>>
+		<br>
+	<</for>>
+	<<icon "store">>
+	<<link  "Buy items" $vendorLocation>>
+		<<set $vendor.selling = false>>
+		<<set $vendor.b = -1>>
+		<<set $vendor.a = -1>>
+	<</link>>
+	<br>
+			
+/*Buy items from vendor*/
+<<else>>
+	<<for _i = 0; _i < $vendorInventory.length; _i++>>
+		/* FIXES AND EDITS - Fix: Make costs account for charges */
+		<<set _itemBaseValue = $vendorInventory[_i].value>>
+		<<set _itemCharge = 1>>
+		<<if $vendorInventory[_i].charges>>
+			<<set _itemCharge = $vendorInventory[_i].charges>>
+		<</if>>
+		
+		<<set _itemValue = Math.round(_itemBaseValue * _itemCharge)>>
+		
+		<<capture _i, _itemValue>>
+			<<set _description = 
+			$vendorInventory[_i].Name+
+			"..."+_itemValue+" gold">>
+			
+			<<if $vendorInventory[_i].icon != null>>
+				<<icon $vendorInventory[_i].icon>>
+			<<else>>
+				<<icon "inventory">>
+			<</if>>
+			
+			<<if $gld < _itemValue>>
+				_description ~~(Not enough gold)~~
+			<<else>>		
+				<<link  _description $vendorLocation>>
+					<<set $vendor.b = _i>>
+				<</link>>
+			<</if>>
+			
+		<</capture>>
+		<br>
+	<</for>>
+	<<icon "store">>
+	<<link  "Sell items" $vendorLocation>>
+		<<set $vendor.selling = true>>
+		<<set $vendor.b = -1>>
+		<<set $vendor.a = -1>>
+	<</link>>
+	<br>
+
+<</if>>
+
+<</widget>>
+
+====
+
+<<widget "vendor">>
+
+<<set $vendor.b = -1>>
+<<set $vendor.a = -1>>
+<<set $vendor.selling = false>>
+
+<<switch $args[0]>>
+
+/*===============================================*/
+<<case "Earl">>
+<<set $vendorInventory = [$milkJug, $oats, $breadLoaf, $hamHock, $bigSteak, $beefStew, $chili, $jambalaya]>>
+
+<<set $vendorThanks = "\"Thank ya' kindly!\" ">>
+
+<<set $vendorLocation = "Trade with Earl">>
+
+/*===============================================*/
+<<case "donkey smith special">>
+<<set $vendorInventory = [$greatSword, $glaive, $giantAxe, $lightLance, $chainmailArmor, $splintArmor, $platemailArmor, $enchantedFighterArmor, $enchantedKnightArmor, $enchantedWarmageArmor]>>
+
+<<set $vendorThanks = "\"Thank you.\" ">>
+
+<<set $vendorLocation = "Trade with the Smith">>
+
+
+<<case "donkey smith normal">>
+<<set $vendorInventory = [$greatSword, $glaive, $giantAxe, $lightLance, $chainmailArmor, $splintArmor, $platemailArmor]>>
+
+<<set $vendorThanks = "\"Thank you.\" ">>
+
+<<set $vendorLocation = "Trade with the Smith">>
+
+
+/*===============================================*/
+<<case "beach raccoon">>
+
+<<set $vendorInventory = [$riceBowl, $tempuraShrimp, $calamari, $sushiRoll]>>
+
+<<set $vendorThanks = "With a blur of expert speed, you watch as the raccoon lovingly turns your order into a reality, before folding it up in a big green leaf. \"There, guaranteed as fresh as the moment you bought it\" ">>
+
+<<set $vendorLocation = "Buy from beach vendor">>
+
+
+/*===============================================*/
+<<case "ocean raccoon">>
+
+<<set $vendorInventory = [$riceBowl, $tempuraShrimp, $calamari, $sushiRoll]>>
+
+<<set $vendorThanks = "With a blur of expert speed, you watch as the raccoon lovingly turns your order into a reality, before folding it up in a big green leaf. \"There, guaranteed as fresh as the moment you bought it\" ">>
+
+<<set $vendorLocation = "Buy from ocean vendor">>
+
+
+/*===============================================*/
+<<case "lizard wizard">>
+
+<<set $vendorInventory = [$ampleApple, $outrageousOrange, $plentifulPeach, $ridiculousRaspberry, $bloatedBlueberry, $sizableStrawberry, $profusePumpkin, $whoppingWatermelon, $giganticGrape]>>
+
+<<set $vendorThanks = "\"Pleasure doing business!\"">>
+
+<<set $vendorLocation = "Trade with the Lizard Wizard">>
+
+
+/*===============================================*/
+<<case "milk stand">>
+<<set _cheapMilkBottle = clone($milkBottle)>>
+<<set _cheapMilkBottle.value = 1>>
+<<set _cheapMilkJug = clone($milkJug)>>
+<<set _cheapMilkJug.value = 1>>
+<<set $vendorInventory = [_cheapMilkBottle, _cheapMilkJug]>>
+
+<<set $vendorThanks = "\"Thank you!\" he reaches behind the bar and sets the milk down as you hand him the gold. ">>
+
+<<set $vendorLocation = "Milk Stand">>
+
+
+/*===============================================*/
+<<case "Island smithee">>
+
+<<set $vendorInventory = [$rapier, $spear, $trident, $warhammer, $lightLance, $splintArmor, $segmentataArmor]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "Island smithee store">>
+
+/*===============================================*/
+<<case "Island smithee special">>
+
+<<set $vendorInventory = [$rapier, $spear, $trident, $warhammer, $lightLance, $splintArmor, $segmentataArmor, $huntersGarb, $brutesHarness, $ironfistPebbles, $beastclawBracers]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "Island smithee store">>
+
+/*===============================================*/
+<<case "west town">>
+
+<<set $vendorInventory = [$bookOfCrystals, $rapier, $spear, $trident, $warhammer, $blueSwimTrunks, $redSwimShirt, $bagOfCandy, $tropicalShirt, $boxOfDonuts]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "West town vendor">>
+
+/*===============================================*/
+<<case "apothecary">>
+
+<<set $vendorInventory = [$lightningWand, $fireWand, $iceWand, $sManaPotion, $mManaPotion, $antidotePotion, $mageApprenticeRobe, $wizardsRobes, $battlemagesGarb]>>
+
+<<set $vendorThanks = "\"Pleasure doing business!\"">>
+
+<<set $vendorLocation = "Apothecary vendor">>
+
+/*===============================================*/
+<<case "Altertarium">>
+
+<<set $vendorDescription = "You walk into the alerterrarium. ">>
+
+<<set $vendorInventory = [$boostStrength]>>
+/* ICY SPELLS */
+<<if $options.icyspells_enabled>>
+	<<run $vendorInventory.push(...["icyspells_lesserWard", "icyspells_ward","icyspells_levitate","icyspells_enlarge"])>>
+<</if>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "Learn spells from Altertarium">>
+
+/*===============================================*/
+<<case "Destructatorium">>
+
+<<set $vendorDescription = "\"You walk into the destructatorium. \"">>
+
+<<set $vendorInventory = [$fire1, $lightning1, $ice1]>>
+/* ICY SPELLS */
+<<if $options.icyspells_enabled>>
+	<<run $vendorInventory.push(...["icyspells_ignite", "icyspells_heatwave"])>>
+<</if>>
+
+<<set $vendorThanks = "\"Thank you...\"">>
+
+<<set $vendorLocation = "Learn spells from Destructatorium">>
+
+/*===============================================*/
+<<case "Restoratorium">>
+
+<<set $vendorDescription = "You walk into the restoratorium. ">>
+
+<<set $vendorInventory = [$heal1, $heal2, $antidote1]>>
+
+<<set $vendorThanks = "\"Thank you.\"">>
+
+<<set $vendorLocation = "Learn spells from Restoratorium">>
+
+/*===============================================*/
+<<case "Smarty">>
+
+<<set $vendorDescription = "\"Want to learn some spells, do you? I'll give you fair warning, these aren't exactly easy to handle.\"">>
+
+<<set $vendorInventory = [$lightning2, $lightning3, $fire2, $fire3, $ice3, $ice5]>>
+/* ICY SPELLS */
+<<if $options.icyspells_enabled>>
+	<<run $vendorInventory.push(...["icyspells_explode"])>>
+<</if>>
+
+<<set $vendorThanks = "\"Well done!\"">>
+
+<<set $vendorLocation = "Learn spells from Smarty">>
+
+/*===============================================*/
+<<case "Island shaman">>
+
+<<set $vendorDescription = "\"Ours is the magic of the earth, water, sky and life. If you seek to become harmonious with the world, I may yet have spells to teach you.\"">>
+
+<<set $vendorInventory = [$boostDefense, $boostDodge, $boostAgility, $earth1, $earth3, $regenerate2, $water1, $water3, $lightning1, $lightning3]>>
+
+/* ICY SPELLS */
+<<if $options.icyspells_enabled>>
+	<<run $vendorInventory.push(...["icyspells_meditate", "icyspells_grease",  "icyspells_ignite","icyspells_heatwave"])>>
+<</if>>
+
+<<set $vendorThanks = "\"Well done!\"">>
+
+<<set $vendorLocation = "Learn spells from shaman">>
+
+/*===============================================*/
+<<case "grocery store">>
+
+<<set $vendorInventory = [$apple, $grapes, $oats, $cheeseburger, $sausage, $meatballSub, $cake, $waterFlask, $waterJug, $orange, $friedChicken, $cheese, $wine]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "grocery store vendor">>
+
+/*===============================================*/
+<<case "armory vendor">>
+
+<<set $vendorInventory = [$leatherArmor, $chainmailArmor, $splintArmor, $platemailArmor, $shortSword, $dagger, $axe, $lightClub]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "armorer vendor">>
+
+/*===============================================*/
+<<case "clothing vendor">>
+
+<<set $vendorInventory = [$buttonDownShirt, $tunic, $bellyShirt, $tuxedoJacket, $tuxedoPants, $blueJeans, $skirt, $overalls, $dressSkirt, $trousers, $vest, $dressGown]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "clothing vendor">>
+
+/*===============================================*/
+<<case "general store">>
+
+<<set $vendorInventory = [$sHealthPotion, $mHealthPotion, $lHealthPotion, $sManaPotion]>>
+
+<<set $vendorThanks = "\"Thank you!\"">>
+
+<<set $vendorLocation = "general store">>
+
+/*===============================================*/
+<<case "hospital vendor">>
+
+<<set $vendorInventory = [$sHealthPotion, $mHealthPotion, $lHealthPotion, $dietPill]>>
+
+<<set $vendorThanks = "Your coins //clink// into the box. ">>
+
+<<set $vendorLocation = "hospital vendor">>
+
+<</switch>>
+<</widget>>
+
+
+:: npc widgets [nobr widget] {"position":"2075,450","size":"200,100"}
+/* FIXES AND EDITS - Change widgets to use the same system that was introduced for fixed NPCs */
+<<widget "createNPC">>
+	<<set _species = $args[0]>>
+	<<set _gender = $args[1]>>
+	<<set _slot = 1>>
+	<<if $args[2]>>
+		<<set _slot = $args[2]>>
+	<</if>>
+
+	<<set _npc = setup.createNPC(_species, _gender)>>
+	
+	/* (For legacy compatibility, even though it means we don't get to free up the nice $species variable D:<) */
+	<<set $species = _npc.speciesObject>>
+	<<set $gender = _npc.gender>>
+	
+	/* Continue to create NPC */
+	<<setNPC _npc _slot>>
+<</widget>>
+
+<<widget "setNPC">>
+	<<if $args.length == 1>> /* 1 argument means something was trying to use the legacy form of this, that's literally only used in one place in the base game + has been replaced by fixes and edits, but we'll still do this anyway */
+		<<set _slot = $args[0]>>
+		
+		<<set _npc = setup.createNPC($species, $gender)>>
+		
+		<<run setup.setNPCToSlot(_npc, _slot)>>
+	<<else>>
+		<<set _npc = $args[0]>>
+		<<set _slot = $args[1]>>
+		
+		<<run setup.setNPCToSlot(_npc, _slot)>>
+	<</if>>
+<</widget>>
+
+
+:: npc widgets old {"position":"1975,450","size":"100,100"}
+/* Trying to comment this out wasn't working, so here's a copy paste of the old (still slightly edited) npc widgets for backup purposes */
+<<widget "createNPC">>
+
+	<<switch $args[0]>>
+		<<case "random">><<set $species = setup.randomSpecies()>>
+		<<case "herbivore">><<set $species = setup.randomHerbivore()>>
+		<<case "carnivore">><<set $species = setup.randomCarnivore()>>
+		<<case "dinosaur">><<set $species = either($raptor, $pterodactyl, $triceratops, $stegosaurus, $apatosaurus, $tyrannosaurus)>>
+		<<default>><<set $species = $args[0]>>
+	<</switch>>
+	
+	<<switch $args[1]>>
+		<<case "male">>
+			<<set $gender = $male>>
+			<<if !$options.males>><<set $gender = $female>><</if>>
+			
+		<<case "female">>
+			<<set $gender = $female>>
+			<<if !$options.females>><<set $gender = $male>><</if>>
+		
+		<<case "random">>
+		  <<if !$options.males and $options.females>>
+			  <<set $gender = $female>>
+		  <<elseif !$options.females and $options.males>>
+			  <<set $gender = $male>>
+		  <<else>>
+			  <<set $gender = either($male, $female)>>
+		  <</if>>
+		  
+		<<default>>
+			<<set $gender = $args[1]>>
+			
+	<</switch>>
+	
+	/*Sets gendered species name*/
+	<<if $species.mname != undefined and $gender.he == $male.he>>
+		<<set $species.species = $species.mname>>
+		<<set $species.Species = $species.mname.toUpperFirst()>>
+	<</if>>
+	<<if $species.fname != undefined and $gender.he == $female.he>>
+		<<set $species.species = $species.fname>>
+		<<set $species.Species = $species.fname.toUpperFirst()>>
+	<</if>>
+	
+
+	<<set _number = 1>>
+	<<if $args.length > 2>><<set _number = $args[2]>><</if>>
+		
+	<<setNPC _number>>
+	
+<</widget>>
+
+====
+<<widget "setNPC">>
+	<<set _number = $args[0]>>
+	
+	<<switch _number>>
+	
+	<<case 1>>
+	
+	/*set species descriptors*/
+	<<set $npc1.speciesType = $species.id>>
+	<<set $npc1.species = $species.species>>
+	<<set $npc1.Species = $species.Species>>
+	<<set $npc1.FurBack = $species.furBack.toUpperFirst()>>
+	<<set $npc1.furBack = $species.furBack>>
+	<<set $npc1.FurBelly = $species.furBelly.toUpperFirst()>>
+	<<set $npc1.furBelly = $species.furBelly>>
+	<<set $npc1.FurHead = $species.furHead.toUpperFirst()>>
+	<<set $npc1.furHead = $species.furHead>>
+	<<set $npc1.Feet = $species.feet.toUpperFirst()>>
+	<<set $npc1.feet = $species.feet>>
+	<<set $npc1.Foot = $species.foot.toUpperFirst()>>
+	<<set $npc1.foot = $species.foot>>
+	<<set $npc1.Hand = $species.hand.toUpperFirst()>>
+	<<set $npc1.hand = $species.hand>>
+	<<set $npc1.Hands = $species.hands.toUpperFirst()>>
+	<<set $npc1.hands = $species.hands>>
+	<<set $npc1.Fur = $species.fur.toUpperFirst()>>
+	<<set $npc1.fur = $species.fur>>
+	<<set $npc1.Furred = $species.furred.toUpperFirst()>>
+	<<set $npc1.furred = $species.furred>>
+	<<set $npc1.Furry = $species.furry.toUpperFirst()>>
+	<<set $npc1.furry = $species.furry>>
+	<<set $npc1.Hair = $species.hair.toUpperFirst()>>
+	<<set $npc1.hair = $species.hair>>
+	<<set $npc1.Tail = $species.tail.toUpperFirst()>>
+	<<set $npc1.tail = $species.tail>>
+	<<set $npc1.Teeth = $species.teeth.toUpperFirst()>>
+	<<set $npc1.teeth = $species.teeth>>
+	<<set $npc1.Mouth = $species.mouth.toUpperFirst()>>
+	<<set $npc1.mouth = $species.mouth>>
+	<<set $npc1.Angry = $species.angry.toUpperFirst()>>
+	<<set $npc1.angry = $species.angry>>
+	<<set $npc1.speciesHeight = $species.speciesHeight>>
+	<<set $npc1.speciesStats = $species.speciesStats>>
+	<<set $npc1.article = $species.article>>
+	<<set $npc1.Article = $species.article.toUpperFirst()>>
+
+	
+	/*set gender descriptors*/
+	<<set $npc1.He = $gender.He>>
+	<<set $npc1.he = $gender.he>>
+	<<set $npc1.Him = $gender.Him>>
+	<<set $npc1.him = $gender.him>>
+	<<set $npc1.His = $gender.His>>
+	<<set $npc1.his = $gender.his>>
+	<<set $npc1.Himself = $gender.Himself>>
+	<<set $npc1.himself = $gender.himself>>
+	<<set $npc1.Man = $gender.Man>>
+	<<set $npc1.man = $gender.man>>
+	<<set $npc1.Boy = $gender.Boy>>
+	<<set $npc1.boy = $gender.boy>>
+	<<set $npc1.Male = $gender.Male>>
+	<<set $npc1.male = $gender.male>>
+	<<set $npc1.Sir = $gender.Sir>>
+	<<set $npc1.sir = $gender.sir>>
+	<<set $npc1.Mister = $gender.Mister>>
+	<<set $npc1.mister = $gender.mister>>
+	<<set $npc1.Brother = $gender.Brother>>
+	<<set $npc1.brother = $gender.brother>>
+	<<set $npc1.Guy = $gender.Guy>>
+	<<set $npc1.guy = $gender.guy>>
+	<<set $npc1.Fella = $gender.Fella>>
+	<<set $npc1.fella = $gender.fella>>
+	<<set $npc1.Buddy = $gender.Buddy>>
+	<<set $npc1.buddy = $gender.buddy>>
+	<<set $npc1.Gentleman = $gender.Gentleman>>
+	<<set $npc1.gentleman = $gender.gentleman>>
+	<<set $npc1.Lad = $gender.Lad>>
+	<<set $npc1.lad = $gender.lad>>
+	<<set $npc1.Laddie = $gender.Laddie>>
+	<<set $npc1.laddie = $gender.Laddie>>
+	<<set $npc1.Sport = $gender.Sport>>
+	<<set $npc1.sport = $gender.sport>>
+
+	<<case 2>>
+	
+	/*set species descriptors*/
+	<<set $npc2.speciesType = $species.id>>
+	<<set $npc2.species = $species.species>>
+	<<set $npc2.Species = $species.Species>>
+	<<set $npc2.FurBack = $species.furBack.toUpperFirst()>>
+	<<set $npc2.furBack = $species.furBack>>
+	<<set $npc2.FurBelly = $species.furBelly.toUpperFirst()>>
+	<<set $npc2.furBelly = $species.furBelly>>
+	<<set $npc2.FurHead = $species.furHead.toUpperFirst()>>
+	<<set $npc2.furHead = $species.furHead>>
+	<<set $npc2.Feet = $species.feet.toUpperFirst()>>
+	<<set $npc2.feet = $species.feet>>
+	<<set $npc2.Foot = $species.foot.toUpperFirst()>>
+	<<set $npc2.foot = $species.foot>>
+	<<set $npc2.Hand = $species.hand.toUpperFirst()>>
+	<<set $npc2.hand = $species.hand>>
+	<<set $npc2.Hands = $species.hands.toUpperFirst()>>
+	<<set $npc2.hands = $species.hands>>
+	<<set $npc2.Fur = $species.fur.toUpperFirst()>>
+	<<set $npc2.fur = $species.fur>>
+	<<set $npc2.Furred = $species.furred.toUpperFirst()>>
+	<<set $npc2.furred = $species.furred>>
+	<<set $npc2.Furry = $species.furry.toUpperFirst()>>
+	<<set $npc2.furry = $species.furry>>
+	<<set $npc2.Hair = $species.hair.toUpperFirst()>>
+	<<set $npc2.hair = $species.hair>>
+	<<set $npc2.Tail = $species.tail.toUpperFirst()>>
+	<<set $npc2.tail = $species.tail>>
+	<<set $npc2.Teeth = $species.teeth.toUpperFirst()>>
+	<<set $npc2.teeth = $species.teeth>>
+	<<set $npc2.Mouth = $species.mouth.toUpperFirst()>>
+	<<set $npc2.mouth = $species.mouth>>
+	<<set $npc2.Angry = $species.angry.toUpperFirst()>>
+	<<set $npc2.angry = $species.angry>>
+	<<set $npc2.speciesHeight = $species.speciesHeight>>
+	<<set $npc2.speciesStats = $species.speciesStats>>
+	<<set $npc2.article = $species.article>>
+	<<set $npc2.Article = $species.article.toUpperFirst()>>
+
+	/*set gender descriptors*/
+	<<set $npc2.He = $gender.He>>
+	<<set $npc2.he = $gender.he>>
+	<<set $npc2.Him = $gender.Him>>
+	<<set $npc2.him = $gender.him>>
+	<<set $npc2.His = $gender.His>>
+	<<set $npc2.his = $gender.his>>
+	<<set $npc2.Himself = $gender.Himself>>
+	<<set $npc2.himself = $gender.himself>>
+	<<set $npc2.Man = $gender.Man>>
+	<<set $npc2.man = $gender.man>>
+	<<set $npc2.Boy = $gender.Boy>>
+	<<set $npc2.boy = $gender.boy>>
+	<<set $npc2.Male = $gender.Male>>
+	<<set $npc2.male = $gender.male>>
+	<<set $npc2.Sir = $gender.Sir>>
+	<<set $npc2.sir = $gender.sir>>
+	<<set $npc2.Mister = $gender.Mister>>
+	<<set $npc2.mister = $gender.mister>>
+	<<set $npc2.Brother = $gender.Brother>>
+	<<set $npc2.brother = $gender.brother>>
+	<<set $npc2.Guy = $gender.Guy>>
+	<<set $npc2.guy = $gender.guy>>
+	<<set $npc2.Fella = $gender.Fella>>
+	<<set $npc2.fella = $gender.fella>>
+	<<set $npc2.Buddy = $gender.Buddy>>
+	<<set $npc2.buddy = $gender.buddy>>
+	<<set $npc2.Gentleman = $gender.Gentleman>>
+	<<set $npc2.gentleman = $gender.gentleman>>
+	<<set $npc2.Lad = $gender.Lad>>
+	<<set $npc2.lad = $gender.lad>>
+	<<set $npc2.Laddie = $gender.Laddie>>
+	<<set $npc2.laddie = $gender.Laddie>>
+	<<set $npc2.Sport = $gender.Sport>>
+	<<set $npc2.sport = $gender.sport>>
+
+	
+	<<case 3>>
+	
+	/*set species descriptors*/
+	<<set $npc3.speciesType = $species.id>>
+	<<set $npc3.species = $species.species>>
+	<<set $npc3.Species = $species.Species>>
+	<<set $npc3.FurBack = $species.furBack.toUpperFirst()>>
+	<<set $npc3.furBack = $species.furBack>>
+	<<set $npc3.FurBelly = $species.furBelly.toUpperFirst()>>
+	<<set $npc3.furBelly = $species.furBelly>>
+	<<set $npc3.FurHead = $species.furHead.toUpperFirst()>>
+	<<set $npc3.furHead = $species.furHead>>
+	<<set $npc3.Feet = $species.feet.toUpperFirst()>>
+	<<set $npc3.feet = $species.feet>>
+	<<set $npc3.Foot = $species.foot.toUpperFirst()>>
+	<<set $npc3.foot = $species.foot>>
+	<<set $npc3.Hand = $species.hand.toUpperFirst()>>
+	<<set $npc3.hand = $species.hand>>
+	<<set $npc3.Hands = $species.hands.toUpperFirst()>>
+	<<set $npc3.hands = $species.hands>>
+	<<set $npc3.Fur = $species.fur.toUpperFirst()>>
+	<<set $npc3.fur = $species.fur>>
+	<<set $npc3.Furred = $species.furred.toUpperFirst()>>
+	<<set $npc3.furred = $species.furred>>
+	<<set $npc3.Furry = $species.furry.toUpperFirst()>>
+	<<set $npc3.furry = $species.furry>>
+	<<set $npc3.Hair = $species.hair.toUpperFirst()>>
+	<<set $npc3.hair = $species.hair>>
+	<<set $npc3.Tail = $species.tail.toUpperFirst()>>
+	<<set $npc3.tail = $species.tail>>
+	<<set $npc3.Teeth = $species.teeth.toUpperFirst()>>
+	<<set $npc3.teeth = $species.teeth>>
+	<<set $npc3.Mouth = $species.mouth.toUpperFirst()>>
+	<<set $npc3.mouth = $species.mouth>>
+	<<set $npc3.Angry = $species.angry.toUpperFirst()>>
+	<<set $npc3.angry = $species.angry>>
+	<<set $npc3.speciesHeight = $species.speciesHeight>>
+	<<set $npc3.speciesStats = $species.speciesStats>>
+	<<set $npc3.article = $species.article>>
+	<<set $npc3.Article = $species.article.toUpperFirst()>>
+	
+	
+	/*set gender descriptors*/
+	<<set $npc3.He = $gender.He>>
+	<<set $npc3.he = $gender.he>>
+	<<set $npc3.Him = $gender.Him>>
+	<<set $npc3.him = $gender.him>>
+	<<set $npc3.His = $gender.His>>
+	<<set $npc3.his = $gender.his>>
+	<<set $npc3.Himself = $gender.Himself>>
+	<<set $npc3.himself = $gender.himself>>
+	<<set $npc3.Man = $gender.Man>>
+	<<set $npc3.man = $gender.man>>
+	<<set $npc3.Boy = $gender.Boy>>
+	<<set $npc3.boy = $gender.boy>>
+	<<set $npc3.Male = $gender.Male>>
+	<<set $npc3.male = $gender.male>>
+	<<set $npc3.Sir = $gender.Sir>>
+	<<set $npc3.sir = $gender.sir>>
+	<<set $npc3.Mister = $gender.Mister>>
+	<<set $npc3.mister = $gender.mister>>
+	<<set $npc3.Brother = $gender.Brother>>
+	<<set $npc3.brother = $gender.brother>>
+	<<set $npc3.Guy = $gender.Guy>>
+	<<set $npc3.guy = $gender.guy>>
+	<<set $npc3.Fella = $gender.Fella>>
+	<<set $npc3.fella = $gender.fella>>
+	<<set $npc3.Buddy = $gender.Buddy>>
+	<<set $npc3.buddy = $gender.buddy>>
+	<<set $npc3.Gentleman = $gender.Gentleman>>
+	<<set $npc3.gentleman = $gender.gentleman>>
+	<<set $npc3.Lad = $gender.Lad>>
+	<<set $npc3.lad = $gender.lad>>
+	<<set $npc3.Laddie = $gender.Laddie>>
+	<<set $npc3.laddie = $gender.Laddie>>
+	<<set $npc3.Sport = $gender.Sport>>
+	<<set $npc3.sport = $gender.sport>>
+
+	<</switch>>
+
+<</widget>>
+
+
+:: quest widgets [widget nobr] {"position":"2075,700","size":"200,100"}
+<<widget "getQuest">>
+	<<set _questGot = clone($args[0])>>
+	<li>You started ''_questGot.name''! </li>
+	<<run $quests.push(_questGot)>>
+<</widget>>
+
+====
+
+<<widget "removeQuest">>
+	<<set _quest = setup.questIndex($args[0])>>
+	
+	<<if _quest > -1>>
+		<<run $quests.deleteAt(_quest)>>
+	<</if>>
+	
+<</widget>>
+
+====
+
+<<widget "advanceQuest">>
+
+	<<if setup.questStarted($args[0])>>
+	
+		<<set _index = setup.questIndex($args[0])>>
+				
+		<<if !$quests[_index].ready>>
+		
+			<<set $quests[_index].progress++>>
+			
+			<<if $quests[_index].progress >= $quests[_index].goal>>
+				<<set $quests[_index].ready = true>>
+				<li>Fulfilled quest ''$quests[_index].name!''</li>
+				
+			<<elseif $quests[_index].progress < $quests[_index].goal>>
+				<li>Advanced quest ''$quests[_index].name!''</li>
+				
+			<</if>>
+			
+		<</if>>	
+		
+	<</if>>
+	
+<</widget>>
+
+====
+
+<<widget "questReward">>
+
+<<set _quest = $quests[setup.questIndex($args[0])]>>
+
+<li>Completed: ''_quest.name!''</li>
+
+<<if _quest.gold > 0>><<doGld _quest.gold>><</if>>
+<<if _quest.xp > 0>><<doXP _quest.xp>><</if>>
+<<if _quest.item != undefined>><<getItem _quest.item>><</if>>
+
+<<if setup.questStarted(_quest)>>
+	<<set $quests[setup.questIndex(_quest)].completed = true>>
+<</if>>
+
+<</widget>>
+
+
+:: spell widgets [nobr widget] {"position":"2300,575","size":"200,100"}
+/* FIXES AND EDITS - Hackily edited to work with spell changes */
+
+<<widget "teach">>
+
+$vendorDescription
+
+/*Purchase confirmation*/
+<<if $vendor.b >= 0>>
+	<<set _tempItem = setup.getSpell($vendorInventory[$vendor.b])>>
+
+	<hr>
+	<u>_tempItem.Name</u>
+	<br><<=setup.getSpellCosts(_tempItem).join(", ")>>
+	<br>_tempItem.description
+	
+	<br><<link "Learn this power?" $vendorLocation>>
+		<<set $vendor.a = $vendor.b>>
+		<<set $vendor.b = -2>>
+	<</link>>
+
+/*Learns the spell*/
+<<elseif $vendor.b == -2>>
+	<hr>
+	$vendorThanks
+	<<set _spend = setup.getSpell($vendorInventory[$vendor.a]).value * -1>>
+	<<doGld _spend>>
+	<<getSpell setup.getSpell($vendorInventory[$vendor.a])>>
+	
+<</if>>
+
+/*Lists buying options*/
+<hr>
+<<for _i = 0; _i < $vendorInventory.length; _i++>>
+	<<set _currentSpell = setup.getSpell($vendorInventory[_i])>>
+
+	<<capture _i, _currentSpell>>
+		<<if _currentSpell.icon != null>>
+			<<icon _currentSpell.icon>>
+		<</if>>
+		
+		<<set _description = 
+		_currentSpell.Name+
+		"..."+_currentSpell.value+" gold">>
+		
+		/*<<if setup.spellIndex($vendorInventory[_i]) > -1>>*/
+		<<if setup.knowsSpell(_currentSpell)>>
+			<s>_description</s> ~~(Already known)~~
+		
+		<<elseif not setup.canLearnSpell(_currentSpell)>>
+			_description ~~(Requires <<=setup.spellLearnFailReasons(_currentSpell).join(", ")>>)~~
+		
+		<<elseif $gld < _currentSpell.value>>
+			_description ~~(Not enough gold)~~
+		
+		<<else>>
+		  <<link  _description $vendorLocation>>
+			  <<set $vendor.b = _i>>
+		  <</link>>
+		<</if>>
+	<</capture>>
+	<br>
+<</for>>
+
+<</widget>>
+
+====
+
+<<widget "getSpell">>
+	<<set _spellGot = clone(setup.getSpell($args[0]))>>
+	
+     <li>You learned ''_spellGot.Name''! </li>
+     
+    <<if _spellGot.unique or $args[1]>> /* The spell should specifically be stored as an object, rather than just an ID. Useful for tracking spell-related variables, though honestly you should probably still use an ID and track variables with globals instead */
+    	<<run $spells.push(_spellGot)>>
+    <<else>>
+    	<<run $spells.push(_spellGot.id)>> /* Only store the ids*/
+    <</if>>
+
+	<<run setup.sortSpellbook()>>
+<</widget>>
+
+====
+
+
+:: time widgets [widget] {"position":"2300,700","size":"200,100"}
+<<widget "rest">>
+	<<doTime 60>>
+	<<stamina 25>>
+	<<health $end>>
+<</widget>>
+
+=====
+
+<<widget "sleep">>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+	<<rest>>
+<</widget>>
+
+=====
+
+<<widget "doTime">>
+	<<set _theTime = Math.round($args[0])>>
+	
+	<<eventTime _theTime>>
+	
+	/*===Sets tens time digit===*/
+	<<set $onesMinute += _theTime>>
+	<<for $onesMinute > 9>>
+		<<set $onesMinute -= 10>>
+		<<set $tensMinute += 1>>
+	<</for>>
+	
+	/*===Sets hour===*/
+	<<for $tensMinute > 5>>
+		<<set $tensMinute -= 6>>
+		<<set $hour += 1>>
+	<</for>>
+	
+	/*===Sets the day===*/
+	<<for $hour > 23>>
+		<<set $hour -= 24>>
+		<<set $day += 1>>
+		<<removeQuest $washedDishes>>
+		<<removeQuest $cookedFood>>
+		<<removeQuest $smithedArmor>>
+	<</for>>
+	
+	/*===Sets the displayed hour===*/
+	<<set $displayHour = $hour>>
+	<<for $displayHour > 12>>
+		<<set $displayHour -= 12>>
+	<</for>>
+	<<if $displayHour == 0>><<set $displayHour = 12>><</if>>
+	
+	/*===Sets AM PM===*/
+	<<if $hour <= 11>>
+		<<set $ampm = "AM">>
+	<<else>>
+		<<set $ampm = "PM">>
+	<</if>>
+	
+	/*===Sets what time of day it is===*/
+	<<if $hour >= 16 and $hour <= 20>>
+		<<set $dayTime = "Evening">><<set $daytime = "evening">>
+		<<set $Sun = "Sun">><<set $sun = "sun">>
+		<<set $Sunlight = "Sunlight">><<set $sunlight = "sunlight">>
+	<<elseif $hour >= 10 and $hour <= 15>>
+		<<set $dayTime = "Day">><<set $daytime = "day">>
+		<<set $Sun = "Sun">><<set $sun = "sun">>
+		<<set $Sunlight = "Sunlight">><<set $sunlight = "sunlight">>
+	<<elseif $hour >= 6 and $hour <= 9>>
+		<<set $dayTime = "Morning">><<set $daytime = "morning">>
+		<<set $Sun = "Sun">><<set $sun = "sun">>
+		<<set $Sunlight = "Sunlight">><<set $sunlight = "sunlight">>
+	<<else>>
+		<<set $dayTime = "Night">><<set $daytime = "night">>
+		<<set $Sun = "Moon">><<set $sun = "moon">>
+		<<set $Sunlight = "Moonlight">><<set $sunlight = "moonlight">>
+	<</if>>
+	
+
+	
+	/*===Digests for input amount of time===*/
+	<<digest _theTime>>
+	
+<</widget>>
+
+=====
+
+<<widget "eventTime">>
+	<<set _eventTime = $args[0]>>
+	
+	
+	
+	<<if $ful > 100>>
+		<<set $status.stomachStretch += _eventTime>>
+		<<if $status.stomachStretch >= 120>>
+			<li>//You've spent so much time being full that your stomach has stretched out.//</li>
+			 <<changeStats "sto" 1>>
+			<<set $status.stomachStretch -= 500>>
+		<</if>>
+	<</if>>
+	
+	
+	
+	<<if $status.wellFed > 0>>
+		<<set $status.wellFedTime -= _eventTime>>
+		<<if $status.wellFedTime <= 0>>	
+			<li>//You reminisce about your last hot meal. //</li>
+			<<set $status.wellFed = 0>>
+			<<set $status.wellFedTime = 0>>
+		<</if>>
+	<</if>>
+	
+	
+	
+	<<if $status.dietPill > 0>>
+		<<set $status.dietPillTime -= _eventTime>>
+		<<if $status.dietPillTime <= 0>>
+			
+			<li>//
+			Your stomach lets out a very audible ''glorp!'' and you're forced to stop still, puffing out your cheeks from a sudden sense of fullness. With a groan your torso bloats outwards, as if you’ve been walking around all this time with your stomach sucked in.
+			/*add clothes popping thing*/
+			
+			Within moments you’re left as big as you ever were, and no longer walking on air. 
+			//</li>
+			<<changeStats "fat" $status.dietPill>>
+			<<set $status.dietPill = 0>>
+			<<set $status.dietPillTime = 0>>
+
+		<</if>>
+	<</if>>
+	
+	
+	
+	<<if $status.stretchFruit > 0>>
+		<<set $status.stretchFruitTime -= _eventTime>>
+		<<if $status.stretchFruitTime <= 0>>
+			<li>//Whatever was making your stomach so stretchy seems to be wearing off. //</li>
+			
+			<<set $status.stretchFruit = 0>>
+			<<set $status.stretchFruitTime = 0>>
+			<<updateStats>>
+				
+			<<if $ful > $maxFul>>
+				<li>//You hear an ominous gurgling sound emanating from your stomach. You look down as you're struck by the all too familiar sensation of growing fuller and fuller. You quickly realize that the powers affecting your stomach are wearing off in spite of you exceeding your normal limits. Fortunately the shrinking eventually stops before you explode, although you're stomach is still stretched to its absolute limit. It seems the effects haven't completely worn off... yet. //</li>
+				<<set _sizeRequired = Math.floor(($ate + $inf + 1) / ($maxFul/100))>>
+				<<set _boostRequired = _sizeRequired - $sto + $status.stretchFruit>>
+
+				<<set $status.stretchFruit = _boostRequired>>
+				<<set $status.stretchFruitTime = setup.tuning("stretchFruitRescueInterval")>> /* default: 40 minutes */
+				<<updateStats>>
+				
+				<<if $hea < 1>><<set $hea = 1>><</if>>
+				<<set $alive = true>>
+			<</if>>
+
+			
+		<</if>>
+	<</if>>
+	
+	/* ICY SPELLS - Add levitation - START */
+	<<if $status.levitateTime > 0>>
+		<<set $status.levitateTime -= _eventTime>>
+		<<if $status.levitateTime <= 0>>
+			<<set _fatness = $fat + $tfat>>
+			
+			<<set _weightLine = "your weight">>
+			<<if _fatness <= 150>>
+				<<set _weightLine = "your weight">>
+			<<elseif _fatness <= 400>>
+				<<set _weightLine = "your generous weight">>
+			<<elseif _fatness <= 900>>
+				<<set _weightLine = "your not inconsiderable weight">>
+			<<elseif _fatness <= 1800>>
+				<<set _weightLine = "your hefty weight">>
+			<<else>>
+				<<set _weightLine = "your crushing weight">>
+			<</if>>
+			
+			<li>//You feel the sensation of weightlessness holding you aloft beginning to slowly ebb away. Soon, you're left to bear _weightLine with your own two $p.feet as gravity gently takes hold of you once more.//</li>
+			
+			<<set $status.levitate = 0>>
+			<<set $status.levitateTime = 0>>
+			<<updateDescriptions>> /* levitating modifies walk description */
+		<</if>>
+	
+	<</if>>
+	/* ICY SPELLS - Add levitation - END */
+	
+	/* FIXES AND EDITS - Height manipulation */
+	<<if $status.heightTime > 0>>
+		<<set $status.heightTime -= _eventTime>>
+		
+		<<if $status.heightTime <= 0>>
+			<<if $status.height > 0>> /* Grown */
+				<li>//Your perspective of the world around you begins to sink as you shrink back to your normal size.//</li>
+			<<else>> /* Shrank */
+				<li>//Your perspective of the world around you begins to rise as you grow back to your normal size.//</li>
+			<</if>>
+			
+			<<set $status.height = 0>>
+			<<set $status.heightTime = 0>>
+			<<updateStats>>
+		<</if>>
+		
+	<</if>>
+    
+    /* ICY SPELLS - Enlarge */
+    /* basically just a copypasta of height one :p */
+    <<if $status.enlargeTime > 0>>
+		<<set $status.enlargeTime -= _eventTime>>
+		
+		<<if $status.enlargeTime <= 0>>
+			<<if $status.enlarge > 1>> /* Grown */
+				<li>//Your perspective of the world around you begins to sink as you shrink back to your normal size.//</li>
+			<<else>> /* Shrank */
+				<li>//Your perspective of the world around you begins to rise as you grow back to your normal size.//</li>
+			<</if>>
+			
+            <<set _wasAlive = $alive>>
+            
+			<<set $status.enlarge = 1>>
+			<<set $status.enlargeTime = 0>>
+			<<updateStats>>
+            
+            <<if _wasAlive and not $alive>> /* Player was KO'd by fullness... honestly could do a better check for this, but whatever xP */
+              <<set _failPassage = "As your body shrinks, you feel a growing fullness in your stomach. It seems that while your stomach is shrinking alongside your body, the contents of it aren't. The sensation in your gut grows concerningly tighter and tighter, the $p.fur on your belly creaking as it reaches an eye-watering strain. Just as you reach the point of exploding, the shrinking around your belly halts. While you watch the rest of your body continue growing smaller, your belly maintains its size, becoming more proportionally mismatched as the remaining seconds of shifting pass. It seems like the effect will hold off on shrinking your stomach any further, for now... ">>
+              <<stomachResizeRescue _failPassage>>
+          <</if>>
+		<</if>>
+	<</if>>
+
+
+	/*Add event for stomach buffs ending?*/
+	
+	<<if $status.bloatVenom > 0>>
+		<<set $status.bloatVenomTime += _eventTime>>
+		
+		<<if $status.bloatVenomTime >= 30>>
+			<<findBursting -1>>
+			
+			<<if $toBurst > $status.bloatVenom>>
+				<<set _randomMessage to random(1, 5)>>
+				<<switch _randomMessage>>
+					<<case 1>>
+						<li>//You suddenly feel slightly more full due to the bloat venom. The sensation is strange, but not entirely unpleasant. It's as if your stomach is slowly inflating like a balloon. //</li>
+					<<case 2>>
+						<li>//A sudden wave of fullness hits you, the bloat venom is taking effect. It's a bit disconcerting, feeling your stomach expand so rapidly. You take a deep breath, trying to adjust to the sensation. //</li>
+					<<case 3>>
+						<li>//The bloat venom causes your stomach to expand slightly. It's a slow, gradual feeling, like your stomach is being gently filled. You can't help but place a hand on your belly, feeling it slowly grow beneath your touch. //</li>
+					<<case 4>>
+						<li>//A strange sensation fills your stomach as the bloat venom takes effect. It's as if your stomach is being filled with a warm, gentle pressure. //</li>
+					<<case 5>>
+						<li>//The bloat venom causes a sudden increase in your fullness. It's a startling sensation, but not entirely unpleasant. You can feel your stomach stretching to accommodate the extra volume. //</li>
+				<</switch>>
+				<<inflate $status.bloatVenom>>
+				<<set $status.bloatVenom -= 0.5>>
+				<<set $status.bloatVenomTime %= 30>>
+			<<else>>
+				<li>//Your stomach creaks ominously as it grows ever more distended from the venom coursing through your veins. The pressure is intense, like a balloon being filled far beyond its capacity. Your skin feels tight, stretched to its limit as your stomach continues to expand. It's a miracle it hasn't exploded already. Each breath you take is shallow and labored, the expanding girth leaving little room for your lungs to expand. You can feel every heartbeat, each pulse sending a wave of discomfort through your bloated form. The sensation is overwhelming, leaving you in a state of discomfort and apprehension. //</li>
+				<<inflate $toBurst>>
+				<<set $status.bloatVenom -= 0.5>>
+				<<set $status.bloatVenomTime %= 30>>
+			<</if>>		
+		<</if>>
+		
+		<<if $status.bloatVenom <= 0>>
+			<li>//Fortunately, your head no longer feels fuzzy and it seems you're finally over the effect's of the bloat venom//</li>
+			<<set $status.bloatVenom = 0>>
+			<<set $status.bloatVenomTime = 0>>
+		<</if>>
+		
+		
+	<</if>>
+	
+	
+	
+	<<if $status.poison > 0>>
+		<<set $status.poisonTime += _eventTime>>
+		<<if $status.poisonTime >= 15>>
+			<<set _damage = $status.poison * -1>>
+			<li>//You feel ill as poison courses through you. //</li>
+			<<health _damage>>
+			<<set $status.poisonTime %= 15>>
+			<<set $status.poison -= 3>>
+			<<if $status.poison < 0>>
+				<<set $status.poison = 0>>
+				<<set $status.poisonTime = 0>>
+			<</if>>
+		<</if>>
+		/*Add stuff for dieing to poison. Especially during royal guard wasp fight*/
+	<</if>>
+
+	<<if $status.stoTime > 0>>
+	  <<set $status.stoTime -= _eventTime>>
+
+	  <<if $status.stoTime <= 0>>
+		  <<if $status.sto < 0>>
+			  <li>//You suddenly feel more hungry.//</li>
+		  <</if>>
+		  <<if $status.sto > 0>>
+			  <li>//You suddenly feel less hungry.//</li>
+		  <</if>>
+
+		  <<set $status.sto = 0>>
+		  <<set $status.stoTime = 0>>
+		  <<updateStats>>
+
+		  <<if $ful > $maxFul>>
+			  <<stomachResizeRescue>>
+		  <</if>>
+	  <</if>>
+	<</if>>
+	
+	<<if $status.agi != 0>>
+		<<set $status.agiTime -= _eventTime>>
+		
+		<<if $status.agiTime <= 0>>
+			<<if $status.agi > 0>>
+				<li>//You no longer feel as fast.//</li>
+			<</if>>
+			<<if $status.agi < 0>>
+				<li>//You no longer feel as slow!//</li>
+			<</if>>
+			<<set $status.agi = 0>>
+			<<set $status.agiTime = 0>>
+		<</if>>
+	<</if>>
+
+	<<if $status.str != 0>>
+		<<set $status.strTime -= _eventTime>>
+		
+		<<if $status.strTime <= 0>>
+			<<if $status.str > 0>>
+				<li>//You no longer feel as strong.//</li>
+			<</if>>
+			<<if $status.str < 0>>
+				<li>//You no longer feel as weak!//</li>
+			<</if>>
+			<<set $status.str = 0>>
+			<<set $status.strTime = 0>>
+		<</if>>
+	<</if>>
+
+	<<if $status.int != 0>>
+		<<set $status.intTime -= _eventTime>>
+		
+		<<if $status.intTime <= 0>>
+			<<if $status.int > 0>>
+				<li>//You no longer feel as smart.//</li>
+			<</if>>
+			<<if $status.int < 0>>
+				<li>//You no longer feel as stupid!//</li>
+			<</if>>
+			<<set $status.int = 0>>
+			<<set $status.intTime = 0>>
+		<</if>>
+	<</if>>
+
+	<<if $status.end != 0>>
+		<<set $status.endTime -= _eventTime>>
+		
+		<<if $status.endTime <= 0>>
+			<<if $status.end > 0>>
+				<li>//You no longer feel as tough.//</li>
+			<</if>>
+			<<if $status.end < 0>>
+				<li>//You no longer feel as sickly!//</li>
+			<</if>>
+			<<set $status.end = 0>>
+			<<set $status.endTime = 0>>
+		<</if>>
+	<</if>>
+
+	<<if $status.mana != 0>>
+		<<set $status.manaTime -= _eventTime>>
+		
+		<<if $status.manaTime <= 0>>
+			<<if $status.mana > 0>>
+				<li>//You no longer feel as empowered.//</li>
+			<</if>>
+			<<if $status.mana < 0>>
+				<li>//You no longer feel as disempowered!//</li>
+			<</if>>
+			<<set $status.mana = 0>>
+			<<set $status.manaTime = 0>>
+		<</if>>
+	<</if>>
+
+<</widget>>
+
+

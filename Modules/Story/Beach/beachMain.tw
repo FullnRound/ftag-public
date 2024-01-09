@@ -1,0 +1,678 @@
+:: Buried treasure [beach] {"position":"775,1150"}
+You notice a glint on the sea floor, which stops your swimming around. You dive down for a better look, and you can see something peeking out of the sand, but it’s too deeply buried to be identifiable. 
+
+<<action "c" "inventory" "Grab buried treasure">><</action>>
+<<action "n" "ocean" "Leave buried treasure">><</action>>
+
+
+:: Buy from beach vendor [beach] {"position":"1225,800"}
+//"Alriiiight!"// $npc1.He cheers, abrupty slapping a broad green leaf over your face. You quickly pull it away, to find that the $npc1.species is now standing at a little booth of crude design, but there is a very alluring spread of seafood within $npc1.his reach, razor-sharp cutlery, and somehow even a pot of boiling oil. "Oh, teeeeensy warning? Let's just say...my portions are a little more filling than they look. Twice the taste with a lot less chewing!" $npc1.He thumps his chest proudly. "So, what'll it be?" $npc1.He asks, gesturing to a yellowed menu written in expert penmanship. 
+
+<<store>>
+<<action "c" "beach" "Done" "Goodbye beach vendor">><</action>>
+
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<if setup.questStarted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "How do you make your food so filling?" "Questioning the beachside chef">>
+			<<set $eventCounterB = "beach">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonCook) == true and setup.questCompleted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "Try my food!" "Beachside chef's taste-test">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "beach">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonFeast) == true and setup.questCompleted($feeder_questRaccoonFeast) == false>>
+		<<action "se" "next" "Attempt the feast (100 Gold)" "Seaside Feast">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "beach">>
+		<</action>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+
+:: Buy from ocean vendor [beach] {"position":"650,1025"}
+You pull yourself from the water onto the open deck, starting to drip-dry. The $npc1.species smiles at you as you take a seat, putting down $npc1.his knives and leaning over the counter, pointing to an old, but well-penned menu. "Just tell me what ya want, and its yours! But I gotta warn ya, this stuff may be small, but it's more filling than it looks" $npc1.He gestures to the steadily-growing $npc2.species, lowering his voice. "$npc2.He didn't look like that four hours ago." 
+
+<<store>>
+<<action "c" "ocean" "Done" "Goodbye ocean vendor">><</action>>
+
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<if setup.questStarted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "How do you make your food so filling?" "Questioning the beachside chef">>
+			<<set $eventCounterB = "ocean">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonCook) == true and setup.questCompleted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "Try my food!" "Beachside chef's taste-test">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "ocean">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonFeast) == true and setup.questCompleted($feeder_questRaccoonFeast) == false>>
+		<<action "se" "next" "Attempt the feast (100 Gold)" "Seaside Feast">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "ocean">>
+		<</action>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+
+:: Captured at buried treasure [beach] {"position":"650,1275"}
+<<set _species = either($shark, $orca, $dolphin)>>
+<<createNPC _species "random" 1>>
+
+A shadow from behind you makes you pause and turn around. Behind you is a rather primal-looking anthro $npc1.species in a crude wetsuit, holding a length of rope. $npc1.He reaches through the bars, grabbing your arms and despite your struggling, ties them up behind your back. $npc1.He opens the cage and reaches in to grab you, but you try to swim away, which is a bit difficult considering your bindings. $npc1.He rolls $npc1.his eyes before picking up the cage and smacking you over the head with it, knocking you unconscious. 
+
+<<action "c" "wait" "Wait..." "Eaten by the orca">><</action>>
+
+
+:: Eaten by the orca [beach] {"position":"525,1275"}
+<<createNPC $orca "random" 2>>
+<<setPassageTitle "Eaten by $orca.article $orca.species">>
+
+<p>You later awake, looking up at what looks like a woven seaweed canvas. You crane your neck and look around, and can just about see that you’re in some sort of underwater village, with several mined-out boulders making up the buildings. You try to move further, but realise you’re wrapped up in seaweed, making movement impossible. You’re just about to struggle before you hear two people conversing in a weird, unknown language right next to you. You strain your neck in the other direction to look at the two – There’s the $npc1.species that captured you and a heavily obese anthro $orca.species. The $orca.species points at you and holds out $npc2.his hand, dropping a large pile of coins into the $npc1.species’s hand. The $orca.species grins at you, grabbing and stuffing you under one of $npc2.his arms before you see $npc2.him picking up another bound and worried-looking anthro from where you were lying before. One look at where you were puts everything together – you can see you were on a stall that’s selling live, land-walking creatures, all of which are wrapped up! </p>
+
+The fact that the $orca.species is looking at you two and licking $npc2.his lips kind of hints at just why the person’s catching and selling land-dwellers like you. $npc2.He begins pushing you headfirst into $npc2.his cavernous mouth, and try as you might, the woven seaweed bindings you’re wrapped in are far too strong to break out of. The $orca.species purrs in delight as $npc2.he licks at you a few times, savouring your flavour before $npc2.he pushes you in completely and swallows, barely taking the time to breathe before cramming the other anthro in. You hear a loud belch from outside as your confines become more cramped, before you hear more talking and more money changing hands, before more loud gulping heralds a third and fourth meal joining you. The $orca.species’s midway through ordering fifths and sixths before the cramped conditions and warmth get too much for you and you pass out. 
+
+<<defeated "devoured">>
+
+
+:: Escape buried treasure [beach] {"position":"525,1150"}
+You punch and kick at the wooden beams imprisoning you. 
+<<set $eventCounterA -= $str>>
+
+<<if $eventCounterA > 0>>
+<<switch $eventCounterB>>
+
+<<case 3>>
+They’re sturdy, and while they do splinter, they don’t give way. 
+<<action "c" "attack" "Struggle" "Escape buried treasure">>
+	<<set $eventCounterB-->><</action>>
+
+<<case 2>>
+You make some more head way, but you still can't quite get free. 
+<<action "c" "attack" "Struggle" "Escape buried treasure">>
+	<<set $eventCounterB-->><</action>>
+
+<<case 1>>
+You give one final kick attempting to break free of your entrapment. 
+<<action "c" "attack" "Struggle" "Escape buried treasure">>
+	<<set $eventCounterB-->><</action>>
+
+<<case 0>>
+<<include "Captured at buried treasure">>
+
+<</switch>>
+
+<<else>>
+As you attack them they splinter and eventually break. You quickly swim away from the trap. You realise you’re still holding the box, but you can already see it’s open and empty. Cursing, you toss it aside and swim away. 
+
+<<include "ocean randomization">>
+
+<</if>>
+
+
+:: Escape the sirens [beach] {"position":"800,525"}
+<p>The creatures singing to you are beautiful, operatically-built mermaids, with silvery fish-tails joined to their hour-glass hips where their lower limbs would be on a land-dwelling animal. Their voices are almost painfully sweet, and the sound is almost hypnotic. They seem very, very keen for you to join them for a feast... </p>
+
+The Sirens raise their voices even further and sing out, the wonderfully enchanting music booming against the rocks and over the sound of the waves. You can't make out any words, but the sound resonates in the pit of your stomach, and it fills your mind with visions and scents of all the finest, tastiest foods that you can imagine. Your mouth starts to water uncontrollably. You've never felt this hungry- their song makes you want to eat until you're <<print either("full to the brim", "stuffed to the ears", "too full to move", "bursting out of your clothes", "ready to explode")>>. You can feel your resistance weakening. 
+
+
+<<action "w" "run" "Resist" "Resist the sirens">>
+	<<set $eventCounterA = 3>>
+<</action>>
+<<action "e" "surrender" "Surrender" "Surrender to the sirens">>
+<</action>>
+
+
+:: Escaped from the sirens [beach] {"position":"750,275"}
+With a burst of effort you swim frantically for shore, and finally feel that current loosen its grip on you. You shoot forward, the mist around you thinning until you're in clear blue sea again, with that island retreating into the distance just as fast as you can swim. You can still hear the voices of the sirens, getting shriller and shriller as they attempt to call you back, a note of anger and frustration now audible in them as you cheat them of their fun. The compulsion to return to their island finally subsides, and you feel free to go on your way. Maybe next time, ladies... 
+<<stamina -40>>
+<<doXP 20>>
+
+<<include "ocean randomization">>
+
+
+:: Find seaweed [beach] {"position":"775,1025"}
+<p>As you plough your way through the water, you find yourself swimming into a bed of seaweed growing from a rocky outcrop. Through the crystal-clear water you watch fish and crustaceans darting between the fronds, with a few brightly-coloured clownfish nibbling on them. Just then a large, ugly-looking catfish swims out of the wide blue yonder and makes to gulp one of these bright little critters up. Its jaws clamp around the tailfin, and the little clownfish paddles frantically to escape. To your astonishment you watch as its tailfin stretches like rubber, and when the catfish opens its jaws to take another bite, the little fish //PINGS// into the safety of the kelp. </p>
+
+Curiously, you dive down, frightening off the catfish as you go. Grabbing hold of some fronds you tug at them, and watch them stretch sluggishly rather than break. Treading water you take a firmer hold and //HEAVE//, kicking your legs furiously as you do so. The fronds stretch and this time a few //SNAP//, sending you into an ungainly backwards somersault that leaves you floating upside down, clutching a handful of seaweed. 
+
+<<getItem $stretchySeaweed>>
+<<include "ocean randomization">>
+
+
+:: Goodbye ocean vendor [beach] {"position":"525,1025"}
+"See ya 'round" $npc1.He gives a curt half-bow as you depart, leaning back and starting to munch down on a few of $npc1.his own treats. 
+
+<<include "ocean randomization">>
+
+
+:: Grab buried treasure [beach] {"position":"650,1150"}
+<<if random(1,2) == 1>>
+You swim down further, reaching forward and tugging the object out – it seems to be a small crate of some description. 
+<<if random(1,4) == 1>><<getItem $treasureChest>>
+<<else>><<getItem $sandyBox>>
+<</if>>
+
+<<include "ocean randomization">>
+
+<<else>>
+
+You swim down further, reaching forward and tugging the object out.... But when you do, a horrible clunking noise rings out through the water before the sand around you shudders and a wooden cage hidden under it flips up on all sides and slams shut. You’re trapped! 
+<<set $eventCounterA = random(120,180)>>
+<<set $eventCounterB = 3>>
+
+<<action "w" "attack" "Struggle" "Escape buried treasure">><</action>>
+<<action "e" "surrender" "Give up" "Captured at buried treasure">><</action>>
+
+<</if>>
+
+
+:: Leave buried treasure [beach] {"position":"775,1275"}
+You figure if something is too good to be true, it probably is. You swim by, ignoring the object. 
+
+<<include "ocean randomization">>
+
+
+:: Leave ocean vendor [beach] {"position":"650,900"}
+"You're missin' out!" $npc1.He says, shrugging. "Maybe another time." And with a quiet //plunk//, you slip back into the water. 
+
+<<include "ocean randomization">>
+
+
+:: Lost to the sirens [beach] {"position":"875,275"}
+<<if !$options.females>><<createNPC $p "male" 1>>
+<<else>><<createNPC $p "female" 1>>
+<</if>>
+
+<p>You wake up slowly, finding yourself laying sprawled on the beach, belly up. There's the murmur of musical voices all around you, and you feel amazingly comfortable. You stretch lazily, then flop back peacefully onto the pebbles- absolutely NOTHING could persuade you to move from this spot. Gazing around you sleepily, you see that you're not alone- you're now amongst the figures you saw from the ocean. Each has a mermaid or –male by their side, and as you watch you can't help but think that they're all slowly putting on weight. A panda with salt-bleached fur laying a little way away looks absolutely gargantuan, his body more boulder-like than anything, while the otter blissfully rubbing his belly a little further away is starting to look downright obese. </p>
+
+<p>Just then, 
+<<if !$options.females>>a heftily-handsome $npc1.species mer-male with chunky features approaches you. Looking down at you, $npc1.he opens $npc1.his mouth and begins to sing to you in a thrumming baritone. 
+<<else>>an extremely pretty $npc1.species mermaid with a lovely curvaceous figure approaches you. Looking down at you, $npc1.he opens $npc1.his mouth and begins to sing to you in a sweet contralto. 
+<</if>>
+
+Immediately your mind fills with thoughts of food, the most delicious food you've ever tasted, and as much as you could possibly eat. You stifle a small groan and feel your jaw go slack in pleasure. You can actually taste all that wonderful food, a feast to end all feasts. Putting your hands to your stomach, you dreamily realise that it's starting to feel a little bigger. Well, you tell yourself- ANYONE who ate food THIS good would find themselves putting on weight. </p>
+
+Now completely under $npc1.his spell, you lay there quite helplessly, dreaming of eating, and eating, and EATING. As you do so, you begin growing fatter, and fatter, and fatter under the magical influence, your butt spreading beneath you, your sides rolling out over the shingle, and your increasingly doughy arms and legs spreading out wide. Pretty soon you're spread-eagled on the beach like the rest of them, pinned beneath an absolutely huge belly, and you're STILL growing. You woozily glance back over at the panda and the otter, but all you can see where they were laying now are huge, smooth boulders, that look vaguely like sprawled, vastly-obese animals if you half-close your eyes and squint. It's hard to only half-close your eyes, though- you're starting to feel enormously full and sleepy. Besides, your stomach is blocking almost ALL of the view now. So your eyes shut all the way, even your eyelids having apparently put on weight. You drift off into a bloated sleep with the mer<<if !$options.females>>man<<else>>maid<</if>> still singing to you, dreaming of yet more food... 
+<<stuffToBursting>>
+<<tempBuff "fat" 4000>>
+
+<<defeated "overeating">>
+
+
+:: Raccoon ocean vendor [beach] {"position":"775,900"}
+<<createFixedNPC "beachVendor">>
+<<createNPC $otter "random" 2>>
+
+<<setPassageTitle "<<=$npc1.species.toUpperFirst()>> ocean vendor">>
+
+<p>Swimming along, you notice something floating on the surface a good distance away. Pushing forward, you surface to find a little boat shop lazily bobbing in the water. There's a small bar and a few stools, one of which is straining under the weight of a very ample $npc2.species. Behind the counter stands a pleasant-looking $npc1.species, calmly sharpening a rather fine looking piece of cutlery. Bright and beautiful specimens of seafood and produce fill the space behind $npc1.him, and you can see crates full of sizeable crustaceans floating in the water around the boat. </p>
+
+"Well, ya comin up for a bite or not?" The bare-chested $npc1.species asks, not glancing up from $npc1.his work. 
+
+<<vendor "ocean raccoon">>
+<<action "c" "store" "Trade" "Buy from ocean vendor">><</action>>
+<<action "n" "ocean" "Leave" "Leave ocean vendor">><</action>>
+
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<if setup.questStarted($feeder_questRaccoonCook) == true and setup.questCompleted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "Try my food!" "Beachside chef's taste-test">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "ocean">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonFeast) == true and setup.questCompleted($feeder_questRaccoonFeast) == false>>
+		<<action "se" "next" "Attempt the feast (100 Gold)" "Seaside Feast">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "ocean">>
+		<</action>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+
+:: Resist the sirens [beach] {"position":"750,400"}
+<p><<switch $eventCounterA>>
+
+<<case 3>>
+Cold sea water splashes into your face, and you partially come to your senses. Flipping over in the foggy ocean, you begin to swim away from the island, but find that the 'helpful' current is suddenly dead against you leaving. You have to swim hard to make any headway at all. 
+<<stamina -40>>
+
+<<case 2>>
+<<set _cost = setup.staminaCost(40)>>
+
+You plough through the water with 
+<<if _cost > 33>>slow and feeble strokes, against the tide, making slow 
+<<elseif _cost > 22>>reasonably strong strokes, against the tide, making reasonable 
+<<else>>strong and powerful strokes, against the tide, making good 
+<</if>>
+headway away from the island. Through the thickening fog you can make out the shore of the mainland, but that haunting music is willing you to just stop swimming and let the tide drag you back to the island. You dunk your head in the water to drown out the sound, but you can still hear it. 
+<<stamina -40>>
+
+<<case 1>>
+Starting to tire, you keep swimming doggedly away from the island. Although the fog is starting to thin, the water is turning choppier, incoming waves lifting you up and swooping you back down again. It's getting harder to swim through, and somehow you think that that's not entirely coincidence... 
+<<stamina -40>>
+
+<</switch>></p>
+
+<<if $sta <= 0>>
+
+<p>Your frantic paddling slows to a stop- you're just too tired to fight against the current any more, and the more you hear that lovely music, you realise that you no longer WANT to. The tide carries you quickly back to the island as you float helplessly, belly-down, and a wave dumps you, fairly gently, on the shore. You slowly heave yourself to your $p.feet and stagger a few feet up from the shoreline, surrounded by that sweet music, which is now humming to you like a lullaby. Maybe after... a short nap you... be able to... get aw... </p>
+<</if>>
+
+<<if $sta > 0>>
+<<if $eventCounterA > 1>>
+	<<action "c" "run" "Keep swimming" "Resist the sirens">>
+		<<set $eventCounterA-->><</action>>
+<<else>>
+	<<action "c" "run" "Almost there" "Escaped from the sirens">><</action>>
+<</if>>
+
+<<else>>
+	<<action "c" "wait" "Sleep..." "Lost to the sirens">><</action>>
+<</if>>
+
+
+:: Sirens [beach] {"position":"800,775"}
+<<setPassageTitle "Mysterious figures">>
+
+Swimming through the water, your eye is caught by a small, rocky, offshore island in the distance, made indistinct by a mist clinging around it. Swimming a little closer, you can make out a number of indistinct figures laying near the water's edge. 
+
+<<action "c" "next" "Investigate" "investigate sirens">><</action>>
+<<action "n" "ocean" "Leave" "leave sirens">><</action>>
+
+
+:: Surrender to the sirens [beach] {"position":"875,400"}
+You never believed in fairy-tales. Listening to your stomach, you dreamily decide 'what harm can it do?', and start paddling towards the island shore, much to the pleasure of the mer-folk. The current sweeps you on towards the island, and the song of the Sirens grows louder and louder around you, until you can practically TASTE the feast awaiting you. You feel your $waist stomach scraping pebbles in the shallow water, and scramble to your feet, wading onto the stony shore, the enchanting, delicious-sounding music all around you. Phew.. that swim has REALLY left you tired. Hang on <<if !$options.females>>guys<<else>>girls<</if>>, just a... short rest and... and then... you'll be ready for that meal... 
+
+<<action "c" "wait" "Wait..." "Lost to the sirens">><</action>>
+
+
+:: investigate sirens [beach] {"position":"725,650"}
+<<setPassageTitle "Investigate the figures">>
+
+<p>You swim a little closer, aided by a helpful current. You're beginning to enter the fog, but you can see the island more clearly now. Even at this distance, you can't help but notice that some of the animals on the beach look remarkably... Rubenesque. It looks like they're being attended to by a number of smaller figures, which move with the rather jerky motion of seals. As the current carries you even closer, you have trouble believing your eyes. The smaller figures look like mermaids! They have the long, flexible tails of fish, but their upper bodies are those of land-dwelling animals- well, except for the remarkably statuesque female $orca.species you can see. While most are beautiful- if somewhat curvaceous- females, you can also see a couple of extremely handsome, rather chunky mer-males, as well. 
+</p>
+
+<p>Just then, on the rocky outcrop closest to you, a head pops into view. She's $p.article $p.species, just like you, though you'd be willing to be she's sporting a fish-tail. She gazes lazily down at you with long, silvery eyelashes, and smiles. Then she opens her mouth, and starts to sing in the sweetest voice you've ever head- it makes you think of honey and apple. The other mermaids on the beach look up, and join in the singing. Their voices echo around the rocks, and so you only catch vague snatches of the words while the sweet music tickles your ears. 
+</p>
+
+"...Come stranger... island of plenty... all you could ever want... come... eat... COME... EAT..." Suddenly you realise how amazingly hungry you are, and you immediately begin paddling toward the island before something inside warns you- this doesn't feel normal. 
+
+<<action "c" "run" "Escape the sirens">><</action>>
+
+
+:: leave sirens [beach] {"position":"850,650"}
+<<setPassageTitle "Swim away">>
+
+Feeling rather nervous for some reason, as quietly as you can, you turn around in the water and swim determinedly away until the foggy island is entirely out of sight. 
+
+<<include "ocean randomization">>
+
+
+
+
+:: Beach [beach] {"position":"1275,1350","size":"100,100"}
+Rolling white sand dunes stretch out to the horizon where they're overtaken by rocky cliffs. Behind the dunes stand long lines of coconut trees weighed down by enormous coconuts. The soft whispering of gentle waves lapping across the shore as well as the subtle sea breeze coming from the ocean make the beach seem very peaceful. 
+
+<<include "beach randomization">>
+
+
+:: Beach rest [beach] {"position":"1275,1225"}
+You find a comfortable spot to sit down and rest. 
+<<rest>>
+
+<<if random(1,5) == 1>>
+	<<set _enemy = either($sandSnake, $waterElemental)>>
+	<<setEnemy _enemy>>
+	You are awoken from your sleep by $e.article $e.name! 
+	<<startCombat>>
+
+<<else>>
+	<<include "beach randomization">><br>
+<</if>>
+
+
+:: Goodbye beach vendor [beach] {"position":"1300,675"}
+"See ya 'round" $npc1.He gives a curt half-bow as you depart, leaning back and starting to munch down on a few of $npc1.his own treats. 
+
+<<include "beach randomization">>
+
+
+:: Hydra attack [beach] {"position":"1050,925"}
+<<setPassageTitle "Commotion on the beach">>
+As you walk along the shore you hear a commotion near the water’s edge which has gathered a crowd. 
+
+<<action "c" "next" "Investigate" "Investigate Hydra">><</action>>
+<<action "n" "beach" "Leave" "Leave Hydra">><</action>>
+
+
+:: Investigate Hydra [beach] {"position":"975,800"}
+<<setPassageTitle "Investiage the commotion">>
+
+As you approach the water, you notice a dark shape from under the surface. You are about to ask what’s going on, when all of a sudden a colossal shape bursts from the deeps. As the mist clears you can make out a huge sand-coloured creature’s back and more noticeably three huge necks with large reptilian heads at the ends gazing at the crowd before roaring and snapping down, grabbing three anthros from the crowd and swallowing them. The crowd screams and scatters, running away as the <<=setup.getSpeciesData("hydra").species>> turns its three separate gazes upon you. 
+
+<<startCombat $hydra>>
+
+
+:: Investigate sand mound [beach] {"position":"1475,800"}
+You walk over to the patch of sand and start digging with your $p.hands. 
+
+<<set _chance = random(1,100)>>
+
+/*===Treasure chest===*/
+<<if _chance > 85>>
+  After a small amount of digging, your hand collides with something metallic. You brush the sand aside and see the top of a beautiful treasure chest. 
+
+  <<if $str > 40>>You brace yourself in the hole, gripping the chest as hard as possible and pulling. After a few moments it slides free. As it comes loose, you can hear something jingling inside. You pick it up carefully and stow it for when you’re ready to open it. 
+
+  <<else>>You tug at the chest, but it won’t budge. Looking around, you find a sturdy stick nearby and climb back into the hole, wedging it in between the chest and the sand, and after a hard push, you manage to crowbar it free. As it comes loose, you can hear something jingling inside. You pick it up carefully and stow it for when you’re ready to open it. 
+  <</if>>
+
+  <<getItem $treasureChest>>
+  <<include "beach randomization">>
+
+
+/*===Sandy box===*/
+<<elseif _chance > 60>>
+  After a small amount of digging, your hand touches something solid. You reach into and pull, and a small box pops out, the sand shifting back into the hole as you dust it off. You shake it gently, and can hear tightly-packed sand inside. It’s impossible to tell if it holds anything but without opening it. 
+
+  <<getItem $sandyBox>>
+  <<include "beach randomization">>
+
+
+/*===Sand snake===*/
+<<elseif _chance > 35>>
+  As you dig, the sand shifts worryingly under your grasp. You step back a little, thinking it might just be a minor cave-in, but an ominous hiss heralds a large, <<if $sandSnake.name == "sand snake">>orange snake<<else>><<=setup.getSpeciesData($sandSnake.species).species>><</if>> bursting out of the sand. Some of its body is still under the sand, but it’s a foot wide, far bigger than any snakes you’ve seen. It has a few gritty fragments of coconut hanging out of its mouth, but it snaps them down and hisses at you, looking at you ravenously. 
+  <<startCombat $sandSnake>>
+
+
+/*===Nothing!===*/
+<<else>>
+  You dig a foot or so down, but find nothing of value. You kick the sand back into the hole and continue on your journey. 
+  <<include "beach randomization">>
+
+<</if>>
+
+
+:: Leave Hydra [beach] {"position":"1100,800"}
+<<setPassageTitle "Nope!">>
+You realise in this world large crowds can often lead to issues, so you hurry on your way as quickly as possible. 
+
+<<include "beach randomization">>
+
+
+:: Leave beach vendor [beach] {"position":"1350,800"}
+The $npc1.species stops scritching $npc1.his gut, looking a bit surprised that you'd decline. $npc1.He then smiles and shrugs. "Your loss." $npc1.He stretches $npc1.his neck from side to side and plops $npc1.himself back down against the palm, getting comfortable. "Maybe another time." 
+
+<<include "beach randomization">>
+
+
+:: Leave sand mound alone [beach] {"position":"1600,800"}
+Deciding against digging, you shrug and move on, leaving the disturbed sand alone. 
+<<include "beach randomization">>
+
+
+:: Minor beach events [beach] {"position":"1425,1300","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+<<switch random(1,2)>>
+
+<<case 1>>
+You stroll across the beach, the sand gently shifting beneath your $p.feet. While very scenic, you don't actually find anything of interest. 
+
+<<default>>
+<p>As you meander along the beach, you notice a few coconut trees. They were originally there just as ornaments, but they’ve "Succumbed" to the same wave of prosperity all plants seem to have been affected by. You walk up to it, and notice several coconuts among its leaves. Looking around, you decide that the people around wouldn’t mind if you tried to get a couple. You grab and shake the tree a little, making several of them fall out, and you have to step out of the way so one of them doesn’t hit you on the head. </p>
+
+As they hit the ground, one cracks open, spilling milk into the sand which seems to draw the attention of something under the sand. You step back a bit as you feel something shift under there, and a few orange snakes surface from under the sand, snatching the shattered remnants of the coconut, as well as grabbing some of the intact ones. You quickly stoop down and grab one just before another snake pops up to grab it. It looks at you disdainfully, but knows that picking a fight with you wouldn’t be a good idea, tunnelling back underground. As you dust off the coconut, the sand under you settles. 
+<<getItem $coconut>>
+
+<</switch>>
+
+<<include "beach randomization">>
+
+
+:: Ocean [beach] {"position":"1100,1125","size":"100,100"}
+<p>You walk to near the shoreline, and as you do, you pass what looks like a charity stall on the way there. You stop and look, seeing that the stall has lots of crates of pills, and a quick read of a pamphlet on the stall says that they’re water-breathing pills being given out for free. You take a couple, nodding your thanks to the stall attendant, before gulping one down and diving into the water. </p>
+
+The clear blues ocean waters allow for very distant visibility that allows you to almost clearly see the ocean floor. Although the further from the beach you get, the farther the sea floor sinks out of view into a serene dark blue abyss. All around you are schools of fish fattened into spheres of different sizes, although as you swim close to anyone school the fish dart surprisingly fast out of your reach. 
+
+<<include "ocean randomization">>
+
+
+:: Ocean rest [beach] {"position":"1050,1275"}
+You find a comfortable spot to float around and rest. 
+<<rest>>
+
+<<if random(1,5) == 1>>
+	<<set _enemy = either($sphericalShark, $bubbleOrca)>>
+	<<setEnemy _enemy>>
+	You are awoken from your sleep by $e.article $e.name! 
+	<<startCombat>>
+
+<<else>>
+	<<include "ocean randomization">><br>
+<</if>>
+
+
+:: Pile of seaweed [beach] {"position":"1425,1050"}
+<p>Pacing along the shoreline you come across a heap of seaweed at the water’s edge. It looks fairly fresh, the fronds still green and slippery. You cautiously lift a wide, strap-like frond, tugging, and to your surprise it stretches rather like stiff rubber- when you let go the strand snaps back against the mass of beached plant matter. Bracing your $p.feet in the sand you reach into the pile, grab hold of a few fronds and HEAVE. The kelp stretches and stubbornly refuses to break, but just when you’re about to turn purple with exertion a handful RIPS free, sending you stumbling backwards, arms windmilling for balance. </p>
+
+<<if random(1,3) == 1>>
+	<<if random(1,2) == 1>><<setEnemy $waterElemental>>
+	<<else>><<setEnemy $sandSnake>><</if>>
+	<p>Unfortunately, your strenuous activity disturbs something. As you stand, panting, your eyes widen when the mass of seaweed suddenly heaves and begins to lift up, as if growing before your eyes. When it gets to waist-height the tangled mass of fronds begin to slide apart, and up bursts $e.article $e.name! </p> 
+	<<startCombat>>
+
+<<else>>
+	<<getItem $stretchySeaweed>>
+	<<include "beach randomization">>
+<</if>>
+
+
+:: Raccoon beach vendor [beach] {"position":"1300,925"}
+<<createFixedNPC "beachVendor">>
+<<setPassageTitle "<<=$npc1.species.toUpperFirst()>> beach vendor">>
+
+<p>Making your way along the strand, you walk right past an impressively large palm tree, thinking little of it. A moment later, you realize that there was someone there, and that somehow you'd almost completely missed $npc1.him. Turning, you see an impressive specimen of a $npc1.species taking a nap right at the base of the trunk. $npc1.His strong, muscular arms rest peacefully over a prodigious $npc1.furBelly gut. $npc1.He slips one eye open as you approach, donning a welcoming smile. "Ah, a customer!" $npc1.He proclaims. </p>
+
+$npc1.He hefts himself to $npc1.his $npc1.feet, before stretching out and releasing a rumbling yawn, licking $npc1.his chops and scritching $npc1.his belly afterwards. While $npc1.his torso is bare, $npc1.he's sporting a roomy pair of traditional-looking pants and an apron with an intricate insignia. "So, buddy, can I getcha somethin'?" 
+
+<<vendor "beach raccoon">>
+<<action "c" "store" "Buy from beach vendor">><</action>>
+<<action "n" "beach" "Leave beach vendor">><</action>>
+
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<if setup.questStarted($feeder_questRaccoonCook) == true and setup.questCompleted($feeder_questRaccoonCook) == false>>
+		<<action "se" "next" "Try my food!" "Beachside chef's taste-test">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "beach">>
+		<</action>>
+	<<elseif setup.questStarted($feeder_questRaccoonFeast) == true and setup.questCompleted($feeder_questRaccoonFeast) == false>>
+		<<action "se" "next" "Attempt the feast (100 Gold)" "Seaside Feast">>
+			<<set $eventCounterA = 0>>
+			<<set $eventCounterB = "beach">>
+		<</action>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+
+:: Sand mound [beach] {"position":"1425,925"}
+While walking along, something about the sand nearby makes you stop. It seems somewhat displaced and stirred up, looking lighter in shade than the rest. Maybe there’s something there? 
+
+<<action "c" "next" "Investigate" "Investigate sand mound">><</action>>
+<<action "n" "beach" "Ignore it" "Leave sand mound alone">><</action>>
+
+
+:: beach ambush [beach] {"position":"1425,1175"}
+<<if $beachEnemies == undefined or $beachEnemies.length == 0>>
+	<<set $beachEnemies = ["snake", "water"]>>
+<</if>>
+<<set _enemy = $beachEnemies.pluck()>>
+
+<<switch _enemy>>
+<<case "snake">>
+As you comb across the beach, you step on a sand dune that shifts under your $p.feet in a peculiar fashion. 
+<<setEnemy $sandSnake>>
+
+<<case "water">>
+As you comb across the beach, you step on a sand dune that squishes under your $p.feet in a peculiar fashion. 
+<<setEnemy $waterElemental>>
+
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: beach randomization [beach] {"position":"1275,1125","size":"100,100"}
+/*Ticks up random events counters*/
+<<set $beachRandomization.combat += $beachRandomization.combatRate>>
+<<set $beachRandomization.special += $beachRandomization.specialRate>>
+<<set $beachRandomization.minor += $beachRandomization.minorRate>>
+
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+<<if $beachRandomization.special > $beachRandomization.combat>>
+<<set _randomEvent = "special">><</if>>
+<<if $beachRandomization.minor > $beachRandomization.special>>
+<<set _randomEvent = "minor">><</if>>
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+<<set $beachRandomization.combat = 0>>
+<<set _event = "beach ambush">>
+
+/*A special event*/
+<<case "special">>
+<<set $beachRandomization.special = 0>>
+
+<<switch random(1,4)>>
+	<<case 1>><<set _event = "Pile of seaweed">>
+	<<case 2>><<set _event = "Sand mound">>
+	<<case 3>><<set _event = "Hydra attack">>
+	<<case 4>><<set _event = "Raccoon beach vendor">>
+	<<default>>''Error in special event randomization!''
+<</switch>>
+
+/*A random minor scene*/
+<<case "minor">>
+<<set $beachRandomization.minor = 0>>
+<<set _event = "Minor beach events">>
+
+<<default>>
+''Error in beach randomization!!!''
+
+<</switch>>
+
+<<action "c" "rest" "Rest" "Beach rest">>
+	<<set $eventCounterB = "rest">><</action>>
+
+<<if $sta > 0>>
+<<action "w" "ocean" "Ocean">><</action>>
+<<action "nw" "ocean" "Ocean">><</action>>
+<<action "sw" "ocean" "Ocean">><</action>>
+<<action "se" "road" "West Town">><</action>>
+<<action "ne" "beach" "Beach" _event>><<set $travel = 5>><</action>>
+<<action "e" "beach" "Beach" _event>><<set $travel = 5>><</action>>
+<<action "n" "beach" "Beach" _event>><<set $travel = 5>><</action>>
+<<action "s" "beach" "Beach" _event>><<set $travel = 5>><</action>>
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	/* For convenience, make the Raccoon chef available while doing quests for him */
+	<<set _doingQuest = false>>
+	
+	<<if setup.questStarted($feeder_questRaccoonCook) == true and setup.questCompleted($feeder_questRaccoonCook) == false>>
+		<<set _doingQuest = true>>
+	<</if>>
+	
+	<<if setup.questStarted($feeder_questRaccoonFeast) == true and setup.questCompleted($feeder_questRaccoonFeast) == false>>
+		<<set _doingQuest = true>>
+	<</if>>
+	
+	<<if _doingQuest == true>>
+		<<action "ne" "store" "Raccoon chef" "Raccoon beach vendor">><<set $travel = 5>><</action>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: ocean ambush [beach] {"position":"925,1275"}
+<<if $oceanEnemies == undefined or $oceanEnemies.length == 0>>
+	<<set $oceanEnemies = ["shark", "orca"]>>
+<</if>>
+<<set _enemy = $oceanEnemies.pluck()>>
+
+<<if _enemy == "shark">>
+<<setEnemy $sphericalShark>>
+As you’re swimming in the ocean, you notice a $npc1.furBack dorsal fin heading right for you. You duck under the water to get a better view, and see an enormous $npc1.species heading your way! 
+
+<<else>>
+<<setEnemy $bubbleOrca>>
+During your swim, you stumble across what looks like one of those crates from earlier, containing the tubes of pills. Strangely, there seems to be lots of empty ones dotted around the crate, and you can see a large, blue tail poking out of the crate. You begin to backstroke away from it, but whatever it is detects you and pulls itself out of the crate. As it faces you, you can see it’s a large $npc1.species, but different from those you may have seen in the sea or in books – It’s taken a deep blue hue with a light blue underbelly, evidently changed by eating the pills. $npc1.He looks at you, smiling as a few bubbles drool out of $npc1.his mouth. 
+
+<</if>>
+
+<<startCombat>>
+
+
+:: ocean randomization [beach] {"position":"950,1125"}
+<<set $oceanRandomization.combat += $oceanRandomization.combatRate>>
+<<set $oceanRandomization.special += $oceanRandomization.specialRate>>
+
+<<set _randomEvent = "combat">>
+<<if $oceanRandomization.special > $oceanRandomization.combat>>
+<<set _randomEvent = "special">><</if>>
+
+<<switch _randomEvent>>
+
+<<case "combat">>
+<<set $oceanRandomization.combat = 0>>
+<<set _event = "ocean ambush">>
+
+<<case "special">>
+<<set $oceanRandomization.special = 0>>
+<<switch random(1,3)>>
+<<case 1>><<set _event = "Buried treasure">>
+<<case 2>><<set _event = "Find seaweed">>
+<<case 3>>
+<<if random(1,2) == 1>><<set _event = "Raccoon ocean vendor">>
+<<else>><<set _event = "Sirens">><</if>>
+<</switch>>
+
+<<default>>
+''ERROR IN OCEAN RANDOMIZATION''
+
+<</switch>>
+
+<<action "c" "rest" "Rest" "Ocean rest">><</action>>
+
+<<if $sta > 0>>
+<<action "e" "beach" "Beach">><</action>>
+<<action "ne" "beach" "Beach">><</action>>
+<<action "se" "beach" "Beach">><</action>>
+<<action "nw" "ocean" "Ocean" _event>><<set $travel = 5>><</action>>
+<<action "n" "ocean" "Ocean" _event>><<set $travel = 5>><</action>>
+<<action "w" "ocean" "Ocean" _event>><<set $travel = 5>><</action>>
+<<action "sw" "ocean" "Ocean" _event>><<set $travel = 5>><</action>>
+<<action "s" "ocean" "Ocean" _event>><<set $travel = 5>><</action>>	
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+

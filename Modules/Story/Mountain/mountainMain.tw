@@ -1,0 +1,1809 @@
+:: Mountain ambush [mountains] {"position":"4675,2375","size":"100,100"}
+<<if $mountainEnemies == undefined or $mountainEnemies.length == 0>>
+	<<set $mountainEnemies = ["ants", "thin", "tough", "magic", "muscle"]>>
+<</if>>
+<<set _enemy = $mountainEnemies.pluck()>>
+
+<<switch _enemy>>
+
+<<case "ants">>
+<<setEnemy $soldierAnts>>
+As you hike along the side of a mountain, you come across a line of <<=setup.getSpeciesData("ant").plural>> marching in formation. This wouldn't be particularly noteworthy if they weren't the size of housecats and carrying away what looks to be an entire banquet. Several of them turn to you, mandibles flexing in a threatening manner. 
+<<switch random(1,3)>>
+	<<case 1>>
+		<<set $e.item = clone($sausage)>>			
+	<<case 2>>
+		<<set $e.item = clone($apple)>>			
+	<<case 3>>
+		<<set $e.item = clone($grapes)>>			
+<</switch>>
+
+/*Fix this with item stacking?
+<<set $e.item.charges = random(3,5)>>*/
+
+<<case "thin">>
+<<setEnemy $thinFur>>
+As you explore the mountains, a thin shell of $npc1.article $npc1.species staggers across your path, holding $npc1.his stomach. Surprisingly, it is flat, though given that $npc1.he is currently taking the last few bites of what looks to have been an entire hock of ham, that seems very unusual. "Never lasts," $npc1.he grumbles quietly, "always need more. Never stay full." $npc1.He suddenly looks up and sees you, $npc1.his face turning into a twisted, angry grimace. "GIVE ME MORE FOOD!" $npc1.he suddenly bellows, dropping the meatless bone and suddenly pulling a nasty looking pair of daggers out! 
+
+
+<<case "tough">>
+<<setEnemy $toughFur>>
+You are wandering through a particularly cold mountainside when your path is crossed by $npc1.article $npc1.species that is abnormally fat, even given the current state of things. $npc1.He appears to be completely unbothered by the inclimental weather, waddling up to you bare $npc1.furred. The sheer girth of $npc1.him becomes more apparent as $npc1.he gets closer--$npc1.his belly nearly hangs down to $npc1.his knees, and every inch of $npc1.his body bulges with thick fat. $npc1.He raises a wooden spear tipped with obsidian at you and demands, "Give me your food, or I'll squash you!" And with that, it's time to fight! 
+
+
+<<case "magic">>
+<<setEnemy $magicalFur>>
+As you traverse the mountains, you come across $npc1.article $npc1.species in tattered robes holding $npc1.his head in both hands and walking in an almost drunken stagger. Given that $npc1.he is grunting and groaning with pain, you feel safe in assuming they aren't having that kind of fun at the moment. "Head hurts..." $npc1.he gasps out, "ALWAYS hurts..." As $npc1.he approaches, you can see that $npc1.his head does appear to be a bit swollen, but not nearly as much as $npc1.his gut. $npc1.He manages to lift $npc1.his head enough to see you, and hisses out, "...except when I get to EAT." With a staggered sweep, $npc1.he throws open one side of $npc1.his robe and pulls out an ugly, bent stick of a wand, pointing it at you menacingly! 
+
+
+<<case "muscle">>
+<<setEnemy $muscleFur>>
+Your path is suddenly crossed by a lumbering hulk of $npc1.article $npc1.species. $npc1.He is exceptionally large, in height, musculature, and weight, $npc1.his massive belly easily being a third of $npc1.his mass, and is dragging something that could be called a club, but would be better described as a small tree. Upon spotting you, $npc1.he rumbles in a deep voice, "Eat more... Get bigger... Eat YOU... GET BIGGER!" $npc1.he rushes you, mouth open wide and club raised! 
+
+
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: Mountainous dead end [mountains] {"position":"4475,2375","size":"100,100"}
+You laboriously climb over the snow frosted stones of the eastern mountains and rewarded with merely more barren rockfaces. 
+
+<<include "mountain randomization">>
+
+
+:: Mountains [mountains] {"position":"4550,2475","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<<set $eventCounterB = "">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($soldierAnts, $thinFur, $toughFur, $magicalFur, $muscleFur)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+		<<startCombat>>
+
+	<<else>>
+		<<include "mountain randomization">>
+	<</if>>
+	
+<<else>>
+The dark snow-capped mountains loom around you in almost all directions, seemingly without end. Behind you an inviting path slopes downwards back into the rolling foothills of the mountains. Cold winds rip and howl through the rocky crags and tug sharply at you as if attempting to fling you off their mountain. The black cliffsides are pockmarked with small caves and outcroppings that could grant temporary sanctuary from the freezing cold, but who knows what else may be seeking shelter from the storm? On a distant peek you can make out the unusual yet unmistakable outline of a lonely white tower jutting vertically from a mountain side. 
+<<include "mountain randomization">>
+
+<</if>>
+
+
+:: mountain randomization [mountains] {"position":"4575,2375","size":"100,100"}
+/*Ticks up random events counters*/
+<<set $mountainRandomization.combat += $mountainRandomization.combatRate>>
+
+<<set $mountainRandomization.special += $mountainRandomization.specialRate>>
+
+<<set $mountainRandomization.leave += $mountainRandomization.leaveRate>>
+
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+
+<<if $mountainRandomization.special > $mountainRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+
+<<if $mountainRandomization.leave > $mountainRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+/**/
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+	<<set $mountainRandomization.combat = 0>>
+	<<if random(1,10) == 1>><<set _event = "Tiger fight">>
+	<<else>><<set _event = "Mountain ambush">>
+	<</if>>
+	
+
+/*A special event*/
+<<case "special">>
+<<set $mountainRandomization.special = 0>>
+<<set _event = $mountainSpecial.pluck()>>
+<<if $mountainSpecial.length == 0>>
+	<<set $mountainSpecial = ["cabal", "wizard", "hive", "wyvern", "experiment"]>>
+<</if>>
+	
+	<<switch _event>>
+	<<case "cabal">><<set _event = "Cabal cave">>
+	<<case "wizard">><<set _event = "Wizard's Tower">>
+	<<case "hive">><<set _event = "Insect Hive">>
+	<<case "wyvern">><<set _event = "Wyvern cave">>
+	<<case "experiment">>
+		<<if setup.questStarted($onGoodTermsExperiments)>>
+			<<set _event = "Experiment Town">>
+		<<else>>
+			<<set _event = "Experiment cave">>
+		<</if>>
+		
+	<</switch>>
+
+/*Opportunity to leave the forest*/
+<<case "leave">>
+ 	<<set $mountainRandomization.leave = 0>>
+	<<set _event = "Mountainous dead end">>
+
+<<default>>
+  ''Error in hills randomization!!!''
+
+<</switch>>
+
+<<action "c" "rest" "Rest" "Mountains">>
+	<<set $eventCounterB = "rest">><</action>>
+	
+<<if $sta > 0>>
+<<action "1" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "2" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "3" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "4" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "6" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "7" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "8" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<action "9" "mountain" "Mountains" _event>>
+	<<set $travel = 5>><</action>>
+<<if setup.questActive($cabalRogue) 
+	and setup.hasItem($cabalCauldron) < 0>>
+<<action "s" "compass" "Follow cabal map" "Fight the cabal dragon">>
+	<<set $travel = 5>><</action>>	
+<</if>>
+
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+
+
+:: Begin the Wizard's experiment [nobr] {"position":"4425,2650","size":"100,100"}
+/*In case you got here from dying to the manticore*/
+<<if $hea < 1>><<set $hea = 1>><</if>>
+<<set $alive = true>>
+
+<p>You can hear the $npc2.species's voice from above, and look up to see that $npc2.he is on a platform connected to nothing in particular over your head. 
+</p>
+
+<<switch random(1,5)>>
+
+/*Experiment 1*/
+<<case 1>>
+<p>"This time, we shall be performing a simple test of body mass transfer!" $npc2.he calls down. "Are you ready, my ample assistant?" The $npc3.species raises $npc3.his foodless $npc3.hand to give a half-hearted thumbs-up to the wizard. "THEN WE SHALL BEGIN!" the $npc2.species bellows overdramatically, raising $npc2.his staff. </p>
+
+<p>The staff glows a cloudy grey with magic, and a thin tendril of whispy red energy begins to flow out from the $npc3.species's massive belly and towards yours. </p>
+
+/*Experiment succesful*/
+<<if random(1,3) == 1>>
+<p>There is the slightest feeling of a pinprick, then an odd, almost electrical tingling shakes your skin. As the spell progresses, the $npc3.species gets steadily thinner, and your own $fatness body begins to enlarge. 
+<<set $fat += 100>>
+<<updateStats>>
+You can feel yourself getting heavier, warmer and softer as your fatty layer thickens. The $npc3.species is nearly fatless before the whispy tendril ceases to emanate from $npc3.him. You, on the other hand, are left $fatness with the addition of $npc3.his weight. </p>
+
+<p>Above, the wizard throws $npc2.his hands over $npc2.his head and yells "Great success!" The $npc3.species, meanwhile, continues to chew on grains, a bored look on $npc3.his face. "My thanks for your participation, $p.sir!" the $npc2.species shouts down to you, "you may leave now." Before you can react, you find yourself back on the mountains, unable to spot the tower anymore. </p>
+
+/*Experiment failed*/
+<<else>>
+<p>There a stabbing pain for a moment, then an odd buzz seems to emanate deep inside your stomach. The $npc3.species begins to thin, and you can feel your stomach getting fuller. Your stomach swells, getting heavy and full as the $npc3.species thins, $npc3.his fat being fed directly into your belly. 
+<<consume 100 65>></p>
+
+<<if $alive>>
+<p>$npc3.He is nearly fatless when the tendril stops exuding from $npc3.him, and when the last of it is absorbed, you are feeling $hungry, and left clutching your swollen belly. Above, you can hear the $npc2.species wizard growl in frustration. "Damn! Not right! ARGH!" With a clatter, $npc2.he throws down $npc2.his staff. There is a crackling like lightning, and you can hear a quiet "Uh oh, not again." It is followed by a brilliant flash, and when your vision returns, you are out on the mountains, and the tower is nowhere to be seen. </p>
+
+/*Experiment not survived*/
+<<else>>
+	<<if $options.popping>>
+		<p>Your stomach groans in protest as more and more of the $npc3.species's immense weight is forced directly into it. You moan and rub at your belly, trying to soothe it, but it just keeps getting tighter and fuller. By the time the tendril fades, the $npc3.species is nearly fatless, and your stomach simply cannot bear its load. You lower yourself onto your back, breathing slowly and deeply to stave off the pain. Above, the wizard quietly lets out an "Oops..." just as the strain becomes too much and you burst with a gooey //GLOORP//! </p>
+
+		<p>"Why do they always explode? I’ll figure it out... eventually..."</p>
+		<<defeated "exploded">>
+	<<else>>
+		<p>Your stomach groans in protest as more and more of the $npc3.species's immense weight is forced directly into it. You moan and rub at your belly, trying to soothe it, but it just keeps getting tighter and fuller. By the time the tendril fades, the $npc3.species is nearly fatless, and your stomach simply cannot bear its load. You lower yourself onto your back, breathing slowly and deeply to stave off the pain. Above, the wizard quietly lets out an "Oops..." </p>
+		<<defeated "overeating">>
+	<</if>>
+<</if>>
+
+<</if>>
+
+
+/*Experiment 2*/
+<<case 2>>
+<p>"Today, we shall be attempting to turn fat into muscle!" $npc2.he calls down. "Are you ready, my pudgy partner?" The $npc3.spcies raises $npc3.his foodless $npc3.hand and gives the most half-hearted thumbs-up you've ever seen. ''"THEN WE SHALL BEGIN!"'' the $npc2.species bellows, going quite a ways over the top as $npc2.he raises $npc2.his staff. </p>
+
+<p>The staff glows a bright red, and a hazy red tendril begins to emanate from the $npc3.species's tremendous gut and towards you. </p>
+
+/*Experiment succesful*/
+<<if random(1,3) == 1>>
+<p>It splits into several smaller tendrils, and there's a momentary pinprick as they connect to your limbs, chest, neck and tail. As energy flows outward, the $npc3.species thins, and you can feel the magic steadily building in your muscles, which swell and harden nicely. The tendril stops flowing once the $npc3.species has thinned to a nearly fatless state, and you are left feeling significantly stronger. Unfortunately, you can also feel the magic slowly leaving you. 
+<<buff "str" 30 180>>
+
+<p>Above, the $npc2.species wizard hums, rubbing $npc2.his chin for a moment. "Well," $npc2.he finally starts, "not quite perfect, but we shall call this a great success!" $npc2.He suddenly throws $npc2.his arms in the air victoriously. "Enjoy that while it lasts, $p.sir!" $npc2.he calls down, waving his staff. Before you can even react, the world blurs again, and you are back on the mountains, the tower nowhere in sight. </p>
+
+
+/*Experiment failed*/
+<<else>>
+<p>It splits into several smaller tendrils, and there's a momentary stabbing pain as they connect to your limbs, chest, neck and tail. Energy flows outward from the $npc3.species and into you, causing $npc3.him to thin, but you are definitely not feeling stronger. Your muscles are expanding, but feel heavy and cumbersome more than strong and flexible. The tendril stops flowing once the $npc3.species has thinned to a nearly fatless state, and you just look up to the wizard in confusion, your muscles significantly larger, but soft and not stronger at all. </p>
+
+The $npc2.species wizard rubs $npc2.his chin and hums for a moment, then calmly begins, "Well, not quite as bad as the last few," then with exagerrated anger continues, "But I'll still call this a ''TOTAL FAILURE! CURSES!''" $npc2.He throws down $npc2.his staff in frustration, and it begins to glow brilliant white. "Oh dear, I did it again," $npc2.he mumbles, just before the world vanishes in a white glare. When you can see again, you are somewhere on the mountains, but the tower is nowhere in sight. 
+<<buff "agi" -30 180>>
+<</if>>
+
+
+/*Experiment 3*/
+<<case 3>>
+<p>"This time, we shall attempt a most unusual change: Fatness into nimbleness!" $npc2.he calls down. "Are you ready, my corpulent companion?" The $npc3.species doesn't even stop eating when he raises his free $npc3.hand to give an inattentive thumbs up. ''"THEN WE SHALL BEGIN!"'' the $npc2.species bellows, raising $npc2.his staff and failing to not look like a madman. 
+
+<p>The staff glows a bright yellow, and a transparent red tendril flows outward from the $npc3.species's massive belly, snaking through the air towards you and splitting into several smaller tendrils when it approaches. </p>
+
+Each weaves its way to one of your joints, the biggest tendril going around behind you, and with a 
+
+/*Experiment succesful*/
+<<if random(1,3) == 1>>
+slight pinprick, they poke into your major joints and spine. The $npc3.species steadily thins, and you can see the tendril send a stream of magical energy your way. When it reaches you, you get the unusual sensation of your joints becoming looser, and your muscles tightening. Somehow or another, this seems to be working, and your body feels lighter and faster. Your pulse quickens, and you feel more keen all around. 
+<<buff "agi" 30 180>>
+
+
+<p>Somehow or another, you do feel faster, though the feeling is slowly fading. Above, the wizard calls down, "Well?" To which the $npc3.species responds by throwing a few grains at you suddenly. You catch them reflexively, and the $npc2.species throws $npc2.his hands over $npc2.his head and yells, "Still not perfect, but still a great success! Thank you for your assistance, $p.sir!" With a wave of $npc2.his staff, the world blurs again, and you are somewhere on the mountains, but the tower is nowhere in sight. </p>
+
+
+/*Experiment failed*/
+<<else>>
+brief stabbing pain, they poke into your major joints and spine. The $npc3.species steadily thins, and you can see the tendril send a stream of magical energy your way. As the energy flows into you, you feel your pulse pick up, and your breaths grow shallow. 
+
+<p>By the time the flow stops, you are a jittery wreck, your $p.hands shaking like you've had enough caffeine to keep a $horse.species awake for a month. The only good thing about it is that it seems to be very slowly fading. From above, the wizard calls down, "Well?" The $npc3.species responds by tossing a few grains at you, which makes you flinch and cover your face as they harmlessly bounce off you. "Curses! Yet another failure!" $npc2.he bellows, then throws $npc2.his staff down in frustration. A brilliant white glow starts to build up, and you can hear $npc2.him mutter, "I've really got to stop doing that," just in time for a white flash to erupt all around. When your vision clears, you are somewhere on the mountains, but the tower is nowhere in sight. </p>
+<<set $cal *= 0.5>>
+
+<</if>>
+
+
+/*Experiment 4*/
+<<case 4>>
+<p>"In this experiment, we shall try to make that skin of yours a little thicker with the addition of some flab!" $npc2.he calls down. "Are you ready, my flabby follower?" The $npc3.species raises $npc3.his free $npc3.hand, giving a nonchallant thumbs up without even ceasing $npc3.his snacking. ''"THEN WE SHALL BEGIN!"'' the $npc2.species bellows, raising $npc2.his staff and failing to strike an impressive pose. </p>
+
+The staff glows green with magic, and a tendril of hazy red energy begins to flow out of the obese $npc3.species's midsection and toward yours. It pokes into the flesh of your belly with a 
+
+/*Experiment succesful*/
+<<if random(1,3) == 1>>
+light pinprick, and as the energy flows outward, the $npc3.species begins to thin. Your body seems to thicken, and while it seems at first that you are simply getting fatter, as time passes, you can tell that your skin is getting tougher as well. You start to feel a bit warmer as your fatty layer seems to grow more dense. The tendril stops flowing when the $npc3.species has thinned to near-fatlessness, and when the last of the magical energy is absorbed, you are significantly more stout than you were before, but the feeling is slowly fading. 
+<<set $fat += 20>>
+<<buff "end" 30 180>>
+
+<p>"Well?" the $npc2.species wizard yells down. The $npc3.species responds by giving you a bit of a slap in your $waist belly, which barely even moves and certainly doesn't hurt. The $npc3.species gives another nonchallant thumbs-up, never having stopped eating in this time, and the wizard bellows out, "Still don't have it down yet, but I shall call this a ''GREAT SUCCESS!''" while throwing $npc2.his hands over $npc2.his head. "Thank you for your assistance, $p.sir! Now allow me to show you out." The world blurs again, and you are back on the mountains, but the tower is nowhere in sight. </p>
+
+
+/*Experiment failed*/
+<<else>>
+brief stabbing pain, and as the energy flows outward, the $npc3.species begins to thin. You, on the other hand, seem to be bloating outward, your skin stretching as thick fat builds up under it. You find yourself getting quite hot, and a bit cramped by the additional weight. 
+<<set $fat += 150>>
+<<buff "agi" -30 180>>
+
+<p>The tendril doesn't stop flowing into you until the $npc3.species is nearly fatless, and by that point, you've become $fatness in a most unbalanced way, your midsection disproportionate with your limbs. "Well?" the wizard calls down. The $npc3.species gives you a poke, and your $waist stomach jiggles softly, to which the $npc3.species gives a nonchallant half-shrug, still eating with $npc3.his other hand. "Then this is a ''TOTAL FAILURE!'' Blast it!" the $npc2.species yells, throwing down $npc2.his staff in frustration. A bright white glow starts to shine above you, and you can hear the wizard mumble, "I must remember not to do that." The white glow becomes a brilliant flash, and when your vision clears, you are back on the mountains, but the tower is nowhere to be found. </p>
+<</if>>
+
+
+/*Experiment 5*/
+<<case 5>>
+<<set _num1 = random(1,99)>>
+<<set _num2 = random(1,99)>>
+<<set _num3 = _num1 * _num2>>
+<p>"This one should be nice and tricky! I shall attempt... to make you ''SMARTER!''" $npc2.he dramatically calls down. "Are you ready, my stout subordinate?" The $npc3.species inattentively gives a thumbs up with his free $npc3.hand, not even slowing down $npc3.his meal. ''"THEN WE SHALL BEGIN!"'' the $npc2.species bellows, raising $npc2.his staff dramatically. </p>
+
+The staff glows blue with magic, and a tendril of misty red energy begins to flow out of the fat $npc3.species's body and towards your head. It splits into two, which poke into the sides of your head with a 
+
+/*Experiment succesful*/
+<<if random(1,3) == 1>>
+light pinprick. The $npc3.species thins as magical energy flows into you, and you can feel a bit of pressure inside your skull. Your thoughts begin to come faster, and you start to notice a bit more of the finer details of the spell, but the most obvious thing you can feel is your head getting very slightly larger. When the $npc3.species is nearly fatless, the tendril ceases to emanate from $npc3.him, and your head feels heavy, and slightly pained, with increased knowledge and mass. 
+<<buff "int" 30 180>>
+
+<p>It isn't terribly pleasant, but your mind is definitely working faster, though the effect is slowly fading. The wizard calls down, "//Quick//, what's _num1 times _num2?" Without thinking, you respond, "_num3?" The $npc2.species takes a moment, tracking numbers on $npc2.his fingers, then pumps $npc2.his fists in the air and yells, "Yes! Great success! Thank you for your time, $p.sir!" With a wave of $npc2.his staff, the world blurs again, and you find yourself back on the mountains, though the tower is nowhere to be seen. </p>
+
+/*Experiment failed*/
+<<else>>
+brief stabbing pain. The $npc3.species thins as magical energy flows into you, and you can feel pressure building inside your skull. Your mind begins to race with thoughts, and the pressure builds into pain, which steadily grows more disorienting as the $npc3.species thins. By the time $npc3.he is nearly fatless, the pain is nearly blinding, and you are clutching your head in both hands, your thoughts a random, useless blur. 
+<<buff "mana" -30 180>>
+
+<p>The wizard calls down, "//Quick//, what's _num1 times _num2?" You open your mouth to respond, but all that comes out is a pained groan. "Another failure! Curses!" $npc2.he yells, throwing $npc2.his staff to the floor. It begins to glow white, and $npc2.he mumbles, "Oh dear, not again." There is a brilliant flash, and you are left with your headache on the mountains, the tower nowhere in sight. </p>
+<</if>>
+
+
+<</switch>>
+
+<<if $alive>>
+
+<<include "mountain randomization">> 
+<</if>>
+
+
+:: Enter the Wizard's tower [nobr] {"position":"4175,2650","size":"100,100"}
+<<createFixedNPC "mountainWizard" 2>>
+<<createFixedNPC "mountainWizardAssistant" 3>>
+
+<p>You locate the door (which is, itself, a bit of a trick) and step inside, finding yourself in something resembling a lobby, but it doesn't appear to exit into any other rooms. </p>
+
+<p>After a few moments of looking at images of magical figures and bookstands, a voice rings out from nowhere in particular, "Ah! I almost didn't notice you! One moment!" Before you can answer, the world blurs and you find yourself standing before a robed, wild-eyed $npc2.species who is smiling at you happily. Your surroundings have changed from an open, decorated room to a small, cluttered laboratory, absolutely clogged with books, magical symbols, and arcane tools. </p>
+
+"I take it you've come to volunteer, yes?" the $npc2.species asks eagerly. "That is why you're here, yes?" 
+
+<<action "w" "yes" "Yes" "Wizard's experiment">><</action>>
+<<action "e" "no" "No" "Fight the Manticore">><</action>>
+
+
+:: Fight the Manticore [nobr] {"position":"4175,2775","size":"100,100"}
+<p>You respond with a simple "No." that seems to echo around the room for a moment, the $npc2.species wizard just staring at you in disbelief. </p>
+
+<p>After an awkward silence, $npc2.his disbelief turns into an angry snarl, and $npc2.he bellows out, ''"THEN WHY ARE YOU DISTURBING ME?!"'' Before you can stop $npc2.him, $npc2.he grabs $npc2.his staff and angrily waves it at you. The world again blurs, and you find yourself in a dimly-lit, wide open chamber with a dirt floor. The wizard's voice calls down from nowhere in particular, "Perhaps a few rounds with my pet manticore will change your mind!" </p>
+
+One of the walls slides open, and out trods an eagle-winged, lion-bodied, scorpion-tailed monstrosity that looks more than eager to change your mind. 
+
+<<startCombat $manticore>>
+<<set $eventCounterA = 0>> /* FIXES AND EDITS - Counter was missing a reset before "Manticore defeated", without it, if the last event was a previous manticore fight, the player would be forced into picking the same option they made last */
+
+
+:: Leave the Wizard's tower {"position":"4050,2775","size":"100,100"}
+You decide that you've had your share of magic for the time being, and head back downward to find somewhere else to explore. As you do, the tower fades away again. 
+
+<<include "mountain randomization">>
+
+
+:: Manticore defeated [nobr] {"position":"4300,2775","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case "Library">>
+<p>You accept $npc2.his offer to peruse $npc2.his library, and $npc2.he eagerly waves $npc2.his staff to send you there. When you arrive, it becomes apparent that most of this tower consists of just the library, with books lining every surface, and even floating in a mass in some places. Fortunately, there's a magical index that can bring any book you are interested in to you. You spend some time studying tomes of forgotten lore and magical theory. By the time you're ready for a break, your head feels heavy with knowledge. 
+<<changeStats "int" 5>></p>
+
+You set down what you're reading, but when you do, you find yourself magically transported back to the mountains, the tower nowhere in sight. You weren't exactly a welcome guest, but that was still rather rude. 
+
+<<include "mountain randomization">>
+
+
+
+<<case "Staff">>
+<p>Without a word, you snatch the wizard's staff away from $npc2.him. $npc2.He lets out a dejected "Oh," and slouches sadly. "Very well," $npc2.he grumbles, "you can have my staff. Just point it at yourself and think of the mountains, and get out of here already." </p>
+
+You hesitate for a moment, then follow $npc2.his instructions. Sure enough, you are out in the mountains, but the tower is nowhere to be seen. The staff, however, is still in your hands, so it's not a total loss. 
+<<getItem $wizardStaff>>
+
+<<include "mountain randomization">>
+
+
+
+<<case "Notebook">>
+<p>You shove the wizard $npc2.species to the side and snap shut $npc2.his notebook, pocketting it as $npc2.he sputters out protests. "Wait--no--Come on now--Oh, curse you!" $npc2.he moans, "Fine, fine, take it. Take it and go." $npc2.He slumps over to a seat, one hand under $npc2.his cheek. </p>
+
+$npc2.He points $npc2.his staff at you, and you find yourself back in the mountains, though the tower is gone. You take a look at the notebook. While the first few pages are a sensible set of studious notes, the further it goes, the more jumbled and fragmented it gets. It may prove useful to someone, though. 
+<<getQuest $wizardNotebook>>
+
+<<include "mountain randomization">> 
+
+
+<<case "Eat him">>
+<p>You lick your teeth as you knock away the wizard's staff, backing $npc2.him into a corner. "W-wait," $npc2.he stutters, "what are you doing? Y-y-you can't mean to--" $npc2.He cuts off as you grab $npc2.his arms, pinning them to $npc2.his sides. "No no!" $npc2.he cries. You open your mouth and lower it down upon $npc2.his head, $npc2.his protests becoming muffled yelps as you fit $npc2.him into your maw. 
+<<consume 125 70>></p>
+
+<<if $alive>>
+<p>You lift $npc2.him up, $npc2.his legs flailing under $npc2.his robes as you force $npc2.him into your throat. As $npc2.he descends to your stomach, $npc2.he struggles, but $npc2.his less-than-impressive physical strength makes it nothing but an interesting internal massage to you and your $waist belly. With a few more swallows, you gulp down $npc2.his chest, $npc2.his somewhat rounded midsection, then $npc2.his legs, and soon $npc2.he is nothing more than a crazed wizard bulge in your stomach. </p>
+
+Your belly jiggles a bit as $npc2.he writhes inside you, and you give it a rubbing as it slowly calms and becomes still. That's the only thing that stays calm and still, as the staff's bright white glow catches your eye just in time for it to become an overwhelming flash of light. When it fades and your vision clears, you are somewhere in the mountains, and the tower is nowhere in sight. 
+
+<<include "mountain randomization">>
+
+<<else>>
+You slowly lift $npc2.him upwards as you swallow $npc2.him down, $npc2.his legs flailing in the air as you push $npc2.him into your throat. Even as you pass $npc2.his shoulders, you feel this might have been a mistake, your stomach already protesting as $npc2.he slowly makes $npc2.his way down to it. $npc2.His pushing isn't enough to free $npc2.him, but is certainly enough to make you feel pain, and you have no choice but to gulp the rest of $npc2.him down into your overfilled, $waist stomach. You let out a groan as it shakes and shudders with the $npc2.species's struggles, and lower yourself to the ground, rubbing at it to try to ease the pressure. You're not able to do so just by will alone, unfortunately, and you soon drift off, your slow, deep breaths heralding an onset of unconsciousness. 
+
+<<defeated "overeating">>
+
+<</if>>
+
+
+
+/*Start to event*/
+<<default>>
+<p>With your foe defeated, you are momentarily left wondering how to get out of the featureless pit you are in, but a sudden rush of magic sends the world blurring yet again, and you find yourself staring at the back of the robed $npc2.species, who is muttering to $npc2.himself and bent over a notebook. $npc2.He lets out a curious hum before turning around, a look of confusion sticking on $npc2.his face for a few seconds before $npc2.he recognizes you. </p>
+
+<p>$npc2.His eyes widen and $npc2.he stammers, "Oh. I, er, I see you bested my, ah, my pet. The manticore." As you move, $npc2.he flinches, throwing his hands up submissively. "Wait, wait, wait!" $npc2.he cries, "This is just an unfortunate misunderstanding! Here, let me offer you something to help smooth this over, please." $npc2.He is practically begging as $npc2.he makes you an offer. </p>
+
+<p>"I could let you use my library, surely there's something there that you could learn from. Or, or you could have my staff, you might find it useful to you." </p>
+
+<<if setup.questStarted($wizardNotebook) == false>>
+<p>You look a bit past $npc2.him at the notebook $npc2.he was pouring over. $npc2.He reflexively seems to cover it with a hand, but $npc2.he's certainly not in a position to deny you anything at this point. </p>
+<</if>>
+
+<<action "1" "spells" "Library" "Manticore defeated">>
+	<<set $eventCounterA = "Library">>
+<</action>>
+
+<<action "2" "weapon" "Staff" "Manticore defeated">>
+	<<set $eventCounterA = "Staff">>
+<</action>>
+
+<<if !setup.questStarted($wizardNotebook)>>
+	<<action "c" "spells" "Notebook" "Manticore defeated">>
+		<<set $eventCounterA = "Notebook">>
+	<</action>>
+<</if>>
+
+<<action "3" "devour" "Eat $npc2.him" "Manticore defeated">>
+	<<set $eventCounterA = "Eat him">>
+<</action>>
+
+
+
+
+<</switch>>
+
+
+:: Wizard's Tower [mountains] {"position":"4050,2650","size":"100,100"}
+As you crest a particularly hard to reach mountaintop, you suddenly find yourself facing an odd, cylindrical tower that you didn't see on the way up. Given the way that it shimmers and sparkles, you can assume that it was either invisible, or simply not here, before you got this close. It is apparent that some sort of magic user lives here. 
+
+<<action "c" "mage" "Approach the tower" "Enter the Wizard's tower">>
+<</action>>
+<<action "n" "mountain" "Leave" "Leave the Wizard's tower">><</action>>
+
+
+:: Wizard's experiment [nobr] {"position":"4300,2650","size":"100,100"}
+<p>You give an affirmative, and the $npc2.species immediately reaches out and pats you on the shoulder, $npc2.his smile getting even wider as $npc2.he practically yells with excitement, "Excellent, excellent!" Picking up $npc2.his staff, $npc2.he makes a gesture at you and says "Just one moment while I take you to the proper facilities." The world blurs again, and you find yourself in a sterile, well-lit chamber. </p>
+
+The only other thing in here is an extremely fat $npc3.species who is non-challantly chewing on grains, which $npc3.he keeps pulling from a large bag beside $npc3.him by the <<=$npc3.hand>>ful. 
+
+<<action "c" "next" "Begin the Wizard's experiment">><</action>>
+
+
+
+
+:: Approach the cabal [nobr] {"position":"4575,3050","size":"100,100"}
+<<createFixedNPC "cabalLion">>
+/*Make this text more dynamic based on state*/
+
+<<if visited("Approach the cabal") == 1>>
+
+<p>As you make your way inward, you are met by a pair of what are obviously guards flanking a very important looking, and very large, $npc1.species. The guards are easily <<sayDistance 84>> tall, and the $npc1.species is even taller than that. As they get closer, you can see that the $npc1.species's earth-brown robes only barely contain $npc1.his enormously muscular frame. 
+</p>
+
+$npc1.He approaches you and spreads $npc1.his arms welcomingly, though the serious look on $npc1.his face does not change. "Welcome, stranger," $npc1.he begins, $npc1.his voice a deep rumble, "You've come at an odd time. We are practicioners of the arts of body changing. We seek enlightenment through physical perfection, and utilize raw body mass as the means to alter our bodies. While excess material has been easy to come by in these curious days, our greatest asset has been lost to us." The $npc1.species shakes $npc1.his head, lowering $npc1.his arms. "If you wish to trade with us, we can change aspects of your body if you are willing to repay us with raw materials... That is to say, body fat. We are also willing to trade it for coin, should you so desire." 
+
+<<else>>
+
+<p>The huge and muscular $npc1.adjective guard with the earth-brown robes stands stands at attention as always. "Welcome,<<if setup.questCompleted($cabalRogue)>> honored<</if>> outsider," $npc1.he begins, $npc1.his voice a deep rumble, "If you wish to trade with us, we can change aspects of your body if you are willing to repay us with raw materials... That is to say, body fat. We are also willing to trade it for coin, should you so desire." </p>
+<</if>>
+
+/*If you have a wyvern egg to sell*/
+<<if setup.hasItem($largeWyvernEgg) >= 0>>
+<p>One of the guards seems to pause for a moment, then makes a furtive gesture to the $npc1.species. $npc1.He gives a nod, and says, "My associate believes you have a wyvern's egg. Perhaps we could make you an offer, if you would be interested in trading it." </p>
+
+<</if>>
+
+/*If you haven't started the cabal rogue quest*/
+<<set _rogueQuest = false>>
+<<if $str > 60 or $agi > 60 or $int > 60>>
+<<if !setup.questStarted($cabalRogue) and !setup.questCompleted($cabalRogue)>>
+<p>The $npc1.species gives you a looking over, seeming to appraise you, then says carefully, "You know, if you felt yourself capable, you may be able to help us with a problem we have." The way $npc1.he phrases it makes it sound important, but ominous. </p>
+<<set _rogueQuest = true>>
+
+<</if>><</if>>
+
+/*If you already started the quest*/
+<<if setup.questStarted($cabalRogue) and !setup.questCompleted($cabalRogue)>><<set _rogueQuest = true>><</if>>
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "The Cabal lion says">>
+
+<<if _rogueQuest>>
+	<<action "4" "quest" "Help the cabal">><</action>><</if>>
+
+<<if setup.hasItem($largeWyvernEgg) >= 0>>
+	<<action "1" "gold" "Sell wyvern egg">>
+		<<set $eventCounterA = "">>
+	<</action>>
+<</if>>
+
+<<action "2" "button" "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+<<action "3" "store" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+<<action "9" "leave" "Leave the cabal cave">><</action>>
+
+
+:: Cabal cave {"position":"4575,2800","size":"100,100"}
+While you explore the jagged mountains, you come across a cave. You can hear what sounds like ritual chanting just on the edge of hearing coming from within. You'll need to go in to find out what's in there. 
+
+<<action "c" "next" "Enter the cave" "Enter the cabal cave">><</action>>
+<<action "n" "mountain" "Leave" "Leave the cabal cave">><</action>>
+
+
+:: Change your body [nobr] {"position":"4450,3050","size":"100,100"}
+<<createFixedNPC "cabalRabbit" 2>>
+
+<<switch $eventCounterA>>
+
+
+<<case "height">>
+"Alter your size, eh?" the $npc2.species hums. "We can do that. Making you larger will make you stronger, but more clumsy. Making you smaller will make you faster, but weaker. So which will it be?"
+
+<<action "w" "up" "Taller!" "Change your body">>
+	<<set $eventCounterA = "Taller">><</action>>
+<<action "e" "down" "Shorter!" "Change your body">>
+	<<set $eventCounterA = "Shorter">><</action>>
+<<action "c" "leave" "Nevermind" "Change your body">>
+	<<set $eventCounterA = "">><</action>>
+
+
+/*========================*/
+
+
+<<case "Taller">>
+<<if $p.height < setup.tuning("playerHeightMax")>>
+
+/*Sets cost based on whether you're above your base height*/
+<<if $p.height > $p.bheight>>
+<<set _cost = Math.pow(Math.abs($p.bheight - $p.height), 1.5) * 10>>
+<<else>>
+<<set _cost = Math.pow(Math.abs($p.bheight - $p.height), 1.1) * 10>>
+<</if>>
+
+/*Adds base cost*/
+<<set _cost = Math.round(_cost + 10)>>
+
+/*Not enough fat*/
+<<if _cost > $fat>>
+The $npc2.species gives you a looking over, walking over to poke your $waist belly with $npc2.his staff. $npc2.He shakes $npc2.his head, and says, "I'm afraid you just don't have the mass to make you larger to a significant degree. You'll just have to come back when you have about <<sayWeight _cost>> of fat you need to get rid of. Perhaps there's something else I can do for you instead." 
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+/*Change height*/
+<<else>>
+<p>"Alright then, hold still." At that, the $npc2.species begins to slowly wave $npc2.his staff in odd patterns, chanting out arcane syllables carefully. The magic circle you are standing in glows, and a hazy red tendril of energy begins to emanate from your $fatness midsection. It splits into multiple smaller tendrils and flows back into your limbs, chest, neck, and spine, though one leads back to the $npc2.species and into $npc2.his belly. Your body slims steadily, and your feet begin to sink away from you. 
+<<set $fat -= _cost>>
+/*<<set $p.height += 1>>*/
+<<changeStats "height" 1>>
+/* FIXES AND EDITS - Remove stat adjustments from resizing at cabal */
+
+/*<<set $bstr *= 1.01>>*/
+/*<<set $bagi /= 1.01>>*/
+/*<<set $bsto *= 1.01>>*/
+
+<<updateStats>>
+</p>
+
+A quick examination of yourself shows you that your body is, surely enough, enlarging. As you grow, $npc2.his belly swells larger and larger. Eventually, the tendril ceases to flow out of you, leaving you standing <<sayDistance $p.height>> tall, and the $npc2.species letting out a hum and patting at $npc2.his bloated stomach. "Mmm, well that was fun, wasn't it?" $npc2.he asks. 
+
+
+<<action "c" "next" "Thanks!" "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+<</if>>
+
+/*Too tall already*/
+<<else>>
+"Woah there, big $p.boy. Unfortunately your height is a bit... out of my range. You're already as tall as I can make you without... dangerous consequences. Sorry, but, cabal policies."
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+<</if>>
+
+
+/*========================*/
+
+
+
+<<case "Shorter">>
+<<if $p.height > setup.tuning("playerHeightMin")>>
+
+/*Sets cost based on whether you're below your base height*/
+<<if $p.height < $p.bheight>>
+<<set _cost = Math.pow(Math.abs($p.bheight - $p.height), 1.5) * 8>>
+<<else>>
+<<set _cost = Math.pow(Math.abs($p.bheight - $p.height), 1.1) * 8>>
+<</if>>
+
+/*Adds base cost*/
+<<set _cost = Math.round(_cost + 10)>>
+
+/*Not enough fat*/
+<<if _cost > $fat>>
+$npc2.He gives you a thorough looking over and shakes $npc2.his head. "It'd be dangerous to make you smaller without extra material to reshape what's left," $npc2.he explains. "Please, come back when you've got at least <<sayWeight _cost>> to throw around, so to speak."
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+/*Change height*/
+<<else>>
+<p>"Alright, stand right there." With that, the $npc2.species begins to wave $npc2.his staff in spiralling patterns, carefully chanting out magic words. The magic circle you are standing in responds, beginning to glow, and a hazy red tendril of magical energy begins to flow out of your $fatness midsection. Several smaller tendrils snake off of it and flow back into your arms, legs, chest, spine, and neck, but one lazily floats toward the $npc2.species's belly. 
+<<set $fat -= _cost>>
+/*<<set $p.height -= 1>>*/
+<<changeStats "height" -1>>
+/* FIXES AND EDITS - Remove stat adjustments from resizing at cabal */
+
+/*<<set $bstr /= 1.01>>*/
+/*<<set $bagi *= 1.01>>*/
+/*<<set $bsto /= 1.01>>*/
+
+<<updateStats>>
+</p>
+
+The world seems to get bigger around you, but as you give yourself a closer look, you confirm that you are, indeed, getting smaller. As you get smaller, $npc2.his belly bulges bigger and bigger. After a few more moments, the tendril ceases to flow out from you, leaving you <<sayDistance $p.height>> tall, and the $npc2.species gives a hum as $npc2.he rubs at $npc2.his swollen belly. "Mmm, I love my job," $npc2.he murmurs. 
+<<action "c" "next" "Thanks!" "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+<</if>>
+
+/*Too short already*/
+<<else>>
+"Woah there, little $p.man. Unfortunately you're already a bit too... under my range. You're already as short as I can make you without... dangerous consequences. Sorry, but, cabal policies." 
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+<</if>>
+
+
+
+/*========================*/
+
+
+<<case "species">>
+<<if $fat >= 200>>
+"Altering your species won't take //too// much," $npc2.he explains, "But I will take some of your fat as a cost for doing it. So what would you like to be?"
+
+<<action "w" "next" "Go ahead!" "Change your body">>
+	<<set $eventCounterA = "slect species">><</action>>
+<<action "e" "no" "Actually..." "Change your body">>
+	<<set $eventCounterA = "">><</action>>
+
+<<else>>
+<<set _difference = Math.ceil(200 - $fat)>>
+$npc2.He looks you over carefully, then walks over and pinches your belly's skin. "Not to be cruel," $npc2.he starts, "but you're short at least another <<sayWeight _difference>> of fat for me to work with, let alone cover the fee I intended. Maybe you should consider eating more?" $npc2.He shrugs. 
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+<</if>>
+
+
+/*========================*/
+
+
+<<case "slect species">>
+Select species (or pick whatever's closest): <br>
+/* FIXES AND EDITS - Unified species lists + allowed for modded species */
+<<printSpeciesOptions "$species">>
+
+<<action "c" "next" "Edit species" "Change your body">>
+	<<set $eventCounterA = "edit species">><</action>>
+
+/*========================*/
+
+
+/* FIXES AND EDITS - Remake and fix species editor */
+<<case "edit species">>
+	<<set $eventCounterB = "cabal">>
+	<<include "Species Editor">>
+
+/*========================*/
+
+/* FIXES AND EDITS - Remake and fix species editor */
+<<case "species selected">>
+	/* (changes have already been applied in the editor passage) */
+	
+	"Alright then, hold still for a moment," $npc2.he says as the circle you stand in begins to glow. There is a surprisingly-painless series of shifts and pops in your bones, and your skin crawls as it changes consistency. A small tendril of hazy red energy snakes its way out of you and into the $npc2.species's belly, making it almost imperceptibly larger before it dissipates. In a few more moments, your body has changed, and you stand there feeling like a brand new $p.species. 
+
+	<<changeStats "fat" -200>>
+	<<action "c" "next" "Thanks!" "Change your body">>
+		<<set $eventCounterA = "">>
+	<</action>>
+
+/*========================*/
+
+
+<<case "gender">>
+
+<<if $fat >= 200>>
+"So, want to see how the other half lives, eh? That's won't take much, but I will take a bit of your fat as a fee. Care to give me the go-ahead?" 
+
+<<action "w" "next" "Go ahead!" "Change your body">>
+	<<set $eventCounterA = "input gender">><</action>>
+<<action "e" "no" "Actually..." "Change your body">>
+	<<set $eventCounterA = "">><</action>>
+
+<<else>>
+$npc2.He looks you over carefully, then walks over and pinches your belly's skin. "Not to be cruel," $npc2.he starts, "but you don't have enough mass for me to work with, let alone cover the fee I intended. You need at least <<sayWeight 200>> of fat to spend first. Maybe you should consider eating more?" $npc2.He shrugs. 
+<<action "c" "next" "Oh..." "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+<</if>>
+
+
+/*========================*/
+
+
+<<case "input gender">>
+<<set $gender = $male>>
+<<if $p.male == $gender.male>><<set $gender = $female>><</if>>
+
+Title (Male/Female):
+<<textbox "$p.male" $gender.male>>
+<br>Subjective (He/She):
+<<textbox "$p.he" $gender.he>>
+<br>Objective (Him/Her):
+<<textbox "$p.him" $gender.him>>
+<br>Possessive (His/Her):
+<<textbox "$p.his" $gender.his>>
+<br>Reflexive (Himself/Herself):
+<<textbox "$p.himself" $gender.himself>>
+<br>Title (Man/Woman):
+<<textbox "$p.man" $gender.man>>
+<br>Diminuitive title (Boy/Girl):
+<<textbox "$p.boy" $gender.boy>>
+<br>Familial title (Brother/Sister):
+<<textbox "$p.brother" $gender.brother>>
+<br>Honorific (Sir/Ma'am):
+<<textbox "$p.sir" $gender.sir>>
+<br>Formal honorific (Gentleman/Gentlewoman):
+<<textbox "$p.gentleman" $gender.gentleman>>
+<br>The other kind of honorific? (Mister/Miss):
+<<textbox "$p.mister" $gender.mister>>
+<br>Regional honorific (Lad/Lass):
+<<textbox "$p.lad" $gender.lad>>
+<br>Longer regional honorific (Laddie/Lassie):
+<<textbox "$p.laddie" $gender.laddie>>
+<br>Folksy honoric (Fella/Missy):
+<<textbox "$p.fella" $gender.fella>>
+<br>Slightly too familiar honorific (Buddy/Pal):
+<<textbox "$p.buddy" $gender.buddy>>
+<br>Slightly disrepectful honorific (Guy/Lady):
+<<textbox "$p.guy" $gender.guy>>
+<br>Slightly demeaning but well intentioned honorific (Sport/Champ/Slugger/Dork):
+<<textbox "$p.sport" $gender.sport>>
+
+<<action "c" "next" "Done" "Change your body">>
+	<<set $eventCounterA = "changing gender">><</action>>
+
+/*========================*/
+
+
+<<case "changing gender">>
+/*Scrubs text entry of gender*/
+<<set $p.male = $p.male.toLowerCase()>>
+<<set $p.he = $p.he.toLowerCase()>>
+<<set $p.him = $p.him.toLowerCase()>>
+<<set $p.his = $p.his.toLowerCase()>>
+<<set $p.himself = $p.himself.toLowerCase()>>
+<<set $p.man = $p.man.toLowerCase()>>
+<<set $p.boy = $p.boy.toLowerCase()>>
+<<set $p.sir = $p.sir.toLowerCase()>>
+<<set $p.mister = $p.mister.toLowerCase()>>
+<<set $p.guy = $p.guy.toLowerCase()>>
+<<set $p.brother = $p.brother.toLowerCase()>>
+<<set $p.fella = $p.fella.toLowerCase()>>
+<<set $p.buddy = $p.buddy.toLowerCase()>>
+<<set $p.gentleman = $p.gentleman.toLowerCase()>>
+<<set $p.lad = $p.lad.toLowerCase()>>
+<<set $p.laddie = $p.laddie.toLowerCase()>>
+<<set $p.sport = $p.sport.toLowerCase()>>
+
+<<set $p.Male = $p.male.toUpperFirst()>>
+<<set $p.He = $p.he.toUpperFirst()>>
+<<set $p.Him = $p.him.toUpperFirst()>>
+<<set $p.His = $p.his.toUpperFirst()>>
+<<set $p.Himself = $p.himself.toUpperFirst()>>
+<<set $p.Man = $p.man.toUpperFirst()>>
+<<set $p.Boy = $p.boy.toUpperFirst()>>
+<<set $p.Sir = $p.sir.toUpperFirst()>>
+<<set $p.Mister = $p.mister.toUpperFirst()>>
+<<set $p.Guy = $p.guy.toUpperFirst()>>
+<<set $p.Brother = $p.brother.toUpperFirst()>>
+<<set $p.Fella = $p.fella.toUpperFirst()>>
+<<set $p.Buddy = $p.buddy.toUpperFirst()>>
+<<set $p.Gentleman = $p.gentleman.toUpperFirst()>>
+<<set $p.Lad = $p.lad.toUpperFirst()>>
+<<set $p.Laddie = $p.laddie.toUpperFirst()>>
+<<set $p.Sport = $p.sport.toUpperFirst()>>
+
+
+$npc2.He raises her staff, mumbling certain arcane words as the magic circle glows, and subtle changes begin to take place in your body. Your proportions change, organs twist and move, and fat deposits shift to change emphasis on your body's shape. A small tendril of hazy red energy snakes its way out of you and into the $npc2.species's belly, making it almost imperceptibly larger before it dissipates. Just like that, you've changed into a new $p.man. 
+
+<<changeStats "fat" -200>>
+
+<<action "c" "next" "Thanks!" "Change your body">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+
+/*========================*/
+
+
+<<default>>
+<p>You ask about how they might change your body, and the $npc1.species has one of the guards show you to what seems to be a magical laboratory, if the sigils on the ground, books, and staves are any indication. There, you encounter a tall, thin $npc2.species $npc2.gentleman wearing clean robes and trousers. $npc2.He is dutifully studying, waving a hand in arcane motions and holding a book in the other before looking up to see you. 
+</p>
+
+"Ah, someone looking for my services, I take it?" $npc2.He sets down $npc2.his book and picks up a staff, motioning for you to stand in the sigil. "Here's what I can do for you: I can make you larger or smaller, change what species you are, or change your gender. You'll need to have a certain amount of mass for any of these, and I will take some as a fee, on top of it. If that doesn't appeal to you, then you can head off as you wish. So what will it be?" 
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "The cabal rabbit says">>
+
+<<action "w" "next" "Alter your height" "Change your body">>
+	<<set $eventCounterA = "height">><</action>>
+<<action "c" "next" "Alter your species" "Change your body">>
+	<<set $eventCounterA = "species">><</action>>
+<<action "e" "next" "Alter your gender" "Change your body">>
+	<<set $eventCounterA = "gender">><</action>>
+<<action "n" "leave" "Leave" "Approach the cabal">><</action>>
+
+<</switch>>
+
+
+:: Enter the cabal cave {"position":"4575,2925","size":"100,100"}
+You steel yourself and slowly march inside, cold stone echoing your footsteps as you enter. As you enter, you are greeted by the sight of robed figures of varying sizes. Some are incredibly large, some are equally incredibly small. Given the glowing glyphs that decorate the place, it's obvious that this is some form of magical cabal. 
+
+<<action "c" "next" "Keep going" "Approach the cabal">><</action>>
+<<action "n" "mountain" "Leave" "Leave the cabal cave">><</action>>
+
+
+:: Help the cabal [nobr] {"position":"4450,3175","size":"100,100"}
+<<createFixedNPC "cabalRogue" 2>>
+
+/*Start quest*/
+<<if !setup.questStarted($cabalRogue)>>
+<p>When you express an interest in helping the group, the $npc1.species nods and leads you to a small room. The guards stand outside as $npc1.he gestures you towards a seat. </p>
+
+<p>"I'm afraid our situation is most dire," $npc1.he says, $npc1.his face deathly serious. "One of our number has gone rogue, and taken our most valuable artifact with $npc2.him: An enchanted cauldron that once stored all of the magical energies that we utilize to alter a body. The kind of power $npc2.he has available to $npc2.him..." The $npc1.species shakes $npc1.his head, $npc1.his brow furrowed, then continues. "As well, I fear $npc2.he is partially responsible for the oddities that have plagued these mountains. Many creatures and even people bear marks that indicate our magic has been used on them, but wrongly. I have little doubt that $npc2.he has spread lies and half-truths of our magic to those that would seek it." $npc1.He hands you a map of the area, and a fairly distant mountain is circled on it. "We have tracked $npc2.him to that point," the $npc1.species continues, "but $npc2.he has fortified the location, and $npc2.his magic circles make even entering a risky proposition. If you are to face $npc2.him, know that $npc2.he will be prepared to use the full force of $npc2.his magical prowess against you. Follow the map when you are ready to face $npc2.him, but be aware: $npc2.He will most certainly use your own body against you." </p>
+
+You pocket the map, and are lead back out to the main room. 
+<<getItem $cabalMap>>
+<<getQuest $cabalRogue>>
+<<action "c" "next" "You can count on me!" "Approach the cabal">>
+<</action>>
+
+/*Quest started but not finished*/
+<<elseif !setup.questReady($cabalRogue)>>
+"We have tracked $npc2.him to that point," the $npc1.species says, "but $npc2.he has fortified the location, and $npc2.his magic circles make even entering a risky proposition. If you are to face $npc2.him, know that $npc2.he will be prepared to use the full force of $npc2.his magical prowess against you. Follow the map when you are ready to face $npc2.him, but be aware: $npc2.He will most certainly use your own body against you." 
+
+<<action "c" "next" "Right, I remember that" "Approach the cabal">>
+<</action>>
+
+/*Turn in quest*/
+<<else>>
+You present the cauldron to $npc1.him. $npc1.His face brightens with a relieved smile as $npc1.he takes it from you. "You've done it!" $npc1.he exclaims. "It's almost too fortunate to be real. Please, wait here just a moment." $npc1.He heads back with the cauldron into $npc1.his chamber, and returns a few moments later bearing a dark colored robe. "When we discovered what our rogue member had done, we searched $npc2.his quarters and found this robe. Apparently $npc2.he did not have time to take it with $npc2.him. It is enchanted with potent magics unlike any that we have ever seen. While we had intended to study it and unlock its mysteries ourselves, it is clear to me that you would make better use of it. Wear it well, honored outsider. You will always be welcome among us." 
+<<removeItem $cabalMap>>
+<<removeItem $cabalCauldron>>
+<<questReward $cabalRogue>>
+
+<<action "c" "next" "Thank you!" "Approach the cabal">>
+<</action>>
+
+<</if>>
+
+
+:: Leave the cabal cave {"position":"4450,2800","size":"100,100"}
+You decide that magic is the last thing you want to deal with right now, and head back out to find a different adventure. 
+
+<<include "mountain randomization">>
+
+
+:: Sell fat to the cabal [nobr] {"position":"4575,3175","size":"100,100"}
+<<switch $eventCounterA>>
+<<createFixedNPC "cabalOwl" 3>>
+
+<<case "">>
+<p>You show interest in trading fat around, and are shown the way to a chamber that is in slight disarray, various pens containing <<=$chicken.plural>>, <<=$pig.plural>>, even a couple of <<=$cattle.plural>>, all in varying degrees of obesity, and all letting out subdued, yet cacophonous, noises. A slightly frazzled looking $npc3.male $npc3.species in a loose, sleeveless robe and plain pants is moving between the lot of them, occasionally waving $npc3.his arms and whispering a few arcane words to send a tendril of of magic from one to another. 
+</p>
+
+$npc3.He turns $npc3.his head to look at you, back still to you, not stopping $npc3.his rhythmic arm movements. "Ah, hello. Things are still a bit disorganized, so pardon the mess." Turning to work with a <<=$pig.species>> in your direction, $npc3.he asks, "I sort the mass here. Did you want sell us some?"
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "The cabal owl says">>
+
+<<action "1" "gold" "10%" "Sell fat to the cabal">>
+	<<set $eventCounterA = 0.1>><</action>>
+<<action "2" "gold" "25%" "Sell fat to the cabal">>
+	<<set $eventCounterA = 0.25>><</action>>
+<<action "3" "gold" "50%" "Sell fat to the cabal">>
+	<<set $eventCounterA = 0.5>><</action>>
+<<action "4" "gold" "75%" "Sell fat to the cabal">>
+	<<set $eventCounterA = 0.75>><</action>>
+<<action "5" "gold" "100%" "Sell fat to the cabal">>
+	<<set $eventCounterA = 1>><</action>>
+
+<<action "se" "leave" "Leave" "Approach the cabal">><</action>>
+
+/*===============*/
+
+
+<<default>>
+<<set _selling = $fat * $eventCounterA>>
+
+<<if _selling < 3>>
+"Hmmmm, well," The $npc3.species eyes you up and down, "Sorry to say this but I'm not sure the juice is worth the squeeze, if you catch my meaning. Maybe you can come back here when you put on some more weight?"
+
+<<action "c" "next" "Oh..." "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>> 
+
+<<elseif _selling <= 10>>
+<<set $fat -= _selling>>
+<<updateStats>>
+"Every little bit is appreciated," $npc3.he says, then waves a $npc3.hand at you. A whispy red tendril snakes out from you and into one of the <<=$chicken.plural>>, making it look a little rounder. You are slightly lighter, now $fatness in appearance. In the midst of $npc3.his sorting, $npc3.he hands you a handful of gold coins. 
+
+<<set _selling /= 3>>
+<<doGld _selling>>
+<<action "c" "next" "Thanks!" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>>
+
+<<elseif _selling <= 30>>
+<<set $fat -= _selling>>
+<<updateStats>>
+"Your contribution is appreciated," $npc3.he says sincerely, then waves both hands at you. A few whispy red tendrils snake out of you, each making its way to a $chicken.species, leaving them a bit rounder than before. You feel a good bit lighter, and your body is $fatness. You are handed a small pouch of gold for your trouble. 
+
+<<set _selling /= 3>>
+<<doGld _selling>>
+<<action "c" "next" "Thanks!" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>>
+
+<<elseif _selling <= 60>>
+<<set $fat -= _selling>>
+<<updateStats>>
+"Oh, that's rather a lot, thank you," $npc3.he says, then points both hands at you. "Hmm, going to have to find a place for some of this," $npc3.he mumbles, and three glowing red tendrils of magical energy seep out of you. Two of them make their way to a pair of <<=$pig.plural>>, their rounded sides thickening with the addition of more fat, and the other snakes into the $npc3.species's belly, making it bulge out like $npc3.he'd had quite a meal. You, on the other hand, feel lighter, and look $fatness. $npc3.He lets out a //"phew"// and hands you a pouch of gold, resuming $npc3.his sorting. 
+
+<<set _selling /= 3>>
+<<doGld _selling>>
+
+<<action "c" "next" "Thanks!" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>>
+
+<<elseif _selling <= 200>>
+<<set $fat -= _selling>>
+<<updateStats>>
+"//Oh dear//, going to have to find places to put all of this," $npc3.he mumbles, then says louder, "We appreciate your generosity." Focussing on you, $npc3.he holds $npc3.his hands out and beckons. Bright tendrils of red magical energy issues forth from you, several gliding through the air and seeping into a $cattle.species's belly, softening it up and sending it sinking noticeably closer to the ground. Hemming and hawing, several more are redirected towards the $npc3.species's belly, where they seep into $npc3.his body. $npc3.His belly swells, filling out his robe and causing $npc3. him to let out a bit of a muffled grunt. "Th-thank you," $npc3.he stammers, taking a breath and patting at $npc3.his now large stomach before handing you a hefty pouch of gold. You are left both lighter and richer, and your body is now $fatness. 
+
+<<set _selling /= 3>>
+<<doGld _selling>>
+<<action "c" "next" "Thanks!" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>>
+
+<<else>>
+<<set $fat -= _selling>>
+<<updateStats>>
+<p>The $npc3.species takes a deep breath when $npc3.he realizes just how much mass $npc3.he's going to be throwing around. "//Right//, here goes, then," $npc3.he says quietly, focussing on you and pointing both arms at you for a moment, then throwing them upwards in a ritualistic gesture. A vibrant red tendril of magical energy issues forth from you, splitting off into numerous smaller ones that seep into the rounded bellies of every beast in the room, all growing noticeably fatter and more lethargic. </p>
+
+<p>Humming and harumphing, the $npc3.species directs the still-bright tendril from one end of the room to the other, stuffing every beast in $npc3.his path with your fat. "Didn't care much for a thin figure anyways," $npc3.he mumbles, and the tendril snakes through the air and towards $npc3.his belly. $npc3.He starts taking deep breaths as $npc3.his stomach stretches and swells. Stifling grunts and moans, $npc3.his robe fills with $npc3.his belly, then overfills, pressing open and showing $npc3.his feathers as it grows round, taut, and huge. It hangs out over the top of $npc3.his pants, which $npc3.he lowers slightly in response, and still bulges further, and further, and further... A few moments later, the tendril finally fades entirely into $npc3.his giant belly, and $npc3.he sinks to a seat, letting out an //"Oog."// You feel significantly lighter, and looks $fatness, but the $npc3.species's not so fortunate. </p>
+
+"Ah," $npc3.he starts slowly, "yeah, gonna have to... find a place for this." $npc3.He produces a sack of gold and holds it up in the air with one arm in your general direction, the other rubbing over $npc3.his entirely too full stomach. "Here, this... take this for... //oog//..." $npc3.he mumbles. You decide that $npc3.he's had enough for the moment and head back out. 
+
+<<set _selling /= 3>>
+<<doGld _selling>>
+<<action "c" "next" "Thanks!" "Sell fat to the cabal">>
+	<<set $eventCounterA = "">><</action>>
+
+<</if>>
+
+<</switch>>
+
+
+:: Sell wyvern egg [nobr] {"position":"4450,2925","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case "str">>
+You spend some time training with the Cabal. It is an unusual course, more devoted to the understanding of what strength is, focusing on unusual parts of the body, but you do emerge stronger. 
+<<changeStats $eventCounterA 4>>
+<<action "c" "next" "Approach the cabal">><</action>>
+
+
+<<case "agi">>
+You spend some time training with the Cabal. The exercise seems to be more about the understanding of flexibility and time, focusing on stretches and meditation, but you do emerge faster. 
+<<changeStats $eventCounterA 4>>
+<<action "c" "next" "Approach the cabal">><</action>>
+
+
+<<case "int">>
+You spend some time training with the Cabal. The course involves pondering the nature of the infinitely large and the infinitely small in meditation. You become keenly aware of how little you truly know in the face of all that is, but the humbling knowledge does give you new insights. 
+<<changeStats $eventCounterA 4>>
+<<action "c" "next" "Approach the cabal">><</action>>
+
+
+<<case "end">>
+You spend some time training with the Cabal. The exercise involves repeating mantras while being hit in the stomach with sticks. It's straightforward and hurts, but you do emerge tougher. 
+<<changeStats $eventCounterA 4>>
+<<action "c" "next" "Approach the cabal">><</action>>
+
+
+<<case "sto">>
+You spend some time training with some of the more 'robust' members of the Cabal. The course seems to be fairly new and experimental, involving unusual 'exercises' with bellows, stomach massages and mantras of endurance. You're left a little light-headed, but feel like you could eat more now. 
+<<changeStats $eventCounterA 4>>
+<<action "c" "next" "Approach the cabal">><</action>>
+
+<<case "hold onto it">>
+The $npc1.species pulls $npc1.his hand up to rub at $npc1.his chin as you put the egg back with your belongings. 
+<<getItem $largeWyvernEgg>>
+
+"I understand. If you change your mind, the offer stands," $npc1.he says humbly. You are led back to the main chamber. 
+<<action "c" "next" "Approach the cabal">><</action>>
+											
+<<default>>
+<p>You hand over the egg, which is still surprisingly warm for how long it's been out in the cold. The $npc1.species claps $npc1.his hands together, a smile crossing $npc1.his large face for the first time since you've been here. "Wonderful!" $npc1.he exclaims. One of $npc1.his guards takes the egg to a small, pillow-lined chamber and carefully sets it down. 
+<<removeItem $largeWyvernEgg>></p>
+
+The $npc1.species nods approvingly at this and turns back to you. "While we cannot offer to teach our magics to an outsider, we //can// assist you in training your body. What shall it be, then?" 
+
+<<action "1" "next" "Train strength" "Sell wyvern egg">>
+	<<set $eventCounterA = "str">>
+<</action>>
+<<action "2" "next" "Train agility" "Sell wyvern egg">>
+	<<set $eventCounterA = "agi">>
+<</action>>
+<<action "3" "next" "Train intelligence" "Sell wyvern egg">>
+	<<set $eventCounterA = "int">>
+<</action>>
+<<action "4" "next" "Train endurance" "Sell wyvern egg">>
+	<<set $eventCounterA = "end">>
+<</action>>
+<<action "5" "next" "Train stomach capacity" "Sell wyvern egg">>
+	<<set $eventCounterA = "sto">>
+<</action>>
+<<action "6" "leave" "Nevermind" "Sell wyvern egg">>
+	<<set $eventCounterA = "hold onto it">>
+<</action>>
+
+
+<</switch>>
+
+
+:: The Cabal lion says [nobr] {"position":"4700,2925","size":"100,100"}
+<<setPopupTitle "Talk to the cabal leader">>
+<<createFixedNPC "cabalRogue" 2>>
+
+<<if setup.questStarted($cabalRogue) and !setup.questCompleted($cabalRogue)>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Our rogue member is a great $npc2.color-$npc2.furred $npc2.species. $npc2.He chose the path of physical might, but had a keen mind for magics just the same. It is likely $npc2.he has made himself quite the giant."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"The magics $npc2.he practiced involved more and more dangerous methods of quelling an opponent by robbing them of strength. I should have known when I saw, but I didn't recognize it before: $npc2.He revels in cruelty and abasing the weak."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"I fear the oversized insects may be $npc2.his doing. To what end, I cannot fathom, however. Perhaps $npc2.he seeks to harvest of them when $npc2.he feels $npc2.he can elude us. Perhaps $npc2.he has already done so..."
+<<set $eventCounterB++>>
+
+<<case 3>>
+"Somehow, I doubt $npc2.he acted alone, but what degree of assistance $npc2.he has received, and from who, I simply do not know. If you best $npc2.him, endeavor to search $npc2.his chambers for any hint of this."
+<<set $eventCounterB++>>
+
+<<default>>
+The $npc1.species thinks for a moment and shrugs, out of anything more to say.
+
+<</switch>>
+
+<<else>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"We rarely get outsiders, for this place is obfuscated from the outside world, but travellers are always welcome to warm themselves here."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"I am the leader of this circle, though that distinction is only granted by my comrades. They trust me to lead them, and I am humbled by that trust."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"The guards have taken a vow of silence, only speaking when it is needed that they may better hear. Their noble devotion is appreciated."
+<<set $eventCounterB++>>
+
+<<case 3>>
+"Physical perfection means different things to different people. You will see those of great size and strength, those of small and swift nature, and those that seek the middle path. All views are considered correct here."
+<<set $eventCounterB++>>
+
+<<default>>
+The $npc1.species thinks for a moment and shrugs, out of anything more to say.
+
+<</switch>>
+
+<</if>>
+
+
+:: The cabal owl says [nobr] {"position":"4700,3050","size":"100,100"}
+<<setPassageTitle "Talk to the cabal fat storer">>
+<<createFixedNPC "cabalRabbit" 2>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"All this is the raw materials we work with here. What with recent times, we've not been at a lack of it, but storing it all has been tricky."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"The art of transferring body mass is more complicated than it may seem. You have to know the specifics so that you don't seriously hurt someone by taking something vital away from them."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"How do we get the gold? Well, a couple sources: With the excess of materials we have, we sell some of our livestock at a premium. As well, a few of our number seek knowledge in the outside world, so they do some adventuring for coin at times."
+<<set $eventCounterB++>>
+
+<<default>>
+"That $npc2.species $npc2.boy that works with outsiders is a bit frustrating sometimes. Takes everything we do as fun, rarely serious. But, well, it's hard not to like $npc2.him for it, I'll admit."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: The cabal rabbit says [nobr] {"position":"4325,3050","size":"100,100"}
+<<setPopupTitle "Talk to the cabal bodyshaper">>
+<<createFixedNPC "cabalOwl" 3>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"I'm tasked with helping outsiders. I volunteered, really; I like meeting new and interesting people, and making them even more interesting."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Our leader speaks humbly, but the truth of the matter is that $npc1.he's the best of all of us. Not that I won't do a great job with whatever you need, of course."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"You should talk to the $npc3.species that's working on sorting the magical energy. $npc3.He could use someone to break $npc3.his concentration."
+<<set $eventCounterB++>>
+
+<<default>>
+"Names? Oh, we avoid using them around outsiders. Nothing personal; we abandon our old names and take up new ones just for our brothers and sisters in the circle. We've got a lot of fun, weird rules like that."<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+
+
+:: Ask about Sampson's chainmail {"position":"5200,3475","size":"100,100"}
+<<set _theTitle = "Ask about "+$npc4.Name+"'s chainmail">>
+<<setPopupTitle _theTitle>>
+"This armor magic, yes. $npc1.Name's work, no. Broken, yes. Fix it for you, no. Wrong magic. Try out West- hear of VERY good armourer on island somewhere. Maybe their work."
+
+
+:: Defeated Smarty {"position":"5225,2725","size":"100,100"}
+<<setPassageTitle "Defeated $npc1.Name">>
+
+The $npc1.species curses you from the ground, and inside, you can see every face turning to you. Knowing that it is now time to beat feet, you head down off the mountain and as far away as you can get. 
+<hr>
+<<include "mountain randomization">>
+
+
+:: Defeated snookums {"position":"5100,2725","size":"100,100"}
+<<createFixedNPC "smarty">>
+<<createFixedNPC "snookums" 2>>
+
+<<setPassageTitle "Defeated $npc2.Name">>
+
+The giant $npc2.species lies panting on the ground, breathless and beaten. You turn to go out, when suddenly a $npc1.male $npc1.species in tattered robes appears in front of you. When $npc1.he spots the $npc2.species, $npc1.he cries out, ''"$npc2.Name!"'' Turning to you, $npc1.his face turns almost ferally furious. "You think you can cause trouble in ''MY'' town and just get away with it?!" $npc1.He pulls a wand out from $npc1.his robe, and you're in another fight! 
+<hr>
+<<startCombat $smarty>>
+<<updateEnemyWithNPC "smarty">>
+
+
+:: Earl says {"position":"4875,3375","size":"100,100"}
+<<createFixedNPC "smarty" 2>>
+<<createFixedNPC "mountainWizardAssistant" 3>>
+
+<<setPopupTitle "Talk to $npc1.Name">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Name's $npc1.Name. Used to run a farm a'fore I got 'sperimented on. Now I do it here for these folks. They're good people, once ya get 'em calmed down."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"That light up there? $npc2.Name's idea. Accordin' to $npc2.him, it's an ar-tee-fishul sun, and the brainy ones power it ta help 'em get rid 'a excess magic."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Me n' the other fast fellers do the cookin' 'round here. Always got a lot a' that ta be done, and keeps the hands busy."
+<<set $eventCounterB++>>
+
+<<default>>
+"You seen my $npc3.brother? Think $npc3.he's with that wizard feller what made me all twitchy. I'm sure $npc3.he's fine, though. $npc3.He's a tough one."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Enter experiment cave [mountains] {"position":"4850,2850","size":"100,100"}
+<<createFixedNPC "snookums">>
+
+You steel yourself and slowly march inside, cold stone echoing your footsteps as you enter. As you enter, you can see various furs in different states of bodily extreme. Particularly thin ones and immensely fat ones can be seen eating non-stop, while some holding their heads are visible sending crackling bolts of magic out against stone target dummies. The one that guards the door, however, is a massively muscular brute of $npc1.article $npc1.species, nearly half again as large as any of the others you can see, and staring at you intently, a massive column of stone held tightly in one hand. 
+
+<<action "c" "talk" "Talk to them" "Talk to experiments">><</action>>
+<<action "n" "leave" "Leave" "Leave experiment cave">><</action>>
+
+
+:: Experiment Town [mountains] {"position":"4975,3250","size":"100,100"}
+<<createFixedNPC "snookums">>
+<<createFixedNPC "smarty" 2>>
+
+You walk up to $npc1.Name, who nods at you and grunts affirmatively. $npc1.He walks with you as you head for the center of the make-shift cave town. 
+
+<<action "nw" "store" "Experiment town farm">><</action>>
+<<action "sw" "store" "Experiment town forge">><</action>>
+<<action "ne" "spells" "$npc2.Name's shack" "Smarty's shack">><</action>>
+<<action "se" "leave" "Leave" "Mountains">><</action>>
+
+
+:: Experiment cave [nobr] {"position":"4975,2725","size":"100,100"}
+While you explore the jagged mountains, you come across a cave. You can hear what sounds like crazed babbling coming from within. You'll need to go in to find out what's in there. 
+
+<<action "c" "next" "Enter" "Enter experiment cave">><</action>>
+<<action "n" "mountain" "Leave" "Leave experiment cave">><</action>>
+
+
+:: Experiment town farm [nobr] {"position":"4975,3375","size":"100,100"}
+<<createFixedNPC "earl">>
+
+<p>You are lead to an expansive cavern that is well lit by an odd glowing orb near its peak. What is more odd, though, is that the cave floor appears to be sprouting plant life. Several <<=$cattle.plural>> graze on grass, and a pen is occupied by several fat <<=$pig.plural>>. Elsewhere, small fields of wheat, corn, and assorted vegetables grow just as vibrantly as they would in a calm, warm grassland. Several extremely fat furs are seen harvesting plants, and one of the larger ones is plowing. </p>
+
+A thin $npc1.male $npc1.species walks quickly up to you, chewing on a bag of grains absently. "Welcome to the farm. What can I get ya?" $npc1.he asks. A nametag on $npc1.his overalls says //"$npc1.Name"//.
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Earl says">>
+
+<<vendor "Earl">>
+<<action "c" "store" "Trade with $npc1.Name" "Trade with Earl">><</action>>
+
+<<action "n" "leave" "Leave" "Experiment Town">><</action>>
+
+
+:: Experiment town forge [nobr] {"position":"5100,3375","size":"100,100"}
+<<createFixedNPC "smith">>
+<<createFixedNPC "snookums" 2>>
+<<createFixedNPC "smarty" 3>>
+<<createFixedNPC "sampson" 4>> /* Another time that we need to use the fabled NPC slot 4 */
+
+<p>You follow $npc2.Name to a sizable, walled-off building. Here, an extremely large $npc1.species is beating a hammer against an anvil, shaping out a piece of metal. $npc1.His tools are normal sized, and look almost comical in $npc1.his huge hands. $npc2.Name waves to get $npc1.his attention, and $npc1.he lets out a grunt when $npc1.he turns and nods at you. </p>
+
+/*Changes inventory based on quest completion*/
+<<if setup.questCompleted($wizardNotebook)>>
+"$npc3.Name says you helped," the smith rumbles, "so you can buy special things." 
+<<vendor "donkey smith special">>
+
+<<else>>
+"Tools and weapons," $npc1.he rumbles out. "What you need?" 
+<<vendor "donkey smith normal">>
+
+<</if>>
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "The donkey smith says">>
+<<if setup.questStage($horseQuestArmor) == 0>>
+	<br><<icon "quest">>
+	<<popup "Ask about $npc4.Name's chainmail" "Ask about Sampson's chainmail">>
+<</if>>
+
+<<action "c" "store" "Trade" "Trade with the Smith">><</action>>
+
+<<action "n" "leave" "Leave" "Experiment Town">><</action>>
+
+
+:: Ignore Smarty [nobr] {"position":"4850,2975","size":"100,100"}
+<<setPassageTitle "Ignore $npc1.Name">>
+
+<<if setup.questStarted($onBadTermsExperiments)>>
+$npc1.His mouth tightens into a sneering frown. "Somehow, I didn't think so, but you're not in a good place to try this time," $npc1.he says, gesturing at you. You hear the giant $npc2.species growling behind you as you are lifted into the air by $npc2.him. $npc2.He carries you back to the mouth of the cave and hurls you out, sending you tumbling a good way down the mountain before you slide to a halt. That didn't quite go as you'd hoped, and you limp off to explore elsewhere. 
+
+<<set _damage = $maxHea * 0.25>>
+<<damage _damage>>
+<<if $hea < 1>><<set $hea = 1>><</if>>
+
+<<else>>
+$npc1.Name's face twists into a VERY angry frown, and you think you can see the sides of $npc1.his head throb a bit. "WELL then," $npc1.he says firmly, "I suppose we're DONE here." $npc1.He turns $npc1.his head a bit to look past you. "$npc2.Name, could you show this $p.gentleman the door?" $npc1.he asks pointedly. Without a word, the giant $npc2.species picks you up bodily over $npc2.his head, walks you back to the cave's entrance, and hurls you out quite physically. You dust yourself off and head somewhere else to let them cool down for a while. 
+<<getQuest $onBadTermsExperiments>>
+
+<</if>>
+
+<hr>
+<<include "mountain randomization">>
+
+
+:: Learn spells from Smarty [nobr] {"position":"5200,3150","size":"100,100"}
+<<teach>>
+
+<<action "c" "leave" "Leave" "Smarty's shack">><</action>>
+
+
+:: Leave experiment cave {"position":"4850,2725","size":"100,100"}
+You decide to avoid these abnormal furs, and head out to find somewhere else to explore instead. 
+<hr>
+<<include "mountain randomization">>
+
+
+:: Listen to Smarty [nobr] {"position":"5100,2975","size":"100,100"}
+<<setPassageTitle "Listen to $npc1.Name">>
+
+<<createFixedNPC "smarty">>
+<<createFixedNPC "snookums" 2>>
+<<createFixedNPC "mountainWizard" 3>>
+<<createFixedNPC "smith" 4>> /* Yep, having to go up to create a new fourth NPC slot for this passage... */
+
+<p>You walk up to $npc2.Name, who nods at you and grunts affirmatively. $npc2.He walks with you as you head for the center of the make-shift cave town. 
+</p>
+
+<p><<if setup.questStarted($onBadTermsExperiments)>>
+$npc1.Name sits back, letting out a relieved sigh. "Good, you've decided to be reasonable about things. So here's what's going on." $npc1.He clears his throat, then launches into an explanation. 
+
+<<else>>
+"Glad to hear that," $npc1.Name nods, then launches into an explanation. 
+
+<</if>></p>
+
+<p>"There's a wizard out there who's having folks delivered to $npc3.him and experimenting on them. Unfortunately, $npc3.he's not very good at it, and all the people you see here and out wandering the mountains are the result. Through a bit of a fluke, what $npc3.he did actually worked without leaving me crippled with pain, so I've been working on how to fix things up. I've gotten this far on my own, and those of us here at least have a way to channel our aggression safely and productively, but if I want to have a chance to reverse things, I'm going to need $npc3.his notes." </p>
+
+<p>$npc1.He stands up and leads you outside. $npc2.Name is leaning against a wall closeby. "$npc2.Name, be a love and help our guest find whatever $p.he needs. $p.He's going to help us now," $npc1.he says to $npc2.him. $npc2.He lets out a happy rumble and marches up to you. "$npc2.Name can show you to the farm, the smith, and back to me. I've got a few spells I've scrounged up if you can use them, and the smith still has $npc4.his wits and $npc4.his skill, thank heavens. Take a look around and get what you need; that $npc3.species has a nasty pet waiting for you, so you'll want to be prepared." </p>
+
+<p>At that, $npc1.he heads back inside, pouring over $npc1.his books again. $npc2.Name looks at you and rumbles, "$npc1.Name's your friend now. You hurt $npc1.Name, you get crushed." Despite the words, $npc2.he doesn't look quite as angry as before. </p>
+
+<<removeQuest($onBadTermsExperiments)>>
+<<getQuest $onGoodTermsExperiments>>
+
+<<action "c" "next" "Next" "Experiment Town">><</action>>
+
+
+:: Return the wizard's notes [nobr] {"position":"5200,3250","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<createFixedNPC "smarty">>
+<<createFixedNPC "smith" 2>>
+
+<<case "Strong">>
+$npc1.He returns after a minute or two with a wheeled cart. "These are some of the better results of my own experimenting. Unlike some fools, I do my tests on inanimate objects first." $npc1.He gestures towards it, and you take a closer look. Inside is a set of decorated metal plate armor, golden in color and lined with silk. "I enchanted the metal, and $npc2.Name shaped it," $npc1.Name explains. "It'll improve your strength and protect you well. If you want any of the others, I've told $npc2.Name to open $npc2.his special stores to you, but you will have to pay for them. Again, I can't thank you enough. Consider yourself welcome any time." 
+
+<<questReward $wizardNotebook>>
+<<getItem $enchantedKnightArmor>>
+<<action "c" "next" "Thank you!" "Smarty's shack">><</action>>
+
+<<case "Fast">>
+$npc1.He returns after a minute or two with what looks to be a set of armor in $npc1.his arms, and lays them out on $npc1.his table. "These are some of the better results of my own experimenting. Unlike some fools, I do my tests on inanimate objects first." $npc1.He gestures towards it, and you take a closer look. It appears to be a set of decorated light plates connected by a chain mesh backed with comfortable silk. "I enchanted the metal, and $npc2.Name shaped it," $npc1.Name explains. "This'll make you faster and protect you well. If you want any of the others, I've told $npc2.Name to open $npc2.his special stores to you, but you will have to pay for them. Again, I can't thank you enough. Consider yourself welcome any time." 
+
+<<questReward $wizardNotebook>>
+<<getItem $enchantedFighterArmor>>
+<<action "c" "next" "Thank you!" "Smarty's shack">><</action>>
+
+<<case "Magical">>
+$npc1.He returns after a minute or two with some cloth in $npc1.his arms, and lays it out on $npc1.his table. "These are some of the better results of my own experimenting. Unlike some fools, I do my tests on inanimate objects first." $npc1.He gestures towards it, and you take a closer look. It appears to be a set of wizard's clothes of a royal purple coloration trimmed with gold and lined with runes. As well, there appears to be metal plates set into the insides in key locations. "I enchanted the silk and plates, and $npc2.Name shaped them," $npc1.Name explains. "This'll make your magic more potent and protect you well. If you want any of the others, I've told $npc2.Name to open $npc2.his special stores to you, but you will have to pay for them. Again, I can't thank you enough. Consider yourself welcome any time." 
+
+<<questReward $wizardNotebook>>
+<<getItem $enchantedWarmageArmor>>
+<<action "c" "next" "Thank you!" "Smarty's shack">><</action>>
+
+<<case "">>
+<p>You place the wizard's notes in front of $npc1.Name, and $npc1.his brow immediately raises. "''You got it?!'' Fantastic! Wonderful!" $npc1.He immediately sets to it, eagerly brushing all $npc1.his other books onto the floor and slapping it open. $npc1.He flips through it steadily slower as $npc1.he gets further into it, skimming over the pages and visibly growing less excited. "I suppose I should've figured," $npc1.he hums out, closing it turning back to you. "It's a jumbled mess, but it's still a boon. I won't be able to fix things overnight, but if I can make sense of it... Well, you've been a great help." </p>
+
+$npc1.He stands up and walks toward the door, then turns to you again. "Now, your reward, like I promised. Would you say that... you're the strong type, the fast type, or the magic type?" 
+
+<<action "w" "next" "Strong" "Return the wizard's notes">>
+	<<set $eventCounterA = "Strong">><</action>>
+<<action "c" "next" "Fast" "Return the wizard's notes">>
+	<<set $eventCounterA = "Fast">><</action>>
+<<action "e" "next" "Magical" "Return the wizard's notes">>
+	<<set $eventCounterA = "Magical">><</action>>
+
+<</switch>>
+
+
+:: Smarty says {"position":"5100,3150","size":"100,100"}
+<<setPopupTitle "Talk to $npc1.Name">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Honestly, I'm quite proud of having set this all up. It was quite a trick at first, having to find everybody new one by one. Now they just seem to turn up at our door... Covered in bruises, usually."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"I swear, all those wizards that do the whole 'live by yourself to study uninterrupted' nonsense are fools. 'Oh, I won't go crazy if I hit a wall and have nobody to talk to about it!' Bah. The guild exists for a reason."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"$npc2.Name was the first one I found. Heh, I remember when we first met, $npc2.he tried to crush me with a rock. I had to hit $npc2.him with lightning eight times before $npc2.he'd listen to me. Ah, memories."
+<<set $eventCounterB++>>
+
+<<default>>
+"Have you seen those giant insects? They're venomous, all of 'em. You'd best know some curative magic. Strange thing, though, I'm not sure they're the wizard's fault. They're too... competently made."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Smarty's shack [nobr] {"position":"5100,3250","size":"100,100"}
+<<createFixedNPC "smarty">>
+<<createFixedNPC "snookums" 2>>
+<<setPassageTitle "$npc1.Name's shack">>
+
+<p>You are lead back to $npc1.Name's shack. $npc2.Name waves to $npc1.him as $npc1.he looks up from $npc1.his reading. $npc1.He smiles and waves back. </p>
+
+"What can I do for you?" $npc1.he asks you. 
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Smarty says">><br>
+
+<<if setup.questStarted($wizardNotebook) and !setup.questCompleted($wizardNotebook)>>
+	<<action "w" "quest" "Return the wizard's notes">>
+		<<set $eventCounterA = "">><</action>>
+<</if>>
+
+<<vendor "Smarty">>
+<<action "c" "spells" "Learn spells from $npc1.Name" "Learn spells from Smarty">><</action>>
+
+<<action "n" "leave" "Leave" "Experiment Town">><</action>>
+
+
+:: Talk to Smarty [nobr] {"position":"4975,2975","size":"100,100"}
+<<createFixedNPC "smarty">>
+<<createFixedNPC "snookums" 2>>
+
+<<setPassageTitle "Talk to $npc1.Name">>
+
+<<if setup.questStarted($onBadTermsExperiments)>>
+<p>You follow the tremendous $npc2.species inside, going past small stone abodes in various states of dishevelment, and into a somewhat-organized chamber, at the center of which is a $npc1.male $npc1.species in slightly tattered robes, presumably $npc1.Name. $npc1.He is rubbing $npc1.his slightly large head with one $npc1.hand as $npc1.he goes over several books. Looking up, $npc1.he furrows $npc1.his brow as $npc1.he spots you. "Oh. It's //you//," $npc1.he says coldly. "Are you going to stop causing trouble and listen to me?" $npc1.he asks. </p>
+
+<<else>>
+<p>You follow the tremendous $npc2.species inside, going past small stone abodes in various states of dishevelment, and into a somewhat-organized chamber, at the center of which is a $npc1.male $npc1.species dressed in somewhat tattered robes. $npc1.His head is slightly large, but unlike others that you saw with this trait, $npc1.he is only rubbing it with one $npc1.hand instead of both. Apparently $npc1.he's more fortunate than the other. $npc1.He looks up from one of the many tomes spread in front of $npc1.him, and greets you. </p>
+
+<p>"Ah, hello. You're a new arrival." $npc1.He steps over to the gigantic $npc2.species and reaches up to touch $npc2.his cheek. "Thank you, $npc2.Name," $npc1.he says to $npc2.him in a sing-songy voice. "Welcome, $npc1.Name," $npc2.he rumbles back, smiling. $npc2.He bends down a bit and they share a kiss before $npc2.he heads back out, and $npc1.Name returns $npc1.his attention to you. "We've all got a bit of a temper after what happened to us, but $npc2.he's still a dear," $npc1.he says off-handedly. $npc1.He clears $npc1.his throat and adopts a more serious look. "Anyways, welcome, traveller, to our refuge. You might've noticed that there's something of an excess of abnormal folks about lately, and sanity is in short supply about them. </p>
+
+Well, I'm working to fix both of those things, and I could use an adventurer to help me out. You won't go unrewarded. Care to hear me out?" 
+<</if>>
+
+<<action "c" "talk" "Listen to Smarty">><</action>>
+<<action "n" "leave" "Ignore Smarty">><</action>>
+
+
+:: Talk to experiments [nobr] {"position":"4975,2850","size":"100,100"}
+<<createFixedNPC "smarty" 2>>
+
+<<if setup.questStarted($onBadTermsExperiments)>>
+You approach the giant $npc1.species, who grits $npc1.his $npc1.teeth and lets out a growl, clamping down on $npc1.his enormous stone mace. ''"YOU,"'' $npc1.he rumbles, taking a heavy step towards you. "You going to talk to $npc2.Name?" $npc1.he asks, $npc1.his words dangerously pointed. 
+
+<<else>>
+As you approach the enormous $npc1.species, $npc1.he holds up one massive hand, and rumbles out, "You go talk to $npc2.Name. $npc2.Name talks to all new arrivals." You hesitate for a moment, and $npc1.his grip tightens, the stone column crumbling a bit. Looks like $npc1.he's not very patient... 
+
+<</if>>
+
+
+<<action "c" "talk" "Talk to Smarty">><</action>>
+<<action "n" "leave" "Leave" "Try to leave experiment cave">><</action>>
+
+
+:: The donkey smith says [nobr] {"position":"5200,3375","size":"100,100"}
+<<setPopupTitle "Talk to the smith">>
+
+<<switch $eventCounterB>>
+
+<<case "ask about chainmail">>
+
+<<case 0>>
+"Call me $npc1.Name. Job and name, good for both."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Other big folk mine. Lots of metal in this mountain."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Not sure what $npc2.Name sees in $npc3.Name."
+<<set $eventCounterB++>>
+
+<<default>>
+"Talk, 'tis no good. But forge, very good."
+
+<</switch>>
+
+
+:: Trade with Earl [nobr] {"position":"4975,3475","size":"100,100"}
+<<setPassageTitle "Trade with $npc1.Name">>
+"Got plenty for ev'ryone. What's yer pleasure?"
+
+<<store>>
+
+<<action "c" "leave" "Leave" "Experiment town farm">><</action>>
+
+
+:: Trade with the Smith [nobr] {"position":"5100,3475","size":"100,100"}
+<<if setup.questCompleted($wizardNotebook)>>
+	The smith pushes aside an enormous stone slab, revealing magical goods to you.
+<<else>>
+	The smith gestures to a lineup of $npc1.his wares with a grunt. 
+<</if>>
+
+<<store>>
+<<action "n" "leave" "Leave" "Experiment town forge">><</action>>
+
+
+:: Try to leave experiment cave {"position":"5100,2850","size":"100,100"}
+The enormous $npc1.species growls at you, approaching angrily with $npc1.his giant stone mace in tow! 
+<<getQuest $onBadTermsExperiments>>
+
+<<startCombat $snookums>>
+<<updateEnemyWithNPC "snookums">>
+<<createFixedNPC "smarty" 2>>
+
+
+
+
+:: Accept Queen's offer {"position":"5375,2450","size":"100,100"}
+You accept the insect queen's offer, and follow the small worker as it leads you back out of the cave. When you are out, it drops the lump of wax it was holding. On closer inspection, you can see that it is a thinly-coated lump of royal jelly, ready to eat whenever you want it. Given the immense magic coming off it, it doesn't seem like a bad prize at all. You take it, and head off to continue exploring. 
+
+<<getItem $royalJelly>>
+<<include "mountain randomization">>
+
+
+:: Attack the Wasp [nobr] {"position":"5125,2450","size":"100,100"}
+<<setPassageTitle "Attack the <<=setup.getSpeciesData('wasp').species.toUpperFirst()>>">>
+
+You brandish your $wea.name at the massive <<=setup.getSpeciesData("wasp").species>> who hovers over to you menacingly, evidently prepared to battle for it's Queen's honor. 
+
+<<startCombat $royalGuardWasp>>
+
+
+:: Enter Hive {"position":"5000,2575","size":"100,100"}
+<p>You steel yourself and slowly march inside, cold stone echoing your footsteps as you enter. Rounding a corner, you come upon a giant wax structure that fills the entirety of the cave. It is now clear that you are standing outside of an unnaturally huge <<=setup.getSpeciesData("bee").species>> hive. You spot insects easily the size of a person heading into and out of chambers along the walls and ceiling. From the looks of it, this cavern expands rather extensively in all directions, though that's been filled with this chambered hive. Curiously, it appears to be a mixture of <<=setup.getSpeciesData("ant").plural>>, <<=setup.getSpeciesData("bee").plural>>, and <<=setup.getSpeciesData("wasp").plural>> of some description all working in unnatural harmony. </p>
+
+There appears to be two primary directions you can get to, lacking the ability to fly as you do: The left path leads to a chamber that <<=setup.getSpeciesData("ant").plural>> with swollen abdomens enter and march out of again less engorged. The right path appears to be guarded by a horrific <<=setup.getSpeciesData("wasp").species>> that's the size of a small house. You'd most certainly have to fight to get through. 
+
+<<action "w" "left" "Left" "Larva pit">><</action>>
+<<action "e" "right" "Right" "Queen's Chambers">><</action>>
+<<action "n" "mountain" "Leave Hive">>
+	<<set $eventCounterA = 1>><</action>>
+
+
+:: Fight the ants [nobr] {"position":"5125,2325","size":"100,100"}
+<<setPassageTitle 'Fight the <<=setup.getSpeciesData("ant").plural>>'>>
+
+You step back and ready your $wea.name as the <<=setup.getSpeciesData("ant").species>> draws closer. It's seems unwavered by your rebuke and continues forward in a more aggressive manner. It seems to be unwilling to let you go without a fight. 
+
+<hr>
+<<startCombat $feederAnt>>
+
+
+:: Insect Hive [mountains] {"position":"4875,2575","size":"100,100"}
+While you explore the jagged mountains, you come across a cave. You can hear an odd buzzing, even from outside. You'll need to go in to find out what's in there. 
+
+<<action "c" "next" "Enter cave" "Enter Hive">><</action>>
+<<action "n" "mountain" "Leave" "Leave Hive">>
+	<<set $eventCounterA = 0>><</action>>
+
+
+:: Larva pit [nobr] {"position":"5000,2450","size":"100,100"}
+You sneak past the <<=setup.getSpeciesData("ant").plural>> and into the chamber. Looking around, you can see white larva wriggling about on the ground, only a few inches in length, broken eggs being carted away by <<=setup.getSpeciesData("bee").plural>> and <<=setup.getSpeciesData("ant").plural>> that are less gigantic than others in here, most likely the worker subspecies. One of the giant <<=setup.getSpeciesData("ant").species>>-like creatures with engorged thoraxes crawls into the middle of a group of larva, turning its thorax to each in turn and exuding what appears to be extremely thick, dense honey into their mouths. Surprisingly, the larva grow in size as they eat, rapidly redoubling in bulk before pulling away from the feeding insect. You have just enough time to realize that whatever magic is involved in this honey is why the insects are giant before one of the <<=setup.getSpeciesData("ant").adjective>>s comes up to you, swollen thorax first. 
+
+<<action "n" "surrender" "Submit" "Submit to the ants">>
+	<<set $eventCounterA = 0>><</action>>
+<<action "c" "attack" "Fight" "Fight the ants">><</action>>
+
+
+:: Leave Hive [nobr] {"position":"4875,2450","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 0>>
+You decide that you don't want to deal with something that buzzes quite that loud, and head back out to find a different adventure. 
+
+<<case 1>>
+You decide that you don't want to deal with something that buzzes quite that loud, and head back out to find a different adventure. 
+
+<</switch>>
+
+<hr>
+<<include "mountain randomization">>
+
+
+:: Queen's Chambers {"position":"5125,2575","size":"100,100"}
+You make for the guarded chamber, under scrutinous watch from the giant <<=setup.getSpeciesData("wasp").species>>. As you approach, its wings make a deep buzz. It hovers in the air and points its stinger at you threateningly. It does not attack immediately, and you get a fairly clear view of a grossly oversized insectoid, unable to move under its own girth. It is tended to by smaller insects, shoving honey into its mouth and collecting eggs from behind its thorax. If you want to approach it, you're going to have to go through its guard... 
+
+<<action "c" "attack" "Attack the Guard" "Attack the Wasp">><</action>>
+<<action "n" "leave" "Back out" "Enter Hive">><</action>>
+
+
+:: Slay Queen {"position":"5250,2325","size":"100,100"}
+The worker carrying your bribe scurries off as you turn away from it and back towards the queen. You have decided to destroy the monstrous thing, and a few swift attacks are enough to put it down. As the massive insect slumps over and goes still, you spot something glinting at the end of its thorax. Going down to take a look, you see the <<=setup.getSpeciesData("wasp").species>>-like aspect of it has left this deceased creature with a very long stinger. On top of that, it looks loose. You give it a few good yanks, and the stinger dislodges. It is long enough, hard enough, and pointy enough to use as a long thrusting weapon, and it even has a bit that was inside the queen that is thin enough to use as a hand hold... after you wash it off. You take your new weapon and head back out to continue exploring. 
+
+<<getItem $queensSting>>
+<<include "mountain randomization">>
+
+
+:: Submit to the ants [nobr] {"position":"5000,2325","size":"100,100"}
+<<setPassageTitle 'Submit to the <<=setup.getSpeciesData("ant").plural>>'>>
+
+<<switch $eventCounterA>>
+
+<<case 0>>
+<p>You decide to throw caution to the wind and tilt your head up passively, opening your mouth and waiting. The huge <<=setup.getSpeciesData("ant").species>> creature pushes the tip of its thorax into your mouth, and you are immediately overwhelmed by its sweet, gooey honey. All you can do is hold on for dear life as you watch the <<=setup.getSpeciesData("ant").species>>'s thorax slowly thin, your belly bulging fuller and tighter in response. The sheer force of the extrusion of honey is forcing it down your throat, and given the hefty mass of the <<=setup.getSpeciesData("ant").species>>'s body holding you in place now, you couldn't stop if you wanted to. 
+<<set _calories = random(240,360)>>
+<<set _honey = _calories * 1.67>>
+<<consume _honey _calories>>
+</p>
+
+<<if $alive>>
+As you fill with the enchanted honey, you can feel yourself growing stronger. Greedily, you reach up and squeeze the feeder <<=setup.getSpeciesData("ant").species>>'s thorax, forcing the honey out of it and down your throat even faster. After just a few more moments of this, the creature is left in your grasp, squirming a bit as the flow slows to a trickle, then stops. You lick your lips, your face a dripping mess of sticky sweetness, before coming to realize that all the insects have stopped entirely. It seems that they didn't expect this to happen and have completely locked up. You decide to capitalize on the confusion, and use your new strength to haul your significantly greater mass back out of the cave. 
+
+<<buff "str" 30 480>>
+<<include "mountain randomization">>
+
+<<else>>
+And after the first few gallons, you definitely want to. You rub at your belly as it swells and stretches, but the torrent just does not end. You are filled well beyond your limits, left groaning on the ground, held up only by your $waist belly. Its magic has certainly had an effect on you; your muscles feel significantly larger, but even with your increased strength, you don't have the will to move. 
+
+<<tempBuff "str" -30>>
+<<action "c" "wait" "Wait" "Submit to the ants">>
+	<<set $eventCounterA++>><</action>>
+<</if>>
+
+<<case 1>>
+Which is unfortunate for you, because as the feeder <<=setup.getSpeciesData("ant").species>> walks away, another moves up to take its place. You are helpless as your belly is made to swell to tremendous size by another... 
+<<consume 500 300>>
+<<tempBuff "str" -30>>
+<<action "c" "wait" "Wait" "Submit to the ants">>
+	<<set $eventCounterA++>><</action>>
+
+<<case 2>>
+And another... 
+<<consume 500 300>>
+<<tempBuff "str" -30>>
+<<action "c" "wait" "Wait" "Submit to the ants">>
+	<<set $eventCounterA++>><</action>>
+
+<<case 3>>
+And another... 
+<<consume 500 300>>
+<<tempBuff "str" -30>>
+<<action "c" "wait" "Wait" "Submit to the ants">>
+	<<set $eventCounterA++>><</action>>
+
+<<case 4>>
+<p>And another. By the time they're done, your massive gut is the size of the passageway you came down, and in spite of how enormous your muscles have become, you can do little but flail your limbs about, unable to move the tremendous load of honey housed inside you. You have little time to contemplate this before a pack of worker insects start to roll you towards what appears to be an offshoot of the chamber. When you're inside it, however, it becomes apparent that you have been shoved into a hollowed out comb, as you feel the waxy walls all around you. </p>
+
+<p>As the insects finish jamming you into the chamber, a few of the <<=setup.getSpeciesData("wasp").plural>> begin to disgorge wax on you. Where it makes contact with your $p.fur, there's an odd itching and stiffening that slowly spreads through you. When it coats your limbs, you can only watch as you lose the ability to move, your body coming to match the wax's consistency. The realization dawns on you that you are becoming a storage chamber for all the honey that was forced into you, but before you have time to ponder the implications, the change is complete, and you lose all sense of being. </p>
+
+<<consume 500 300>>
+<<tempBuff "str" -30>>
+<<defeated "transformed">>
+
+<</switch>>
+
+
+:: Wasp Defeated [nobr] {"position":"5250,2450","size":"100,100"}
+<<setPassageTitle '<<=setup.getSpeciesData("wasp").species.toUpperFirst()>> Defeated'>>
+
+Leaving behind the wrecked body of the guard <<=setup.getSpeciesData("wasp").species>>, you approach the giant, bloated beast of a queen. As you do, the small servants scatter from you, already beginning to tend the guard. The queen turns at you, its mandibles flexing in what might be a threatening manner, if it weren't so completely engorged as to be immobile. It turns its gaze at one of the workers, which stops its frantic scattering and run to another room. After a moment, it appears in the doorway, holding a lump of something. The queen has stopped attempted to look threatening and is merely staring at you. It seems to be offering you a bribe to leave it alone... 
+
+<<action "w" "yes" "Accept Queen's offer">><</action>>
+<<action "e" "attack" "Slay Queen">><</action>>
+
+
+
+
+:: Approach the wyvern nest [nobr] {"position":"5100,2050","size":"100,100"}
+<<setPassageTitle 'Approach the <<=setup.getSpeciesData("wyvern").species>> nest'>>
+
+Not one to be deterred by adversity, you brace yourself for combat and make your way closer to the nest. Sure enough, the <<=setup.getSpeciesData("wyvern").species>> guarding it comes marching at you, roaring in a fury! 
+
+<<startCombat $fatWyvern>>
+
+
+:: Enter the wyvern cave {"position":"4975,2050","size":"100,100"}
+<<setPassageTitle 'Enter the <<=setup.getSpeciesData("wyvern").species>> cave'>>
+
+You steel yourself and slowly march inside, cold stone echoing your footsteps as you enter. Not too far in, you find what was making the sound you heard outside: An especially large <<=setup.getSpeciesData("wyvern").species>> guarding a nest. You can see the nest has baby <<=setup.getSpeciesData("wyvern").plural>> in it, and can also make out the glint of metal. It's entirely possible that this nest has treasure in it, but if you want it, you're going to have to get past an angry parent. 
+
+<<action "c" "next" "Approach the nest" "Approach the wyvern nest">><</action>>
+<<action "n" "mountain" "Leave" "Leave the wyvern cave">><</action>>
+
+
+:: Leave the wyvern cave {"position":"4850,2050","size":"100,100"}
+<<setPassageTitle "Leave the <<=setup.getSpeciesData('wyvern').species>> cave">>
+
+You decide to stay away from things that growl that loudly, and head off to find a different place to explore. 
+
+<<include "mountain randomization">>
+
+
+:: Pillage the Wyvern nest {"position":"5225,2050","size":"100,100"}
+<<setPassageTitle 'Pillage the <<=setup.getSpeciesData("wyvern").species>> nest'>>
+
+You approach the nest, half a dozen small, reptillian faces turning up and squeaking at you. While the glints of metal turned out to be nothing more than worthless scrap, the nest does contain an unhatched egg. Given the size and strength of the <<=setup.getSpeciesData("wyvern").species>> that guarded it, there might be something magical about it, so you take it and head back to the mountains. 
+
+<<getItem $largeWyvernEgg>>
+<<include "mountain randomization">>
+
+
+:: Wyvern cave [mountains] {"position":"4975,2175","size":"100,100"}
+<<setPassageTitle '<<=setup.getSpeciesData("wyvern").species.toUpperFirst()>> cave'>>
+
+While you explore the jagged mountains, you come across a cave. You can hear an intermittant growling, even from outside. You'll need to go in to find out what's in there. 
+
+<<action "c" "next" "Enter the cave" "Enter the wyvern cave">><</action>>
+<<action "n" "mountain" "Leave" "Leave the wyvern cave">><</action>>
+
+
+
+
+:: Attack the tiger [nobr] {"position":"4175,2200","size":"100,100"}
+<<setPassageTitle "Attack the mountainous $npc1.species">>
+
+<p>You let forth a shout and charge forward. The $npc1.species tying $npc1.his bag shut before turning to you, looking a bit surprised. As you draw close you can see just how built $npc1.he is. Clad in only a dark loincloth, $npc1.he is all but drowning in $npc1.his own muscle. $npc1.His head is all but buried between $npc1.his chest and $npc1.his back, and $npc1.his biceps are easily larger than you were before the start of your journey.<<if $npc1.nspecies == "tiger">> $npc1.His $npc1.stripes cling to $npc1.his bulges for dear life.<</if>></p>
+
+$npc1.He leers at you as you approach, before turning around and giving $npc1.his overmuscled bubble-butt a taunting slap. "You wanna play? Let's play!" 
+
+<<startCombat $mountainousTiger>>
+<<updateEnemyWithNPC "tigerBoss">>
+
+
+:: Controlled by the Cabal Dragon {"position":"4675,2175","size":"100,100"}
+<<setPassageTitle "The cabal rogue's puppet">>
+
+<<doTime 4320>>
+<<stuffToBursting>>
+<<consume 3000 2500>>
+<<tempBuff "str" -40>>
+<<tempBuff "agi" -10>>
+<<tempBuff "end" -10>>
+<<tempBuff "int" -10>>
+<p>There are hazy memories of roaming the mountain and eating, being fed sweet honey by massive insects, and devouring unwary travellers and all their food whole. You lose track of time, and the world is only clear again when you stand before your captor once more, massively overfed and awaiting $npc1.his command. $npc1.He beckons, and you slowly haul yourself to $npc1.his $npc1.feet before embracing $npc1.his huge belly. The $npc1.species lets out a deep growl, and you feel yourself slowly sink in to $npc1.his huge, soft stomach. It engulfs you, a soft, gelatinous grey pillow that sucks you into its squishy warmth, wrapping around you gently but firmly, pulling you in. </p>
+
+
+<p>$npc1.He wraps $npc1.his arms around you, pulling you into $npc1.him as the majority of your body below your neck is engulfed by $npc1.his now-ooze-like belly. You are over-joyed to finally be being consumed... And at that moment, $npc1.he touches your head, releasing $npc1.his control of your thoughts. You have just enough time for the realization of what's happened to sink in before $npc1.he shoves your head inside of $npc1.him, and you are soon turned into more of $npc1.his massive stomach. </p>
+
+<<defeated "devoured">>
+
+
+:: Fight the cabal dragon {"position":"4575,2175","size":"100,100"}
+<<setPassageTitle "Confront the cabal rogue">>
+
+<<createFixedNPC "cabalRogue">>
+
+You follow the map to a cliff face and find an unlit cave. Stepping inside reveals the darkness to be an illusion; once you set foot within, you are greeted by a large, lit passageway. Following it deeper inside, you come to a huge, dome-shaped chamber. A magical force triggers behind you, barring the way you came. A deep, rumbling voice booms out, "So, the cabal has sent another meal to me? How kind of them!" The entire floor lights up in a gigantic magical circle, and a gigantic anthropomorphic $npc1.color $npc1.species is revealed to be before you, light glinting off $npc1.his eyes and sharp teeth. With no way out, you steel yourself for battle! 
+
+<<startCombat $cabalDragon>>
+<<updateEnemyWithNPC "cabalRogue">>
+
+
+:: Run from the tiger {"position":"4300,2075","size":"100,100"}
+You realize that if such a massive $npc1.adjective had no trouble catching that many people, $npc1.he probably wouldn't have a problem forcing you to join them. Turning tail, you scurry back down the hill you came up, hoping $npc1.he didn't see you. 
+
+<<include "mountain randomization">>
+
+
+:: Tiger fight [mountains] {"position":"4300,2200","size":"100,100"}
+<<createNPC "random" "random" 2>>
+<<createFixedNPC "tigerBoss">>
+
+<<setPassageTitle "A mountainous $npc1.species">>
+
+As you crest a hill, you find yourself looking down at a scene in progress a good hundred yards away. $npc1.Article $npc1.species of improbable musculature seems rather occupied with tying up a particularly fat $npc2.species. From this distance, you gauge $npc1.him to be about a good fifteen feet in height, but larger than $npc1.him is what appears to be a sack, the size of a building, in black cloth and gold-thread embroidery. The $npc1.species hefts up the helpless $npc2.species, pulling open the mouth of the bag and stuffing $npc2.him right in. You suddenly realize that the entire bulging payload is filled to the brim with all manner of fattened captives. 
+
+<<action "c" "attack" "Attack the tiger">><</action>>
+<<action "n" "run" "Run from the tiger">><</action>>
+
+

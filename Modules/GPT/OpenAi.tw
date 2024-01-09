@@ -1,0 +1,4 @@
+:: OpenAI Widgets [widget nobr] {"position":"2000,400","size":"300,300"}
+<<widget "CallAPI">> 
+  <<print "<li>//Fullness +_stuffed//</li>">>
+<</widget>>

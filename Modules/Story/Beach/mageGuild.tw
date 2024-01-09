@@ -1,0 +1,281 @@
+:: Altertarium [mageguild] {"position":"2000,1225"}
+<<createFixedNPC "altertarium">>
+
+<p>You walk into the Altertarium. There, you can see a $npc1.color-$npc1.furred $npc1.species giving a lecture to several confused-looking apprentice mages. $npc1.He has drawn diagrams and figures magically in the air and is gesticulating wildly as $npc1.he tries to explain the hows and whats of Alteration. After a few more moments of this, the lesson comes to an abrupt end. </p>
+
+As the students shuffle out, the $npc1.species walks up to you. "Alteration magic. Care to try? Maybe learn some?" 
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Altertarium teacher says">><br>
+
+<<vendor "Altertarium">>
+<<action "c" "spells" "Learn spells" "Learn spells from Altertarium">><</action>>
+
+<<action "s" "leave" "Leave" "Study hall">><<set $travel = 1>><</action>>
+
+
+:: Altertarium teacher says [mageguild] {"position":"2100,1325"}
+<<setPopupTitle "Talk to the altertarium teacher">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Lucille? No. Lucern? Still no. $npc1.Name? That sounds right. $npc1.Name. That's my name. For now. Alteration is always changing."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Hard to pin down. No, impossible, really. Alteration is. The best mind for it is the mind that can change. Maybe."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"How long? Have I been using Alteration magic? What a silly question. Ten days. Or was it years? Yes, it was years."
+<<set $eventCounterB++>>
+
+<<default>>
+"Change yourself by changing your mind. Change your mind by changing your thoughts. Change your thoughts by changing yourself. These are the rules of Alteration. For now."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Apothecary [mageguild] {"position":"1800,1350"}
+<<createFixedNPC "apothecary">>
+
+<p>You walk over to the Apothecary's, which is a relatively small room that doesn't seem to have much in the way of actual stock, appearing to have only one of each item that is sold here. </p>
+
+<p>A rotund $npc1.species lounges about behind a counter, garbed in a hideous yellow robe that no longer contains $npc1.his long, bulging belly. $npc1.He raises a hand at you, eating a ham sandwich with far too much mustard, if the yellow splotches on $npc1.his face and chest are any indication. </p>
+
+With an exagerrated swallow, $npc1.he clears $npc1.his mouth and says, "What can I get for ya?"
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Ferret apothecary says">>
+
+<<vendor "apothecary">>
+<<action "c" "store" "Trade" "Apothecary vendor">><</action>>
+
+<<action "e" "leave" "Leave" "Mage's Guild">>
+	<<set $travel = 1>><</action>>
+
+
+:: Apothecary vendor [mageguild] {"position":"1900,1350"}
+A rotund $npc1.species lounges about behind a counter, garbed in a hideous yellow robe that no longer contains $npc1.his long, bulging belly. 
+
+<<store>>
+<<action "c" "leave" "Done" "Apothecary">><</action>>
+
+
+:: Destructatorium [mageguild] {"position":"1800,1125"}
+<<createFixedNPC "destructatorium">>
+
+<p>Walking into the Destructatorium, the sounds you heard from outside suddenly have much more distinct sources. A professional looking $npc1.species in an armored black robe is walking up and down a line of students as they hurl fireballs and lightning bolts at insulated target dummies. At some, $npc1.he nods, at others, $npc1.he barks out brief instructions, causing them to visibly flinch. </p>
+
+After a moment, $npc1.he spots you, and walks over to you. "Spells or words?" $npc1.he asks curtly. 
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Words?" "Destructatorium teacher says">><br>
+
+<<vendor "Destructatorium">>
+<<action "c" "spells" "Learn spells" "Learn spells from Destructatorium">><</action>>
+
+<<action "s" "leave" "Leave" "Study hall">><<set $travel = 1>><</action>>
+
+
+:: Destructatorium teacher says [mageguild] {"position":"1700,1025"}
+<<setPopupTitle "Talk to the destructatorium teacher">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Name's $npc1.Name. I'm here to drill combat readiness into the minds of these layabouts. Casting in battle is harder than casting when you have all the time in the world to focus."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Almost all fighting magic takes the form of an element. It's simpler and more reliable to try to conjure something that has a natural form than it is to make solid arcana."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Some foes resist elements. Some foes resist physical forces. Some foes even resist raw arcana. Don't get stuck in a mindset of trying something that's failed again unless you like getting eaten by monsters. It won't work as well as changing your tactics, even if you do it 'harder.'"
+<<set $eventCounterB++>>
+
+<<default>>
+"Fire can burn, ice can slow movement, lightning can give 'em the shakes. My preference is lightning. Things don't fight very well when they're twitching in a fetal position on the ground."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Ferret apothecary says [mageguild] {"position":"1800,1450"}
+<<setPopupTitle "Talk to the apothecary">>
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Name's $npc1.Name, I sell the stuff to the folks, blah blah blah, magic. I freaking love magic. I used magic to make this sandwich. This is the best damn sandwich."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"Hm? Oh. No, there's not much stuff out here. Why should there be? You buy something, I magic it up from the store rooms. Walking around to get things is for chumps. I got magic for that."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"You want robes? We got robes. We got robes in every color. All of them. Some of them ARE every color. We're mages. We do that with magic. Even are duds are friggin' magic. Being a mage is awesome."
+<<set $eventCounterB++>>
+
+<<default>>
+"So apparently there are dudes that like, do things with like, the power of their bodies. I don't even know what they are ON about. Body magic done by crafting your body to perfection? Screw that noise, I got magic."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Guild receptionist says [mageguild] {"position":"1575,1350"}
+<<setPopupTitle "Talk to the guild receptionist">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Welcome to the Mage's Guild. All you need to be permitted here is a desire to understand the mysterious. But a fancy robe helps you fit in."<<set $eventCounterB++>>
+
+<<case 1>>
+"My name? Well, I was born in the ocean, so it's a series of clicks and cries, but I tend to go by '$npc1.Name' on land."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"You should check out the library if you haven't already. Even if you don't need to study, it's got a fine cookbook section, too. That's been popular lately."
+<<set $eventCounterB++>>
+
+<<default>>
+"The Apothecary sells a variety of magical goods, and the Study Hall is where the masters teach spells. The guild's not a complicated place; the complexity is in the mystery of magic! And determining the perfect color of hat."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Learn spells from Altertarium [mageguild] {"position":"2100,1225"}
+<<teach>>
+
+<<action "c" "leave" "Leave" "Altertarium">><</action>>
+
+
+:: Learn spells from Destructatorium [mageguild] {"position":"1800,1025"}
+<<teach>>
+
+<<action "c" "leave" "Leave" "Destructatorium">><</action>>
+
+
+:: Learn spells from Restoratorium [mageguild] {"position":"1900,1025"}
+<<teach>>
+
+<<action "c" "leave" "Leave" "Restoratorium">><</action>>
+
+
+:: Library [mageguild] {"position":"1675,1225"}
+<p>You enter the library, and the first thing you notice is that sound seems to be muffled here. The second thing you notice is that the library extends to a size significantly larger than what you remember the building being from the outside. Tall, wheeled ladders sit beside pillars that double as book shelves, and there is even a large selection of particularly magical books that float in a magical clump above a reading area. </p>
+
+An index sits a few steps in and seems to respond to inquiries you make even as you are thinking of them. Sections are labelled by floating glyphs that separate the library into dozens of sections based on topic, including more esoteric things, such as 'Learning Methods' and 'Meta-Studies.' You get the impression that you could definitely get your learn on here. 
+
+<<action "c" "spells" "Study" "Study">><</action>>
+
+<<action "e" "leave" "Leave" "Mage's Guild">>
+	<<set $travel = 1>><</action>>
+
+
+:: Mage's Guild [mageguild] {"position":"1675,1350"}
+<<createFixedNPC "guildReceptionist">>
+
+<p>You step into the main foyer of the mage's guild, your eyes immediately assaulted by carpets and tapestries of various loud and gaudy colors. In various parts of the comfortably-furnished room, small groups of robed furs have debates, discussions, and demonstrations of magical theory, all while gorging themselves on food that floats to their beckoning hands. 
+</p>
+
+$npc1.Article $npc1.species $npc1.guy lazily swims in the air towards you, smiling happily. "Greetings to you," $npc1.he says. 
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Guild receptionist says">>
+
+<<action "nw" "spells" "Library">><<set $travel = 1>><</action>>
+<<action "w" "store" "Apothecary">><<set $travel = 1>><</action>>
+<<action "ne" "spells" "Study hall">><<set $travel = 1>><</action>>
+<<action "s" "leave" "Leave" "West Town">><<set $travel = 1>><</action>>
+
+
+:: Restoratorium [mageguild] {"position":"1900,1125"}
+<<createFixedNPC "restoratorium" 2>>
+<<createNPC "random" "random">>
+
+<p>You head into the Restoratorium, and aside from treating burned mage trainees, you can see rather a lot of figures of anatomy. From the looks of it, learning what organs do what and where they are in the body has high importance in this class. 
+</p>
+
+A $npc2.species $npc2.gentleman in a white robe rubs ointment on $npc1.article $npc1.species's hand, then walks up to you. "If you need assistance, I am here to help however I can." $npc2.he says. 
+<hr>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Restoratorium teacher says">><br>
+
+<<vendor "Restoratorium">>
+<<action "c" "spells" "Learn spells" "Learn spells from Restoratorium">><</action>>
+
+<<action "s" "leave" "Leave" "Study hall">><<set $travel = 1>><</action>>
+
+
+:: Restoratorium teacher says [mageguild] {"position":"2000,1025"}
+<<setPopupTitle "Talk to the restoratorium teacher">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"I'm $npc2.Name, and I'm in charge of teaching students Restoration spells. Anything that makes the body whole and well is my passion."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"In my spare time, I tend to a reagent garden outside. Did you think they were just flowers? Well, in addition to being lovely, they are the primary ingredients for the potions for sale at the Apothecary and other places."
+<<set $eventCounterB++>>
+
+<<case 2>>
+"With how easy it is to grow ingredients, we have a special arrangement with the hospital in the city. Half of the potions we send them are free of charge, since they have such need to put them to good use lately."
+<<set $eventCounterB++>>
+
+<<default>>
+"My most sincere hope is that, by teaching these spells to any that can learn them, I can save even a single person from suffering. Please, if you choose to learn my spells, share them freely with those in need."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Study [mageguild] {"position":"1575,1225"}
+<<doTime 30>>
+<<if $fat > 3>>
+You pore over some books and somehow feel yourself becoming much smarter... yet somehow physically drained....
+<<changeStats "fat" -3>>
+<<changeStats "int" 0.3>>
+<<updatePanels>>
+
+<<else>>
+You skim through several books, but the information seems to just slide out of your brain. Your only thought is that you feel so hungry and sooooo skinny. 
+
+<</if>>
+
+
+<<action "c" "spells" "Study" "Study">><</action>>
+
+<<action "e" "leave" "Leave" "Mage's Guild">>
+	<<set $travel = 1>><</action>>
+
+
+:: Study hall [mageguild] {"position":"1800,1225","size":"200,100"}
+<p>You $walk into a hallway that leads to the classrooms of the guild. There are exactly four doors, each with a lit sign above them. </p>
+
+<<if $options.feeder_expansionEnabled>>
+Behind the door labelled "Destructatorium", you can hear explosions and crackling, and the occasional yell of //"Ow!"// Generally following that, you see a singed fur running over to the Restoratorium door. Those that go into the Altertarium tend to come out looking more confused than when they started, meanwhile those visiting the Creatorium leave with much more rounded bellies.
+<<else>>
+Behind the door labelled "Destructatorium", you can hear explosions and crackling, and the occasional yell of //"Ow!"// Generally following that, you see a singed fur running over to the Restoratorium door. Those that go into the Altertarium tend to come out looking more confused than when they started.
+<</if>>
+
+<<action "1" "darkMagic" "Destructatorium">><</action>>
+<<action "2" "whiteMagic" "Restoratorium">><</action>>
+<<action "3" "greyMagic" "Altertarium">><</action>>
+<<if $options.feeder_expansionEnabled>>
+	<<action "4" "greyMagic" "Creatorium">><</action>>
+<</if>>
+<<action "sw" "leave" "Mage's Guild">><<set $travel = 1>><</action>>
+
+

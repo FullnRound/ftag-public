@@ -1,0 +1,562 @@
+:: drunk ai {"position":"4900,750","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a bloated drunken $npc1.species who appears to be raring to pick a fight with whoever $npc1.he runs into. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<switch random(1,3)>>
+	<<case 1>>
+		<li>Attack</li>
+		The bloated drunk rears $npc1.his fist back and hits you with a haymaker. 
+		<<damage $edmg>>
+		
+	<<case 2>>
+		<li>Attack</li>
+		The swollen drunk appears to be nodding off. You pause for a moment, wondering if $npc1.he's passed out when $npc1.he suddenly slumps forward and headbutts you right in the nose. 
+		<<damage $edmg>>
+		<<eHealth -1>>
+		
+	<<default>>
+		<li>Attack?</li>
+		The sloshing drunk tries to rear back $npc1.his fist but somehow manages to get $npc1.his hand caught in $npc1.his own shirt sleeve. 
+		
+<</switch>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You lunge at your enemy in an attempt to devour the $npc1.species and you succeed in tackling $npc1.him to the ground. The drunk $npc1.species sloshes about on top of $npc1.his gut as you begin to move $npc1.him. Turning $npc1.him over, $npc1.his stomach lists to one side and then the other from the momentum, making $npc1.him groan. Sitting down, you grab $npc1.his $npc1.feet and pull them into your mouth. As you work $npc1.him down your throat to $npc1.his waist, $npc1.his keg of a belly spills over $npc1.his chest, triggering a drunken, wet belch. $npc1.He groans anew as you work $npc1.his paunch into your mouth, making it slosh with every inch you swallow. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	As you reach $npc1.his armpits, you are forced to lift $npc1.his arms above $npc1.his head. $npc1.He begins to curl in a fetal position around $npc1.his belly as you swallow past $npc1.his head. With a few more great gulps, $npc1.he is forced the rest of the way in as you swallow $npc1.his hands. You stand and saunter off, your own gut giving a heave. After you take a few steps, $npc1.he gives one final great belch, the sensation tickling its way through your belly. After about 15 minutes, you feel a great warmth surge through your belly. Your thoughts slow as you begin to stumble, the warmth suffusing your entire being. It seems that alcohol had to go somewhere. 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+<<else>>
+	As you work $npc1.him down to your stomach, it gives an audible groan. With a sudden surge of pressure, you realize you've bitten off more than you could chew. As your mouth closes around his hands, your gut spills forth faster and faster, and you pass out from the strain with a few quiet hiccups. 
+	<hr>
+	<<defeated "overeating">>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+The drunk closes $npc1.his eyes for a second and wavers on $npc1.his $npc1.feet. You take this as a good opportunity to run away. As you look over your shoulder, you see the drunk wake up and look around in confusion, $npc1.he shouts something about you just disappearing like magic. 
+<<endCombat>>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $gld > 3>>
+	You grab a few coins out of your pocket and toss them at the drunk. $npc1.He tries to punch the coins out of the air but misses and stumbles. $npc1.He staggers for a bit before noticing those were coins you threw at $npc1.him and $npc1.he bends over to pick the coins up. $npc1.He's almost pulled off $npc1.his feet by $npc1.his sloshing stomach, but $npc1.he manages to regain his balance and stand up. "Ah, thanksh you kind $p.sir. Believe me thish won't go to washte!" $npc1.he says before drunkenly sloshing off into the night towards the nearest bar, singing a jaunty tune. 
+	<<doGld -3>>
+	<<endCombat>>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+	
+<<elseif $gld > 0>>
+	You grab the last of your gold out of your pocket and toss it at the drunk. $npc1.He tries to punch the coins out of the air but misses and stumbles. $npc1.He staggers for a bit before noticing those were coins you threw at $npc1.him and $npc1.he bends over to pick the coins up. $npc1.He's almost pulled off $npc1.his feet by $npc1.his sloshing stomach, but $npc1.he manages to regain $npc1.his balance and stand up. "What? Thatsh it!" $npc1.he tosses and beer bottle at your head before $npc1.he wobbles off into the night, complaining about people's lack of charity these days. 
+	<<set _gold = $gld * -1>>
+	<<doGld _gold>>
+	<<endCombat>>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+	
+<<else>>
+	You search your person for any gold you could toss at the $npc1.guy, but you can only shrug your shoulders when you find none. "You thinks I'm fallin' for that? I know you're holdin' out on me! 
+	<<enemyAction "attack">>
+	
+<</if>>
+
+/*===You lose===*/
+<<case "defeat">>
+Your vision fades to black as you fall unconscious. 
+<<defeated "battle">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The bloated drunk spins around on $npc1.his heel in an attempt to flee but ends up falling flat on $npc1.his swollen gut instead. $npc1.He sloshes back and forth for a second, "//belch// I could takes yous alls outsh if I washn't soooo... tired." The drunk passes out and begins snooring and occasionally hiccuping very loudly. Apparently you've won. 
+<<include "Victory">>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<set _randomization = "market square movement">>
+	<<if $e.exit == "Central Square">>
+		<<set _randomization = "central square movement">>
+	<</if>>
+	<<feeder_genericActionFull "eater" false _randomization>>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: takeout terror ai {"position":"5025,750","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+<p>You’re brought up short as a hugely fat $npc1.species waddles towards you- practically so wide that there’s no space in the street to avoid him. The ground shakes beneath his thunderous footfalls. His shirt and denim pants are bursting at the seams, his belly so bloated it hangs past his knees. He resembles a hot-air balloon stuffed into a set of clothes. Obviously having been gorging for hours, the $npc1.species is occupied greedily devouring something from a crumpled parchment bag, accompanied by a strong smell of fried food, but as you watch he balls the now-empty bag up and tosses it away, obviously STILL not satisfied. Catching sight of you, he pants, "Hey, y-you there! You’ve gotta lend me some GOLD!" His enormous middle emits a subterranean rumble, and he adds desperately. "You don’t understand, I just… gotta get some more CHOW!" A slightly crazed look enters his food-fuddled gaze, and he looms over you like a wrecking ball. "In fact… you’re look mighty tasty there… if you’ve not got any gold maybe I’ll j-just eat YOU!" </p>
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<if $grapple > 0>>
+	<li>Devour</li>
+	<<switch $e.special>>
+		<<case 3>>
+			As you squirm helplessly against in your vast opponent’s obese embrace, you feel his gigantic blubbersome belly rumble ominously against you. 
+			<<set $e.special-->>
+			
+		<<case 2>>
+			All this fighting has worked up an appetite. 
+			<<set $e.special-->>
+			
+		<<case 1>>
+			He moans, and then $npc1.angry ravenously. "More food... MORE... FOOOOOD...!" Still compressed against that mountain of chub, you feel yourself being bodily lifted off your $p.feet, scraping against the rolls and folds of his overfed frame as you go. You’re brought face-to-face with him, both of you sweating with exertion, though his face is the fatter by far. His eyes have a distant, hungry quality. He's not seeing 'you', just one of the biggest portions of takeout he’s ever seen. His gut emits another deep gurrrrrgling sound and he opens wiiiiiiiide, stuffing you head-first down his gullet. It takes him some time, but he manages to stuff all of you in in one bite, aided by the grease from all the fried foods he's inhaled previously. 
+			<<if setup.weight() > 600>>
+				Your $fatness belly gives him some difficulty, but he stolidly pushes more and more of you in with his hands, mouth stretching wider and wider to accommodate all of it. 
+			<</if>>
+			By the time your nose is tickling at his stomach, you can feel his jaws pressing on your backside while your legs kick helplessly. A muffled rrrrrip! sound tells you that your devourer has just burst out of his clothes, followed by a shuddering THUMP that suggests he’s just fallen onto his enormous butt, too stuffed to move. You’re pressed into his capacious stomach, stretching it 
+			<<if setup.weight() < 300>>slightly
+			<<elseif setup.weight() < 450 and setup.weight() >= 300>>moderately
+			<<elseif setup.weight() < 600 and setup.weight() >= 450>>significantly
+			<<else>>hugely
+			<</if>>. You can feel your devourer’s fat hands rubbing weakly at his stretched sides, pressing against you through the deep layers of blubber. It’s very hot and stuffy in there, and mercifully you quickly lose consciousness. You can only imagine how fat this guy’s going to be after digesting YOU... 
+			<hr>
+			<<defeated "devoured">>
+			
+	<</switch>>
+
+<<else>>
+	<<switch random(1,6)>>
+		<<case 1>>
+			<li>Squash</li>
+			<<if setup.dodge() and setup.weight() < 500>>
+				With a growl the vastly-overfed $npc1.species tries to pin you against the nearest wall with his stomach, but fortunately for you you’re able to dodge free just in time. There’s a loud SMACK as his bare belly hits the stonework. Ouch, that’s got to SMART... 
+				
+			<<elseif setup.weight() < 500>>
+				With a growl the vastly-overfed $npc1.species steps forward and literally bulldozes you against the nearest wall with his blubber-blown belly- it’s a wonder the collision doesn’t knock the wall down. Squashed against the stonework like an insect, you wheeze as all the breath is pressed out of you. 
+				<<damage $edmg>>
+			
+			<<else>>
+				<<if $fat > 100>>
+					With a growl, the vastly-overfed $npc1.species steps forward and attempts to bulldoze you with his blubber-blown belly. His belly squishes against your own oversized belly as he tries to shove you into the nearest wall, but you're just too heavy to be pushed around. He eventually gives up and stumbles back in frustration, causing both your bellies to ripple and jiggle furiously as they come apart. 
+				<<else>>
+					With a growl, the vastly-overfed $npc1.species steps forward and attempts to bulldoze you with $npc1.his blubber-blown belly. $npc1.His overabundant flab squishes against your hardened, muscular body as $npc1.he tries to shove you into the nearest wall, but you manage to brace yourself and push back with all your considerable strength, upsetting $npc1.his balance. $npc1.He’s forced to stumble back, $npc1.his belly rippling and jiggling furiously. 
+				<</if>>
+				
+			<</if>>
+			
+		<<case 2>>
+			<li>Punch</li>
+			<<if setup.dodge()>>
+				Your jumbo-sized adversary swings a podgy fist at you, but luckily he’s so lumbering that you see it coming in time and duck. His fist sails through empty air and he has to windmill violently to retain balance, giving you time to move clear. 
+				
+			<<else>>
+				Your jumbo-sized adversary swings a podgy fist at you in a roundhouse punch. It connects with your chin and you practically spin around. He may be slow, but that swing’s got a LOT of weight behind it. 
+				<<damage $edmg>>
+				
+			<</if>>
+			
+		<<case 3>>
+			<li>Snack</li>
+			Squaring up to you, your opponent’s nose starts to twitch. He spots a discard food wrapper on the floor, and forgetting all about you for the moment bends down and grabs it. You expect the seam of his pants to burst at any second. There’s obviously some of the snack remaining, because he upends the wrapper over his snout and devours the contents. Wiping his greasy lips with a fat $npc1.hand, the massively obese $npc1.species returns his attention to you... 
+			<<eHealth 10>>
+			
+		<<case 4>>
+			<li>Button-burst</li>
+			<<if setup.dodge()>>
+				Your fat opponent swings a punch at you violently, clothes //creeeaking// in protest at the sudden movements. With a loud POP a button SNAPS free of his shirt and ricochets harmlessly off the wall behind you. A bit more of his vast paunch hangs free of his clothing and he grunts in irritation.
+				
+			<<else>>
+				Your fat opponent swings a punch at you violently, clothes //creeeaking// in protest at the sudden movements. With a loud POP a button SNAPS free of his shirt and hits you with near ballistic speed. You stagger painfully, while your adversary grunts and looks satisfied now that he can move a bit more freely. 
+				<<set $edmg *= 0.8>>
+				<<damage $edmg>>
+				<<if random(1,100) < 30>><<tempBuff "stun" 1>><</if>>
+					
+			<</if>>
+			
+		<<case 5>>
+			<li>Belch</li>
+			As you prepare to attack an ominous GLORP arises from you massive opponent’s belly. He puts both hands to the sides of his stomach and lets out a colossal BURRRRRAP! It’s worse than standing underneath a church bell when it’s struck. The noise echoes down the darkened streets and sends you reeling, clutching your ears defensively. 
+			<<tempBuff "stun" 1>>
+			
+		<<case 6>>
+			<li>Grab</li>
+			<<if setup.dodge()>>
+				Your hugely obese opponent makes a sudden lunge at you, trying to catch you off-guard. Fortunately he’s so colossally lumbering that you manage to dodge, and he stampedes right past you, unable to change course in time. 
+				
+			<<else>>
+				Your hugely obese opponent makes a sudden lunge at you, taking you by surprise. His blubbery bulk SER-MACKS against you and he manages to get one fat arm wrapped around you in a headlock. You can feel the rolls of flab on his bloated arm wobble and smoosh against your face as you struggle to breathe, while that mammoth belly rolls up and rests on your back like some gargantuan boulder, pinning you down. Talk about... throwing your weight around... 
+				<<set $grapple = $e.str * 3>>
+				<<set $e.special = 3>>
+					
+			<</if>>
+			
+	<</switch>>
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+With a sharp kick you manage to trip up the huge fatso, who ''SLAMS'' down onto his huge stomach and sprawls there on top of it, panting and winded. With a loud //POP// his clothes finally burst, leaving a lot of bare fur on display. He looks extremely... appetising. Greedily you grab the overblown $npc1.species under his fat armpits and haul him to his knees, his belly wobbling heavily against you. Then you open your jaws WIDE and stuff him in, face-first! Even his head is something of a mouthful, with those bloated cheeks to squeeze in and that chubby neck to follow. He lets out a muffled protest and tries to squirm free. Bracing yourself, you HEAVE upwards and stretch your maw to encompass his flabby chest, then slide your hands down to grab under his bloated sides for more grip. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	Heaving and hauling, you stuff the struggling superchub down your throat like some massively-oversized marshmallow, having some difficulty with those chubby arms but eventually getting them licked- quite literally. By the time it comes to his stomach you’re seated heavily on the floor and are hefting his spherical bulk above your head with your arms. You struggle to pass his equator, but after that it’s really just a matter of swallowing. It takes the biggest GULP of your life, but down he slides, distorting your neck hugely as he descends, your entire body stretching to accommodate him in your middle. You sprawl onto your back in the street, stomach ready to pop, and let out a deep moan, jostling your gut weakly with your $p.hands to settle it. Finally a deep //BURRRP// wells up from within you, and you start to feel a little better. Sluggishly you heave yourself back onto your $p.feet, belly weighing like an anchor, and slowly waddle off, arms stuck out to your sides. Now THAT’s what you call takeout... 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+<<else>>
+	Heaving and hauling, you try to stuff the struggling superchub down your throat like some massively-oversized marshmallow, but by the time you reach his stomach you realise you’ve bitten off more than you can chew. Seated heavily on the ground, you heave his weight above your head in an effort to swallow him. All that blubber bears down on you and you feel your jaws stretch, and stretch, and stretch... he sinks down unstoppably, and your eyes widen as you feel yourself expand far more than you ever should as he fills you to capacity, and then more, and more, and more, until you’re so stretched out he’s wearing you like a second skin. You’re left helpless, imprisoned from within by the vast bulk of the huge fatso you’ve just golloped down. The strain is making you dizzy, and your ears start to ring as if you’re underwater. 
+	<<if !$options.popping>>
+		The world begins to fade, replaced by white light that grows brighter, and brighter, and brighter... 
+		
+		<<defeated "overeating">>
+	<<else>>
+		You let out a stifled moan, but this is drowned out by a deep, muffled //BURRRP// from your super-swollen stomach. You feel yourself shift and rock around as your ‘meal’ squirms and tries to sit up inside of you, stretching your hide to near transclucent-tightness. You feel a couple of loud, organic-sounding //pops// inside you, and suddenly you’re stretching further again. This can’t be good. The pressure inside you grows to unbearable levels, and you shut your eyes and whimper as you grow tighter, and tighter, and tighter... 
+		
+		<<defeated "exploded">>
+	<</if>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+Going purple in the face, you squirm and struggle against this overfed brute’s huge bulk, which wobbles and ripples as you try to break free- it’s like fighting a vast ball of dough. You manage to prize his obese arm off of your neck, and SHOVE him backwards- though mostly you wind up just bouncing free of him as his gut rebounds against you. 
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+Going purple in the face, you squirm and struggle against this overfed brute’s huge bulk, which wobbles and ripples as you try to break free- it’s like fighting a vast ball of dough. Try as you might, you’re unable to escape from this lardball’s chubby grip. You shove hard against him, but all you do is sink into his soft blubber. And he STINKS of fried food... 
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+People who say a fat animal isn’t intimidating have obviously never been up close and personal with one. You suddenly dodge left, then right, and try to sprint past the colossally chubby $npc1.species. Caught off-balance, you make it past and get behind him! Fortunately he’s so unwieldy that by the time he’s managed to turn around, you’re well up the street and too far off for him to catch. You here a bellow of anger- followed by a deafening belly-rumble- but, for today at least, you’re nobody’s snack. 
+<<endCombat>>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+People who say a fat animal isn’t intimidating have obviously never been up close and personal with one. You suddenly dodge left, then right, and try to sprint past the colossally chubby $npc1.species. Unfortunately, he picks the same direction as you and so stomps into your path. There’s not enough room to get past! You SMACK into his huge belly and rebound as firmly as if you’d hit a crash-mat. He, in contrast, barely registers the collision with nothing more than a stifled grunt. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $gld >= 8>>
+	A look of gluttonous glee spreads over the super-fattened $npc1.species’s face as you hand over 8 gold. "Oof, thanks, I- BURRP!-just got time to make it for DESSERT!" Without another word he squeezes past you, practically smooshing you into the wall. You’re left a little bruised, but otherwise unharmed. 
+	<<doGld -8>>
+	<<endCombat>>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+
+<<else>>
+	<<if $gld > 1>>
+		You take out you last $gld gold and toss them at him. The coins bounce of his gut with several pings and he looks back at you, apparently still not satisfied. 
+		<<set _gold = $gld * -1>>
+		<<doGld _gold>>
+
+
+	<<elseif $gld == 1>>
+		You take out the last gold coin you have and toss it at him. It bounces off his gut with a soft ping and falls to the ground. He looks back up at you, clearly still not satisfied. 
+		<<doGld -1>>
+
+	<<else>>
+		With a sigh you rummage in your inventory, but find yourself embarrassingly short of cash. 
+
+	<</if>>
+		
+	A look of desperation and annoyance begins to crease the fatso’s face, 
+	<<set _takeoutTerrorFood = "">>
+	
+	<<for _i = 0; _i < $inventory.length; _i++>>
+		<<capture _i>>
+			<<if $inventory[_i].type == "food">>
+				<<set _takeoutTerrorFood = $inventory[_i]>>
+				<<break>>
+			<</if>>
+		<</capture>>
+	<</for>>
+	
+	<<if _takeoutTerrorFood == "">>
+		and you frantically look for some food as a substitute, but there’s nothing that’ll satisfy an appetite like THIS. Suddenly losing patience, the butterball $npc1.species grabs hold of you with his fat, surprisingly strong hands, belly rolling up against you like a soft wrecking-ball. "More food... MORE... FOOOOOD...!" Still compressed against that mountain of chub, you feel yourself being bodily lifted off your $p.feet, scraping against the rolls and folds of his overfed frame as you go. You’re brought face-to-face with him, both of you sweating with exertion, though his face is the fatter by far. His eyes have a distant, hungry quality. He's not seeing 'you', just one of the biggest portions of takeout he’s ever seen. His gut emits another deep gurrrrrgling sound and he opens wiiiiiiiide, stuffing you head-first down his gullet. It takes him some time, but he manages to stuff all of you in in one bite, aided by the grease from all the fried foods he's inhaled previously. 
+		<br><br>
+		
+		<<if setup.weight() > 600>>
+			Your $fatness belly gives him some difficulty, but he stolidly pushes more and more of you in with his hands, mouth stretching wider and wider to accommodate all of it. 
+		<</if>>
+		By the time your nose is tickling at his stomach, you can feel his jaws pressing on your backside while your legs kick helplessly. A muffled rrrrrip! sound tells you that your devourer has just burst out of his clothes, followed by a shuddering THUMP that suggests he’s just fallen onto his enormous butt, too stuffed to move. You’re pressed into his capacious stomach, stretching it 
+		<<if setup.weight() < 300>>slightly
+		<<elseif setup.weight() < 450 and setup.weight() >= 300>>moderately
+		<<elseif setup.weight() < 600 and setup.weight() >= 450>>significantly
+		<<else>>hugely
+		<</if>>
+		. You can feel your devourer’s fat hands rubbing weakly at his stretched sides, pressing against you through the deep layers of blubber. It’s very hot and stuffy in there, and mercifully you quickly lose consciousness. You can only imagine how fat this guy’s going to be after digesting YOU... 
+		<<defeated "devoured">>
+		
+	<<else>>
+		but at the last minute you manage to rustle up _takeoutTerrorFood.article _takeoutTerrorFood.Name, and his face lights up. Without another word he snatches it from you and crams it into his mouth with greedy grunts. While he’s distracted, you make a hasty getaway, appalled equally by the fact that that you were so easily bullied and by the table-manners you’ve just witnessed. 
+		<<removeItem _takeoutTerrorFood>>
+		<<endCombat>>
+		<<if $e.exit == "Central Square">><<include "central square movement">>
+		<<else>><<include "market square movement">><</if>>
+		
+		
+	<</if>>
+			
+
+<</if>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+<p>You slump weakly against this monster’s massive stomach, defeated by his sheer BULK. You sink to your knees, face resting against that huge stomach, which lets out a cavernous rumble. You feel your opponent’s fat arms grab you, smooshing and pinning you against all that flab, but you’re too weak to fight back. Your face winds up pressed into his gargantuan chest. He lets out a ravenous $npc1.angry. "More food... MORE... ''FOOOOOD''...!" Still compressed against that mountain of chub, you feel yourself being bodily lifted off your $p.feet, scraping against the rolls and folds of his overfed frame as you go. You’re brought face-to-face with him, both of you sweating with exertion<<if $fat < 500>>, though his face is the fatter by far<</if>>. His eyes have a distant, hungry quality. He’s not seeing 'you', just one of the biggest portions of takeout he’s ever seen. His gut emits another deep //gurrrrrgling// sound and he opens wiiiiiiiide, stuffing you head-first down his gullet. It takes him some time, but he manages to stuff all of you in in one bite, aided by the grease from all the fried foods he’s inhaled previously. </p>
+
+<<if setup.weight() > 600>>
+	Your $fatness belly gives him some difficulty, but he stolidly pushes more and more of you in with his hands, mouth stretching wider and wider to accommodate all of it. 
+<</if>>
+
+By the time your nose is tickling at his stomach, you can feel his jaws pressing on your backside while your legs kick helplessly. A muffled //rrrrrip//! sound tells you that your devourer has just burst out of his clothes, followed by a shuddering THUMP that suggests he’s just fallen onto his enormous butt, too stuffed to move. You’re pressed into his capacious stomach, stretching it <<if setup.weight() < 300>>slightly
+<<elseif setup.weight() < 450 and setup.weight() >= 300>>moderately
+<<elseif setup.weight() < 600 and setup.weight() >= 450>>significantly
+<<else>>hugely
+<</if>>. You can feel your devourer’s fat hands rubbing weakly at his stretched sides, pressing against you through the deep layers of blubber. It’s very hot and stuffy in there, and mercifully you quickly lose consciousness. You can only imagine how fat this guy’s going to be after digesting YOU... 
+
+<<defeated "devoured">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The massively obese $npc1.species staggers one last time and teeters precipitously on his $npc1.feet, until the weight of his he backside pulls him down with a THUMP that makes the surrounding buildings shake, accompanied by a RRIP as his clothes finally burst apart. He moans and topples onto his back, belly rising up level with your chin, heaving in time with his panting breath. Looks like this guy won’t be hassling anyone soon- not until he can get up. 
+<<include "Victory">>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<set _randomization = "market square movement">>
+	<<if $e.exit == "Central Square">>
+		<<set _randomization = "central square movement">>
+	<</if>>
+	<<feeder_genericActionFull "eater" false _randomization>>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: thief ai {"position":"4775,750","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a thief who’s clearly packed on a few pounds. $npc1.His leather armor is bursting at the seams all over and appears to be comically held together with bits of rope. $npc1.He’s wielding a vicious-looking dagger though. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<set _chance = random(1,5)>>
+<<if _chance == 1 and $e.gld >= 15>>
+	<li>Run</li>
+	The thief, satisfied with $npc1.his "earnings" turns to run away
+	<<if $e.agi > $agi>>
+		 and leaves you behind in the dust. 
+		<<endCombat>>
+		<<if $e.exit == "Central Square">>
+			<<include "central square movement">>
+		<<else>>
+			<<include "market square movement">>
+		<</if>>
+	<<else>>
+		, but you catch up to $npc1.him before $npc1.he can get away. 
+	<</if>>
+	
+	
+<<elseif _chance == 2 and $agi > $e.agi>>
+	<li>Pocket Sand!</li>
+	<<if $str > 250>>
+	The thief reaches into $npc1.his pocket and shouts, "Pocket sand!" before throwing a handful of sand in your face. You stumble back in surprise as you cough and cover your eyes. When you uncover them, the thief is nowhere to be seen. The sound of panicked footsteps recedes into the distance as the thief makes good $npc1.his escape. 
+	<<endCombat>>
+	<<if $e.exit == "Central Square">>
+		<<include "central square movement">>
+	<<else>>
+		<<include "market square movement">>
+	<</if>>
+	<<else>>
+	The thief reaches into $npc1.his pocket and shouts, "Pocket sand!" before throwing a handful of sand in your face. You stumble back in surprise as you cough and cover your eyes. Your speed is lowered from the irritation. 
+	<<set _debuff = random(-2,-4)>>
+	<<tempBuff "agi" _debuff>>
+	<</if>>
+	
+	
+<<elseif _chance == 3 or _chance == 4 and $e.gld < 15>>
+	<li>Steal</li>
+	<<set _tempInt = random(0,$gld * .1)>>
+	The fat thief feints right. As you're distracted, $npc1.his hand darts into one of your pockets 
+	<<if $gld <= 0 or _tempInt <= 0>>
+		but $npc1.he comes up dissapointed as $npc1.he finds no gold in that pocket. 
+	<<else>>
+		stealing _tempInt gold, $npc1.his weight clearly not hindering $npc1.his thieving abilities. 
+		<<set $e.gld += _tempInt>>
+		<<set _tempInt *= -1>>
+		<<doGld _tempInt>>
+	<</if>>
+	
+	
+<<else>>
+	<li>Attack</li>
+	The thief deftly slashes at you with $npc1.his dagger. 
+	<<damage $edmg>>
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You lunge at your enemy in an attempt to devour the $e.name and you succeed in tackling $npc1.him to the ground. You roll the $npc1.species thief onto $npc1.his back, $npc1.his stomach swaying back and forth a bit from the momentum. As you untie the rope holding $npc1.his armor together, it bursts off from $npc1.his strained form piece by piece, $npc1.his pudgy features jiggling a bit after the relieved pressure. Even so, $npc1.his stomach is still barely contained by $npc1.his jeans, let alone $npc1.his torn tunic. Grabbing his tunic, you haul $npc1.him to $npc1.his feet and start to devour $npc1.him face first. You shove $npc1.his face into your throat, your swallowing pulling $npc1.him in bit by bit. Pinning $npc1.his arms to the side, you pull $npc1.him in up to $npc1.his chest, then $npc1.his stomach, your jaw sinking into $npc1.his belly. You begin to hear muffled shouts coming from your belly as $npc1.his head and arms enter it. He begins to kick $npc1.his feet, forcing you to swallow rapidly to pin them together and stop $npc1.him from escaping. 
+<<consume $e.weight 0>>
+
+<<if $alive>>
+	Your gut bulges as $npc1.he presses on your belly in an attempt to push himself out. As your mouth finally closes around $npc1.his feet, you give a final massive gulp and curl $npc1.him up in your belly. Your gut lurches from side to side from $npc1.his struggles as you $walk off, rubbing it as you listen to $npc1.his muffled cursing. 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+<<else>>
+	As you try to swallow $npc1.him further, you gag as you realize your stomach won't stretch any further. Your stomach bulges as $npc1.he begins to push himself out with $npc1.his hands, aided by $npc1.his leg thrashing. You gag again as you disgorge $npc1.him, the momentum causing you to tumble to the ground. As you hack and cough from your painful failed attempt to devour the thief, $npc1.he takes it upon $npc1.himself to rifle through your pockets. 
+	<<set _tempGLD = -15>>
+	<<if $gld > 0>>
+		$npc1.He managed to pilfer 
+		<<if $gld + _tempGLD <= 0>>
+			<<set _tempGLD = $gld * -1>>
+			all your gold 
+		<<else>>
+			some of your gold 
+		<</if>>
+	<<else>>
+		<<set _tempGLD = 0>>
+		You hear $npc1.him cursing you for being so poor 
+	<</if>>
+	before whacking you hard over the back of your head, knocking you unconcious. 
+	<<if _tempGLD != 0>><<doGld _tempGLD>><</if>>
+	<<defeated "battle">>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<<if $str > 250>>
+<li>"Escaped!"</li>
+You lower your $wea.name and make a shooing motion toward the thief. $npc1.He takes the hint and sprints away as fast as $npc1.his legs can carry $npc1.him. 
+<<else>>
+<li>Escaped!</li>
+You find an opportunity to flee and take advantage of it. The thief, not one for heroics, runs off also. 
+<</if>>
+<<endCombat>>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<<if $str > 250>>
+	<li>"Escaped!"</li>
+	You lower your $wea.name and make a shooing motion toward the thief. $npc1.He takes the hint and sprints away as fast as $npc1.his legs can carry $npc1.him. 
+	<<endCombat>>
+	<<if $e.exit == "Central Square">><<include "central square movement">>
+	<<else>><<include "market square movement">><</if>>
+
+<<else>>
+	<li>Run failed!</li>
+	You failed to escape! 
+	<<enemyAction "attack">>
+<</if>>
+
+
+
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<endCombat>>
+<<if $gld > 8>>
+	<<if $str > 250>>
+	Against your better judgment, you reach into your pocket for a few coins and toss them at the thief. $npc1.He's so surprised that $npc1.he almost fails to catch the gold. "Um... thanks?" The $npc1.species quickly runs off before you can change your mind. 
+	<<else>>
+	You quickly toss a handful of gold at the $npc1.species in hopes that it'll make $npc1.him go away. $npc1.He deftly snatches the gold out of the air. "Good choice, sucker." And with that, $npc1.he dashes off into the night. 
+	<</if>>
+	<<doGld -8>>
+
+
+<<elseif $gld > 0>>
+	<<if $str > 250>>
+	Against your better judgment, you reach into your pocket for what gold you have left and toss it at the thief. $npc1.He's so surprised that $npc1.he almost fails to catch the gold. "Um... thanks?" The $npc1.species quickly runs off before you can change your mind. 
+	<<else>>
+	You quickly toss what gold you have left at the $npc1.species in hopes that it'll make $npc1.him go away. $npc1.He deftly snatches the gold out of the air. "Good choice, sucker." And with that, $npc1.he dashes off into the night. 
+	<</if>>
+	<<set _gold = -1 * $gld>>
+	<<doGld _gold>>
+
+
+<<else>>
+	You search your person for any gold you might have, but you can only shrug your shoulders at $npc1.him when you come up with nothing. The $npc1.species sighs angrily. "What a waste." and with that $npc1.he angrily skulks off into the night. 
+<</if>>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+
+/*===You lose===*/
+<<case "defeat">>
+Your vision fades to black as you fall unconscious. 
+
+<<defeated "battle">>
+
+
+/*===You win!===*/
+<<case "victory">>
+The fat thief stumbles and kneels to the ground. "I just needed money... for another... dozen doughnuts!" he sighs before collapsing unconscious. 
+<<include "Victory">>
+<<if $e.exit == "Central Square">><<include "central square movement">>
+<<else>><<include "market square movement">><</if>>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<set _randomization = "market square movement">>
+	<<if $e.exit == "Central Square">>
+		<<set _randomization = "central square movement">>
+	<</if>>
+	<<feeder_genericActionFull "eater" false _randomization>>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+

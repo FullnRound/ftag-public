@@ -1,0 +1,411 @@
+:: Climb the pitcher plant {"position":"575,2725","size":"100,100"}
+<<if random(1,100) <= 60>>
+	<p>You carefully climb up the plant, its rough surface providing surprisingly good traction as you make your way to the oozing bud. It is just within your reach, but the moment you touch it, the bud suddenly rolls up on top of you, sending you slipping into the tubular leaf and splashing into the pooled nectar below. The sun's light is soon filtered through the closed top of the leaf, leaving you stuck in a dark, sweet trap! </p> 
+	
+	You've fallen into the pitcher plant's leaf, and are floating in its nectar, which is starting to sting a little bit. A quick testing proves that this plant is quite resilient from the inside, so cutting your way out isn't an option. You might be able to brute force the top of the leaf back open if you can reach it, and if push comes to shove, you're certain you'll be out of trouble if you can drink down all the nectar. 
+	
+	<<action "w" "next" "Drink from the pitcher plant">><</action>>
+	<<action "e" "attack" "Fight the pitcher plant">><</action>>
+
+<<else>>
+	You carefully climb up the plant, its rough surface providing surprisingly good traction as you make your way to the oozing bud. It's almost too easy when you put your mouth to it and start gulping down its nectar, which is somewhat thin and slightly acidic, but quite sweet. 
+	<<set _nectar = random(8,16)>>
+	<<set _calories = random(6,12)>>
+	<<consume _nectar _calories>>
+	<<if !$alive>>
+		The last couple of swallows prove to be too much for your overfull stomach, however, and you groan, clutching at your $waist belly. As if on cue, the bud rolls down, sending you sliding into the tubular leaf and splashing into the nectar pooled within. The light from above fades as you find yourself floating and trapped inside, the sticky liquid leaving you floating on your back, belly up in the air. Too full to fight your way out, you opt to rub your overstuffed belly and drift off to sleep, barely even feeling it when the plant begins to digest you. 
+
+		<<defeated "devoured">>
+	<<else>>
+		<<action "c" "next" "Drink from the pitcher plant">><</action>>
+		<<action "n" "leave" "Leave" "Leave the pitcher plant">><</action>>
+	<</if>>
+<</if>>
+
+
+:: Cultist village {"position":"275,2600","size":"100,100"}
+<<setEnemy $gluttonSeparatistBoss>>
+As you work your way through the jungle, you come across a small, fortified settlement. A fat $npc1.species can be seen looking about as $npc1.he  patrols back and forth in front of the open gate. Judging by the banner being flown, this looks like a hostile stronghold. You haven't been spotted yet, and so you might just be able to get in without raising suspicion of you're fast and smart about it. All else fails, you can force your way through. 
+
+<<action "w" "run" "Sneak into cultist village">><</action>>
+<<action "e" "attack" "Fight into cultist village">><</action>>
+<<action "n" "leave" "Leave" "Leave cultist village">><</action>>
+
+
+:: Drink from the pitcher plant {"position":"700,2725","size":"100,100"}
+<<if random(1,100) < 25>>
+	<p>After your last few swallows, the bud suddenly rolls down on you, sending you slipping into the tubular leaf and splashing into the pooled nectar below. It grows somewhat dark as the $sun's light is soon filtered through the closed top of the leaf. </p>
+	
+	You've fallen into the pitcher plant's leaf, and are floating in its nectar, which is starting to sting a little bit. A quick testing proves that this plant is quite resilient from the inside, so cutting your way out isn't an option. You might be able to brute force the top of the leaf back open if you can reach it, and if push comes to shove, you're certain you'll be out of trouble if you can drink down all the nectar. 
+	
+	<<action "w" "next" "Drink the nectar">><</action>>
+	<<action "e" "attack" "Fight the pitcher plant">><</action>>
+	
+<<else>>
+	You gulp down several more mouthfuls of nectar, the tangy sweetness almost addictive as it fills out your $waist stomach. 
+	<<set _nectar = random(8,16)>>
+	<<set _calories = random(6,12)>>
+	<<consume _nectar _calories>>
+	<<if !$alive>>
+		<p>The last couple of swallows prove to be too much for your overfull stomach, however, and you groan, clutching at your $waist belly. As if on cue, the bud rolls down, sending you sliding into the tubular leaf and splashing into the nectar pooled within. The light from above fades as you find yourself floating and trapped inside, the sticky liquid leaving you floating on your back, belly up in the air. Too full to fight your way out, you opt to rub your overstuffed belly and drift off to sleep, barely even feeling it when the plant begins to digest you. </p>
+
+		<<defeated "devoured">>
+	
+	<<else>>
+
+		<<action "c" "next" "Drink from the pitcher plant">><</action>>
+		<<action "n" "leave" "Leave" "Leave the pitcher plant">><</action>>
+	
+	<</if>>
+<</if>>
+
+
+:: Drink the nectar {"position":"700,2850","size":"100,100"}
+<<set _drink = random(15,25)>>
+<<set _calories = Math.round(_drink*0.75)>>
+<<set $eventCounterB -= _drink>>
+
+<p>You dip your head under the pool and take a several gulps of the nectar. 
+<<consume _drink _calories>>
+
+<<if $eventCounterB > 150>>There's still a whole lot of nectar left to drink, and you're feeling $hungry. 
+<<elseif $eventCounterB > 100>>You've drunk a sizable amount of the nectar, and are feeling $hungry. 
+<<elseif $eventCounterB > 50>>Most of the nectar is now in your $waist belly, and you are feeling $hungry. 
+<<else>>You're almost there, the bottom of the plant is under your feet, though most of the space is now taken up by your $waist stomach, which is quite full of nectar and making you feel $hungry. 
+<</if>></p>
+
+/*If you die*/
+<<if !$alive>>
+	<p>Your desperate drinking slows to a stop as your $waist belly begins to protest, stretched past its limits as you float in the pool of nectar. You let out a groan, rubbing your overstuffed belly tenderly as you slowly float onto your back. Between the tightness in your stomach and the dim lighting, you find yourself unable to keep struggling and slowly drift to unconsciousness in the belly of a plant, of all things.</p> 
+	
+	<<defeated "devoured">>
+
+/*If you're still going*/
+<<elseif $eventCounterB > 0>>
+	<<action "w" "next" "Drink the nectar">><</action>>
+	<<action "e" "attack" "Fight the pitcher plant">><</action>>
+
+/*If you succeed*/
+<<else>>
+	Scooping up the last few handfuls of nectar and gulping them down, you suddenly find yourself in a dry, empty tubular leaf. Apparently confused by this, the plant unrolls, giving you a clear way to get out. Your $waist belly sloshing, you take the opportunity and scramble out (as much as you can, at least) and back down to the forest floor. Still soaked with nectar, you head off to clean up a bit before continuing your exploration. 
+	
+	<<include "jungle randomization">>
+<</if>>
+
+
+:: Fight into cultist village {"position":"275,2725","size":"100,100"}
+You throw caution to the wind and run straight for the guard, $wea.name raised for a fight. From the looks of $npc1.him, that's exactly what you're going to get! 
+
+<<startCombat>>
+
+
+:: Fight the pitcher plant {"position":"575,2850","size":"100,100"}
+/*Add some sort of fail state for fighting your way out*/
+
+<<switch setup.skillTest($agi + $str, 90)>>
+	<<case true>>
+		With no small amount of effort, you manage to force your way up the smooth, slick sides of the plant and to the rolled up top. Despite a lack of leverage, you easily push the plant open, making an opening wide enough for you to slip out of. A dripping mess, you slide out of the plant and back to the jungle floor, heading off to clean yourself up before continuing your exploration. 
+		<<include "jungle randomization">>
+	
+	<<case false>>
+		<<if $agi < $str>>
+			You try to climb up the sides from within, but the nectar has slickened the smooth insides of the plant, and you fail to get more than a few inches up out of the pool. 
+		<<else>>
+			You make it up to the rolled top of the leaf, scrabbling up the slick insides of the plant, but your leverage doesn't allow you to force it open wide enough to climb out before you're sent sliding back down into the pool below. 
+		<</if>>	
+		
+		<<action "w" "next" "Drink the nectar">><</action>>
+		<<action "e" "attack" "Fight the pitcher plant">><</action>>
+		
+<</switch>>
+
+
+:: Follow hammer map {"position":"350,2350","size":"100,100"}
+<<setEnemy $starShaman>>
+<<updateEnemyWithNPC "starShaman">>
+
+You follow the map into the jungle, not having to go very far before finding freshly worn foot paths. Following them in the appropriate direction leads you to a barricaded structure. Fortunately, the gate is open, and you make your way inside. There, the shaman is performing some kind of ritual around a totem that is topped with the Fallen Star. $npc1.He suddenly stops, pointing at you. From behind, you hear a creaking of wood as the gate crashes shut. Looks like the only way out is a fight! 
+
+<<startCombat>>
+
+
+:: Follow spear map {"position":"350,2250","size":"100,100"}
+You follow the map deep into the jungle, the landmarks upon it proving usable, even if you do have to climb a tree to see them a couple of times. When you arrive in the marked location, you come across a hole in the ground. When you approach, an enormous snake begins to slide out of it. More and more of the giant snake emerges, and it soon becomes apparent that you are trapped in the area by its enormously lengthy body! 
+<<setEnemy $anacondaBoss>>
+
+<<startCombat>>
+
+
+:: Follow sword map {"position":"350,2150","size":"100,100"}
+You follow the map through the jungle and towards the center of the island, climbing up the side of the volcanic mountain. The heat begins to grow immense as you steadily approach the deposit, which is uncomfortably close to the open peak. Fortunately, you don't have to go much further, as the obsidian lies before you. Before you can take any of it, though, a deep, booming growl echoes from the mountain, forming obscure arcane syllables. As you watch, the obsidian rises up, taking a rough anthropomorphic form, and marches to you in time to a magical barrier trapping you in with it! 
+<<setEnemy $golemBoss>>
+
+<<startCombat>>
+
+
+:: Got inside cultist village {"position":"275,2850","size":"100,100"}
+Inside the fortifications, there are several hastily-built huts surrounding an unusual looking totem atop a stone shrine. Before it, a shaman in feathered robes dances and chants in a language you don't understand. 
+
+<<if !setup.questCompleted($defeatShaman) and setup.questStarted($defeatShaman)>>
+	The chief asked you to beat some sense back into some shaman, and it looks like this one will do just fine. 
+<</if>>
+
+As you approach, the Shaman seems to sense you, stopping and turning to face you, pointing accusingly and shouting threateningly. Several of the residents give a wide berth, watching to see what will happen next. 
+
+<<startCombat $shamanBossNormal>>
+
+
+:: Jungle [jungle] {"position":"450,2250","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($anaconda, $fatJaguar, $gluttonSeparatist, $dinosaurRider)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+		
+		<<startCombat>>
+
+	<<else>>
+		<<include "jungle randomization">><br>
+	<</if>>
+	
+<<else>>
+<p>Densely packed trees surround you on all sides and form a dense canopy overhead, allowing very little light to hit the jungle floor and making it rather difficult to navigate through. A cacophony of sorrounds constantly accompanies you as you travel through the untamed wilds. A huge array of musical calls from countless unseen birds echo through the jungle. Every once in a while, with a huge ''thwump'' an incredibly colorful and obese <<=setup.getSpeciesData("parrot").species>> falls from a tree and hits the ground. They somehow always manage to drunkenly stumble to their feet and flap off with overburdened wings. An occasional rustle from the undergrowth causes you to turn, but whatever caused the sound always seems to slip out of reach. Thundering footsteps and shaking trees also sometimes heralds the travel of the larger jungle denizens. </p>
+
+Due to its hostile and untamed nature, as well as the general seclusion of the island itself, not much is known about the jungle. You occasionally you trip accross broken chunks of carved stone that were obviously part of some ancient society long since given to ruin. You consider for a moment if there's some connection with the dinosaur village you encountered when you arrived on the island, but the designs are clearly different from any of the architecture you saw before. 
+
+
+<<include "jungle randomization">><br>
+
+<</if>>
+
+
+:: Leave cultist village {"position":"150,2600","size":"100,100"}
+You take advantage of the fact that you haven't been seen yet to remain that way, staying far from the stronghold to go explore elsewhere. 
+
+<<include "jungle randomization">>
+
+
+:: Leave the pitcher plant {"position":"700,2600","size":"100,100"}
+You decide not to bother with the plant's nectar and continue your exploration through the jungle. 
+
+<<include "jungle randomization">>
+
+
+:: Pitcher plant {"position":"575,2600","size":"100,100"}
+<<set $eventCounterB = 200>>
+You are making your way through the jungle when you chance upon a huge plant with tubular green leaves nearly fifteen feet tall tinged with dark red at the top of a bud-like protrusion. On closer inspection, you can see that it leaks a honey-like nectar from these buds, and that the tubular leaves have deep pools of this nectar. Just looking at it makes you want to try some, but there's no easy way to get to it: You'd have to climb up it and drink directly from the bud in a precarious position. 
+
+<<action "n" "leave" "Leave" "Leave the pitcher plant">><</action>>
+<<action "c" "next" "Climb the pitcher plant">><</action>>
+
+
+:: Shaman defeated {"position":"275,2975","size":"100,100"}
+With the shaman bested, the onlookers are left astonished and mouths agape. 
+
+<<if setup.questActive($defeatShaman)>>
+	<<advanceQuest $defeatShaman>>
+	<<set _quest = $quests[setup.questIndex($defeatShaman)]>>
+	<<set _shamanLeft = _quest.goal - _quest.progress>>
+	
+	<<if _shamanLeft > 0>>
+		The chief still wants you to find _shamanLeft more shaman, but this is good progress. 
+	<<else>>
+		That was the last shaman the chief wanted you to take care of. Job well done! 
+	<</if>>
+<</if>>
+
+You $walk out of the stronghold, having bested the leader, and head back out to the jungle unopposed. 
+
+<<include "jungle randomization">><br>
+
+
+:: Sneak into cultist village {"position":"150,2725","size":"100,100"}
+<p>You do your best to quietly approach the gate, hoping to get around the guard while $npc1.his back is turned. </p>
+
+/*sneak success*/
+<<if setup.skillTest($agi + $int,120)>>
+	<<if random(1,10) == 10>>
+		You walk up to the guard and exclaim, "Look behind you, a Three-Headed Monkey!" When a look of confusion crosses $npc1.his face, you smash your fist into the side of $npc1.his head, knocking $npc1.him out cold. 
+		
+	<<else>>
+		<<switch random(1,3)>>
+			<<case 1>>
+				With a thrown pebble as a distraction, you quietly dash around and inside as the $npc1.species turns $npc1.his head for a moment to locate the sound. 
+				
+			<<case 2>>
+				The guard heaves with a sigh and a yawn, giving you the opportunity to simply sneak right by $npc1.him while $npc1.his eyes are closed. 
+				
+			<<case 3>>
+				You spot a good foothold in the wall around the gate, and with a fortunate change of plans, climb right over the top while the guard's attention is elsewhere. 
+				
+		<</switch>>			
+	<</if>>
+	<<action "c" "next" "Got inside cultist village">><</action>>
+	
+/*sneak fail*/
+<<else>>
+	<<if random(1,10) == 10>>
+		You walk up to the guard and say, "I'm selling these fine leather jackets." $npc1.His face twists into a snarl; guess $npc1.he prefers cotton. 
+		
+	<<else>>
+		<<switch random(1,3)>>
+			<<case 1>>
+				You try to throw a pebble to misdirect $npc1.his attention. It works for about half a second, then $npc1.he looks right back at you, catching you in mid-sneak. 
+				
+			<<case 2>>
+				The guard heaves with a sigh and a yawn, closing $npc1.his eyes for a moment, but your attempt to quietly rush past goes south as you step on foliage that crunches under your feet. 
+				
+			<<case 3>>
+				You think you spot a good foothold in the wall around the gate and try to climb over it to avoid the guard altogether, but can't quite manage to get up over it so easily. The guard spots you mid-climb and comes rushing toward you. 
+				
+		<</switch>>
+		
+	<</if>>
+
+	<<startCombat>>
+		
+<</if>>
+
+
+:: jungle ambush {"position":"450,2450","size":"100,100"}
+<<if $jungleEnemies == undefined or $jungleEnemies.length == 0>>
+	<<set $jungleEnemies = ["anaconda", "jaguar", "glutton", "rider"]>>
+<</if>>
+<<set _enemy = $jungleEnemies.pluck()>>
+
+<<switch _enemy>>
+	<<case "anaconda">>
+	<<setEnemy $anaconda>>
+	As you $walk through the jungle, you suddenly catch sight of a long, tubular, $npc1.furred snake's torso. Your eyes follow it left and right but can't seem to find the end of it. Turning around, you see the head of the lengthy $npc1.species, and discern two things: First off, it's looking at you hungrily, and second, its body is all around you! 
+	
+	<<case "jaguar">>
+	<<setEnemy $fatJaguar>>
+	Your travels through the jungle is suddenly interrupted by the sound of a growling $npc1.adjective. Turning to look, you are within arms reach of a round-bellied $npc1.species, which has snuck up quite closely to you, and is obviously quite confident that you won't escape it, judging by its behavior. You have just enough time to prepare to fight as it pounces at you! 
+	
+	<<case "glutton">>
+	<<setEnemy $gluttonSeparatist>>
+	As you $walk through the jungle, you are suddenly interrupted by an angry shout in a language you don't understand. 
+	
+	<<case "rider">>
+	<<setEnemy $dinosaurRider>>
+	You $walk through the jungle and encounter an oddly flattened clearing. Closer inspection reveals that the plant life in this area has been completely trampled. By the time you realize this, you can hear the tell-tale thudding of enormous footsteps. A quick glance in the direction of their origin gives you a good view of an enormous feral $tyrannosaurus.species parting the trees with its body, being directed by an anthro $npc1.species wearing a light armor that bears the symbol of the Glutton Separatists. $npc1.He shouts commandingly in a tongue you don't understand, and the $tyrannosaurus.species turns to face you. This could go very poorly! 
+	
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: jungle leave {"position":"700,2325","size":"100,100"}
+<<setPassageTitle "A path out the Jungle">>
+
+You find a clearing ahead. As you approach closer you find it is one of the roads through the jungle! 
+
+<<include "jungle randomization">>
+
+<<action "n" "leave" "Leave" "Island Town">>
+	<<addPretext "You emerge from the jungle and find yourself in the town of dinosaurs. ">>
+<</action>>
+
+
+:: jungle minor {"position":"700,2450","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+As you're $walking through the jungle, you come across a peculiar little bush. Stooping down, you find what appears to be a small blueberry bush. But rather than the normal covering of blueberries, it merely has one gigantic one larger than your fist nestled in the center. You pluck the oddly out of place blueberry and notice it seems to be a bit of a weird color as well. No sense complaining about a free meal though. 
+<<getItem $weirdBerry>>
+
+<<include "jungle randomization">>
+
+
+:: jungle randomization {"position":"550,2450","size":"100,100"}
+<<set $jungleRandomization.combat += $jungleRandomization.combatRate>>
+<<set $jungleRandomization.special += $jungleRandomization.specialRate>>
+<<set $jungleRandomization.leave += $jungleRandomization.leaveRate>>
+<<set $jungleRandomization.minor += $jungleRandomization.minorRate>>
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+<<if $jungleRandomization.special > $jungleRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+<<if $jungleRandomization.minor > $jungleRandomization.special>>
+	<<set _randomEvent = "minor">>
+<</if>>
+<<if $jungleRandomization.leave > $jungleRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+	<<case "combat">>
+		<<set $jungleRandomization.combat = 0>>
+		<<set _event = "jungle ambush">>
+	<<case "special">>
+		<<set $jungleRandomization.special = 0>>
+		<<if random(1,2) == 1>>
+			<<set _event = "Cultist village">>
+		<<else>>
+			<<set _event = "Pitcher plant">>
+		<</if>>
+	<<case "minor">>
+		<<set $jungleRandomization.minor = 0>>
+		<<set _event = "jungle minor">>
+	<<case "leave">>
+		<<set $jungleRandomization.leave = 0>>
+		<<set _event = "jungle leave">>
+	<<default>>
+		''Error in jungle randomization!'' 
+<</switch>>
+
+<<action "c" "rest" "Rest" "Jungle">>
+<<set $eventCounterB = "rest">><</action>>
+
+
+<<if $sta > 0>>
+	
+<<action "1" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "2" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "3" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "4" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "6" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "7" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "8" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+<<action "9" "jungle" "Jungle" _event>>
+	<<set $travel = 5>><</action>>
+
+/*Quest locations*/
+<<if !setup.questReady($spearQuest) and setup.questStarted($spearQuest)>>
+	<<action "sw" "compass" "Follow spear map" "Follow spear map">>
+		<<set $travel = 5>>
+	<</action>>
+<</if>>
+
+<<if !setup.questReady($hammerQuest) and setup.questStarted($hammerQuest)>>
+	<<action "s" "compass" "Follow hammer map" "Follow hammer map">>
+		<<set $travel = 5>>
+	<</action>>
+<</if>>
+
+<<if !setup.questReady($swordQuest) and setup.questStarted($swordQuest)>>
+	<<action "se" "compass" "Follow sword" "Follow sword map">>
+		<<set $travel = 5>>
+	<</action>>
+<</if>>
+
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+

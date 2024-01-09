@@ -1,0 +1,687 @@
+:: Boat captain says [beach] {"position":"1125,1700","size":"100,100"}
+<<setPopupTitle "Talk to the boat captain">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"The name's $npc1.Name, and I love the sea. This boat's my home, and my home's this boat. Wouldn't have it any other way."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"When I'm not ferrying folks, I'm shipping goods. When I'm not shipping goods, I'm fishing. When I'm not fishing, I'm ferrying folks. Pretty good life for a $npc1.man of the sea!"
+<<set $eventCounterB++>>
+
+<<case 2>>
+"The living space doesn't make up most of this boat, even though it looks that way. Most of it's empty space for hauling trade goods or fish. I may not look like it, but I'm a bit of a wheeler and dealer!"
+<<set $eventCounterB++>>
+
+<<default>>
+"I'll tell you a true story: One time I was out fishing way off, and I swear to you, just below the surface, I saw a great $blueDragon.species! Before I could even do anything, it looked at me and my boat, and the water just carried us off like it wanted to be left alone. Lost my favorite pole that day, I did."
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Docks [beach] {"position":"1125,1600","size":"100,100"}
+<<createFixedNPC "captain">>
+
+<p>Extending out from town is a long pier, not particularly bustling with activity, though there are a few boats docked here. Signs point out the docks reserved by business-minded captains willing to offer services and transport. You follow the sign to what seems to be a docked houseboat with a sail. From the deck, a thick-bodied and round-bellied $npc1.species can be seen lazily fishing. $npc1.He glances towards the dock and catches sight of you, waving politely before calling out, "Step onboard, $p.sir! Let me know what I can do for you!" </p>
+
+<p><<if setup.weight() < 600>>You step aboard onto the lightly swaying vessel. 
+<<else>>You cautiously step aboard the vessel, your heavy body causing it to sway deeply when you do so. After a moment it settles back to a light sway. Fortunately, $npc1.he doesn't seem bothered by this. 
+<</if>></p>
+
+<p>"This boat heads to the western island," the $npc1.species explains, not leaving $npc1.his rod. "I head out regularly, and can bring you along, if you'd like. What do you say?"</p>
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Boat captain says">>
+
+<<action "w" "ocean" "Sail west">><</action>>
+
+<<action "e" "leave" "Go back" "West Town">><</action>>
+
+
+:: Inn [beach] {"position":"1525,1775","size":"100,100"}
+<<createFixedNPC "westInnkeeper">>
+<<createFixedNPC "westInnkeeperReplacement" 2>>
+
+<<set $eventCounterA = "no quest">>
+
+
+/*Sets which quest you're on*/
+<<if !setup.questStarted($slimeQuest3)>>
+<<set $eventCounterA = "before 3">>
+
+<<elseif !setup.questCompleted($slimeQuest3)>>
+<<set $eventCounterA = "on 3">>
+
+<<elseif !setup.questCompleted($slimeQuest4)>>
+<<set $eventCounterA = "on 4">>
+
+<<elseif !setup.questCompleted($slimeQuest5)>>
+<<set $eventCounterA = "on 5">>
+
+<<elseif setup.questCompleted($slimeQuest5)>>
+<<set $eventCounterA = "pig popped">>
+
+<</if>>
+
+
+<<switch $eventCounterA>>
+<<case "before 3">>
+You $walk into a slightly dank inn, apparently made from reclaimed ship's wood. There are rows of hammocks strung to wooden pillars that keep the place intact. The jagged windows give you a good view of the ocean, and the sound of the waves is soothing enough that you think you could catch a good night's sleep here in spite of the less-than-sterling appearance of the place. A massively obese $npc1.species $npc1.guy is doing $npc1.his best to ignore everything that is not $npc1.his meal while still 'running' the place. 
+
+
+
+<<case "on 3">>
+<p>You $walk into a slightly dank inn, apparently made from reclaimed ship's wood. There are rows of hammocks strung to wooden pillars that keep the place intact. The jagged windows give you a good view of the ocean, and the sound of the waves is soothing enough that you think you could catch a good night's sleep here in spite of the less-than-sterling appearance of the place. </p>
+
+<<set _tempQuest = $quests[setup.questIndex($slimeQuest3)]>>
+<<switch _tempQuest.progress>>
+<<case 0>>
+$npc1.Name the innkeeper is still sitting at the dining table, the fat $npc1.species as surly as ever. $npc1.He's put on some weight since you brought $npc1.him that last Lemon Slime, a crescent of $npc1.his round belly poking out from under $npc1.his taut beige tunic. 
+
+<<case 1>>
+$npc1.Name the innkeeper is still sitting at the dining table, the outsized $npc1.species as surly as ever. $npc1.He's gotten even porkier recently- $npc1.his grubby old tunic and pants are splitting at the seams, but are somehow grimly sticking with $npc1.him. $npc1.His swollen porcine paunch fills $npc1.his lap and presses up against the table, while the bench $npc1.he sits on is bending beneath $npc1.his bulging backside. 
+
+<<case 2>>
+$npc1.Name the innkeeper is still sitting at the dining table, the huge $npc1.species as surly as ever. $npc1.His recent weight-gain has become un-ignorable, a good two-thirds of $npc1.his torso swelling out from beneath $npc1.his burst tunic, a love-handle slung like an enormous tyre around $npc1.his middle. The table now digs deeply into the front of $npc1.his huge stomach, the top part bulging over onto its surface. The bench creaks in protest beneath $npc1.his double-plus-sized posterior, $npc1.his pants only clinging on thanks to a huge split across their seat. $npc1.His face has grown to moon-roundness, $npc1.mouth sticking out from between fat cheeks and a sizeable double-chin. And that's without $npc1.his mouth full, which seems to be a rarity these days. 
+<</switch>>
+
+
+
+<<case "on 4">>
+<p>You $walk into a slightly dank inn, apparently made from reclaimed ship's wood. There are rows of hammocks strung to wooden pillars that keep the place intact. The jagged windows give you a good view of the ocean, and the sound of the waves is soothing enough that you think you could catch a good night's sleep here in spite of the less-than-sterling appearance of the place. </p>
+
+$npc1.Name the innkeeper has become a local landmark, a $npc1.species so super-sized that visitors come to stay just to gawp at $npc1.him. Wider than $npc1.he is tall, the near-spherical porker sits at $npc1.his usual table, $npc1.his stomach mostly resting on top, the front of it wobbling off the planks at the far side. $npc1.His bacon-ball behind is parked on a bench built for three and leaves no room for anyone else. The bench bends so far that it actually touches the ground- it HAS to be magically reinforced, no mere wood could survive that load. The burst and split remnants of a tunic and rough pants cling to $npc1.his overblown curves, just enough to leave $npc1.him decent, but leaving very little of $npc1.him to the imagination. $npc1.His chubby chins rest atop his swollen chest, $npc1.his head being pushed slightly up and back to accommodate its volume. $npc1.His fat arms rest on $npc1.his sides when $npc1.he's not eating- and these days that's practically ALL $npc1.he does, shovelling down meal after meal. 
+
+
+
+<<case "on 5">>
+<p>You $walk into a slightly dank inn, apparently made from reclaimed ship's wood. There are rows of hammocks strung to wooden pillars that keep the place intact. The jagged windows give you a good view of the ocean, and the sound of the waves is soothing enough that you think you could catch a good night's sleep here in spite of the less-than-sterling appearance of the place. </p>
+
+<<set _tempQuest = $quests[setup.questIndex($slimeQuest5)]>>
+<<switch _tempQuest.progress>>
+<<case 0>>
+$npc1.Name the sumo-sized $npc1.adjective innkeeper is still sitting at the dining table, bigger than ever, and twice as surly! This hugely overfed specimen of $npc1.species-kind is now making the table $npc1.he sits at look kind of small, almost swamped beneath $npc1.his downright vast, doughy belly. Since you last saw $npc1.him even more $npc1.species-blubber has bulged free of the confines of $npc1.his burst and tattered clothing, which are starting to look under a desperate strain. Magically reinforced or not, the 3-person bench $npc1.he's sitting on has bowed down further yet beneath the weight of $npc1.his gigantic bottom, and $npc1.he's grown nearly as wide as it. 
+
+<<case 1>>
+$npc1.Name the enormous $npc1.adjective innkeeper is still sitting at the dining table, bigger than ever, and twice as surly! This massively overfed specimen of $npc1.pig-kind is now practically filling $npc1.his corner of the inn, that table now completely buried beneath the pachyderm-sized ball of flab that $npc1.he calls his middle. Since you last saw $npc1.him even more $npc1.pig-blubber has bulged free of the confines of $npc1.his burst and tattered clothing, which are now hardly noticeable on $npc1.his humungous frame. Magically reinforced or not, the 3-person bench $npc1.he's sitting on has bowed down further yet beneath the weight of $npc1.his stupendously fat bottom, and $npc1.he's now visibly wider than it. 
+
+<<case 2>>
+$npc1.Name the gargantuan $npc1.adjective innkeeper is still sitting at the dining table, bigger than ever, and twice as surly! This stupendously overfed specimen of $npc1.pig-kind is starting to make the inn feel a bit small, the table now groaning beneath the hot-air balloon-sized hill of fatty $npc1.pork that $npc1.he calls $npc1.his middle. Since you last saw $npc1.him even more $npc1.pig-blubber has bulged free of the confines of $npc1.his burst and tattered clothing, which are now threatening to burst if $npc1.he so much as breathes deeply. Magically reinforced or not, the 3-person bench $npc1.he's sitting on has bowed down further yet beneath the weight of $npc1.his whale-like bottom, which is now starting to overflow it. 
+
+<<case 3>>
+$npc1.Name the $npc1.adjective innkeeper has now achieved whale-like proportions, and makes the entire building feel downright cramped! Travellers just stop and gape at this ludicrously overfed, sweaty specimen of $npc1.pig-kind, the dining table buried somewhere beneath $npc1.his mountainous blimp of a belly bending and creeeaking under the load, while they eat their dinners off their laps. The straining tatters of clothes hanging on around $npc1.his balloon-like bulk are now on the verge of destruction, creaking dangerously if $npc1.he so much as hiccups. $npc1.His neck has completely vanished, sandwiched somewhere between the twin hills $npc1.his chest has become and the thick facial tyre of $npc1.his double chin. Magically reinforced or not, the 3-person bench $npc1.he's sitting on is now almost hidden from view beneath $npc1.his indescribably fat backside, the only sign of its existence the occasional creak when $npc1.he reaches laboriously back to scratch an itch. 
+<</switch>>
+
+
+
+<<case "pig popped">>
+<p>You $walk into an inn near the seashore, newly rebuilt and redecorated, it would seem. Built from reclaimed wood, there's a pleasant smell of sawdust and beeswax around the place, and all the freshly-stripped and scrubbed planking gleams, livened up by touches of cheerful paint here and there. Large porthole-style windows let in plenty of light to make the modest place seem airy. A set of fine straw beds seem to be available for any who want them, and for free. </p>
+
+<p>A surprisingly tall and muscular $npc2.color $npc2.species clad in a bright flower-patterned shirt and apron seems to be in charge of the place, busily wiping down tables and keeping things spick-and-span. </p>
+
+<</switch>>
+
+<<action "c" "rest" "Sleep" "West inn sleep">><</action>>
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to innkeeper">><br>
+
+<<if $eventCounterA != "pig popped">>
+	<<action "e" "quest" "Quest" "West inn quest">><</action>>
+<</if>>
+
+<<action "s" "leave" "Leave" "West Town">><</action>>
+
+
+:: Panther merchant says [beach] {"position":"1400,1775","size":"100,100"}
+<<setPopupTitle "Talk to the merchant">>
+
+<<set _parent = "mom">>
+<<if $npc1.male == "male">> /* Panthers are both same genders, so we can just check the merchant's gender */
+	<<set _parent = "pop">>
+<</if>>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"I'm $npc1.name. I run the shop while my _parent's out adventuring. We've got clothes for swimming, candy for eating, and big nasty weapons for fighting monsters!"
+<<set $eventCounterB++>>
+
+<<case 1>>
+"_parent.toUpperFirst() took a boat west over the ocean. $npc1.He says there's an island out there where dinosaurs live. I bet $npc1.he's having super exciting adventures all the time there!"
+<<set $eventCounterB++>>
+
+<<case 2>>
+"Are you an adventurer? I'm gonna be one when I grow up. I wanna find a big ol' dragon and poke it in the face!"
+<<set $eventCounterB++>>
+
+<<default>>
+"I like selling things, too. Running a store is fun, but it's a different kind of fun than exploring. I smile and tell people a price, and they give me gold! Hee hee!"
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+:: Sail west [beach] {"position":"1050,1475","size":"100,100"}
+<p>"All right, make yourself comfortable," the $npc1.species says, finally getting up to weigh anchor as $npc1.he hums a little song to $npc1.himself. $npc1.He seems content to do the job by hand, pulling it up with $npc1.his burly arms rather than a winch before pushing the boat away from the dock with one thick leg. $npc1.He breaks into a song about someone named Barrett, you think, as $npc1.he looses the sail and makes for the helm. </p>
+
+<<switch random(1,8)>>
+
+<<case 1>>You spend the trip fishing, but the captain takes what you catch as a fare. 
+<<case 2>>The trip is spent singing progressively more outlandish songs about things that almost certainly never happened. 
+<<case 3>>The captain spends the entire time regaling you with facts about fishing that you will never, ever use. 
+<<case 4>>The captain talks about the dozens of ways you can prepare a fish. $npc1.He never seems to run out. 
+<<case 5>>The trip is a little worrying as the captain somehow takes a nap that lasts the duration. Fortunately, $npc1.he wakes up in time to dock safely. 
+<<case 6>>You manage to get a view of a pod of <<=$dolphin.plural>> swimming by. One of them waves at you cheerfully. 
+<<default>>
+	<<switch random(1,4)>>
+	<<case 1>>The captain spends the trip weaving consecutively bigger lies about the loves $npc1.he's had and lost. You call $npc1.him out around the time $npc1.he tries to convince you $npc1.he picked a flower from the moon to swoon some damsel or another. The rest of the trip is spent with awkward silence and sheepish expressions from $npc1.him. 
+	<<case 2>>The captain regales you with a certainly-false tale of $npc1.his chance encounter with a <<=$brownBear.species>>-maid, a mystical creature with the upper body of a beautiful lady <<=$brownBear.species>> and the lower body of a $dolphin.species. $npc1.He looks a bit dismayed when you just shake your head at $npc1.his nonsense. 
+	<<case 3>>The captain spends the entire trip spinning tales of great sea monsters, claiming that a giant, three-headed sea snake is the reason why there aren't very many ships. $npc1.He seems put off when you bring up the point that there just isn't all that much else out there so far as anyone knows. 
+	<<case 4>>The captain spends a great deal of time telling you about a poem that $npc1.he received from another sea farer in $npc1.his travels. Specifically, about the lengths $npc1.he's gone to to try to understand it. When you ask for a look, you can't make too much of it either, but it's got something to do with a poet eating <<=$lion.plural>>. 
+	<</switch>>
+<</switch>>
+
+<<action "w" "next" "To port" "Island Town">><</action>>
+
+
+:: Talk to innkeeper [beach] {"position":"1525,1875","size":"100,100"}
+<<setPopupTitle "Talk to the innkeeper">>
+<<set _partner = "wife">>
+<<set _partnerGender = $female>>
+<<if $options.fixedNPCGenders == "swap">>
+	<<set _partner = "husband">>
+    <<set _partnerGender = $male>>
+<<elseif $options.fixedNPCGenders == "male">>
+	<<set _partner = "husband">>
+    <<set _partnerGender = $male>>
+<</if>>
+
+/*
+<<switch $eventCounterB>>
+<<case 0>>
+<<set $eventCounterB++>>
+
+<<case 1>>
+<<set $eventCounterB++>>
+
+<<case 2>>
+<<set $eventCounterB++>>
+
+<<default>>
+<<set $eventCounterB = 0>>
+
+<</switch>>
+*/
+<<switch $eventCounterA>>
+
+<<case "before 3">>
+<<switch $eventCounterB>>
+<<case 0>>"Eh, what? Oh. Yeah, I'm $npc1.Name. Ever met anyone named $npc1.Name? Well now you have."
+<<set $eventCounterB++>>
+
+<<case 1>>"Have a nap, it's free. The Mages across the way pay me to keep this place open to adventurers and whatnot. Even put an enchantment on the place to keep bugs away. Good deal, you ask me. All I gotta do is make sure it doesn't collapse. It won't, by the way."
+<<set $eventCounterB++>>
+
+<<case 2>>"My _partner's out adventuring, and _partnerGender.he told me earlier that when _partnerGender.he went to the forest last, some of the plants grabbed _partnerGender.him and started stuffing _partnerGender.him with syrup. I thought _partnerGender.he'd finally lost it, but _partnerGender.he gave me a piece _partnerGender.he cut off, and sure enough, syrup in a vine. Crazy, huh?"
+<<set $eventCounterB++>>
+
+<<default>>"If you see my _partner out there, tell _partnerGender.him I said to see if _partnerGender.he can bring back some gelatinous monster goop. _partnerGender.He says it's delicious and I want to try some, but hell if I'm going out to get lost in the forest for it."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+
+
+<<case "on 3">>
+<<set _tempQuest = $quests[setup.questIndex($slimeQuest3)]>>
+<<switch _tempQuest.progress>>
+
+/*0 quest progress*/
+<<case 0>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Have a nap, it's free. The Mages across the way pay me to keep this place open to adventurers and whatnot. Even put an enchantment on the place to keep bugs away. Good deal, you ask me. All I gotta do is make sure it doesn't collapse. It won't, by the way.\"
+<<set $eventCounterB++>>
+
+<<case 2>>"Whaddya talking about, 'Put on weight'? I ain't put on no weight, just you ask the _partner! _partnerGender.He'll say I'm still the fine figure of the $npc1.species _partnerGender.he married more'n 10 years ago!"
+<<set $eventCounterB++>>
+
+<<case 3>>"My _partner's out adventuring, and _partnerGender.he told me earlier that when _partnerGender.he went to the forest last, some of the plants grabbed _partnerGender.him and started stuffing _partnerGender.him with syrup. I thought _partnerGender.he'd finally lost it, but _partnerGender.he gave me a piece _partnerGender.he cut off, and sure enough, syrup in a vine. Crazy, huh?"
+<<set $eventCounterB++>>
+
+<<default>>"Yeah, I've seen those yellow goop things out in the forest myself. In fact, just the other day had to I show one of them a thing or two- wound up eating the whole damn thing! Ever tried one? Well, let me tell you, they're damned tasty."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+/*1 quest progress*/
+<<case 1>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Have a nap, it's free. The Mages across the way pay me to keep this place open to adventurers and whatnot. Even put an enchantment on the place to keep bugs away. Good deal, you ask me. All I gotta do is make sure it doesn't collapse. It won't, by the way."
+<<set $eventCounterB++>>
+
+<<case 2>>"Say what you like about those mages, they can't do laundry worth a dang- they managed to SHRINK alla my clothes, and that's when I ain't even never got them washed in the first place!"
+<<set $eventCounterB++>>
+
+<<case 3>>"My _partner's out adventuring, and _partnerGender.he told me earlier that when _partnerGender.he went to the forest last, some of the plants grabbed _partnerGender.him and started stuffing _partnerGender.him with syrup. I thought _partnerGender.he'd finally lost it, but _partnerGender.he gave me a piece _partnerGender.he cut off, and sure enough, syrup in a vine. Crazy, huh?"
+<<set $eventCounterB++>>
+
+<<default>>"Yep, I went out and caught me one of those Yellow Goop Monsters out in the forest. Let me tell you, it was THIS big- I nearly couldn't finish it all!"
+<<set $eventCounterB = 0>>
+<</switch>>
+
+/*2 quest progress*/
+<<case 2>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Have a nap, it's free. The Mages across the way pay me to keep this place open to adventurers and whatnot. Even put an enchantment on the place to keep bugs away. Good deal, you ask me. All I gotta do is make sure it doesn't collapse. It won't, by the way."
+<<set $eventCounterB++>>
+
+<<case 2>>"One of those Mages came over here the other day talking about 'struck-ture-ral ree-in-forse-ment of the floor. Ain't nothing wrong with this floor- it ALWAYS sounds like this when I walk on it, I told $npc1.him."
+<<set $eventCounterB++>>
+
+<<case 3>>"My _partner's started talking about me going on a diet. *Snort* What'd I'D need with a diet, I said? And since when did it get so draughty in here?"
+<<set $eventCounterB++>>
+
+<<default>>"Yep, that's me- $npc1.Name Boyer, Yellow Goop Monster Destroyer. Took two down one day last week- didn't even work up a sweat! Well, no more'n USUAL, anyway..."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+<</switch>>
+
+
+<<case "on 4">>
+<<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Yep, I'm $npc1.Name, guess you've heard of me. Took down three Yellow Goop Monsters at once. Don't know anyone ELSE who could stomach that, eh?"
+<<set $eventCounterB++>>
+
+<<case 2>>"Those dumb Mages opposite are trying to make me pay for an extra spell to keep the floor up, can you believe it! Shoddy workmanship, that's what's to blame! If it can't take the weight of just one $npc1.species standin' on it they should go get their money back. 'Risk of collapse', my butt! Uh... not that it's gonna, of course."
+<<set $eventCounterB++>>
+
+<<case 3>>"My _partner was back for a little bit, sure, did pretty good in the kitchen, but now _partnerGender.he's gone out adventuring again. I told _partnerGender.him not to, but would _partnerGender.he listen? It's terrible- _partnerGender.he'd put on ten pounds out there. _partnerGender.He's really letting herself go- say, that a slice of cake you've got there?"
+<<set $eventCounterB++>>
+
+<<default>>"You heard they've only gone and found some BLUE goop monsters out in the hills? I hear tell it's REAL tasty. What I wouldn't give to get my hands on one of THEM. But SOMEONE's- BURRP- gotta keep this place from fallin' down..."
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+<<case "on 5">>
+
+<<set _tempQuest = $quests[setup.questIndex($slimeQuest5)]>>
+<<switch _tempQuest.progress>>
+
+/*0 quest progress*/
+<<case 0>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Weight problem? Who says I've got a WEIGHT PROBLEM? You show me who said that n' I'll SIT on 'em! Haw, THEN we'll see who's problem it is!"
+<<set $eventCounterB++>>
+
+<<case 2>>"My _partner's started talking about me going on a diet. //Snort// What'd I'D need with a diet, I said? And since when did it get so draughty in here?"
+<<set $eventCounterB++>>
+
+<<default>>"I tell you, those stupid mages MUST have messed up the spell they tried to put on this floor- all the tables have gone and started to shrink! You can hardly fit a decent meal across TWO of them, now."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+/*1 quest progress*/
+<<case 1>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Weight problem? Who says I've got a WEIGHT PROBLEM? You show me who said that n' I'll SIT on 'em! Haw, THEN we'll see who's problem it is!"
+<<set $eventCounterB++>>
+
+<<case 2>>"Ok, so maybe I HAVE got a bit 'huskier' lately. So what? Have you SEEN some of the fat-asses lumbering around here lately? I told the _partner, there's plenty of people out there who APPRECIATE someone who's more'n just skin and bones."
+<<set $eventCounterB++>>
+
+<<default>>"Those mages still haven't fixed that spell they messed up when they 'fixed' the floor- now the rest of the furniture's started to shrink! I got my butt stuck in a chair the other day- burst the thing clean apart trying to squeeze out of it!" 
+<<set $eventCounterB = 0>>
+<</switch>>
+
+/*2 quest progress*/
+<<case 2>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Weight problem? Who says I've got a WEIGHT PROBLEM? You show me who said that n' I'll SIT on 'em! Haw, THEN we'll see who's problem it is!"
+<<set $eventCounterB++>>
+
+<<case 2>>"Ok, so maybe I AM getting rounder. So what? People expect us innkeepers to be 'jolly'. It's practically a law. Pass me that jug of cream, willya?"
+<<set $eventCounterB++>>
+
+<<case 3>>"Those clowns at the Mages' Guild STILL haven't fixed that spell they messed up when they 'fixed' the floor- now the doorways have started shrinking. Tried to get to the kitchen last night and got wedged tight. You know how much butter my _partner had to rub on me before I could squeeze through? The stuff costs money!"
+<<set $eventCounterB++>>
+
+<<default>>"You got any chow on you? All this talkin's working up a real APPETITE..."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+/*3 quest progress*/
+<<case 3>><<switch $eventCounterB>>
+<<case 0>>"Whaddya want? Can't you see I'm EATING, here?"
+<<set $eventCounterB++>>
+
+<<case 1>>"Weight problem? Who says I've got a WEIGHT PROBLEM? You show me who said that n' I'll SIT on 'em! Haw, THEN we'll see who's problem it is!"
+<<set $eventCounterB++>>
+
+<<case 2>>"What is it with people? You put on a LITTLE bit of extra weight and they start acting like you're some fat PIG or something. My _partner called me a downright greedy hog the other day. Can you believe it?"
+<<set $eventCounterB++>>
+
+<<case 3>>"Since when did you all start to get so SKINNY? I tell you, those jokers at the Mages' Guild have really gotta get this crazy spell of theirs under control, or you'll all wind up vanishing!"
+<<set $eventCounterB++>>
+
+<<default>>"You got any chow on you? All this talkin's worked up one serious appetite..."
+<<set $eventCounterB = 0>>
+<</switch>>
+
+<</switch>>
+
+
+
+<<case "pig popped">>
+<<switch $eventCounterB>>
+<<case 0>>
+"Well hi there! Welcome to the Spruce Goose! Anything you want, just ask!"
+<<set $eventCounterB++>>
+
+<<case 1>>
+"I'm the new innkeeper! The previous one...? Oh, $npc1.he retired. Sorta. We don't like to talk about it much. Oh, I'm $npc2.Name, by the way! Pleased to meet you!"
+<<set $eventCounterB++>>
+
+<<case 2>>
+"I just flew in from overseas. I think I'm going to like it here! But I have to say, a lot of the locals seem very... relaxed about their figures. Nosiree, you won't catch that happening to me! I'm gonna be staying in shape!"
+<<set $eventCounterB++>>
+
+<<case 3>>
+"Am I always this cheerful? Sure am! I've got a lot to be cheerful about!"
+<<set $eventCounterB++>>
+
+<<default>>
+"If you want a bed for the night, please just help yourself! We can even do you a healthy snack if you like!"
+<<set $eventCounterB = 0>>
+
+<</switch>>
+
+
+<</switch>>
+
+
+:: West Town [beach] {"position":"1400,1500","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+You're standing in the center of the small western port town. 
+
+
+<<action "c" "rest" "Rest" "West Town">>
+	<<set $eventCounterB = "rest">><</action>>
+
+<<if $sta > 0>>
+	<<action "e" "road" "Western Road">><<set $travel = 5>><</action>>
+	<<action "ne" "mage" "Mage's Guild">><<set $travel = 1>><</action>>
+	<<action "s" "store" "Westerly Store">><<set $travel = 1>><</action>>
+	<<action "se" "inn" "Inn">><<set $travel = 1>><</action>>
+	<<action "nw" "beach" "Beach">><<set $travel = 1>><</action>>
+	<<action "w" "ocean" "Docks">><<set $travel = 1>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: West inn quest [beach] {"position":"1625,1775","size":"100,100"}
+<<set _partner = "wife">>
+<<if $options.fixedNPCGenders == "swap">>
+	<<set _partner = "husband">>
+<<elseif $options.fixedNPCGenders == "male">>
+	<<set _partner = "husband">>
+<</if>>
+
+/*===Start 1st quest*/
+<<if !setup.questStarted($slimeQuest1)>>
+<p>You ask the innkeeper if there's any work $npc1.he needs doing and $npc1.he regales you with a tale of a curiously delicious monster in the forests east of town. You offer to bring back some of this 'gelatinous monster goop' from the forest for $npc1.Name to try... for a fee. $npc1.Name looks at you suspiciously from $npc1.his bench at the dining table, but $npc1.his appetite makes the decision for $npc1.him. </p>
+
+<p>"Ok, you manage to bring me back some of that goop to try and I'll give you... 3 gold for it." With a bit of hard bartering you manage to argue $npc1.him up to 10 gold- once you've outlined the violence needed to subdue a slime monster. With a small but vivid demonstration on one of the inn's spoons. </p>
+
+"Alright, I'll give you 10 gold for it- but don't think you can try to trick me! I'll know if it's a fake- the real stuff tastes of lemon, my _partner says. And you owe me 2 for that spoon!"
+<<getQuest $slimeQuest1>>
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+
+/*===Progress 1st quest*/
+<<elseif !setup.questStarted($slimeQuest2)>>
+/*You do have the quest item*/
+<<if setup.hasItem($lemonSampleItem) >= 0>>
+<p>You plonk your sample of slime onto the empty plate in front of $npc1.Name, where it wobbles gelatinously. The fat $npc1.species's eyes widen behind $npc1.his porky cheeks. $npc1.He scoops up some of it with $npc1.his fingers and sniffs it suspiciously. </p>
+
+<p>"Hmm... I GUESS you're on the level..." $npc1.He pops the yellow slime into $npc1.his mouth, chewing. $npc1.His face lights up, and you could swear $npc1.he almost smiles. "Say, that's REALLY tasty!". $npc1.He reaches to scoop the rest of the sample off the plate, but your $p.hand clamps around $npc1.his wrist, and you politely remind $npc1.him of your deal. An argument ensues. You eventually persuade $npc1.Name to grudgingly count out 5 gold pieces from $npc1.his money pouch. </p>
+
+<p>"This is a pretty puny serving, $p.mister Bigmouth- I'll give you the other 5 if you can bring me a WHOLE one of these things-" $npc1.his big belly lets out an impatient gurgle, "- AND another 15 on top of that!" $npc1.he adds, $npc1.his trapped $npc1.hand scrabbling to reach the remains of the goop you brought. Seeing your hesitation, $npc1.he adds, a little desperately, "I'll even call us even about that spoon!" </p>
+
+20 gold for capturing a Lemon slime- you can live with a deal like that. You let go of $npc1.Name's wrist, and $npc1.he grabs the remainder of the lemon slime from the plate, stuffing it into $npc1.his mouth, then noisily sucks $npc1.his fingers clean. As you turn away $npc1.he even picks up the plate and licks it clean. 
+
+<<removeItem $lemonSampleItem>>
+<<questReward $slimeQuest1>>
+<<getQuest $slimeQuest2>>
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+
+/*Don't have quest item*/
+<<else>>
+"Where's that Lemon Thing you were gonna bring me? Have you caught me one, yet? Well I ain't gonna wait all week for it. And where's my 2 gold for that spoon you bent?"
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+
+<</if>>
+
+/*===Progress 2nd quest*/
+<<elseif !setup.questStarted($slimeQuest3)>>
+<<if setup.hasItem($lemonSlimeItem) >= 0>>
+<p>You heave the Lemon Slime onto the table like a trawlerman landing a catch. $npc1.Name is so surprised $npc1.he actually stands up, the bench $npc1.he was sat on creaking with relief. The Slime glistens and wobbles in the lamplight, apparently stunned by its capture. </p>
+
+<p>"Holy mudda of..." The $npc1.species's eyes widen, and then for the first time $npc1.his fat face breaks into a greasy grin. "It's a WHOLE one! You gone and got me a whole one!" $npc1.He runs a finger down one of the cube's wobbling sides, and licks it. "And it tastes even better fresh!" You cough and $npc1.Name scowls at you, annoyed at the interruption. "Oh, yeah..." Surprisingly, $npc1.he digs into $npc1.his money-pouch and pays you without any further complaint, $npc1.his eyes always returning to the large yellow jello-cube sprawled across $npc1.his table. "Tell ya what, I'll give you another 50 if you can bring me THREE more of these things!" $npc1.He's already licking $npc1.his lips at the thought. The Slime quivers a little on the table, possibly picking up on the $npc1.species's voracious thoughts. You shrug agreement. </p>
+
+As you turn away, you hear the rather disgusting sucking and schlurping sounds of someone tucking into an enormous lump of jello... 
+
+<<removeItem $lemonSlimeItem>>
+<<questReward $slimeQuest2>>
+<<getQuest $slimeQuest3>>
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+
+<<else>>
+"Pah, bet you ain't NEVER got one- got a friend of yours to fetch you that last bit, didya? Well tell $npc1.him to find me some more!" /* yes despite refusing to edit most minor gender things, I'm making the hypothetical friend available for genderswapping xP */
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+<</if>>
+
+/*===Progress 3rd quest*/
+<<elseif !setup.questCompleted($slimeQuest3)>>
+<<if setup.hasItem($lemonSlimeItem) >= 0>>
+<<switch setup.questStage($slimeQuest3)>>
+<<case 0>>
+You haul the Lemon Slime onto the table, to appreciative gasps from bystanders. $npc1.Name's piggy eyes gleam with delight. The greedy $npc1.species grabs the end of the glistening cube and pulls off a large <<=$npc1.hand>>ful, holding it quivering in front of $npc1.his face before $npc1.he opens wide and pushes the whole chunk in at once. Then $npc1.he unceremoniously begins stuffing great goopy hunks of it into $npc1.his mouth as fast as $npc1.he can, making $npc1.his cheeks bulge out in funny shapes. You don't stay to watch. As you turn away $npc1.he calls out, rather indistinctly, "Dry do geb be ab eben BIGGER wub negt dime!" 
+
+<<removeItem $lemonSlimeItem>>
+<<advanceQuest $slimeQuest3>>
+
+<<case 1>>
+<p>You haul the Lemon Slime onto the slime-stained table-top, to astonished gasps from bystanders. $npc1.Name's piggy eyes gleam with delight from behind $npc1.his chubbed-up cheeks. $npc1.He looks so pleased even $npc1.his flapping ears perk up some. </p>
+
+"Hot DIGGITY!" The shameless glutton then tears in with $npc1.his $npc1.hands, ravenously stuffing great goopy hunks of it into his mouth as if $npc1.he hadn't eaten for weeks. With each noisy swallow $npc1.he seems to swell even bigger. As you turn away $npc1.he calls out, rather indistinctly, "Nob bag, bug dry do geb be ab eben BIGGER wub negt dime, Bigmoud!" 
+
+<<removeItem $lemonSlimeItem>>
+<<advanceQuest $slimeQuest3>>
+
+<<case 2>>
+<p>You haul the Lemon Slime onto what space there is on the slime-slicked table-top in front of $npc1.Name, to astonished gasps from bystanders. $npc1.Name grins from ear-to-ear, then lunges straight at the thing, head-first! $npc1.He sinks $npc1.his snout in the dead-centre of the glistening, jiggling cube with a tremendous GLOOP noise. The sounds that follow as $npc1.he gorges the thing down are simply indescribable. What an out-and-out PIG! As $npc1.he stuffs himself $npc1.he swells rounder and rounder, more stitches bursting as $npc1.he further outgrows $npc1.his tattered clothing. </p>
+
+<p>$npc1.He finally slurps down the last of the slime- even licking the table clean!- and slowly rocks back on the bench, letting out a tremendous //BURRRRRRP//, looking too stuffed to move. $npc1.He pants, $npc1.his swollen chest heaving as $npc1.he wobbles there, making few remaining stitches of $npc1.his tunic strain audibly. </p>
+
+"Ok... ok... I guess y'vearned yer- //BURP!//- money THIS time..." The enormously fat $npc1.species wobbles futilely in an attempt to reach $npc1.his money-pouch, which in the end is found laying on the ground beneath the bench, along with the torn end of $npc1.his burst belt. $npc1.His fat fingers sluggishly fumble out 50 gold pieces onto the curved top of $npc1.his bloated belly. When you've retrieved your gold $npc1.he sits back and puts $npc1.his $npc1.hands to the sides of $npc1.his massive middle. "I can't believe I ate the whole thing...." 
+
+<<removeItem $lemonSlimeItem>>
+<<advanceQuest $slimeQuest3>>
+<<questReward $slimeQuest3>>
+
+<</switch>>
+
+<<action "c" "next" "Alright then" "West Town">><</action>>
+
+<<else>>
+"It's about time you showed up again, $p.mister Bigmouth! Ain't you got me another of those Lemon Goop Monsters yet? Well hurry it up! They're darn tasty! In fact, it's making me hungry just THINKING about it! Pass me <<print either("those crackers","the mustard","that ham","the cheese")>>, willya?"
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+<</if>>
+
+/*===Get 4th quest*/
+<<elseif !setup.questStarted($slimeQuest4)>>
+<p>You offer to go and fetch a Blueberry slime from the hills for the innkeeper- again. $npc1.Name's piggy eyes narrow behind $npc1.his fat, swollen cheeks across the table, which is still splattered with yellow-ish slime where it's visible from underneath that gigantic bacon-belly. </p>
+
+"Back again, huh, $p.mister Bigmouth? Boy, have you got <<if $fat > 100>>skinny<<else>>FAT<</if>>! Yer lucky that business is so good lately, otherwise I'd be out there getting one of those things for myself! But I'm working myself to the bone here keeping things going. Alright, you bring me some of this blue monster goop and I'll make it worth your while. But even THINK 'bout trying to con me- this time I want a WHOLE one, straight off! I'm wearing myself to skin and bones as it is!" 
+<<getQuest $slimeQuest4>>
+<<action "c" "next" "Alright then" "West Town">><</action>>
+
+
+/*===Progress 4th quest*/
+<<elseif !setup.questCompleted($slimeQuest4)>>
+<<if setup.hasItem($blueSlimeItem) >= 0>>
+<p>With a mighty heave you haul the entire Blueberry slime onto the remaining free table-space, setting it down with a loud SPLAT! The inn falls quiet for a moment at its appearance, and even $npc1.Name forgets to look unimpressed, staring at the very large, translucent blue block of gelatine in front of $npc1.him. $npc1.He sniffs at it curiously, and gets a jet of blue slime between $npc1.his lips for $npc1.his trouble. $npc1.He gulps in surprise... and then $npc1.he licks $npc1.his lips, piggy eyes lighting up. </p>
+
+<p>"Smokin' BACON that's tasty! Dang, if I could only FARM these things I'd have all the Goop I'd want- and it'd sell by the barrel..." </p>
+
+<p>$npc1.Name catches sight of you, and the obese $npc1.oinker's fat face creases into an expression mixing gluttony with cunning. "Say there, Pardner. Thanks for rounding up this little fella- here's 30 gold for ya trouble. Now, how'd you feel about getting me a few MORE of these critters? You do and I'll give you... 100 gold- OK! OK!" $npc1.he says, seeing your expression and starting to sweat, "150, but you ain't squeezin' a copper more outa me, you got that? Good. Make 'em big, healthy ones, too. It shouldn't take more'n FOUR to start things off. Well... what're you doin' just STANDING there?" </p>
+
+You turn to leave, and behind you you hear $npc1.Name say, "Of course... it'd be a crying shame to let THIS one just go to waste..." As you reach the door you hear a gloopy, gelatinous SQUEAK followed by some quite revolting slurping, sucking and lip-smacking sounds. The expression on a few of the customers' faces encourages you not to look back. A few paces down the road you're followed by a deep, rolling BURRRRRP! from the depths of the inn. 
+
+<<removeItem $blueSlimeItem>>
+<<questReward $slimeQuest4>>
+<<getQuest $slimeQuest5>>
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+
+<<else>>
+"Back already, $p.mister Bigmouth? Got me that Blue Goop Monster I told you to get me, yet? Well what're you doing standing around HERE for, you <<if $fat > 100>>skinny<<else>>FAT<</if>> layabout? Go fetch me one! I'm starting to get HUNGRY, here!"
+<<action "c" "next" "Alright then" "West Town">><</action>>
+
+<</if>>
+
+/*===Progress 5th quest*/
+<<elseif !setup.questCompleted($slimeQuest5)>>
+<<if setup.hasItem($blueSlimeItem) >= 0>>
+<<switch setup.questStage($slimeQuest5)>>
+
+<<case 0>>
+<p>With a mighty heave you haul the entire Blueberry slime onto the rapidly-shrinking free table-space, setting it down with a loud //SPLAT//! $npc1.Name grunts happily, and with a deft jab elicits a squirt of blue slime that $npc1.he catches in $npc1.his mouth, rather messily. The remains of $npc1.his tunic let out a warning //creeeeak//. "Mphh, at last! I'd almost forgotten how TASTY these things were... Whattya doin' just standing around, Bigmouth? Go and get the rest! And HUSTLE, this time!" </p>
+
+You turn to leave, and behind you you hear the king-sized $npc1.oinker smacking $npc1.his lips, and that huge gut rumble loudly. "I can smell the profit already... if only it didn't make me so... HUNGRY..." As you reach the door you hear a gloopy, gelatinous SQUEAK followed by some quite revolting slurping, sucking and lip-smacking sounds. A few paces down the road you're followed by a deep, rolling //BURRRRRP//! from the depths of the inn. 
+
+<<removeItem $blueSlimeItem>>
+<<advanceQuest $slimeQuest5>>
+<<action "c" "next" "The journey continues" "West Town">><</action>>
+
+<<case 1>>
+<p>With a mighty heave you haul the Blueberry slime into the air to show the $npc1.species. It dangles from your $p.hand like some weird novelty dessert. $npc1.Name <<=$npc1.angry>>s eagerly and takes it from you, and with an expert squeeze elicits a long jet of slime that $npc1.he slurps down, $npc1.his obese body bloating even bigger. $npc1.He finally wipes $npc1.his lips and sighs happily. "By apple sauce that stuff's good. Folks won't be able to get enough of it! Whattya doin' just standing around, Bigmouth? Go and get the rest! And HUSTLE, this time!" </p>
+
+You turn to leave, while behind you the emperor-sized $npc1.oinker's gargantuan belly rumbles demandingly. "This stuff's just... irresistible. //Snort!// I just can't... get enough of it..." As you reach the door you hear a gloopy, gelatinous //SQUEAK// followed by some quite revolting slurping, sucking and lip-smacking sounds. A few paces down the road you're followed by a deep, rolling //BURRRRRP!// from the depths of the inn. 
+
+<<removeItem $blueSlimeItem>>
+<<advanceQuest $slimeQuest5>>
+<<action "c" "next" "The journey continues" "West Town">><</action>>
+
+<<case 2>>
+<p>With a mighty heave you haul the Blueberry slime into the air to show the $npc1.species. It dangles from your $p.hand like some weird novelty dessert. $npc1.Name grunts greedily with delight and makes a grab for it with $npc1.his fat arms, huffing with the effort. $npc1.He wrings the struggling gelatinous cube like a giant sponge, gulping down the slime until it runs dry, then $npc1.he sits back, panting, one fat, goopy $npc1.hand absently patting$npc1. his still-swelling gut. "//Oogh//... that's the real stuff alright, but I still hadta make SURE. //BURRRP!// I'm gonna have customers queuing round the town for this! Whattya doin' just standing around, Bigmouth? Go and get the rest! And HUSTLE, this time!" </p>
+
+As you turn to leave, you overhear the sultan-sized $npc1.oinker's Taj-Mahal-scale stomach rumble tectonically. "Oof... THIS time I really gotta save you for the farm... but then again you're so, so TASTY... No, I-I really GOTTA..." As you reach the door you hear a gloopy, gelatinous SQUEAK followed by some quite revolting slurping, sucking and lip-smacking sounds. A few paces down the road you're followed by a deep, rolling BURRRRRP! from the depths of the inn. 
+<<removeItem $blueSlimeItem>>
+<<advanceQuest $slimeQuest5>>
+<<action "c" "next" "The journey continues" "West Town">><</action>>
+
+<<case 3>>
+<p>With a mighty heave you haul the Blueberry slime into the air, raising an appreciative //'Ooo'// from nearby customers. It dangles from your $p.hand like some weird novelty dessert. $npc1.Name puffs and grunts, eyeing it without $npc1.his usual enthusiasm, so you lean forward and ceremoniously plonk it on top of $npc1.his barn-sized belly, where it wobbles sluggishly. The gigantic $npc1.species <<=$npc1.angry>>s and groans, $npc1.his fat $npc1.hands pressing against $npc1.his sides. "Y-yeah, thanks, that one looks great too, 'm just... //BURRRP!// ...kinda FULL right now..." $npc1.He looks ready to burst. "H-here's your gold, s-sucker. Ha, just one of these is enough to m-make me a FORTUNE. Enjoy being POOR, Bigmouth!" With a knowing smile you turn and leave, although you pause at the door, just waiting for what comes next. </p>
+
+<p>"Groo... Cryin' Chipolatas... I'm... s-so STUFFED, but... but... I... just... can't... STOP..." </p>
+
+<p>There's a quite abominable squelching noise, followed by a gloopy slurp, and you turn back in time to see the last of the slime getting swallowed. With one last gulp it's gone and for a moment nothing happens, the $npc1.species just sitting there, looking dazed. Then a low, rending //groan// starts from $npc1.his ruined, painfully-tight clothing, getting louder and louder until finally it all BURSTS apart at once! </p>
+
+<<if $options.popping>>
+<<set _oink = $npc1.angry.toUpperCase()>>
+<<set _nameAllCaps = $npc1.Name.toUpperCase()>>
+
+<p>With a surprised //_oink!// $npc1.Name's belly surges outwards, $npc1.his whole body visibly swelling from $npc1.his latest 'snack'. But $npc1.he just doesn't seem to stop! A deep gurrrgling comes from that behemoth of a belly, and $npc1.he continues to swell fatter, and fatter, and fatter! The magically-reinforced bench beneath $npc1.him finally //SNAPS// beneath $npc1.his weight, the force of the $npc1.species's impact shaking the entire building! But $npc1.he just keeps on ballooning outwards, barely recognisable as a $npc1.species anymore as chairs and tables and scraped across the floor in front of $npc1.him, now starting to fill a sizeable fraction of the inn! And keeps on growing! </p>
+
+<p>Sensing trouble you duck through the doorway and set off briskly down the road, whistling innocently. A few minutes later you hear frantic scrambling sounds and turn to watch customers from the inn leaving by any exit they can. A low, thrumming groan can be heard coming from the inn, felt more through the $p.feet than the ears. One pauses long enough to cup $npc1.his paws to $npc1.his mouth and bellow, //"_nameAllCaps'S GONNA BLOOOOOW!!!"// </p>
+
+Watching with interest, you see the wooden walls of the inn quiver slightly, and then you're almost knocked off your $p.feet by a deafening //KABOOSHHH!// The roof bulges out and then sags inwards a little, and little splatters of slime fly everywhere. Ouch, that's going to need more than a re-paint... 
+
+<<else>>
+<p>$npc1.Name's belly surges outwards, $npc1.his whole body visibly swelling from $npc1.his last 'snack'. It's too much for the furniture- with a final, devastating //SNAP// the bench gives way beneath $npc1.him. The planks may have been magically reinforced, but it looks like no-one thought the legs would ever need it. The behemoth of a $npc1.species starts to tumble backwards, almost in slow-motion. Another //CRACK// announces the collapse of the table beneath $npc1.his gut, and then there's a long, meaty, building-shaking //SLAP// as $npc1.he hits the floor, backside first, then $npc1.his back, and then $npc1.his shoulders. Several unsuspecting customers are thrown off their feet by the impact. $npc1.He bounces slightly, before crashing down again. Dust shakes down from the ceiling and you can see cracks in the walls where the wooden joists have shifted. </p>
+
+<p>The stunned, slime-splattered $npc1.species lays there, an island of $npc1.his own making. You grin and head out of the door, which has fallen off one hinge. As you step outside you head a deep, rumbling, bubbling gurgle coming from the supersized porker's stomach. THIS time you're sure they can hear the volcanic //BELCH// that follows two islands along. It even lifts the roof off the inn! </p>
+
+<</if>>
+
+<<removeItem $blueSlimeItem>>
+<<advanceQuest $slimeQuest5>>
+<<questReward $slimeQuest5>>
+<<action "c" "next" "Mission accomplished" "West Town">><</action>>
+
+<</switch>>
+
+<<else>>
+What took you so long, $p.mister Bigmouth? Got me another of those Blue Goop Monsters, yet? Well what're you doing standing around HERE for, you <<if $fat > 100>>skinny<<else>>FAT<</if>> layabout? Go fetch me one! Don't make me go out there and do your job for you!"
+<<action "c" "next" "I'll get right on it" "West Town">><</action>>
+<</if>>
+
+<</if>>
+
+
+:: West inn sleep [beach] {"position":"1625,1875","size":"100,100"}
+<<setPassageTitle "Sleep">>
+
+You find a hammock to rest in and lay down for a nap. 
+<<sleep>>
+
+<<action "c" "next" "Wake up" "Inn">><</action>>
+
+<<action "s" "rest" "Sleep" "West inn sleep">><</action>>
+
+
+:: West town vendor [beach] {"position":"1300,1875","size":"100,100"}
+<p>A smattering of various foods and clothing are on a few shelves, and an array of weapons lines an entire wall. Behind a counter, a young looking $npc1.species $npc1.boy smiles at you. </p>
+
+"Welcome to the store!" $npc1.he greets you chipperly, "Everything is for sale, so don't hesitate to ask for whatever you want." 
+
+<<store>>
+<<action "c" "leave" "Done" "Westerly Store">><</action>>
+
+
+:: Westerly Store [beach] {"position":"1300,1775","size":"100,100"}
+<<createFixedNPC "westMerchant">>
+
+<p>You $walk into the west town general store, which is neat and organized to display their goods. A smattering of various foods and clothing are on a few shelves, and an array of weapons lines an entire wall. Behind a counter, a young looking $npc1.species $npc1.boy smiles at you. 
+</p>
+
+"Welcome to the store!" $npc1.he greets you chipperly, "everything is for sale, so don't hesitate to ask for whatever you want." 
+
+<<vendor "west town">>
+<<action "c" "store" "Trade" "West town vendor">><</action>>
+
+<hr>
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Panther merchant says">><br>
+
+<<action "s" "leave" "Leave" "West Town">><</action>>
+
+

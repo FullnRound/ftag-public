@@ -1,0 +1,899 @@
+:: bloat bee ai {"position":"5275,500","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a group of <<if $npc1.nspecies == "bee">>rather oversized bees the size of humming birds<<else>>rather intimidatingly sized $npc1.plural<</if>>. From their oversized abdomen protrude sharp stingers, which drip with an amber looking fluid. 
+<<set _bees = Math.ceil($e.hea/25)>>
+<<if _bees > 1>>There are _bees left still flying. 
+<<else>>There is only 1 bee left still flying. 
+<</if>>
+
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<set _beesLeft = Math.ceil($e.hea/25)>>
+<<set _damage = 0>>
+<<set _bloat = 0>>
+
+<<for _i = 1;_i <= _beesLeft;_i++>>
+	<li>Sting</li>
+	$npc1.Article $npc1.species dives toward you, it's stinger flaired. 
+	<<switch setup.dodge()>>
+		<<case false>>			
+			<<doEdmg>>
+			<<if $edmg != 0>>
+				The stinger pierces your skin, and you feel a slight burning as you take $edmg damage. 
+				<<set _damage += $edmg>>
+				<<set _bloat += 1>>
+			<<else>>
+				The stinger doesn't manage to pierce your defenses, leaving you completely unharmed. 
+			<</if>>
+			
+		<<default>>
+			You manage to avoid it's needle like stinger. 
+			
+	<</switch>>
+<</for>>
+
+/*Deals total damage bloat*/
+<<if _damage > 0>>
+	<<damage _damage>>
+	<<buff "bloat" _bloat>>
+<</if>>
+
+/*===Vore actions===*/
+<<case "vore">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You escaped! 
+<<endCombat>>
+<hr>
+<<include "hills randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<set _beesLeft = Math.ceil($e.hea/25)>>
+You decide not to fight against your $npc1.adjective foe. 
+<<if _beesLeft > 1>>
+The $npc1..plural turn to each other and appear to communicate with each other through a series of buzzes. After a moment, they continue with the general $npc1.species plan and sting you several times over. 
+<<else>>
+The lone remaining $npc1.species hovers warily for a second, before continuing with the general $npc1.species strategy of stinging the crap out of everything. <</if>>
+You feel your stomach start to expand faster and faster as you're stung over and over again. 
+<<stuffToBursting>>
+
+<<if $options.popping>>
+Eventually, you're far too bloated to stand and you fall to the ground as your stomach continues to inflate above you, rounding you out into a massive, helpless sphere. It seems most of the $npc1.plural have withdrawn. One lone bloat $npc1.species crawls across your taut hide. Its stinger flicking in and out as it scans for any sign of aggression. The bloat venom continues its work and you slowly grow larger and tighter. Your strained body emits a loud //CREEEEAAK// and the startled $npc1.species plummets its stinger down into the delicate surface of your belly. Your hide splits open at the speed of sound, sending a mighty ''POW'' echoing through the hills. 
+<hr>
+<<defeated "exploded">>
+
+<<else>>
+Eventually, you're far too bloated to stand and you fall to the ground as your stomach continues to inflate above you. Eventually you pass out from the pain of your overinflated stomach. 
+<hr>
+<<defeated "overeating">>
+<</if>>
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $ful >= $maxFul>>
+	You collapse to the ground clutching you bulging stomach. You can feel it stretched taut like an overinflated balloon. As you lay on your back nursing your overinflated gut, a new swarm of several $npc1.plural slowly hover towards you. As you're about to pass out from the pain of your overpressurized stomach, several $npc1.plural sting you in the stomach at once. 
+	<<stuffToBursting>>
+	<<if $options.popping>>
+		You are stretched far too thin to be pierced like this. Your hide splits open at the speed of sound, sending a mighty ''POW'' echoing through the hills. 
+		<hr>
+		<<defeated "exploded">>
+	<<else>>
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+
+<<else>>
+	You collapse to the ground, overwhelmed by the painful stings of you enemies. You can hear the sound of several more $npc1.plural buzzing their way into the area. As you're too weakened to fight them off, they all surround you and sting you at once. For a brief moment you feel the several stingers pierce your skin, but that's quickly overpowered as you feel your stomach rapidly blow up as being inflated like a balloon. 
+	<<stuffToBursting>>
+	<<if $options.popping>>
+		As your stomach stretches and grows, your whole body begins to creak and groan at being stretched. The venom doesn’t let up and your taut hide gives way with a mighty ''POW'' that echoes though the hills. 
+		<hr>
+		<<defeated "exploded">>
+
+	<<else>>
+		As your stomach stretches and grows, eventually the pain becomes too much and you pass out even as you feel your stomach slowly inflating larger and larger. 
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+<</if>>
+
+
+
+/*===You win!===*/
+<<case "victory">>
+You won! 
+<<include "Victory">>
+<hr>
+<<include "hills randomization">>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: blueberry slime ai {"position":"5025,500","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a huge gelatinous cube about <<sayDistance 48>> long on each side. The translucent blue blob smells strongly of blueberries! 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $grapple > 0>>
+	<li>Feed</li>
+	The slime monster begins pushing itself down your throat, occasionaly making room for you to breath. You can't help but gulp it down between breaths as it squeezes itself into your stomach. 
+	<<set _cram = random(4,9)>>
+	<<eDamage _cram>>
+	<<set _calories = _cram * 0.5>>
+	<<consume _cram _calories>>
+<<else>>
+	<<switch random(1,3)>>
+		<<case 1>>
+			<li>Feed</li>
+			The slime monster draws back in on itself before spraying a huge blast of slime directly towards your mouth. You can't help but swallow several mouthfuls and feel it slide into your gut. Almost as much slime gets on you as in you. It tastes delightfully like blueberries! 
+			<<set _cram = random(5,9)>>
+			<<eDamage _cram>>
+			
+			<<set _missed = _cram>>
+			<<set _cram = random(3, _cram-2)>>
+			<<set _missed += _cram>>
+			<<set _missed *= -1>>
+			<<set _calories = _cram * 0.5>>
+			
+			<<tempBuff "agi" _missed>>
+			<<consume _cram _calories>>
+			
+		<<case 2>>
+			<li>Feed</li>
+			The slime monster draws back in on itself before firing a blast of slime towards you. If it was aiming at your mouth though, it appears to have missed. 
+			<<set _slimed = random(2,6)>>
+			<<eDamage _slimed>>
+			<<set _slimed += random(3,_slimed)>>
+			<<if _slimed > 0>>
+				<<set _slimed *= -1>>
+				<<tempBuff "agi" _slimed>>
+				The blast still manages to hit your legs, causes them to become sticky and hard to move. 
+			<</if>>
+			
+		<<default>>
+			<li>Grab</li>
+			The slime monster lunges towards you, 
+			<<switch setup.dodge()>>
+				<<case true>>
+					but you manage to dodge out of its way in time. 
+					
+				<<default>>
+					engulfing your head and upper body in blue goo. 
+					<<set $grapple = $e.hea * .75>>
+					<<enemyAction "attack">>
+					
+			<</switch>>
+			
+	<</switch>>
+<</if>>
+
+
+<<if $e.hea <= 0>>
+	The last of the slime monster slides down your throat. 
+	<<if !$alive>>
+	For a moment you feel a sense of triumph, but you swiftly realize you're practically too full to stand. You collapse to the ground and roll over onto your back, your stomach sloshing back and forth, before passing out in an overstuffed coma. 
+	<<defeated "overeating">>
+	
+	<<else>>
+	With nothing left to fight, I guess you can call this a victory? 
+	<<include "Victory">>
+	<hr>
+	<<include "hills randomization">>		
+	
+	<</if>>
+
+<<elseif $agi <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You escaped! 
+<<endCombat>>
+<hr>
+<<include "hills randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You open your mouth wide and beckon the slime monster in. You don't even have to swallow as the slime forcefully pumps itself into you. You rub your $waist stomach as it stretches outward with sentient blueberry sweetness. 
+<<set _cram = $e.hea>>
+<<set _calories = _cram * 0.5>>
+<<consume _cram _calories>>
+<<eDamage _cram>>
+
+<<switch $alive>>
+	<<case true>>
+		You slurp up the last of the slime monster down. With nothing left to fight, I guess you can call this a victory? 
+		<<include "Victory">>
+		<hr>
+		<<include "hills randomization">>		
+		
+	<<case false>>
+		<<if $options.popping>>
+		Your stomach keeps growing larger and larger, but there's still more blueberry slime to go. You hold onto your aching gut as blueberry goo pumps almost endlessly down your gullet. You slowly lower yourself down and sit on the ground as you feel your stomach stretch painfully bloated. You're not sure how much more you can take, but you're determined to win this gastronomical battle. If you can just hold out a little longer. You begin losing the test of will though as you collapse fully to the ground. The remainder of the slime monster rises menacingly and dives towards your mouth in a final onslaught. A wet GLOOORP resonates deep within your gut as the slime pushes into every available nook and cranny. Ultimately out of room, your belly lurches forward and bursts scattering globs of blue slime across the hillside.
+Each glob creeps off to grow into a new blueberry slime. The cycle continues...
+		<hr>
+		<<defeated "exploded">>
+
+		<<else>>		
+		Your stomach keeps growing larger and larger, but there's still more blueberry slime to go. You hold onto your aching gut as blueberry goo pumps almost endlessly down your gullet. You slowly lower yourself down and sit on the ground as you feel your stomach stretch painfully bloated. You're not sure how much more you can take, but you're determined to win this gastronomical battle. If you can just hold out a little longer. You begin losing the test of will though as you become too painfully full to stay awake. You collapse on your back on the ground and pass out even as the rest of the slime monster slides down your throat. 
+		<hr>
+		<<defeated "overeating">>
+		<</if>>
+		
+<</switch>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $e.hea > 0 and $agi > 0>>
+	<<if $options.popping>>
+	You fall to the ground, too painfully full to stand. You wince in pain and grab your achingly bloated gut. When you open your eyes, you look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively. You can feel the slime move around in your gut as it explore its new confines. Unfortunately, these new accommodations won’t do. Your bloated orb of a belly detonates with a wet BLOORP!
+	<<set _cram = $e.hea * 0.5>>
+	<<set _calories = _cram * 0.5>>
+	<<consume _cram _calories>>
+	The slime creeps off in search of a new home. It seems the previous housing bubble has burst...
+	<hr>
+	<<defeated "exploded">>
+
+	<<else>>
+	You fall to the ground, too painfully full to stand. You wince in pain and grab your achingly bloated gut. When you open your eyes, you look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively. 
+	<<set _cram = $e.hea * 0.5>>
+	<<set _calories = _cram * 0.5>>
+	<<consume _cram _calories>>
+	<hr>
+	<<defeated "overeating">>
+	<</if>>
+<<else>>
+	<<if $options.popping>>
+		Your $p.fur is so soaked through with with sticky blue gunk that you have trouble even moving. You eventually find you can't move your arms or legs and fall to the ground in a pile of blueberry slime. You look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively. You can feel the slime move around in your gut as it explore its new confines. 
+		<<set _cram = $e.hea>>
+		<<set _calories = _cram * 0.5>>
+		<<consume _cram _calories>>
+		<<if $hea <= 0>>
+			Unfortunately, these new accommodations won’t do. Your bloated orb of a belly detonates with a wet BLOORP! 
+			
+			<p>The slime creeps off in search of a new home. It seems the previous housing bubble has burst...</p>
+			<hr>
+			<<defeated "exploded">>
+		<<else>>
+			<<set $alive = true>>
+			However you manage to swallow it all down! Having swallowed the majority of the slime down, the remaining goo you're covered in starts sliding off of you and soaking into the ground. Apparently you've won! 
+			<<include "Victory">>
+			<hr>
+			<<include "hills randomization">>				
+		<</if>>
+
+	<<else>>
+		Your $p.fur is so soaked through with with sticky blue gunk that you have trouble even moving. You eventually find you can't move your arms or legs and fall to the ground in a pile of blueberry slime. You look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively. 
+		<<set _cram = $e.hea>>
+		<<set _calories = _cram * 0.5>>
+		<<consume _cram _calories>>
+		<<if $hea <= 0>>
+			<hr>
+			<<defeated "overeating">>
+		<<else>>
+			<<set $alive = true>>
+			However you manage to swallow it all down. Having swallowed the majority of the slime down, the remaining goo you're covered in starts sliding off of you and soaking into the ground. Apparently you've won! 
+			<<include "Victory">>
+			<hr>
+			<<include "hills randomization">>
+		<</if>>
+	<</if>>
+<</if>>
+
+
+/*===You win!===*/
+<<case "victory">>
+You won! 
+<<include "Victory">>
+<hr>
+<<include "hills randomization">>
+
+
+/*===Capture a slime===*/
+<<case "capture">>
+<li>Capture</li>
+<<if setup.skillTestRange($agi+$str+$int, $e.agi+$e.str+$e.int+$e.hea, 10, 90)>>
+	You charge the large blue cuboid, 
+	<<if setup.weight() < 150>>scrabbling for purchase across its wide sides.
+	<<elseif setup.weight() < 300>>colliding with a gelatinous SLAP.
+	<<else>>smacking into it so hard as to make it ripple.
+	<</if>>
+	It seems stunned by this novel tactic, and seizing the opportunity you 
+	<<if setup.weight() < 150>>spring lightly on top of it.
+	<<elseif setup.weight() < 300>>leap laboriously on top of it.
+	<<elseif setup.weight() < 500>>heave yourself weightily on top of it.
+	<<else>>flop whale-like on top of it.
+	<</if>>
+	The Blueberry slime makes strange bubbling, glorping noises as it sinks down under your weight, spraying slime and struggling to free itself from your grip. But although by now thoroughly slime-soaked, you 
+	<<if setup.weight() < 150>>cling on frantically like a rodeo rider as it bucks and bounces,
+	<<elseif setup.weight() < 300>>keep it pinned beneath you with your sizeable belly while it wriggles and wobbles,
+	<<else>>use your enormous weight to squash it into submission,
+	<</if>>
+	until finally it shows signs of tiring out. With a struggle you manage to heave the large jello-like mass from the ground. After a few astonished quivers it subsides, apparently completely confused as to where it is. Thus subdued, you are able to stash it safely. 
+	<<include "Victory">>
+	<<getItem $blueSlimeItem>>
+	<hr>
+	<<include "hills randomization">>
+	
+<<else>>
+	You charge the large blue cuboid, 
+	<<if setup.weight() < 150>>scrabbling for purchase across its wide sides
+	<<elseif setup.weight() < 300>>colliding with a gelatinous ''SLAP''
+	<<else>>smacking into it so hard as to make it ripple
+	<</if>>, but it flings you off with a mighty quiver. 
+	<<enemyAction "attack">>	
+<</if>>
+
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: honey slime ai {"position":"5150,500","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a large chunk of amporphous honey that smells too sweet. Still, the $sunlight perforating through the slime makes your gurgle with possibly oncoming gastronomical onslaught - or feast! This slime seems reasonably slower than its counterparts in its rather sticky, honeyish form. As it trudges towards you, it actually leaves a viscous trail behind! 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $grapple <= 0>>
+	<<switch random(1,3)>>
+		<<case 1>>
+			<li>Honey blast</li>
+			<<switch setup.dodge()>>
+				<<case true>>
+					Shrinking for a mere instant, the slime several lumps of sweet honey towards you. As the slime's marksmanship is nothing to rival your maneuvers, several lumps of honey splash on the ground. 
+					<<set _damage = random(4,6)>>
+					<<eDamage _damage>>
+					
+				<<case false>>
+					Shrinking for a mere instant, the slime several lumps of sweet honey towards you. In superb precision, the lumps seem to land right into your mouth. You are but to savor the <<print either("delicious", "cloying")>> honey as orange, glistening lumps of deliciousness slowly fill your belly. 
+					<<set _cram = random(4,6)>>
+					<<set _calories = _cram * 0.8>>
+					<<consume _cram _calories>>
+					<<eDamage _cram>>
+					
+					<<set _buff = random(0,-2)>>
+					<<if _buff != 0>><<tempBuff "str" _buff>><</if>>
+					<<set _buff = random(0,-2)>>
+					<<if _buff != 0>><<tempBuff "agi" _buff>><</if>>
+					<<set _buff = random(0,-2)>>
+					<<if _buff != 0>><<tempBuff "end" _buff>><</if>>
+					
+			<</switch>>
+			
+		<<case 2>>
+			<li>Honey blast</li>
+			<<switch setup.dodge()>>
+				<<case true>>
+					The slime seems to melt into the ground, only to launch several chunks of honey! As you duck beneath the airborne honey, all chunks splatter across the ground in a warm, orange glisten. Still, a driblet or two of honey splatters onto you do nothing more than whetting your appetite. Some drops to spice, or sweeten, things up! 
+					<<eDamage 1>>
+					
+				<<case false>>
+					The slime seems to melt into the ground, only to launch several chunks of honey! While some of the fragrant and tacky projectiles fall into ground in a dull glisten, a few finds their way onto you. Your motion seems restricted by the orange sweet on your $fatness body. However much you attempt, you cannot seem to liberate your $p.hands from the sweet. Moreover, the honey dripping on your tummy seems to elicit some growls from your midriff. 
+					<<set _buff = random(-3,-5)>>
+					<<tempBuff "str" _buff>>
+					<<tempBuff "agi" _buff>>
+					<<eDamage 1>>
+					
+			<</switch>>
+			
+		<<case 3>>
+			<li>Grab</li>
+			<<switch setup.dodge()>>
+				<<case true>>
+					The slime jolts towards you as a cavity opens inside the slime. As you sidestep your fragrant foe, the blob collapses flat onto the ground. Instead of an ample gourmand like you, brushings seem to taste the delicious honey. What a waste! 
+					
+				<<case false>>
+					The slime jolts towards you as a cavity opens inside the slime. The slime rapidly engulfs you into the cavity as a floating sensation takes the hold of you. Eventually, your head gets engulfed, just then you begin wriggling inside the amorphous blob. Trying to keep your eyes open, you behold the world in an amber tint as light slowly nullifies. Soon, your perception is overwhelmed by sweet deliciousness. 
+					<<set _buff = random(-1,-2)>>
+					<<tempBuff "agi" _buff>>
+					<<set $grapple = $e.str * 3>>
+					
+			<</switch>>
+			
+	<</switch>>
+<</if>>
+
+<<if $grapple > 0>>
+	<li>Feed</li>
+	The delicious honey, all less viscous, seems to surge into your mouth as you gasp for air - and find more honey indeed! The treat is to be relished as you literally breathe the onslaught of rich and sweet honey. 
+	<<set _cram = random(4,6)>>
+	<<set _calories = _cram * 0.8>>
+	<<consume _cram _calories>>
+	<<eDamage _cram>>
+	You feel $hungry. 
+<</if>>
+
+
+<<if $agi <= 0 or $str <= 0 or $end <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You escaped! 
+<<endCombat>>
+<hr>
+<<include "hills randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You open your mouth wide and beckon the slime monster in. You don't even have to swallow as the slime forcefully pumps itself into you. You rub your $waist stomach as it stretches outward with sentient honey sweetness. 
+<<set _cram = $e.hea>>
+<<set _calories = _cram * 0.5>>
+<<consume _cram _calories>>
+<<eDamage _cram>>
+
+<<switch $alive>>
+	<<case true>>
+		You slurp up the last of the slime monster down. With nothing left to fight, I guess you can call this a victory? 
+		<<include "Victory">>
+		<hr>
+		<<include "hills randomization">>		
+		
+	<<case false>>
+		<<if $options.popping>>
+		<p>Your stomach keeps growing larger and larger, but there's still more honey slime to go. You hold onto your aching gut as honey goo pumps almost endlessly down your gullet. You slowly lower yourself down and sit on the ground as you feel your stomach stretch painfully bloated. You're not sure how much more you can take, but you're determined to win this gastronomical battle. If you can just hold out a little longer. You begin losing the test of will though as you collapse fully to the ground. The remainder of the slime monster rises menacingly and dives towards your mouth in a final onslaught. A wet GLOOORP resonates deep within your gut as the slime pushes into every available nook and cranny. Ultimately out of room, your belly lurches forward and bursts scattering globs of blue slime across the hillside. </p>
+		
+		Each glob creeps off to grow into a new honey slime. The cycle continues...
+		<<defeated "exploded">>
+
+		<<else>>		
+		Your stomach keeps growing larger and larger, but there's still more honey slime to go. You hold onto your aching gut as honey goo pumps almost endlessly down your gullet. You slowly lower yourself down and sit on the ground as you feel your stomach stretch painfully bloated. You're not sure how much more you can take, but you're determined to win this gastronomical battle. If you can just hold out a little longer. You begin losing the test of will though as you become too painfully full to stay awake. You collapse on your back on the ground and pass out even as the rest of the slime monster slides down your throat. 
+		<hr>
+		<<defeated "overeating">>
+		<</if>>
+		
+<</switch>>
+
+/*===You lose===*/
+<<case "defeat">>
+/*Slime is alive*/
+<<if $e.hea > 0>>
+	As the sticky honey slime wrestles you down onto the ground, it begins spraying honey relentlessly into your mouth. You gasp, for a breath or two, while inhaling  the seemingly endless stream of honey. Eventually, a drowsy sugar rush takes you before a stuffed slumber. 
+	<<set _calories = $e.hea * 0.8>>
+	<<consume $e.hea _calories>>
+
+	/*You're alive*/
+	<<if $hea > 0>>
+		As you begin swallowing the large chunk of honey, a restful warmth begins spreading through your stomach. As your belly begins surging out, you soon become oblivious to the cloying sweetness of honey, absorbed into its soothing comfort and deliciousness. A minute? An hour? A day? You just seem to lose the track of time as your feast endures. Soon awaken from your feeding lethargy as you lick bland air instead of honey! <<print $hungry.toUpperFirst()>> and a bit sticky, you rise to continue your journey, with the honey still warm in your belly. 
+		<<set $alive = true>>
+		<<include "Victory">>
+		<hr>
+		<<include "hills randomization">>
+	/*You're dead*/
+	<<else>>
+		<hr>
+		<<defeated "overeating">>
+	<</if>>
+
+/*Slime is dead*/
+<<else>>
+	After lodging it's last attack, you look down to find the last of the honey slime dissipate into a pool of regular honey. 
+	
+	/*You're alive*/
+	<<if $hea > 0>>
+		Apparently you won! 
+		<<set $alive = true>>
+		<<include "Victory">>
+		<hr>
+		<<include "hills randomization">>
+		
+	/*You're dead*/
+	<<else>>
+		<<if $options.popping>>
+		Before you can feel too triumphant however, you stumble forward to the ground under the painful weight of your overdistended stomach, landing heavily on your belly. The sudden load put too much strain on your strained gut and you bust open at the seams with a wet GLOOOP! 
+		<br><br>
+		You sink slowly into the viscous mass you previously contained as you mercifully drift to unconsciousness...
+		<hr>
+		<<defeated "exploded">>
+
+		<<else>>
+		Before you can feel too triumphant however, you stumble to the ground under the painful weight of your overdistended stomach and pass out facedown in the pool of honey. 
+		<hr>
+		<<defeated "overeating">>
+		<</if>>
+	<</if>>
+<</if>>
+
+/*===You win!===*/
+<<case "victory">>
+After lodging it's last attack, you look down to find the last of the honey slime dissipate into a pool of regular honey. Apparently you won! 
+<<include "Victory">>
+<hr>
+<<include "hills randomization">>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: meat monster ai {"position":"4900,500","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent appears to be a <<sayDistance 72>> tall semi-sentient animated golem made of several different types of cooked meat. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+
+<<set _random = random(1,3)>>
+<<if $grapple > 0>>
+	<li>Feed</li>
+	The meat monster man takes advantage of your restrained state and grabs a hunk of himself and forcefully crams it down your throat. 
+	<<set _cram = random(1,4)>>
+	<<set _calories = _cram * 0.5>>
+	<<consume _cram _calories>>
+	<<set $e.hea -= _cram>>
+<<elseif _random == 1 and ($e.hea/$e.maxhea) > .5>>
+	<li>Grab</li>
+	<<switch setup.dodge()>>
+		<<case false>>
+		<<set $grapple = $e.str * 3>>
+		The meat monster man launches forward and wraps his meaty sausage arms around you. 
+		<<enemyAction "attack">>
+		
+		<<case true>>
+		The meat monster lunges at you, but you dodge out of the way before he can grab you. 
+		
+	<</switch>>
+<<else>>
+	<li>Attack</li>
+	The meat monster rears back and decks you in the face with his sausagey fist. 
+	<<doEdmg>>
+	<<damage $edmg>>
+<</if>>
+
+<<if $e.hea <= 0 and $alive>>
+	And with that, there's nothing left of the meat man. He's managed to entirely feed his entire self into you. You stand up and brush yourself off and find yourself with nothing left to fight...? You shake your gut suspiciously, but there's seemingly no reaction from the monster inside. It appears you've won? 
+	<<include "Victory">>
+	<hr>
+	<<include "hills randomization">>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You manage to flee from your opponent. He lets out a meaty roar before slowly stalking you down, but you think you manage to lose him before too long. It appears you have escaped! 
+<<endCombat>>
+<hr>
+<<include "hills randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $grapple > 0>>
+You relax in his greasy meaty embrace and eagerly chomp down on whatever he crams into you. 
+<<else>>
+You leap into his meaty grasp and look up at him, mouth agape. 
+<</if>>
+You see a look of what might be perplexity, or possibly happiness cross his face. It's pretty hard to tell though. In either case, he begins tearing off hunks of steak/sausage/ham/bacon from himself. He hardly waits for you to swallow the previous mouthful before he crams the next one in, practically shoving meat into your stomach. As you consume more and more of him, his body shifts and reconstructs into a smaller and smaller meat golem. Eventually, as he senses you don't plan on struggling and he becomes too weak to hold you, he lowers you to the ground as he continues cramming himself into you. 
+<<set _cram = $e.hea>>
+<<set _calories = _cram * 0.5>>
+<<consume _cram _calories>>
+
+<<switch $alive>>
+	<<case true>>
+		You've managed to devour most of him, leaving you with a $waist stomach. The meat monster has shrunken to only a foot tall stickman made out of a few sausages. You look over when you notice you aren't being fed anymore and find that what was once a meat monster is now just a pile of inanimate sausage. Whatever force animated him apparently can no longer function in such a small vessel. It looks like you've "Won". 
+		<<include "Victory">>
+		<hr>
+		<<include "hills randomization">>
+		
+	<<case false>>
+		<<if $options.popping>>
+		Your stomach steadily bulges larger and larger as he stuffs you with unwavering dedication. You rub your taut stomach as you force yourself to swallow another mouthful and you can feel your belly grow slightly. You start to wonder how much more you can take, but you don't want to stop him, and he probably doesn't even know how to stop. Your musing is interrupted as another handful is crammed into your mouth. Eventually you are little more than a meat balloon, quivering at the edge of ruin. 
+		<<stuffToBursting>>
+		A final sausage is forced down your throat. Much like a sausage casing that’s been overfilled, you split open, showering the hillside with chunks of meat.
+		<hr>
+		<<defeated "exploded">>
+		
+		<<else>>
+		Your stomach steadily bulges larger and larger as he stuffs you with unwavering dedication. You rub your taut stomach as you force yourself to swallow another mouthful and you can feel your belly grow slightly. You start to wonder how much more you can take, but you don't want to stop him, and he probably doesn't even know how to stop. You start to drift off into a glutted stupor, but every few seconds you're jolted awake as another handful is crammed into your mouth and your gut slowly stretches. Eventually you're just too stuffed to stay awake and you fall asleep to the rhytmic sensation of your stomach continuing to bulge out larger and larger....
+		<hr>
+		<<defeated "overeating">>
+		<</if>>
+		
+		
+<</switch>>
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $ful > $maxFul>>
+<<if $options.popping>>
+You're so stuffed you find it almost impossible to struggle against your captor. He grabs the end of a sausage rope and begins to cram it link after link down your throat. Every sausage causes your stomach to swell, but as the final link disappears into your mouth, you feel something split deep inside. Your belly suddenly surges outwards, and you burst in a shower of meat chunks. 
+<hr>
+<<defeated "exploded">>
+
+<<else>>
+You're so stuffed you find it almost impossible to struggle against your captor. Your vision fades to black as you see the meat monster cram a particularly large hunk of meat down your throat. 
+<hr>
+<<defeated "overeating">>	
+<</if>>
+
+
+<<else>>
+Your vision fades to black as you fall unconscious. 
+<hr>
+<<defeated "battle">>	
+
+<</if>>
+
+
+
+/*===You win!===*/
+<<case "victory">>
+Your final attack causes what remains of the meat monster man to fall to the ground, apparently becoming nothing more than a pile of regular meat... it seems.... 
+<<include "Victory">>
+<hr>
+<<include "hills randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<if $feeder_itemFed.flavors != null and $feeder_itemFed.flavors.includes("meat")>>
+		You try cramming your $feeder_itemFed.name into what could best be interpreted as the golem's mouth. The moment the $feeder_itemFed.name makes contact it suddenly begins twitching and moving, fusing into the masses of meat that already make up the meaty creature.
+		<<eHealth $feeder_fedAmount>>
+		Oops?
+		<<removeItem $feeder_itemFed>>
+	<<else>>
+		You pull out $feeder_itemFed.article $feeder_itemFed.name, but then pause as you look the animated pile of meat up and down. It doesn't really have a mouth to stuff food into, nor any sign of a stomach to fill up - well, you think you notice some tripe amidst the variety of meats that make up the golem, but that's besides the point. You decide to put the $feeder_itemFed.name away.
+	<</if>>
+	<<enemyAction "attack">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: milk machine ai {"position":"4775,500","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a large, steam-powered, wheeled, brass amalgamation of flailing mechanical arms and hoses surrounding a massive cylindrical storage tank. The mechanical hoses are each tipped with a rubber suction cup-like tip that occasional spurts out milk. This mechanical monster has found a new container to store its harvest in. (Hint: it's you.) 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $grapple > 0>>
+	<li>Pump</li>
+	The mechanical hose crammed in your mouth starts forcefully pumping large quantities of warm milk down your throat. You can't help but swallow as the rubber suction cup completely fills your mouth. All this warm milk bloating your stomach is starting to make you feel very very drowsy. 
+	<<tempBuff "str" -2>>
+	<<tempBuff "agi" -2>>
+	<<tempBuff "end" -2>>
+	<<tempBuff "int" -2>>
+	<<set _stuff = random(3,7)>>
+	<<set _calories = _stuff * 0.5>>
+	<<consume _stuff _calories>>
+<<else>>
+	<li>Grab</li>
+	One of the mechanical arms attempts to sweep you off of your feet. 
+	<<switch setup.dodge()>>
+		<<case true>>
+		Luckily, you're <<if $int > $agi>>smart<<else>>fast<</if>> enough that you manage to keep your footing. 
+			
+		<<default>>
+		Unfortunately, you're not <<if $int > $agi>>smart<<else>>fast<</if>> enough to keep your footing and your knocked to the ground and left dazed. The mechanical monstrosity pinches your head in one of it's claws as one of it's hoses coils around your chest before cramming it's rubber suction cup into your mouth. 
+		<<set $grapple = $e.str * 2.5>>
+		<<enemyAction "attack">>
+			
+	<</switch>>
+<</if>>
+
+<<if $str <= 0 or $agi <= 0 or $int <= 0 or $end <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn to flee from the mechanical monstrosity and manage to outrun it as it slowly trundles after you, spitting out steam and angrily flailing its arms all the while. 
+<<endCombat>>
+<<include "hills randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<if $grapple > 0>>You forego struggling against your enemy and relax in its metallic embrace. 
+<<else>>You forego fighting your enemy and allow it to snatch you up in its metallic grasp. <</if>>
+
+<<if $options.popping>>
+A particularly large hose crams itself into your jaws as it starts gushing warm milk down your throat quarts at a time. Your stomach rapidly swells as it's pumped full of warm creamy milk, filling you up like a water balloon.
+<br><br>
+
+You quickly begin to feel drowsy as the warmth of the milk spreads through your body, sapping your will to resist. As your stomach grows larger and heavier, you watch a dial on the side of the large storage tank slowly drift from "F" towards "E". The dial is nearly on empty when a deep gurgling rises from your bloated belly. 
+<<stuffToBursting>>
+Your turgid gut gives out one final groan, then bursts with a wet BLOOOSH!. 
+<br><br>
+
+The milk machine’s simple programming can’t process what just happened. The contraption trundles off in search of more milk. And a new container...
+<hr>
+<<defeated "exploded">>
+
+<<else>>
+A particularly large hose crams itself into your jaws as it starts gushing warm milk down your throat quarts at a time. Your stomach rapidly swells as it's pumped full of warm creamy milk, filling you up like a water balloon. 
+<<stuffToBursting>>
+
+You quickly begin to feel drowsy as the warmth of the milk spreads through your body, making you feel incredibly tired. You drift off to sleep as you watch a dial on the side of the large storage tank slowly drift from "F" to "E" as your stomach grows larger and heavier. 
+<hr>
+<<defeated "overeating">>
+<</if>>
+
+
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $ful > $maxFul>>
+<<if $options.popping>>
+Your stomach groans and gurgles as it swells to its limit with warm creamy milk. You find it harder and harder to remain conscious as your stomach painfully swells before your eyes like an overinflated balloon. Your waist slowly pulses larger and larger with each jet of milk sprayed down your throat. 
+<<stuffToBursting>>
+After a few minutes of pumping, you notice your belly has ceased growing with each blast, instead getting tighter, and tighter until you finally burst with a wet BLOOOSH! 
+<br><br>
+
+The milk machine’s simple programming can’t process what just happened. The contraption trundles off in search of a new container...
+
+<<defeated "exploded">>
+<<else>>
+Your stomach groans and gurgles as it swells to its limit with warm creamy milk. You find it harder and harder to remain concious as your stomach painfully swells before your eyes like an overinflated balloon. Eventually you drift into unconsciousness as your waist slowly pulses larger and larger with each jet of milk sprayed down your throat. 
+
+<<defeated "overeating">>
+<</if>>
+
+
+<<else>>
+You find it harder and harder to stay awake as the warm relaxing milk fills up your stomach. You attempt to yawn between the repeated jets of milk spraying down the back of your throat. Eventually your eyes drift close as your stomach continues to inflate with milk. 
+<hr>
+<<defeated "overeating">>
+
+<</if>>
+
+
+
+/*===You win!===*/
+<<case "victory">>
+The large machine squeals and hisses as its mechanical arms flail about until, with a final crunching, grinding, exploding noise, it falls still. 
+<<include "Victory">>
+<hr>
+<<include "hills randomization">>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<if $feeder_itemFed.flavors != null and $feeder_itemFed.flavors.includes("milk")>>
+		You pull out a $feeder_itemFed.name and hold it out towards the machine. The mechanical monstrosity freezes for a moment, processing the sudden appearance of a new milk source. It extends a snaking hose into the $feeder_itemFed.name and drains it dry.
+		<<feeder_tryRemoveFedItem>>
+	<<else>>
+		You pull out $feeder_itemFed.article $feeder_itemFed.name, only to realise there isn't really any way to //feed// a hulking mechanical monstrosity. Does a tank count as a stomach? Shaking your head, you put the $feeder_itemFed.name back into your pack.
+		<<enemyAction "attack">>
+	<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+

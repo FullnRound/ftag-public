@@ -1,0 +1,3106 @@
+:: species variables [nobr] {"position":"3800,425","size":"200,100"}
+/* FIXES AND EDITS - Overhaul of species system. This should be loaded once to establish the base core, then never again. Later edits to these species should be done via `setup.registerSpecies` */
+/* FIXES AND EDITS - Added new elements to all species, as well as introduced missing species that appear in game narration, but don't have an entry */
+
+/* Wipe existing species data - Species patches happen every time */
+<<set $speciesList = {}>>
+
+/*
+Default template
+<<set $ = {
+	article: "",
+	id: "",	
+	species: "",
+	angry: "",
+	furBack: "", furBelly: "", furHead: "",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "",
+	tail: "",
+	teeth: "",
+	mouth: "",
+	fname: "",
+	mname: "",
+	speciesHeight: ,
+	speciesStats: [,,,,,],
+}>>
+*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "catgirl",	
+	species: "catgirl",
+	angry: "yell",
+	furBack: "tan", furBelly: "tan", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "hair",
+	tail: "short tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	fname: "woman",
+	mname: "man",
+	speciesHeight: 71,
+	speciesStats: [6,6,6,6,6,6],
+	adjective: "feline",
+    
+    core: "true",
+
+	carnivore: true,
+    herbivore: true,
+    human: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "human",	
+	species: "human",
+	angry: "yell",
+	furBack: "tan", furBelly: "tan", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "hair",
+	tail: "spine",
+	teeth: "teeth",
+	mouth: "mouth",
+	fname: "woman",
+	mname: "man",
+	speciesHeight: 71,
+	speciesStats: [6,6,6,6,6,6],
+	adjective: "human",
+
+	carnivore: true,
+    herbivore: true,
+    human: true,
+})>>
+
+/*=================*/
+/*==== Aquatic ====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "dolphin",	
+	species: "dolphin",
+	angry: "click",
+	furBack: "grey", furBelly: "light grey", furHead: "grey",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "",
+	mname: "",
+	speciesHeight: 68,
+	speciesStats: [4,7,4,7,3,3],
+	adjective: "delphine",
+	core: true,
+	aquatic: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "orca",	
+	species: "orca",
+	angry: "roar",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [7,5,4,2,7,15],
+	core: true,
+	adjective: "orcin", /* don't know if that's true or not, but it sounds right :P */
+	aquatic: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "shark",	
+	species: "shark",
+	angry: "roar",
+	furBack: "dark grey", furBelly: "light grey", 
+	furHead: "light grey",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [8,5,2,0,10,5],
+	core: true,
+	adjective: "selachian",
+	aquatic: true,
+})>>
+
+/*=================*/
+/*===== Avian =====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "blueJay", /* FIXES AND EDITS - Fix ID */
+	species: "blue jay",
+	angry: "chirp",
+	furBack: "blue", furBelly: "white", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 59,
+	speciesStats: [3,9,6,7,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "hawk",	
+	species: "hawk",
+	angry: "screech",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 64,
+	speciesStats: [5,9,5,6,0,0],
+	core: true,
+	adjective: "avian",
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "owl",	
+	species: "owl",
+	angry: "hoot",
+	furBack: "grey", furBelly: "white", furHead: "grey",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 63,
+	speciesStats: [5,6,5,9,0,2],
+	core: true,
+	adjective: "avian",
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "penguin",	
+	species: "penguin",
+	angry: "honk",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 66,
+	speciesStats: [4,4,5,5,7,6],
+	core: true,
+	adjective: "avian",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "raven",	
+	species: "raven",
+	angry: "caw",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 61,
+	speciesStats: [3,8,5,9,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "robin",	
+	species: "robin",
+	angry: "chirp",
+	furBack: "grey", furBelly: "red", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 61,
+	speciesStats: [3,8,5,9,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "magpie",	
+	species: "magpie",
+	angry: "chirp",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 58,
+	speciesStats: [2,9,4,10,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+/* FIXES AND EDITS - There's a duck NPC but no duck species, so added in a duck for the sake of simplicity ;P */
+<<run setup.registerSpecies({
+  article: "a",
+  id: "duck",	
+  species: "duck",
+  angry: "quack",
+  furBack: "brown", furBelly: "beige", furHead: "brown",
+  foot: "webbed foot", feet: "webbed feet",
+  hand: "wing", hands: "wings",
+  fur: "feathers", furred: "feathered", furry: "feathery",
+  hair: "headfeathers",
+  tail: "tailfeathers",
+  teeth: "bill",
+  mouth: "bill",
+  speciesHeight: 63,
+  speciesStats: [4,6,8,7,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "chicken",	
+	species: "chicken",
+    mname: "rooster",
+    fname: "hen",
+	angry: "cluck",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 61,
+	speciesStats: [3,6,7,6,3,5],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "parrot",	
+	species: "parrot",
+	angry: "chirp",
+	furBack: "blue", furBelly: "yellow", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 58,
+	speciesStats: [2,9,4,10,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+})>>
+
+
+/*=================*/
+/*==== Canines ====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "coyote",	
+	species: "coyote",
+	angry: "bark",
+	furBack: "grey-brown", furBelly: "light grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 60,
+	speciesStats: [2,5,6,7,5,3],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "dog",	
+	species: "dog",
+	angry: "bark",
+	furBack: "black", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [5,5,5,5,5,8],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "fox",	
+	species: "fox",
+	angry: "bark",
+	furBack: "red", furBelly: "white", furHead: "red",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 60,
+	speciesStats: [1,5,7,7,5,3],
+	core: true,
+	adjective: "vulpine",
+	carnivore: true,
+	plural: "foxes",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "paintedDog",	/* FIXES AND EDITS - Fix ID */
+	species: "painted dog",
+	angry: "bark",
+	furBack: "spotted", furBelly: "spotted", furHead: "spotted",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [4,5,7,4,5,3],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "wolf",	
+	species: "wolf",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [5,5,5,3,7,5],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+	plural: "wolves",
+})>>
+
+/*=================*/
+/*=== Dinosaurs ===*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "raptor",	
+	species: "raptor",
+	angry: "growl",
+	furBack: "dark green", furBelly: "beige", furHead: "dark green",
+	foot: "claw", feet: "claws",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 70,
+	speciesStats: [3,7,4,1,10,0],
+	core: true,
+	adjective: "saurian", /* not actually the term but it sounds good */
+	dinosaur: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "pterodactyl",	
+	species: "pterodactyl",
+	angry: "screech",
+	furBack: "green", furBelly: "beige", furHead: "green",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "tail",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 65,
+	speciesStats: [3,9,6,5,2,4],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	/* won't add flying label because I think dinos are intended to be restricted */
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "triceratops",	
+	species: "triceratops",
+	angry: "growl",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long powerful tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	speciesHeight: 75,
+	speciesStats: [8,0,7,5,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	plural: "triceratops",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "stegosaurus",	
+	species: "stegosaurus",
+	angry: "growl",
+	furBack: "grey", furBelly: "beige", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "spiky tail",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 75,
+	speciesStats: [6,0,7,7,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	plural: "stegosauruses",
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "apatosaurus",	
+	species: "apatosaurus",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "extremely long tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	speciesHeight: 84,
+	speciesStats: [7,0,7,6,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	plural: "apatosauruses",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "tyrannosaurus",	
+	species: "tyrannosaurus",
+	angry: "roar",
+	furBack: "dark green", furBelly: "beige", furHead: "dark green",
+	foot: "claw", feet: "claws",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long powerful tail",
+	teeth: "sharp teeth",
+	mouth: "mouth",
+	speciesHeight: 78,
+	speciesStats: [8,3,4,0,10,5],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	plural: "tyrannosauruses",
+})>>
+
+/*=================*/
+/*==== Dragons ====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "blackDragon",	
+	species: "black dragon",
+	angry: "roar",
+	furBack: "black", furBelly: "gold", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 74,
+	speciesStats: [8,2,0,5,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "blueDragon",	
+	species: "blue dragon",
+	angry: "roar",
+	furBack: "blue", furBelly: "gold", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 73,
+	speciesStats: [5,0,2,8,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "greenDragon",	
+	species: "green dragon",
+	angry: "roar",
+	furBack: "green", furBelly: "gold", furHead: "green",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [10,2,1,2,10,10],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "redDragon",	
+	species: "red dragon",
+	angry: "roar",
+	furBack: "red", furBelly: "gold", furHead: "red",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 73,
+	speciesStats: [6,4,2,3,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "whiteDragon",	
+	species: "white dragon",
+	angry: "roar",
+	furBack: "white", furBelly: "gold", furHead: "white",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 74,
+	speciesStats: [7,0,3,5,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "wyvern",	
+	species: "wyvern",
+	angry: "roar",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "draconic", /* Dragon nerds, please don't lynch me for this */
+	speciesHeight: 73,
+	speciesStats: [6,4,3,2,10,5],
+	
+	dragon: true,
+	carnivore: true,
+	flying: true,
+})>>
+
+/*=================*/
+/*==== Feline =====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "lion",	
+	species: "lion",
+	angry: "roar",
+	furBack: "golden", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "mane",
+	tail: "long tail",
+	teeth: "fangs",
+	mouth: "muzzle",
+	fname: "lioness",
+	mname: "lion",
+	speciesHeight: 71,
+	speciesStats: [5,5,5,0,10,4],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "cheetah",	
+	species: "cheetah",
+	angry: "growl",
+	furBack: "spotted", furBelly: "white", furHead: "spotted",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [0,10,5,0,10,0],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "cougar",	
+	species: "cougar",
+	angry: "growl",
+	furBack: "gold", furBelly: "white", furHead: "gold",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long poofy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 67,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "leopard",	
+	species: "leopard",
+	angry: "growl",
+	furBack: "rosetted", furBelly: "black-white", 
+	furHead: "black-gold",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "panther",	
+	species: "panther",
+	angry: "growl",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "tiger",	
+	species: "tiger",
+	angry: "growl",
+	furBack: "black and orange striped", 
+	furBelly: "white", furHead: "striped",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [5,5,5,0,10,4],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+})>>
+
+/* FIXES AND EDITS - Core additions */
+<<run setup.registerSpecies({ /* Yes, this is basically just a copy of the cheetah */
+	article: "a",
+	id: "jaguar",	
+	species: "jaguar",
+	angry: "growl",
+	furBack: "spotted", furBelly: "spotted", furHead: "spotted",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "feline",
+	speciesHeight: 68,
+	speciesStats: [5,4,3,6,7,3],
+	
+	carnivore: true,
+})>>
+
+/*=================*/
+/*==== Hooved =====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "cattle",	/* FIXES AND EDITS - Fix ID */
+	species: "cow",
+	angry: "moo",
+	furBack: "black and white", furBelly: "black and white", 
+	furHead: "black",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "cow",
+	mname: "bull",
+	speciesHeight: 76,
+	speciesStats: [8,0,7,5,5,25],
+	core: true,
+	adjective: "bovine",
+	herbivore: true,
+	plural: "cattle",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "deer",	
+	species: "deer",
+	angry: "grunt",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "doe",
+	mname: "buck",
+	speciesHeight: 67,
+	speciesStats: [4,7,5,4,5,10],
+	core: true,
+	adjective: "cervine",
+	herbivore: true,
+	plural: "deer",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "donkey",	
+	species: "donkey",
+	angry: "bray",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 70,
+	speciesStats: [7,5,8,5,0,6],
+	core: true,
+	adjective: "asinine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "goat",	
+	species: "goat",
+	angry: "bleat",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [6,2,7,5,5,15],
+	core: true,
+	adjective: "caprine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "horse",	
+	species: "horse",
+	angry: "whinny",
+	furBack: "beige", furBelly: "beige", furHead: "beige",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "mare",
+	mname: "stallion",
+	speciesHeight: 76,
+	speciesStats: [7,7,7,4,0,4],
+	core: true,
+	adjective: "equine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "pig",	
+	species: "pig",
+	angry: "oink", /* FIXES AND EDITS - Pigs go oink */
+	furBack: "pink", furBelly: "pink", furHead: "pink",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "curly tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 67,
+	speciesStats: [4,3,5,7,6,13],
+	core: true,
+	adjective: "porcine",
+	herbivore: true,
+})>>
+
+/*=================*/
+/*=== Mustelid ====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "badger",	
+	species: "badger",
+	angry: "growl",
+	furBack: "black", furBelly: "white", furHead: "black and white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "poofy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [6,4,5,5,5,10],
+	core: true,
+	adjective: "musteline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "ferret",	
+	species: "ferret",
+	angry: "growl",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 56,
+	speciesStats: [3,9,5,8,0,0],
+	core: true,
+	adjective: "musteline",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "greyKangaroo",	
+	species: "grey kangaroo",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thick tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 65,
+	speciesStats: [5,7,6,5,2,5],
+	core: true,
+	adjective: "macropidine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "redKangaroo",	
+	species: "red kangaroo",
+	angry: "growl",
+	furBack: "russet", furBelly: "beige", furHead: "russet",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thick tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [7,4,6,4,4,5],
+	core: true,
+	adjective: "macropidine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "otter",	
+	species: "otter",
+	angry: "growl",
+	furBack: "dark brown", furBelly: "light brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,7,6,8,0,5],
+	core: true,
+	adjective: "lutrine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "raccoon",	
+	species: "raccoon",
+	angry: "hiss",
+	furBack: "grey", furBelly: "grey", furHead: "grey striped",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,5,4,8,4,8],
+	core: true,
+	adjective: "procyonine",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "skunk",	
+	species: "skunk",
+	angry: "hiss",
+	furBack: "black and white", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "large fluffy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 62,
+	speciesStats: [5,5,7,7,1,5],
+	core: true,
+	adjective: "mephitine",
+})>>
+
+/* FIXES AND EDITS - Core additions */
+<<run setup.registerSpecies({
+	article: "a",
+	id: "weasel",	
+	species: "weasel",
+	angry: "growl",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "musteline",
+	speciesHeight: 58,
+	speciesStats: [4,8,5,8,0,0],
+	
+	carnivore: true,
+})>>
+
+/*=================*/
+/*==== Rodent =====*/
+/*=================*/
+/* "rodentian" is the general adjective for rodents, but I think "rodent" would probably pass */
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "mouse",	
+	species: "mouse",
+	angry: "squeak",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thin tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 58,
+	speciesStats: [3,6,5,8,3,2],
+	core: true,
+	adjective: "rodent",
+	herbivore: true,
+	plural: "mice",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "rabbit",	
+	species: "rabbit",
+	angry: "squeak",
+	furBack: "grey-brown", furBelly: "white", furHead: "grey-brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "stubby tail",
+	teeth: "long teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,7,5,5,4,5],
+	core: true,
+	adjective: "leporine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "rat",	
+	species: "rat",
+	angry: "squeak",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thin tail",
+	teeth: "long teeth",
+	mouth: "muzzle",
+	speciesHeight: 65,
+	speciesStats: [4,5,6,6,4,5],
+	core: true,
+	adjective: "rodent",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "squirrel",	
+	species: "squirrel",
+	angry: "squeak",
+	furBack: "grey", furBelly: "white", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long bushy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 59,
+	speciesStats: [3,7,6,6,2,3],
+	core: true,
+	adjective: "sciurine", /* okay, I know I said I prefer to stick to the generals, and "rodent" would work here, I just like the word "sciurine" :p */
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "bat",	
+	species: "bat",
+	angry: "squeak",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "stubby tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 64,
+	speciesStats: [4,6,6,6,2,1],
+	core: true,
+	adjective: "pteropine",
+	flying: true,
+})>>
+
+/* FIXES AND EDITS - Core additions */
+<<run setup.registerSpecies({
+	article: "a",
+	id: "shrew",	
+	species: "shrew",
+	angry: "squeak",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thin tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "soricine",
+	speciesHeight: 56,
+	speciesStats: [3,7,5,7,3,2],
+	
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "gopher",	
+	species: "gopher",
+	angry: "squeak",
+	furBack: "grey-brown", furBelly: "grey-brown", furHead: "grey-brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "long teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "rodent",
+	speciesHeight: 62,
+	speciesStats: [5,4,7,5,4,5],
+	
+	herbivore: true,
+})>>
+
+/*=================*/
+/*==== Ursine =====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "blackBear",	
+	species: "black bear",
+	angry: "roar",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 77,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "brownBear",	
+	species: "brown bear",
+	angry: "roar",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+	carnivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "panda",	
+	species: "panda",
+	angry: "roar",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 75,
+	speciesStats: [8,0,5,0,12,22],
+	core: true,
+	adjective: "ursine",
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "polarBear",	
+	species: "polar bear",
+	angry: "roar",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 78,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+})>>
+
+/*=================*/
+/*==== INSECT =====*/
+/*=================*/
+<<run setup.registerSpecies({
+	article: "a",
+	id: "bee",	
+	species: "bee",
+	angry: "buzz",
+	furBack: "black and yellow striped", furBelly: "black and yellow striped", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "fuzz", furred: "fuzzed", furry: "fuzzy",
+	hair: "head",
+	tail: "stinger",
+	teeth: "mandibles",
+	mouth: "mouth",
+	core: true,
+	adjective: "apiarian",
+	speciesHeight: 58,
+	speciesStats: [5,7,8,5,0,0],
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "wasp",	
+	species: "wasp",
+	angry: "buzz",
+	furBack: "black and yellow striped", furBelly: "black and yellow striped", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "chitin", furred: "chitinous", furry: "chitin",
+	hair: "head",
+	tail: "stinger",
+	teeth: "mandibles",
+	mouth: "mouth",
+	core: true,
+	adjective: "vespine",
+	speciesHeight: 59,
+	speciesStats: [8,7,5,5,0,0],
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "ant",	
+	species: "ant",
+	angry: "yell",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "chitin", furred: "chitinous", furry: "chitin",
+	hair: "head",
+	tail: "stinger",
+	teeth: "mandibles",
+	mouth: "mouth",
+	core: true,
+	adjective: "insect",
+	speciesHeight: 56,
+	speciesStats: [10,3,5,2,0,0],
+})>>
+
+/*=================*/
+/*==== REPTILE ETC =====*/
+/*=================*/
+
+/* FIXES AND EDITS - Core additions */
+<<run setup.registerSpecies({
+	article: "a",
+	id: "hydra",	
+	species: "hydra",
+	angry: "roar",
+	furBack: "blue", furBelly: "blue", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "heads",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "reptilian", 
+	speciesHeight: 75,
+	speciesStats: [4,0,10,6,5,5],
+	
+	noRandom: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "snake",	
+	species: "snake",
+	angry: "hiss",
+	furBack: "green", furBelly: "yellow", furHead: "green",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long, snaking tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "serpentine",
+	speciesHeight: 65,
+	speciesStats: [0,0,0,5,20,0],
+})>>
+
+/* FIXES AND EDITS - There's a lizard NPC but no lizard species, so adding one for simplicity... even though "Lizard" is horribly generic */
+<<run setup.registerSpecies({
+	article: "a",
+	id: "lizard",	
+	species: "lizard",
+	angry: "roar",
+	furBack: "green", furBelly: "green", furHead: "green",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,5,6,6,4,5],
+	core: true,
+	adjective: "reptilian", /* technically lacertian would be better, but I think more people would recognise "reptilian" :p */
+})>>
+
+<<run setup.registerSpecies({
+	article: "an",
+	id: "anacondaSpecies",	
+	species: "anaconda",
+	angry: "hiss",
+	furBack: "green-brown", furBelly: "yellow", furHead: "green-brown",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long, snaking tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "serpentine", 
+	carnivore: true,
+	speciesHeight: 78,
+	speciesStats: [5,0,0,0,20,0],
+})>>
+
+/*=================*/
+/*==== Other? =====*/
+/*=================*/
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "rhino",	
+	species: "rhino",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 77,
+	speciesStats: [11,0,6,2,6,20],
+	core: true,
+	adjective: "rhinocerine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "hippo",	
+	species: "hippo",
+	angry: "growl",
+	furBack: "reddish brown", furBelly: "brownish pink", 
+	furHead: "reddish brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 79,
+	speciesStats: [10,0,5,2,8,30],
+	core: true,
+	adjective: "hippopotamine",
+	herbivore: true,
+})>>
+
+
+/* FIXES AND EDITS - Core additions */
+<<run setup.registerSpecies({
+	article: "an",
+	id: "elephant",	
+	species: "elephant",
+	angry: "trumpet",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 82,
+	speciesStats: [10,0,5,2,8,20],
+	core: true,
+	adjective: "elephantine",
+	herbivore: true,
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "meerkat",	
+	species: "meerkat",
+	angry: "bark",
+	furBack: "grey-brown", furBelly: "grey", furHead: "grey-brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	core: true,
+	adjective: "suricate",
+	speciesHeight: 63,
+	speciesStats: [4,5,5,7,4,5],
+})>>
+
+<<run setup.registerSpecies({
+	article: "a",
+	id: "manticore",	
+	species: "manticore",
+	angry: "roar",
+	furBack: "golden", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "mane",
+	tail: "scorpion tail",
+	teeth: "fangs",
+	mouth: "muzzle",
+	speciesHeight: 73,
+	speciesStats: [6,5,1,3,10,4],
+	core: true,
+	adjective: "feline",
+	
+	noRandom: true,
+})>>
+
+/* POST SETUP */
+/* Running the random carnivore and herbivore functions will also populate the backwards compatible $herbivores and $carnivores arrays */
+<<run setup.randomHerbivore()>>
+<<run setup.randomCarnivore()>>
+
+/* Meanwhile, this will populate the globals of species from the core species, like how they used to be formatted in the original game, so we can preserve some backwards compatibility. */
+<<run setup.populateCoreGlobalSpecies()>>
+
+
+
+
+
+
+
+
+
+
+
+
+:: Species Variables Backup {"position":"4000,425","size":"100,100"}
+/* FIXES AND EDITS - Added new elements to all species, as well as introduced missing Duck, Lizard, and Elephant */
+/* (NOTE: Major changes are going to happen to the species system, so not sure how long this is going to last :p) */
+
+/*Species*/
+
+/*
+Default template
+<<set $ = {
+	article: "",
+	id: "",	
+	species: "",
+	angry: "",
+	furBack: "", furBelly: "", furHead: "",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "",
+	tail: "",
+	teeth: "",
+	mouth: "",
+	fname: "",
+	mname: "",
+	speciesHeight: ,
+	speciesStats: [,,,,,],
+}>>
+*/
+
+
+/*=================*/
+/*==== Aquatic ====*/
+/*=================*/
+
+<<set $dolphin = {
+	article: "a",
+	id: "dolphin",	
+	species: "dolphin",
+	angry: "click",
+	furBack: "grey", furBelly: "light grey", furHead: "grey",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "",
+	mname: "",
+	speciesHeight: 68,
+	speciesStats: [4,7,4,7,3,3],
+	adjective: "delphine",
+	core: true,
+	aquatic: true,
+}>>
+
+<<set $orca = {
+	article: "an",
+	id: "orca",	
+	species: "orca",
+	angry: "roar",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [7,5,4,2,7,15],
+	core: true,
+	adjective: "orcin", /* don't know if that's true or not, but it sounds right :P */
+	aquatic: true,
+}>>
+
+<<set $shark = {
+	article: "a",
+	id: "shark",	
+	species: "shark",
+	angry: "roar",
+	furBack: "dark grey", furBelly: "light grey", 
+	furHead: "light grey",
+	foot: "fin", feet: "fins",
+	hand: "fin", hands: "fins",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "skin",
+	tail: "tail fin",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [8,5,2,0,10,5],
+	core: true,
+	adjective: "selachian",
+	aquatic: true,
+}>>
+
+/*=================*/
+/*===== Avian =====*/
+/*=================*/
+
+<<set $blueJay = {
+	article: "a",
+	id: "blueJay", /* FIXES AND EDITS - Fix ID */
+	species: "blue jay",
+	angry: "chirp",
+	furBack: "blue", furBelly: "white", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 59,
+	speciesStats: [3,9,6,7,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+}>>
+
+<<set $hawk = {
+	article: "a",
+	id: "hawk",	
+	species: "hawk",
+	angry: "screech",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 64,
+	speciesStats: [5,9,5,6,0,0],
+	core: true,
+	adjective: "avian",
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $owl = {
+	article: "an",
+	id: "owl",	
+	species: "owl",
+	angry: "hoot",
+	furBack: "grey", furBelly: "white", furHead: "grey",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 63,
+	speciesStats: [5,6,5,9,0,2],
+	core: true,
+	adjective: "avian",
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $penguin = {
+	article: "a",
+	id: "penguin",	
+	species: "penguin",
+	angry: "honk",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 66,
+	speciesStats: [4,4,5,5,7,6],
+	core: true,
+	adjective: "avian",
+}>>
+
+<<set $raven = {
+	article: "a",
+	id: "raven",	
+	species: "raven",
+	angry: "caw",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 61,
+	speciesStats: [3,8,5,9,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+}>>
+
+<<set $robin = {
+	article: "a",
+	id: "robin",	
+	species: "robin",
+	angry: "chirp",
+	furBack: "grey", furBelly: "red", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 61,
+	speciesStats: [3,8,5,9,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+}>>
+
+<<set $magpie = {
+	article: "a",
+	id: "magpie",	
+	species: "magpie",
+	angry: "chirp",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "wing", hands: "wings",
+	fur: "feathers", furred: "feathered", furry: "feathery",
+	hair: "headfeathers",
+	tail: "tailfeathers",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 58,
+	speciesStats: [2,9,4,10,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+}>>
+
+/* FIXES AND EDITS - There's a duck NPC but no duck species, so added in a duck for the sake of simplicity ;P */
+<<set $duck = {
+  article: "a",
+  id: "duck",	
+  species: "duck",
+  angry: "quack",
+  furBack: "brown", furBelly: "beige", furHead: "brown",
+  foot: "webbed foot", feet: "webbed feet",
+  hand: "wing", hands: "wings",
+  fur: "feathers", furred: "feathered", furry: "feathery",
+  hair: "headfeathers",
+  tail: "tailfeathers",
+  teeth: "bill",
+  mouth: "bill",
+  speciesHeight: 63,
+  speciesStats: [4,6,8,7,0,0],
+	core: true,
+	adjective: "avian",
+	flying: true,
+}>>
+
+/*=================*/
+/*==== Canines ====*/
+/*=================*/
+
+<<set $coyote = {
+	article: "a",
+	id: "coyote",	
+	species: "coyote",
+	angry: "bark",
+	furBack: "grey-brown", furBelly: "light grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 60,
+	speciesStats: [2,5,6,7,5,3],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+}>>
+
+<<set $dog = {
+	article: "a",
+	id: "dog",	
+	species: "dog",
+	angry: "bark",
+	furBack: "black", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [5,5,5,5,5,8],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+}>>
+
+<<set $fox = {
+	article: "a",
+	id: "fox",	
+	species: "fox",
+	angry: "bark",
+	furBack: "red", furBelly: "white", furHead: "red",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 60,
+	speciesStats: [1,5,7,7,5,3],
+	core: true,
+	adjective: "vulpine",
+	carnivore: true,
+}>>
+
+<<set $paintedDog = {
+	article: "a",
+	id: "paintedDog",	/* FIXES AND EDITS - Fix ID */
+	species: "painted dog",
+	angry: "bark",
+	furBack: "spotted", furBelly: "spotted", furHead: "spotted",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [4,5,7,4,5,3],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+}>>
+
+<<set $wolf = {
+	article: "a",
+	id: "wolf",	
+	species: "wolf",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [5,5,5,3,7,5],
+	core: true,
+	adjective: "canine",
+	carnivore: true,
+}>>
+
+/*=================*/
+/*=== Dinosaurs ===*/
+/*=================*/
+
+<<set $raptor = {
+	article: "a",
+	id: "raptor",	
+	species: "raptor",
+	angry: "growl",
+	furBack: "dark green", furBelly: "beige", furHead: "dark green",
+	foot: "claw", feet: "claws",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 70,
+	speciesStats: [3,7,4,1,10,0],
+	core: true,
+	adjective: "saurian", /* not actually the term but it sounds good */
+	dinosaur: true,
+}>>
+
+<<set $pterodactyl = {
+	article: "a",
+	id: "pterodactyl",	
+	species: "pterodactyl",
+	angry: "screech",
+	furBack: "green", furBelly: "beige", furHead: "green",
+	foot: "claw", feet: "claws",
+	hand: "wing", hands: "wings",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "tail",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 65,
+	speciesStats: [3,9,6,5,2,4],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+	/* won't add flying label because I think dinos are intended to be restricted */
+}>>
+
+<<set $triceratops = {
+	article: "a",
+	id: "triceratops",	
+	species: "triceratops",
+	angry: "growl",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long powerful tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	speciesHeight: 75,
+	speciesStats: [8,0,7,5,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+}>>
+
+<<set $stegosaurus = {
+	article: "a",
+	id: "stegosaurus",	
+	species: "stegosaurus",
+	angry: "growl",
+	furBack: "grey", furBelly: "beige", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "spiky tail",
+	teeth: "beak",
+	mouth: "beak",
+	speciesHeight: 75,
+	speciesStats: [6,0,7,7,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+}>>
+
+<<set $apatosaurus = {
+	article: "an",
+	id: "apatosaurus",	
+	species: "apatosaurus",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "extremely long tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	speciesHeight: 84,
+	speciesStats: [7,0,7,6,5,20],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+}>>
+
+<<set $tyrannosaurus = {
+	article: "a",
+	id: "tyrannosaurus",	
+	species: "tyrannosaurus",
+	angry: "roar",
+	furBack: "dark green", furBelly: "beige", furHead: "dark green",
+	foot: "claw", feet: "claws",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "long powerful tail",
+	teeth: "sharp teeth",
+	mouth: "mouth",
+	speciesHeight: 78,
+	speciesStats: [8,3,4,0,10,5],
+	core: true,
+	adjective: "saurian",
+	dinosaur: true,
+}>>
+
+/*=================*/
+/*==== Dragons ====*/
+/*=================*/
+
+<<set $blackDragon = {
+	article: "a",
+	id: "blackDragon",	
+	species: "black dragon",
+	angry: "roar",
+	furBack: "black", furBelly: "gold", furHead: "black",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 74,
+	speciesStats: [8,2,0,5,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $blueDragon = {
+	article: "a",
+	id: "blueDragon",	
+	species: "blue dragon",
+	angry: "roar",
+	furBack: "blue", furBelly: "gold", furHead: "blue",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 73,
+	speciesStats: [5,0,2,8,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $greenDragon = {
+	article: "a",
+	id: "greenDragon",	
+	species: "green dragon",
+	angry: "roar",
+	furBack: "green", furBelly: "gold", furHead: "green",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [10,2,1,2,10,10],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $redDragon = {
+	article: "a",
+	id: "redDragon",	
+	species: "red dragon",
+	angry: "roar",
+	furBack: "red", furBelly: "gold", furHead: "red",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 73,
+	speciesStats: [6,4,2,3,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+}>>
+
+<<set $whiteDragon = {
+	article: "a",
+	id: "whiteDragon",	
+	species: "white dragon",
+	angry: "roar",
+	furBack: "white", furBelly: "gold", furHead: "white",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "thick tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 74,
+	speciesStats: [7,0,3,5,10,5],
+	core: true,
+	adjective: "draconic",
+	dragon: true,
+	carnivore: true,
+	flying: true,
+}>>
+
+/*=================*/
+/*==== Feline =====*/
+/*=================*/
+
+<<set $lion = {
+	article: "a",
+	id: "lion",	
+	species: "lion",
+	angry: "roar",
+	furBack: "golden", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "mane",
+	tail: "long tail",
+	teeth: "fangs",
+	mouth: "muzzle",
+	fname: "lioness",
+	mname: "lion",
+	speciesHeight: 71,
+	speciesStats: [5,5,5,0,10,4],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $catgirl = {
+	article: "a",
+	id: "catgirl",	
+	species: "catgirl",
+	angry: "yell",
+	furBack: "tan", furBelly: "tan", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "furry",
+	hair: "hair",
+	tail: "short tail",
+	teeth: "teeth",
+	mouth: "mouth",
+	fname: "woman",
+	mname: "man",
+	speciesHeight: 71,
+	speciesStats: [6,6,6,6,6,6],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $cheetah = {
+	article: "a",
+	id: "cheetah",	
+	species: "cheetah",
+	angry: "growl",
+	furBack: "spotted", furBelly: "white", furHead: "spotted",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [0,10,5,0,10,0],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $cougar = {
+	article: "a",
+	id: "cougar",	
+	species: "cougar",
+	angry: "growl",
+	furBack: "gold", furBelly: "white", furHead: "gold",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long poofy tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 67,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $leopard = {
+	article: "a",
+	id: "leopard",	
+	species: "leopard",
+	angry: "growl",
+	furBack: "rosetted", furBelly: "black-white", 
+	furHead: "black-gold",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $panther = {
+	article: "a",
+	id: "panther",	
+	species: "panther",
+	angry: "growl",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 68,
+	speciesStats: [4,6,5,3,7,3],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+<<set $tiger = {
+	article: "a",
+	id: "tiger",	
+	species: "tiger",
+	angry: "growl",
+	furBack: "black and orange striped", 
+	furBelly: "white", furHead: "striped",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [5,5,5,0,10,4],
+	core: true,
+	adjective: "feline",
+	carnivore: true,
+}>>
+
+/*=================*/
+/*==== Hooved =====*/
+/*=================*/
+
+<<set $cattle = {
+	article: "a",
+	id: "cattle",	/* FIXES AND EDITS - Fix ID */
+	species: "cow",
+	angry: "moo",
+	furBack: "black and white", furBelly: "black and white", 
+	furHead: "black",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "cow",
+	mname: "bull",
+	speciesHeight: 76,
+	speciesStats: [8,0,7,5,5,25],
+	core: true,
+	adjective: "bovine",
+	herbivore: true,
+}>>
+
+<<set $deer = {
+	article: "a",
+	id: "deer",	
+	species: "deer",
+	angry: "grunt",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "doe",
+	mname: "buck",
+	speciesHeight: 67,
+	speciesStats: [4,7,5,4,5,10],
+	core: true,
+	adjective: "cervine",
+	herbivore: true,
+}>>
+
+<<set $donkey = {
+	article: "a",
+	id: "donkey",	
+	species: "donkey",
+	angry: "bray",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 70,
+	speciesStats: [7,5,8,5,0,6],
+	core: true,
+	adjective: "asinine",
+	herbivore: true,
+}>>
+
+<<set $goat = {
+	article: "a",
+	id: "goat",	
+	species: "goat",
+	angry: "bleat",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [6,2,7,5,5,15],
+	core: true,
+	adjective: "caprine",
+	herbivore: true,
+}>>
+
+<<set $horse = {
+	article: "a",
+	id: "horse",	
+	species: "horse",
+	angry: "whinny",
+	furBack: "beige", furBelly: "beige", furHead: "beige",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	fname: "mare",
+	mname: "stallion",
+	speciesHeight: 76,
+	speciesStats: [7,7,7,4,0,4],
+	core: true,
+	adjective: "equine",
+	herbivore: true,
+}>>
+
+<<set $pig = {
+	article: "a",
+	id: "pig",	
+	species: "pig",
+	angry: "oink", /* FIXES AND EDITS - Pigs go oink */
+	furBack: "pink", furBelly: "pink", furHead: "pink",
+	foot: "hoof", feet: "hooves",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "curly tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 67,
+	speciesStats: [4,3,5,7,6,13],
+	core: true,
+	adjective: "porcine",
+	herbivore: true,
+}>>
+
+/*=================*/
+/*=== Mustelid ====*/
+/*=================*/
+
+<<set $badger = {
+	article: "a",
+	id: "badger",	
+	species: "badger",
+	angry: "growl",
+	furBack: "black", furBelly: "white", furHead: "black and white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "poofy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 66,
+	speciesStats: [6,4,5,5,5,10],
+	core: true,
+	adjective: "musteline",
+	carnivore: true,
+}>>
+
+<<set $ferret = {
+	article: "a",
+	id: "ferret",	
+	species: "ferret",
+	angry: "growl",
+	furBack: "brown", furBelly: "white", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 56,
+	speciesStats: [3,9,5,8,0,0],
+	core: true,
+	adjective: "musteline",
+	carnivore: true,
+}>>
+
+<<set $greyKangaroo = {
+	article: "a",
+	id: "greyKangaroo",	
+	species: "grey kangaroo",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thick tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 65,
+	speciesStats: [5,7,6,5,2,5],
+	core: true,
+	adjective: "macropidine",
+	herbivore: true,
+}>>
+
+<<set $redKangaroo = {
+	article: "a",
+	id: "redKangaroo",	
+	species: "red kangaroo",
+	angry: "growl",
+	furBack: "russet", furBelly: "beige", furHead: "russet",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thick tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 72,
+	speciesStats: [7,4,6,4,4,5],
+	core: true,
+	adjective: "macropidine",
+	herbivore: true,
+}>>
+
+<<set $otter = {
+	article: "an",
+	id: "otter",	
+	species: "otter",
+	angry: "growl",
+	furBack: "dark brown", furBelly: "light brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,7,6,8,0,5],
+	core: true,
+	adjective: "lutrine",
+	carnivore: true,
+}>>
+
+<<set $raccoon = {
+	article: "a",
+	id: "raccoon",	
+	species: "raccoon",
+	angry: "hiss",
+	furBack: "grey", furBelly: "grey", furHead: "grey striped",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "bushy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,5,4,8,4,8],
+	core: true,
+	adjective: "procyonine",
+}>>
+
+<<set $skunk = {
+	article: "a",
+	id: "skunk",	
+	species: "skunk",
+	angry: "hiss",
+	furBack: "black and white", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "large fluffy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 62,
+	speciesStats: [5,5,7,7,1,5],
+	core: true,
+	adjective: "mephitine",
+}>>
+
+/*=================*/
+/*==== Rodent =====*/
+/*=================*/
+/* "rodentian" is the general adjective for rodents, but I think "rodent" would probably pass */
+
+<<set $mouse = {
+	article: "a",
+	id: "mouse",	
+	species: "mouse",
+	angry: "squeak",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thin tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 58,
+	speciesStats: [3,6,5,8,3,2],
+	core: true,
+	adjective: "rodent",
+	herbivore: true,
+}>>
+
+<<set $rabbit = {
+	article: "a",
+	id: "rabbit",	
+	species: "rabbit",
+	angry: "squeak",
+	furBack: "grey-brown", furBelly: "white", furHead: "grey-brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "stubby tail",
+	teeth: "long teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,7,5,5,4,5],
+	core: true,
+	adjective: "leporine",
+	herbivore: true,
+}>>
+
+<<set $rat = {
+	article: "a",
+	id: "rat",	
+	species: "rat",
+	angry: "squeak",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long thin tail",
+	teeth: "long teeth",
+	mouth: "muzzle",
+	speciesHeight: 65,
+	speciesStats: [4,5,6,6,4,5],
+	core: true,
+	adjective: "rodent",
+	herbivore: true,
+}>>
+
+<<set $squirrel = {
+	article: "a",
+	id: "squirrel",	
+	species: "squirrel",
+	angry: "squeak",
+	furBack: "grey", furBelly: "white", furHead: "grey",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "long bushy tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 59,
+	speciesStats: [3,7,6,6,2,3],
+	core: true,
+	adjective: "sciurine", /* okay, I know I said I prefer to stick to the generals, and "rodent" would work here, I just like the word "sciurine" :p */
+	herbivore: true,
+}>>
+
+<<set $bat = {
+	article: "a",
+	id: "bat",	
+	species: "bat",
+	angry: "squeak",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "stubby tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 64,
+	speciesStats: [4,6,6,6,2,1],
+	core: true,
+	adjective: "pteropine",
+	flying: true,
+}>>
+
+/*=================*/
+/*==== Ursine =====*/
+/*=================*/
+
+<<set $blackBear = {
+	article: "a",
+	id: "blackBear",	
+	species: "black bear",
+	angry: "roar",
+	furBack: "black", furBelly: "black", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 77,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+	carnivore: true,
+}>>
+
+<<set $brownBear = {
+	article: "a",
+	id: "brownBear",	
+	species: "brown bear",
+	angry: "roar",
+	furBack: "brown", furBelly: "brown", furHead: "brown",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 76,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+	carnivore: true,
+}>>
+
+<<set $panda = {
+	article: "a",
+	id: "panda",	
+	species: "panda",
+	angry: "roar",
+	furBack: "black", furBelly: "white", furHead: "black",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 75,
+	speciesStats: [8,0,5,0,12,22],
+	core: true,
+	adjective: "ursine",
+}>>
+
+<<set $polarBear = {
+	article: "a",
+	id: "polarBear",	
+	species: "polar bear",
+	angry: "roar",
+	furBack: "white", furBelly: "white", furHead: "white",
+	foot: "paw", feet: "paws",
+	hand: "paw", hands: "paws",
+	fur: "fur", furred: "furred", furry: "furry",
+	hair: "headfur",
+	tail: "short tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 78,
+	speciesStats: [8,0,5,0,12,20],
+	core: true,
+	adjective: "ursine",
+}>>
+
+/*=================*/
+/*==== Other? =====*/
+/*=================*/
+
+<<set $human = {
+	article: "a",
+	id: "human",	
+	species: "human",
+	angry: "yell",
+	furBack: "tan", furBelly: "tan", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "hair",
+	tail: "spine",
+	teeth: "teeth",
+	mouth: "mouth",
+	fname: "woman",
+	mname: "man",
+	speciesHeight: 71,
+	speciesStats: [6,6,6,6,6,6],
+	core: true,
+	adjective: "human",
+	carnivore: true,
+}>>
+
+<<set $woman = {
+	article: "a",
+	id: "woman",	
+	species: "woman",
+	angry: "yell",
+	furBack: "tan", furBelly: "tan", furHead: "brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "hair",
+	tail: "spine",
+	teeth: "teeth",
+	mouth: "mouth",
+	fname: "woman",
+	mname: "woman",
+	speciesHeight: 71,
+	speciesStats: [6,6,6,6,6,6],
+	core: true,
+	adjective: "feminine",
+	carnivore: true,
+}>>
+
+<<set $rhino = {
+	article: "a",
+	id: "rhino",	
+	species: "rhino",
+	angry: "growl",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 77,
+	speciesStats: [11,0,6,2,6,20],
+	core: true,
+	adjective: "rhinocerine",
+	herbivore: true,
+}>>
+
+<<set $hippo = {
+	article: "a",
+	id: "hippo",	
+	species: "hippo",
+	angry: "growl",
+	furBack: "reddish brown", furBelly: "brownish pink", 
+	furHead: "reddish brown",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 79,
+	speciesStats: [10,0,5,2,8,30],
+	core: true,
+	adjective: "hippopotamine",
+	herbivore: true,
+}>>
+
+/* FIXES AND EDITS - There's a lizard NPC but no lizard species, so adding one for simplicity... even though "Lizard" is horribly generic */
+<<set $lizard = {
+	article: "a",
+	id: "lizard",	
+	species: "lizard",
+	angry: "roar",
+	furBack: "green", furBelly: "green", furHead: "green",
+	foot: "foot", feet: "feet",
+	hand: "claw", hands: "claws",
+	fur: "scales", furred: "scaled", furry: "scaly",
+	hair: "head",
+	tail: "tail",
+	teeth: "sharp teeth",
+	mouth: "muzzle",
+	speciesHeight: 63,
+	speciesStats: [4,5,6,6,4,5],
+	core: true,
+	adjective: "reptilian", /* technically lacertian would be better, but I think more people would recognise "reptilian" :p */
+}>>
+
+/* FIXES AND EDITS - Add elephant since missing */
+<<set $elephant = {
+	article: "an",
+	id: "elephant",	
+	species: "elephant",
+	angry: "trumpet",
+	furBack: "grey", furBelly: "grey", furHead: "grey",
+	foot: "foot", feet: "feet",
+	hand: "hand", hands: "hands",
+	fur: "skin", furred: "skinned", furry: "skinned",
+	hair: "head",
+	tail: "tail",
+	teeth: "teeth",
+	mouth: "muzzle",
+	speciesHeight: 82,
+	speciesStats: [10,0,5,2,8,20],
+	core: true,
+	adjective: "elephantine",
+	herbivore: true,
+}>>
+
+/*=================*/
+/*==== Groups ====*/
+/*=================*/
+<<set $herbivores = [$horse, $cattle, $deer, $goat, $donkey, $pig, $rabbit, $mouse, $squirrel, $rat, $greyKangaroo, $redKangaroo, $rhino, $hippo, $elephant]>>
+
+<<set $carnivores = [$lion, $hawk, $owl, $coyote, $dog, $fox, $paintedDog, $wolf, $blackDragon, $blueDragon, $redDragon, $greenDragon, $whiteDragon, $cheetah, $cougar, $leopard, $lion, $panther, $tiger, $badger, $ferret, $otter, $blackBear, $brownBear]>>
+
+<<if $speciesList == null>>
+	<<set $speciesList = {}>> /* This is what's actually going to be holding the species info in the future */
+<</if>>
+
+/* Aquatic */
+<<set $speciesList.dolphin = $dolphin>>
+<<set $speciesList.orca = $orca>>
+<<set $speciesList.shark = $shark>>
+/* Avian */
+<<set $speciesList.blueJay = $blueJay>>
+<<set $speciesList.hawk = $hawk>>
+<<set $speciesList.owl = $owl>>
+<<set $speciesList.penguin = $penguin>>
+<<set $speciesList.raven = $raven>>
+<<set $speciesList.robin = $robin>>
+<<set $speciesList.magpie = $magpie>>
+<<set $speciesList.duck = $duck>>
+/* Canine */
+<<set $speciesList.coyote = $coyote>>
+<<set $speciesList.dog = $dog>>
+<<set $speciesList.fox = $fox>>
+<<set $speciesList.paintedDog = $paintedDog>>
+<<set $speciesList.wolf = $wolf>>
+/* Dinosaurs */
+<<set $speciesList.raptor = $raptor>>
+<<set $speciesList.pterodactyl = $pterodactyl>>
+<<set $speciesList.triceratops = $triceratops>>
+<<set $speciesList.stegosaurus = $stegosaurus>>
+<<set $speciesList.apatosaurus = $apatosaurus>>
+<<set $speciesList.tyrannosaurus = $tyrannosaurus>>
+/* Dragons */
+<<set $speciesList.blackDragon = $blackDragon>>
+<<set $speciesList.blueDragon = $blueDragon>>
+<<set $speciesList.greenDragon = $greenDragon>>
+<<set $speciesList.redDragon = $redDragon>>
+<<set $speciesList.whiteDragon = $whiteDragon>>
+/* Feline */
+<<set $speciesList.lion = $lion>>
+<<set $speciesList.cheetah = $cheetah>>
+<<set $speciesList.catgirl = $catgirl>>
+<<set $speciesList.cougar = $cougar>>
+<<set $speciesList.leopard = $leopard>>
+<<set $speciesList.panther = $panther>>
+<<set $speciesList.tiger = $tiger>>
+/* Hooved */
+<<set $speciesList.cattle = $cattle>>
+<<set $speciesList.deer = $deer>>
+<<set $speciesList.donkey = $donkey>>
+<<set $speciesList.goat = $goat>>
+<<set $speciesList.horse = $horse>>
+<<set $speciesList.pig = $pig>>
+/* Mustelid */
+<<set $speciesList.badger = $badger>>
+<<set $speciesList.ferret = $ferret>>
+<<set $speciesList.greyKangaroo = $greyKangaroo>>
+<<set $speciesList.redKangaroo = $redKangaroo>>
+<<set $speciesList.otter = $otter>>
+<<set $speciesList.raccoon = $raccoon>>
+<<set $speciesList.skunk = $skunk>>
+/* Rodent */
+<<set $speciesList.mouse = $mouse>>
+<<set $speciesList.rabbit = $rabbit>>
+<<set $speciesList.rat = $rat>>
+<<set $speciesList.squirrel = $squirrel>>
+<<set $speciesList.bat = $bat>>
+/* Ursine */
+<<set $speciesList.blackBear = $blackBear>>
+<<set $speciesList.brownBear = $brownBear>>
+<<set $speciesList.panda = $panda>>
+<<set $speciesList.polarBear = $polarBear>>
+/* Other */
+<<set $speciesList.human = $human>>
+<<set $speciesList.woman = $woman>>
+<<set $speciesList.rhino = $rhino>>
+<<set $speciesList.hippo = $hippo>>
+<<set $speciesList.lizard = $lizard>>
+<<set $speciesList.elephant = $elephant>>
+

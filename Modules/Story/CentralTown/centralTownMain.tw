@@ -1,0 +1,1415 @@
+:: Ambient city {"position":"2625,1500","size":"100,100"}
+<<createNPC "random" "random" 1>>
+
+<<switch $daytime>>
+
+<<case "night">>
+The sun has completely set, leaving the town in darkness only broken by small pools of light around flickering street lamps. 
+
+<<if $fat < 200>>
+An oppressive silence has fallen over the city square. You try to walk as lightly and noiselessly as you can, not wanting to draw attention to yourself. 
+<<elseif $fat < 500>>
+The city square is completely silent, save for the sound of your ponderous footsteps. Your heavy body limits your stealth capabilities, and try as you might, you can't quite manage to walk completely noiselessly. 
+<<else>>
+The dead silence in the city square provides a stark contrast to the booming sound of your heavy footfalls. Keeping a low profile is out of the question; you can only hope that your formidable size will suffice to deter anyone with ill intent. 
+<</if>>
+
+
+<<switch random(1,9)>>
+<<case 1>>
+All folks that have had too much to eat or drink already, and those obliged to wake before sunrise have dozed off in their beds and hospital wards, and the square is left to the nocturnal songbirds, last tardy porters, lurching connoisseurs of cheap drink and surly guards lighting the torches. 
+<<case 2>>
+This time of night, no one is on the streets who doesn't absolutely need to be there, meaning the streetcleaners, the pudgy stray dogs going about their business after an evening of snatching sausages from the spoiled gourmands, and the perpetually gloomy night watch officers. 
+<<case 3>>
+It's the dead of night in the city square, and whenever the night watch isn't around, shadowy figures can be seen creeping along the walls, exchanging mysterious objects and secretive whispers with each other before sinking into the nearest alleyway. 
+<<case 4>>
+One or two lit windows can be counted in this city of hundreds, and now that both the the citizenry and the scarce town fauna have quieted down, muffled echos of strange and disturbing wilderness sounds can be heard from beyond the city walls. 
+<<case 5>>
+The contrast of the dead silence filling the square to the din of the city at noon could not be more stark than at this awkward, empty hour, and even the usually bickering and grouching night watch officers seem to be feeling oppressed, as they plod by with their torches and jingling keychains. 
+<<case 6>>
+Only a rare prematurely awoken bird ever produces a halfhearted chirp this early, but the air and the subtle change of lighting feel like the whole city tosses and turns in its sleep, ready to cringe at the first rays of the sun. 
+<<case 7>>
+A fur is passed out in the gutter with a wine bottle in his hand. His swollen stomach sticks up in the air and occasionaly sloshes back and forth as he rolls in his sleep. 
+<<case 8>>
+A small group of $npc1.species drunkenly stumbles past you as they waddle down the street. They're each sporting swollen sloshing stomachs that bump into each other as they lean on each other's shoulders and sing drunken bar songs off key. 
+<<default>>
+A stiff breeze ruffles across your $p.fur. 
+<</switch>>
+
+
+<<case "morning">>
+The morning sunlight has just begun shining on the city streets. 
+
+<<if $fat < 200>>
+You shiver slightly as you stroll through the cold morning air. 
+<<elseif $fat < 500>>
+The lingering morning chill in the air makes you feel grateful for the layer of fat insulating your body. 
+<<else>>
+You take a moment to breathe in deeply, enjoying the morning air. Although it's still rather chilly outside, you actually feel quite comfortable, thanks to the thick layer of blubber enrobing your entire body. 
+<</if>>
+
+<<switch random(1,7)>>
+<<case 1>>
+It is still much too early for anyone to be up and about, and the only notable sounds consist of the grunting, coughing and swearing of the night watch guards shuffling to their barracks to be relieved after long shift. 							
+<<case 2>>
+The few birds that inhabit the rooftops of the city's buildings can be heard lazily starting their daily routine of chirps and twitterings, but for the most part the common folk are still dreaming. 		
+<<case 3>>
+The earliest of craftsmen and the last night's party guests on their way back home can be occasionally seen staggering about with sleepy expressions, and more and more window blinds are opened to greet the morning light and let out the smells of early breakfast tea. 			
+<<case 4>>
+The chilly morning air is slowly becoming saturated with the beehive sounds of a large, busy city coming awake, and an inviting aroma starts emanating from the restaurant as it first orders are prepared for the early bird patrons. 				
+<<case 5>>
+The porters and vendors can be seen carting their goods, pouring out of every street and alleyway and funneling into the market square, although some of those carts carry living passangers bloated with imprudent gorging - those steer towards the hospital entrance instead.
+<<case 6>>
+The square is slowly filling up with all sorts of people - not just those who have any actual business being there, but also the persons of leisure taking their relaxed morning strolls, tourists and street entertainers. 
+<<default>>
+Birds chirp merrily from the branches of the city's trees. 
+<</switch>>
+
+
+<<case "day">>
+The warm sun hangs over head and beats down upon the city. 
+
+<<if $fat < 200>>
+You enjoy the feeling of the afternoon sun warming your body. 
+<<elseif $fat < 500>>
+You wipe the sweat from your brow, finding that your soft, padded body is retaining heat a little too well for comfort in the warmth of the afternoon. 
+<<else>>
+Drenched in sweat, you find yourself shying away from the sun's rays as much as possible, as your heavily over-insulated blubbery body struggles to rid itself of excess heat. 
+<</if>>
+
+<<switch random(1,7)>>
+<<case 1>>
+The paved space of the town's center is starting to clear out after the morning rush, but you still cannot walk through the square in a straight line without bumping into someone. 						
+<<case 2>>
+A steady stream of diners vanishes behind the voracious doors of the restaurant, and a corresponding queue of porters issue from the establishment's back doors, carrying the customers towards the hospital's overworked overindulgence ward. 
+<<case 3>>
+At this time, the square has more or less cleared out of all the urgently rushing folk, leaving behind the easy sight of promenading nobles and the more prudent of diners hauling their bulks out of the restaurant halls and towards their destinations of choice. 
+<<case 4>>
+There is a sense of sun-baked contentment in the almost empty square, but even with the lack of ruckus nearby, a low hum of busy life permeates the city, accentuated every now and then by a loud call, a door getting bashed shut, a sound of explosion from one of the hospital wards or a satisfied belch from one of the restaurant regulars. 
+<<case 5>>
+Between a rare cart or a lone rider passing across it, the square is largely empty at the moment, allowing the birds to be heard above the subdued din of the working city. 
+<<case 6>>
+The city is filled with the sounds of conversation as groups of furs walk past you. 
+<<default>>
+A very overweight $npc1.species waddles $npc1.his way down the street with several bags of food under each arm. 						
+<</switch>>
+
+
+<<case "evening">>
+The sunlight is starting to get dimmer as the sun sets. 
+
+<<if $fat < 200>>
+<<elseif $fat < 500>>
+As you make your way through the crowded square, your sizable <<print either("belly", "rump")>> occasionally brushes against other furs, despite your best efforts to weave through them. Most of the townsfolk pay it little mind, although you do draw a few disapproving looks from the more cantankerous ones. 
+<<elseif $fat < 3000 and random(1,4) == 1>>
+As you try to pick your way through the crowd, your <<print either("bulging belly", "prodigious posterior")>> smacks into a particularly thin $npc1.species hard enough to make $npc1.him stumble. The $npc1.species takes it in stride and graciously accepts your apology, telling you not to worry about it. However, you try to move a little more carefully as you proceed through the crowd. 
+<<elseif $fat >= 3000 and random(1,4) == 1>>
+As you awkwardly try to maneuver your enormous bulk through the crowd, your <<print either("massive belly", "titanic rear")>> slams into a particularly thin $npc1.species so hard that it knocks $npc1.him to the ground. You apologize profusely as you help the dazed $npc1.species to $npc1.his feet. Recovering $npc1.his senses, the $npc1.species's jaw drops as $npc1.he notices your mind-bogglingly fattened form for the first time. The $npc1.species eventually manages to find $npc1.his tongue and accept your apology, but $npc1.he can't help but stare after you, shaking $npc1.his head in disbelief, as you slowly (and very carefully) move off through the crowd. 
+<</if>>
+
+<<switch random(1,7)>>
+<<case 1>>
+The lazier, fatter midday city guards give way to their more exercised and hardened night watch counterparts, and the evening bells summon the vanguard of the wearied workers and vendors getting back from work. 
+<<case 2>>
+The square is crowding up at an alarming rate, with the three main components of this stew being the hungry restaurant patrons, the already overtly sated being rushed to the hospital, and the market porters with the significantly lightened carts bowling through. 
+<<case 3>>
+Bustling with both amiable cheers and irritated cursing, the city's hub is replete with people of all trades, shaped and sizes, and this gathering draws forth the street bards, jesters and the portable snack stand proprietors seeking to service those that didn't fit into the crowded restaurant. 
+<<case 4>>
+The evening revelries are in full swing now, and as the first windows become lit with candles and magic glowstones, the loud crowd outside them trades the heavily laid dinner plattes for mugs and flagons of ale, and go around singing, chatting and carousing. 
+<<case 5>>
+As the darkness falls on the city, the cacophonic commotion begins to decline, with only the most devoted of party animals continuing to gorge and quaff in the settling quiet of the night. 
+<<case 6>>
+All of the chatty congregations of townsfolk have long since dispersed in this late hour, and the last bits of merry laughter and sated burps now come from inside the homes around the square.
+<<default>>
+A $npc1.species sits on a bench outside the grocery store and $npc1.he's busily cramming slices of cake into his face as $npc1.he rubs $npc1.his swollen stomach. 
+<</switch>>
+
+
+<<default>>
+**Error in ambient forest**
+
+<</switch>>
+
+
+/*===Random fight===*/
+<<if $daytime == "night" and random(1,5) == 1>>
+<<set $eventCounterA = "fight">>
+<<if $cityEnemies == undefined or $cityEnemies.length == 0>>
+	<<set $cityEnemies = ["drunk", "thief"]>>
+	<<if $lvl >= 5>>
+		<<run $cityEnemies.push("takeout")>> 
+	<</if>>
+<</if>>
+<<set _enemy = $cityEnemies.pluck()>>
+
+<<switch _enemy>>
+	<<case "drunk">>
+	<<setEnemy $drunk>>
+	As you wander through the city streets, you happen to run into a $npc1.species stumbling down the street towards you. $npc1.He barely manages to stumble up to you as $npc1.he's clearly had a bit too much to drink. And by clearly too much, $npc1.he appears to have drained an entire keg judging by the size of $npc1.his swollen gut, which has long since burst through $npc1.his shirt. As $npc1.he drunkenly wobbles $npc1.his way up to you, $npc1.his gut sloshes back and forth with each step, doing no favors for his poor sense of balance. "Hey you! //*hic*// Gimme a goldsssh. I need ta get backsh to the bar before lasht call! //*hic*//" $npc1.He stumbles into you and nearly knocks you to the ground. "Oh! Sos its a fight you wantsh eh! //*hic*// Well puts 'em up!" $npc1.He raises his fists in a drunken stance. You weren't necessarily looking for a fight before, but apparently you're in one now. 
+	
+	
+	<<case "thief">>
+	<<setEnemy $thief>>
+	<<createNPC "random" "random" 2>>
+	<<if $str > 250>>
+	A scream rings out from a nearby alley, piercing the nighttime silence. You round the corner just in time to <<if $fat > 200>>run belly-first<<else>>crash<</if>> into a pudgy, dark-clad $npc1.species, knocking $npc1.him over. You instinctively reach down to help $npc1.him up, but you stop as you notice the dagger in $npc1.his hand. Nearby, a young $npc2.species gapes up at you in astonishment. As the $npc1.species shakes $npc1.his head and starts climbing to $npc1.his feet, the young $npc2.species takes the opportunity to dart off, leaving you alone with the would-be thief. The $npc1.species's eyes widen in fear as you loom over $npc1.him, $wea.name at the ready. 
+	<<else>>
+	As you $walk down a city street, you get the feeling you’re being watched. You hear the quiet but unmistakable sound of footsteps behind you. You whirl around to see a pudgy $npc1.species dressed in dark, ill-fitting clothing standing right behind you and wielding a dagger. “Your money or your life!” $npc1.he says. You bring up your $wea.name and prepare for a fight. 
+	<</if>>
+	
+	
+	<<case "takeout">>
+	<<setEnemy $takeoutTerror>>
+	You’re brought up short as a hugely fat $npc1.species waddles towards you- practically so wide that there’s no space in the street to avoid $npc1.him. The ground shakes beneath $npc1.his thunderous footfalls. $npc1.His shirt and denim pants are bursting at the seams, $npc1.his belly so bloated it hangs past $npc1.his knees. $npc1.He resembles a hot-air balloon stuffed into a set of clothes. Obviously having been gorging for hours, the $npc1.species is occupied greedily devouring something from a crumpled parchment bag, accompanied by a strong smell of fried food, but as you watch $npc1.he balls the now-empty bag up and tosses it away, obviously STILL not satisfied. Catching sight of you, $npc1.he pants, "Hey, y-you there! You’ve gotta lend me some GOLD!" $npc1.His enormous middle emits a subterranean rumble, and $npc1.he adds desperately. "You don’t understand, I just… gotta get some more CHOW!" A slightly crazed look enters $npc1.his food-fuddled gaze, and $npc1.he looms over you like a wrecking ball. "In fact… you’re look mighty tasty there… if you’ve not got any gold maybe I’ll j-just eat YOU!" 
+	
+	
+	<<default>>
+	''Error in enemy randomization''
+<</switch>>
+
+<</if>>
+
+
+:: Ask about burst chainmail {"position":"3275,1400","size":"100,100"}
+You proffer the burst chainmail to $npc1.Name, who stops work to examine it. Holding it up to the forge-light, $npc1.he shakes his head. "Aye, this is skilled craft, I'll grant you. I can't say who forged this, but they had rare talent, maybe magic, too. I cannae touch it $p.laddie- I just don't have the know-how. You may have better luck out West, or I knew of a fine smith in the mountains, if $npc2.he's still around.
+
+
+:: Central Square [city] {"position":"2500,1825","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+	
+<<else>>
+<p>You're standing in the main city of the area. Longer than recorded history this city has stood in the shadow of the eastern mountains, isolated from the goings on in the rest of the world. The coblestone streets are well worn and smoothed over from centuries of horse, cart, and foot traffic. The streets are lined by old wood and stone buildings. </p>
+
+<</if>>
+
+<<include "Ambient city">>
+<hr>
+
+<<include "central square movement">>
+
+
+:: Church [city] {"position":"2750,2100","size":"100,100"}
+<<createFixedNPC "priest">>
+<<set _priest = "priest">>
+<<if $npc1.male == "female">>
+	<<set _priest = "priestess">>
+<</if>>
+/* no, I can't be bothered to mess with the genders of the gods, too */
+
+<p>You step into the church, which is resplendant, clean and quiet. The marble floor is decorated by colored carpets that lead to a variety of shrines and altars dedicated to the gods. Above, the stone archways are painted with images depicting events of great significance and spiritual importance. The head _priest, $npc1.article $npc1.species in robed finery, nods to acknowledge you as $npc1.he makes his way from one end of the room to the other, cleaning each altar and praying at each shrine. </p>
+
+<p><<switch $eventCounterB>>
+
+<<case 0>>
+"Greetings, adventurer. I am $npc1.Name, and I tend to this place. In these strange times, you would do well to pay heed to the gods, lest you be led astray." 
+
+<<case 1>>
+"Those with the explorer's heart are granted a boon by the goddess of courage. Should they meet their end beyond the reach of mortal aid, they will be led to Her altar to begin anew. Bear in mind that there is a cost to this, for the drive to explore must come from deep desire." 
+
+<<case 2>>
+"Be wary of those that delve too deeply into the magics of change. While the gods will respect whatever natural form you make choose to take, there is a boundary beyond which you are something that does not belong in this world. Those that cross this line have a history of coming to madness." 
+
+<<default>>
+"To be honest, my faith is tried with our current state of affairs. The blessings of the god of harvest are surely grand and wonderous, but whether it was His intent that we fall into gluttony from them I am not certain. Are we being tested? Are we being rewarded? Or is there yet another force at work? I fear I cannot say." 
+<<set $eventCounterB = 0>>
+
+<</switch>></p>
+
+
+<<action "c" "talk" "Talk" "Church">><<set $eventCounterB++>><</action>>
+<<action "nw" "gate" "Central Square">><<set $travel = 5>><</action>>
+
+
+:: Clothing Store {"position":"2925,1500","size":"100,100"}
+<<createFixedNPC "clothier">>
+<<createFixedNPC "tailor" 2>> /* Guessing that the husband mentioned is the tailor? (even though the general store merchant's name is used)*/
+
+You walk into the clothier's shop, greeted by the sight of rows of clothing hung up for display. A well-dressed and well-fed $npc1.species $npc1.gentleman comes up to greet you. "Welcome to my store," $npc1.he says, gesturing around politely. "If you are interested in any of my wares, or need your clothing mended or altered, please let me know." 
+<hr>
+
+<<vendor "clothing vendor">>
+<<action "c" "store" "Trade" "clothing vendor">><</action>>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to cow clothier">><br>
+
+<<action "s" "leave" "Market Square">><<set $travel = 1>><</action>>
+
+
+:: Clothing tailored {"position":"3050,1825","size":"100,100"}
+<<if $eventCounterA == "top">><<set _clothing = $top>>
+<<elseif $eventCounterA == "btm">><<set _clothing = $btm>>
+<<else>><<set _clothing = $inventory[$eventCounterA]>>
+<</if>>
+
+<<set _size = Math.round(setup.waistDiameter() * 1.2 + 3)>>
+<<set _clothing.value += Math.round((_clothing.value/_clothing.size) * _size)>>
+<<set _clothing.size = Math.round(setup.waistDiameter()*1.2+3)>>
+<<set _clothing.popped = false>>
+
+<<if !_clothing.description.contains(" (Tailored)")>>
+	<<set _clothing.description += " (Tailored)">>
+<</if>>
+
+<p>$npc1.He takes a few minutes to measure your sizes all over. 
+<<if setup.weight() > 3000>>It takes $npc1.him a very long while before $npc1.he can find a tailor's measuring tape long enough. 
+<<elseif setup.weight() > 1500>>It takes $npc1.him a little while before $npc1.he can find a tailor's measuring tape long enough. 
+<</if>>
+After $npc1.he has your dimensions written down, $npc1.he takes the _clothing.name to the back and begins working on it. Faster than what might otherwise seem possible, $npc1.he comes back with the _clothing.name better tailored to fit you. </p>
+
+"There you are $p.sir. Is there anything else I can help you with?" 
+<<doGld $eventCounterB>>
+
+<<action "c" "next" "Thank you!" "Tailor">><</action>>
+
+
+:: Cook food {"position":"2475,1425","size":"100,100"}
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+You offer to help cook, and are led back to the kitchen, where you see what at first appears to be 3 identical <<=$npc2.plural>> manning several stoves and cooking fires. "Hey, $npc2.Name," the _waiter says. As the <<=$npc2.plural>> come to a stop, you realize that it was just the one, moving VERY fast. "You got an assistant," $npc1.he continues, then heads back out. The $npc2.species gives you a looking over, then nods at you silently, handing you a chef's knife and pointing to a massive pile of vegetables on a long table. It is separated into thirds labelled "Dice," "Slice," and "Mince." You wash your hands and go to work. 
+
+<<if $agi > 45 and $int > 45>>
+You are able to smoothly cut through everything necessary, leaving the table a pile of variously cut ingredients in spite of $npc2.Name rushing up and placing more on top every once in a while and taking large amounts away. With your speed and skill, you even find the time to exercise your knowledge of recipes and get some cooking in yourself on a couple of stoves, much to $npc2.Name's relief. The _waiter eventually returns with a pouch of gold, which you take as a sign that you've done enough. "$npc2.Name's taciturn, but trust me: $npc2.He thinks you did a good job today, and so's the boss. Take this for your trouble, and come help again whenever you want." $npc1.He gives you the gold and a tired, but honest smile, and you head back out with your coin purse a bit fuller. 
+<<doGld 40>>
+
+<<else>>
+As you do, $npc2.Name slides the ingredients onto a plate and dumps them into various cooking equipment. You don't have the time to prepare a single dish yourself, but still prove useful. The _waiter returns with a small pouch of gold after a few hours, which you take as a sign to stop. "$npc2.Name's taciturn, but trust me: $npc2.He appreciates you helpin' him out, and so's the boss. Here you go, hon." $npc1.He gives you the gold and a tired, but honest smile, and you head back out with your pockets jingling. 
+<<doGld 10>>
+<</if>>
+
+<<doTime 240>>
+<<stamina -50>>
+<<getQuest $cookedFood>>
+
+<<action "c" "next" "A job well done" "Restaurant">><</action>>
+
+
+:: Defeated [city] {"position":"2850,2100","size":"100,100"}
+<<createFixedNPC "priest">>
+<<set _priest = "priest">>
+<<if $npc1.male == "female">>
+	<<set _priest = "priestess">>
+<</if>>
+<<createNPC "random" "random" 2>>
+<<createNPC "random" "random" 3>>
+
+<<endCombat>>
+<<set $mana = 0>>
+<<set $sta = 100>>
+<<set $ate = 0>>
+<<set $inf = 0>>
+<<set $infMass = 0>>
+<<set $cal = 0>>
+<<set $gld -= 10>>
+<<if $gld < 0>><<set $gld = 0>><</if>>
+<<removeStatus>>
+<<updateStats>>
+<<rest>>
+<<set $hea = Math.round($maxHea * 0.5)>>
+<<set $alive = true>>
+
+
+<<switch $defeatedBy>>
+<<case "battle">>
+<p>You eventually wake up some time later and slowly open your eyes.You sit up and rub your aching head and find yourself covered in bandages and sitting on a hospital bed. You still have several aches and bruises, but otherwise look none the less for wear. </p>
+
+"In my professional opinion, it looks like you got your butt whooped by $e.article $e.name. You should be more careful next time." a doctor says as $npc2.he hands you back your equipment without further explanation. You take off the bandages and put your stuff back on before hopping off your bed.
+<<action "c" "hospital" "Hospital">><</action>>
+				
+<<case "devoured">>
+<p>You awake on an altar. Looking around you eventually realize you're laying in the city's church. You look over and see the preacher standing beside you. </p>
+
+"Though the fates may save 'ye from a terrible... fate, they exact a steep price! Hopefully in the future you won't stray so far into danger. Now please move if you would. Adventurers keep popping into existence here for some reason."  
+<<action "c" "church" "Church">><</action>>
+
+<<case "exploded">>
+<p>You awake with a jolt and sit bolt upright. Remembering your previous encounter you grab your $waist and thankfully find it apparently all in one peice. Although you're aboslutely covered in bandages and looking around confirms that you're in the hospital. </p>
+
+<p>A startled doctor standing by your bed turns to you and smiles, "Oh excellent, you actually woke up! I almost lost five gold on you. Well the good news is that we somehow managed to put you back together. At least we're pretty sure anyway. Although the bad news is you're now horrendously ugly." You immediately tear off your bandages and thankfully find yourself just as good looking as you were before. You glare up at the doctor. </p>
+
+$npc2.He slaps you on the shoulder, "Ha ha, just messing with you kid. Keep up the good work." $npc2.he adds sarcastically as he absentmindedly wanders off to check up on other patients. You gruffly pick up your stuff and head out. 
+<<action "c" "hospital" "Hospital">><</action>>
+
+<<case "overeating">>
+<<if $options.popping>>
+<p>You blink the sleep from your eyes as you are awakened by a loud and low groaning and gurgling noise. You quickly notice that the source of this noise is you painfully distended stomach protesting being stretched to the absolute bursting point. You gently massage your exposed gut and moan in pain and can practically feel the stretch marks coursing across your bloated waist. </p>
+
+<p>$npc2.Article $npc2.species standing next to you in doctors scrubs says, "Oh good, you've regained conciousness. I have some good news and some bad news. The good news is that some kind citizen managed to drag you back here. Quite impressive given your state! The bad news is that you're about to explode like a pinata." Your stomach picks that moment to let out a particularly loud groan. "But don't worry, you're in //very// good hands and you'll be right as rain in no time!" $npc2.he smiles reassuringly and gives you a hearty pat on the gut. </p>
+
+<p>This proves to have been a very poor idea as your vastly overinflated stomach makes an awful loud gurgling noise and begins to jiggle alarmingly from the impact.</p>
+
+<p>"Oh, whoops." the doctor says as $npc2.he ducks for cover just in time for your stomach to finally give out one final groan and explode like the pinata it was described as. As you pass out from the pain you hear the doctor say to $npc2.himself "You know, you'd think I'd learn to stop tempting fate like that." </p>
+
+<p>Some time later you awake with a start and sit bolt upright in your hospital bed. A different doctor is standing by your bed this time. "Oh good, you're awake again." $npc3.he says as $npc3.he notes something down on a clipboard. "Very sorry about that, we've had to hire a lot of new interns lately what with the drastically increased need for doctors. We had our best people on the case though and we were able to put you back together good as new. Feel free to leave whenever you're ready." In the distance you can just barely hear someone say, //"right as rain"// shortly followed by a loud explosion. </p>
+
+''"Oh damn it!"'' exclaims the doctor as $npc3.he hurries off towards the sound of the noise. After watching $npc3.him leave, you pick up your belongings and head out before anything else goes wrong.
+
+<<elseif !$options.popping>>
+
+<p>You blink the sleep from your eyes and wake up to find yourself lying on a hospital bed. $npc2.Article $npc2.species wearing doctors scrubs walks up to your bed. $npc2.He looks down at a clipboard before addressing you. </p>
+
+"Looks like a distinct case of overeating. We've been getting that a lot lately." the doctor says half to $npc2.himself, "All we can do is let 'em sleep it off. You should be fine to go, just make sure you don't overdo it again any time soon alright?" $npc2.He gives you a wink and a good natured punch on the arm before walking off to deal with $npc2.his other patients. 
+<</if>>
+<<action "c" "hospital" "Hospital">><</action>>
+
+<<case "floating">>
+<<if $options.popping>>
+<p>As you continue to fly away, you feel dizzy from the thinning air, as well as extremely unwell. The pressure from inside you is acting upon the lesser air pressure from outside, stretching your skin even further. To your horror, you’re bloating up even bigger than you were before, and it’s becoming worryingly clear that your body can’t take much more. Your stomach is letting out all sorts of horrible groaning and creaking noises as your vision is starting to go black. You can’t tell if it’s your failing consciousness or getting close to escaping the atmosphere. </p>
+
+<p>You can tell that you’re close to breaking point because your discomfort is turning to pain. You can’t even alleviate your pressure by burping because your mouth is pinned shut by your own bloated middle. After your body lets out one huge, final groan, you register the start of an ear-shattering explosion before everything goes black and quiet. Just as soon as that blackness swallowed you, you suddenly find yourself awakening in a hospital room, sitting bolt upright with a startled yell. The doctors and a few other patients look at you.
+</p>
+
+"Hello there, $name. I see you’re finally awake from your little... flight of fancy. Took a lot of bandages and healing potions to put you back together, but we think you’ll make a ''full'' recovery. Just try and take it easy from now on, alright?" The doctor says, looking you over. You get out from the hospital later that day, looking at yourself in a mirror in the bathroom before you go. The doctors were right – they did wonders on fixing you, without leaving so much as a hairline scar. You leave your hospital room, finally feeling ready to hit the road once more.
+<<action "c" "hospital" "Hospital">><</action>>
+
+<<elseif !$options.popping>>
+<p>As you continue to fly away, you feel dizzy from the thinning air, as well as somewhat unwell and lethargic. You wiggle helplessly as the wind continues to make you drift away. You’re aware of some small specks of people far below looking at you before you pass out. As you come to, you feel a few leaves in your mouth and spit them out. Looking around, you see a large amount of green foliage, and realise your little flight came to an end at some point while you were out. Whether it was due to an unconscious reflex of expelling the air from your body, colliding with a bird in the air, or the lack of air pressure having its way with you, you’re uncertain of that fact. What you are certain of however, is that however your flight ended you landed in a large tree in town. </p>
+
+You carefully let yourself down from the tree, and inspect yourself for any damage, and see that your body looks fine. However, a quick search of your belongings finds you a little lighter in the gold department – some of it must have fallen out during your drifting. You also feel very hungry, indicating that you were unconscious from the crash landing for a small while. Brushing off both the leaves and the odd looks you’re getting, you walk away from the tree. 
+<<action "c" "road" "Central Square">><</action>>
+<</if>>
+					
+<<case "transformed">>
+<p>You awake with a start and sit upright. You grab yourself all over and are relieved to find your body is back in it's expected $p.species state and not permanently transformed. </p>
+
+"There are many perils to meddling in the way of dark magics. Be thankful that your form has been returned to you." The stern voice of the churches _priest chides you. You've found yourself sitting upon the altar of the city's church. 
+<<action "c" "church" "Church">><</action>>
+				
+<<default>>
+I'm not sure how you died, but something went terribly wrong. And you should probably report this error! 
+<<action "c" "hospital" "Hospital">><</action>>
+
+<</switch>>
+
+<<set $defeatedBy = "">>
+
+
+:: Donut shop {"position":"2625,1625","size":"100,100"}
+Double-click this passage to edit it.
+
+
+:: Eastern Road [city] {"position":"3125,2100","size":"200,100"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+You're standing on the dirt road east out of the city. To the north there is a dense forest. To the south are rolling foothills leading up towards the mountain. 
+
+
+<<action "c" "rest" "Rest" "Eastern Road">>
+	<<set $eventCounterB = "rest">><</action>>
+<<if $sta > 0>>
+<<action "w" "gate" "Central Square">><<set $travel = 5>><</action>>
+<<action "n" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "nw" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "ne" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "s" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "sw" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "se" "hills" "Hills">><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Embroider clothes with gold {"position":"3350,1725","size":"100,100"}
+Taking the thread and the desired clothing, the $npc1.species excuses $npc1.himself momentarily, returning with a freshly-tailored, gold-threaded update. "There! One size will fit all, no matter your size!" 
+
+<<if $eventCounterA == "top">>
+<<set $top.size = 0>>
+<<set $top.popped = false>>
+<<set $top.value += 200>>
+<<set $top.description += "This item of clothing is embroidered with an enchanted gold thread that causes it to never break. ">>
+
+<<elseif $eventCounterA == "btm">>
+<<set $btm.size = 0>>
+<<set $btm.popped = false>>
+<<set $btm.value += 200>>
+<<set $btm.description += "This item of clothing is embroidered with an enchanted gold thread that causes it to never break. ">>
+
+
+<<else>>
+<<set $inventory[$eventCounterA].size = 0>>
+<<set $inventory[$eventCounterA].popped = false>>
+<<set $inventory[$eventCounterA].value += 200>>
+<<set $inventory[$eventCounterA].description += "This item of clothing is embroidered with an enchanted gold thread that causes it to never break. ">>
+<</if>>
+
+<<action "c" "next" "Thank you!" "Tailor">><</action>>
+
+
+:: General Store {"position":"3050,1500","size":"100,100"}
+<<createFixedNPC "generalStore">>
+
+You $walk into the general store, a small, cluttered structure with barely any space to walk around with all the oddities and tools on display. A pudgy $npc1.species fellow in slightly dirty clothes sits behind a counter that is, itself, piled high with assorted goods that $npc1.he is inspecting. When $npc1.he gets a good view of you, $npc1.he waves and says, "Welcome, adventurer. You buy, I buy. Everybody buys here. Let me know if you want to do business." 
+<hr>
+
+<<vendor "general store">>
+<<action "c" "store" "Trade" "general store">><</action>>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to general store clerk">><br>
+
+<<action "s" "leave" "Market Square">><<set $travel = 1>><</action>>
+
+
+:: Grocery Store {"position":"2800,1500","size":"100,100"}
+<<createFixedNPC "grocer">>
+
+You walk into the grocery store, which is nearly as packed as the restaurant. Several furs in aprons are quickly bustling about carrying loads of food out to display shelves, which are emptied nearly as fast as they are filled. A few <<=setup.getSpeciesData("penguin").plural>> waddle about about, arms full of iced meats to fill their stocks. One fat and happy looking $npc1.species $npc1.gentleman walks up to you, clearly the proprietor of the place, and greets you warmly, "Welcome to my store. We're quite busy, but have everything you need. Feel free to browse the ingredients or the pre-made meals." As $npc1.he speaks, $npc1.he gestures to the main floor, then to the deli off to the side, which is also busy but well staffed. 
+
+<hr>
+
+<<vendor "grocery store">>
+<<action "c" "store" "Trade" "grocery store vendor">><</action>>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to grocery clerk">><br>
+
+<<action "s" "leave" "Market Square">><<set $travel = 1>><</action>>
+
+
+:: List your clothes {"position":"3150,1725","size":"100,100"}
+Choose something to embroider:
+<hr>
+<<if $top.size > 0 and $top.size != null>>
+	<<link $top.Name "Tailor clothing">>
+		<<set $eventCounterA = "top">>
+	<</link>> (Equipped)
+	<br>
+<</if>>
+<<if $btm.size > 0 and $btm.size != null>>
+	<<link $btm.Name "Tailor clothing">>
+		<<set $eventCounterA = "btm">>
+	<</link>> (Equipped)
+	<br>
+<</if>>
+<<for _i = 0; _i < $inventory.length; _i++>>
+
+	<<capture _i>>
+		<<if $inventory[_i].size > 0 and $inventory[_i].size != null>>
+			<<link $inventory[_i].Name "Tailor clothing">>
+				<<set $eventCounterA = _i>>
+			<</link>>
+			<br>
+		
+		<</if>>
+	<</capture>>
+  
+<</for>>
+
+<<action "c" "next" "Back" "Tailor">><</action>>
+
+
+:: Market Square {"position":"2925,1625","size":"200,100"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+
+<<else>>
+<p>You're standing in the main city of the area. Longer than recorded history this city has stood in the shadow of the eastern mountains, isolated from the goings on in the rest of the world. The coblestone streets are well worn and smoothed over from centuries of horse, cart, and foot traffic. The streets are lined by old wood and stone buildings. 
+</p>
+<</if>>
+
+<<include "Ambient city">>
+
+<<include "market square movement">>
+
+
+:: Offer gold thread {"position":"3250,1625","size":"100,100"}
+<<if setup.questStarted($foundGoldThread)>>
+	"Ah! A gold thread!" The $npc1.species steps up, getting a good look at it. "Yep, and it's just as magical as ever. So then, what'll it be?" 
+<<else>>
+	<p>You withdraw a length of Gold Thread, holding it out to the $npc1.species. At first, $npc1.he gives you a curious look, before stepping closer and getting a better look at it. $npc1.His eyes widen and $npc1.he seems to realize what you're presenting $npc1.him. </p>
+	
+	<p>"This...I know this thread." $npc1.He explains, a bit shocked. "It was made by my $npc2.brother. How did you manage to get this from $npc2.him? $npcs2.He's incredibly powerful!" The slim $npc1.species puts a $npc1.hand to $npc1.his head in bewilderment, before retaining $npc1.his composure. "Well, however you got it, I'm glad to see it. It probably means either my $npc2.brother finally got what was coming to $npc2.him, or at least learned a lesson." $npc1.He smiles at you, looking you up and down. "But on to more pressing matters. There's three things I can do here. Either I can stitch this into a piece of clothing you already wear, making it stretch enough to fit you, no matter what. I can reward you with 500 gold. Or if you prefer, I could weave it into a bracelet for you, which, when worn, would make your body able to expand more. So what will it be?" </p>
+<<getQuest $foundGoldThread>>
+<</if>>
+
+<<action "1" "gold" "Sell it" "Use golden thread">>
+	<<set $eventCounterA = "gold">>
+<</action>>
+
+<<action "2" "tailor" "Embroider clothing" "Use golden thread">>
+	<<set $eventCounterA = "embroider">>
+<</action>>
+
+<<action "3" "other" "Make a bracelet" "Use golden thread">>
+	<<set $eventCounterA = "bracelet">>
+<</action>>
+
+<<action "c" "leave" "Nevermind" "Tailor">><</action>>
+
+
+:: Order food {"position":"2255,1425","size":"100,100"}
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+<<switch $eventCounterA>>
+<<case "Cheap meal">>
+	You ask for something to fit an extremely tight budget and plunk down a couple of coins. The _waiter heads off and starts and eventually returns with a tiny plate of food and a glass of water. A dish this small can't make you help but feel like this is from the kid's menu. But maybe that's just because the dish is arranged to make a smiley face. 
+	<<consume 4 2>>
+	<<doTime 15>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -3>>
+	<<if $alive>>
+		It's not the best, but it's a meal. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 60>>
+			<<set $status.wellFedTime = 60>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+		<hr><<defeated "overeating">>
+	<</if>>
+	
+<<case "Normal meal">>
+	You order a regular meal and put down some coins. The _waiter heads off to the kitchen, yelling out some garbled nonsense that the cook manages to correctly interpret. A few minutes later, $npc1.he delivers a steaming plate loaded with a healthy variety of foodstuffs, which you chow down ravenously. 
+	<<consume 10 7>>
+	<<doTime 30>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -6>>
+	<<if $alive>>
+		It feels nice to eat a fresh, expertly prepared meal. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 120>>
+			<<set $status.wellFedTime = 120>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+		<hr><<defeated "overeating">>
+		
+	<</if>>
+	
+<<case "Large meal">>
+	You order a generous amount of food and pay a bit of gold. The _waiter heads off to the kitchen after writing down everything, hangs the order and yells "Order up!" The kitchen bustles with activity, and a while later, you are delivered several plates piled high with meats, cheeses, vegetables, sauces, and grains. Your drink is comically tiny in comparison. 
+	<<consume 22 15>>
+	<<doTime 45>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -12>>
+	<<if $alive>>
+		You devour it all hungrily, then lean back and pat your $waist stomach, warmed and comforted by the well-cooked meal. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 180>>
+			<<set $status.wellFedTime = 180>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+		<<defeated "overeating">>
+	<</if>>
+	
+<<case "Huge meal">>
+	You decide to splurge and order a couple of meals worth of food, putting down a small pile of gold. The _waiter quickly writes down everything and repeats it all back to you, which is a fairly lengthy process. Afterwards, $npc1.he takes the order back to the kitchen, and the kitchen bustles with fervent activity. A while later, the _waiter returns with a completely loaded cart of dishes and trays, which soon becomes a full table of food, various noodle, meat and rice dishes side by side with a few early desserts and large, decadent soups. You feverishly demolish it all, scraping plates and licking bowls to get every last bit of the delicious meal into your mouth and down your throat.
+	<<consume 54 38>>
+	<<doTime 60>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -24>>
+	<<if $alive>>
+		When you're done, you let out a breath, leaning back and rubbing your $waist stomach while you enjoy the feeling of well made food filling you. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 240>>
+			<<set $status.wellFedTime = 240>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+		<<defeated "overeating">>
+	<</if>>
+	
+<<case "Too much food">>
+	You go a little crazy, ordering entire columns from the menu, paying up a large pile of gold, and are subsequently led away from your table and to a significantly larger banquet table. The _waiter foregoes writing down your order, simply circling large parts of a menu, and heads off to the kitchen, which visibly lights up from the sudden increase in working ovens and fires. After a good while, the _waiter begins to wheel out fully loaded carts and setting out their contents on the table. You don't even wait until $npc1.he's finished before you start eating everything in sight. Time passes, appetizers eventually giving way to meals, meals eventually giving way to desserts, and drinks being available by the double-fistful the whole time. It takes a while before you're done, and several of the dishes you ate on at the start have had time to be cleaned, dried, and piled high with more food for you before it's over. 
+	<<consume 126 81>>
+	<<doTime 120>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -48>>
+	<<if $alive>>
+		You let out a comforted hum, leaning back lazily to rub your $waist belly, the delightful feast making you feel warm and happy. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 300>>
+			<<set $status.wellFedTime = 300>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+		<<defeated "overeating">>
+	<</if>>
+	
+<<case "Way too much food">>
+	You hand the menu back, ordering it all. The _waiter blanches at this, but shakes $npc1.his head and says "Alright, if that's what you want" as you hand $npc1.him a huge amount of gold. $npc1.He heads to the kitchen to deliver your order, and it becomes a din of clanging pots and pans and glowing fires. Before too long, you are being delivered entire meals three at a time. By the time you're done with them, another set is being delivered. Used dishes pile up, clean and empty in the wake of your hungering mouth. Food piles up in your belly as the hours stretch on, and you refuse to even slow down. Eventually, you have tasted every appetizer, breakfast, lunch, dinner, dessert, and drink the restaurant has to offer, and eaten enough that some people have stopped their daily activities just to watch you ram tremendous amounts of food down your gullet in morbid fascination. 
+	<<consume 300 210>>
+	<<doTime 180>>
+	<<health $maxHea>>
+	<<if $hea > 0>><<set $alive = true>><</if>>
+	<<doGld -96>>
+	<<if $alive>>
+		You let out a happy groan and rub your $waist stomach, the heavy weight of it actually making you feel quite good. 
+		<<set $status.wellFed = 5>>
+		<<if $status.wellFedTime < 360>>
+			<<set $status.wellFedTime = 360>>
+		<</if>>
+		
+	<<else>>
+		You lean back and let out a groan, your $waist belly far too full after your last meal. 
+		<<if $options.popping>>
+			<p>When the _waiter notices that your gluttonous rampage has ground to a halt, $npc1.he comes by to offer you a mint to polish off your feast. In your glutted stupor, you can’t seem to express that you are too full... even for a Wafer. Thin. Mint. </p>
+			The $npc1.species pokes the mint into your mouth and you reflexively swallow. "There, now. That should help settle your stomach." $npc1.He beams innocently. You feel the intrepid wafer descend to your stomach and settle like a stone. 
+			<<consume 1>>
+			<p>A sharp pain grips the center of your gut. Your stretched belly lets out a worrisome moan as it begins to swell. The _waiter takes a step back, but $npc1.he is too slow. Your overtaxed stomach explodes in a tidal wave of half-digested goo. </p>
+			The _waiter wipes some "soup-of-the-day" from $npc1.his face and sighs, "This’ll take forever to clean up. $p.He made a bigger mess than Beck and Pete did, combined!" 
+			<<defeated "exploded">>
+
+		<<else>>
+			When the _waiter notices this, $npc1.he calls out flatly, "Hey Doc, got another one here." It is the last thing you hear as you drift off to unconsciousness, thoughts of food flitting through your mind. 
+			<<defeated "overeating">>
+		<</if>>
+		
+	<</if>>
+<</switch>>
+
+
+:: Repair old worn pants {"position":"3250,1825","size":"100,100"}
+<<if setup.questStage($horseQuestClothes) == 0>>
+
+<p>The $npc1.species's expression as you produce such an ancient, threadbare garment is one of polite, fastidious horror. When you hand over the measurements to go with them, and explain, $npc1.his expression is more of incredulity. "I remember $npc3.name Shire, of course!" Still clutching the note, the $npc1.species looks down at the atrocious pants, and comments vaguely, "I recall that $npc3.his hindquarters were ALWAYS built a little too generously for a conventional fit..." $npc1.He takes the pants through to his work-room. But $npc1.he returns very quickly, shaking $npc1.his head over the measurements. "I'm very sorry, but I just don't have enough suitable material to make the adjustments- or even to make a new pair- in THIS size! Quite honestly I don't think any of our standard fabrics would cut it, anyway. If you're willing to help me, I think the only thing that will work is magical cloth- the sort they make at the Mage's Guild. I have some experience at making alterations with that- even Mages want their robes letting out from time to time..." </p>
+
+<p>$npc1.He looks doubtfully at the list of measurements again. "I'm not sure that even an Apprentice's robes will do, it'll have to be a full Wizard's Robe to provide sufficient support. If you can get me a Wizard's Robe, I think that I should be able to make $npc3.name some new pants. And of course I'll pay you back for the robe- I'll just add it to ''$npc3.his'' bill."</p>
+
+<<advanceQuest $horseQuestClothes>>
+<<action "c" "next" "I'll get right on it" "Tailor">><</action>>
+
+
+<<elseif setup.hasItem($wizardsRobes) >= 0>>
+"Ah, of course!" The $npc1.species's face lights up with pleasure. $npc1.He takes the robe to the back and begins working on it. Faster than what might otherwise seem possible, $npc1.he comes back with an extremely large pair of pants, heavily patched with gaudy material from the wizard's robe. "There you are $p.sir. Is there anything else I can help you with?" 
+<<removeItem $wizardsRobes>>
+<<removeItem $horsePantsBroke>>
+<<getItem $horsePantsFixed>>
+<<doGld 65>>
+<<advanceQuest $horseQuestClothes>>
+<<action "c" "next" "Thank you!" "Tailor">><</action>>
+
+
+<<else>>
+You're about to ask about the pants again, but then you remember; you have to get a set of wizard's robes for the tailor to use. 
+<<action "c" "next" "Oh yeah" "Tailor">><</action>>
+
+
+<</if>>
+
+
+:: Restaurant {"position":"2375,1625","size":"100,100"}
+<<createFixedNPC "waitress">>
+<<createFixedNPC "cook" 2>>
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+<<if $eventCounterA != "">><p><<include"Order food">></p><</if>>
+
+<<if $alive>>
+<p>It is jam-packed with people in various states of overwhelming obesity eating huge portions of food. Eventually, you are shown to a seat by a heavy-set $npc1.species $npc1.gentleman whose every motion showcases exhaustion. "Payment in advance in case you overstuff yourself, what can I get for ya?" $npc1.he drones out, $npc1.his voice a tired monotone. </p>
+
+<p>A nearby menu has a convenient, if vague, price list. 
+<li>Cheap meal: 3 gold</li>
+<li>Normal meal: 6 gold</li>
+<li>Large meal: 12 gold</li>
+<li>Huge meal: 24 gold</li>
+<li>Too much food: 48 gold</li>
+<li>Way too much food: 96 gold</li></p>
+
+<<if $gld > 3>>
+<<action "1" "restaurant" "Cheap meal" "Restaurant">>
+	<<set $eventCounterA = "Cheap meal">>
+<</action>><</if>>
+
+<<if $gld > 6>>
+<<action "2" "restaurant" "Normal meal" "Restaurant">>
+	<<set $eventCounterA = "Normal meal">>
+<</action>><</if>>
+
+<<if $gld > 12>>
+<<action "3" "restaurant" "Large meal" "Restaurant">>
+	<<set $eventCounterA = "Large meal">>
+<</action>><</if>>
+
+<<if $gld > 24>>
+<<action "4" "restaurant" "Huge meal" "Restaurant">>
+	<<set $eventCounterA = "Huge meal">>
+<</action>><</if>>
+
+<<if $gld > 48>>
+<<action "5" "restaurant" "Too much food" "Restaurant">>
+	<<set $eventCounterA = "Too much food">>
+<</action>><</if>>
+
+<<if $gld > 96>>
+<<action "6" "restaurant" "Way too much food" "Restaurant">>
+	<<set $eventCounterA = "Way too much food">>
+<</action>><</if>>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to the waitress">>
+
+<<action "s" "quest" "Work at the restaurant">>
+	<<set $eventCounterA = "">>
+<</action>>
+
+<<action "se" "leave" "Central Square">>
+	<<set $travel = 5>>
+<</action>>
+/*FEEDER EXPANSION EDIT - START*/
+<<if $options.feeder_expansionEnabled == true>>
+	<<feeder_vendor "restaurant">>
+	<<action "sw" "store" "Order to go" "To Go Counter">><</action>>
+<</if>>
+/*FEEDER EXPANSION EDIT - END*/
+<</if>>
+
+
+:: Sleep {"position":"2625,1225","size":"100,100"}
+You climb into bed and curl up under the covers and close your eyes as you drift off into sleep. 
+<<if setup.weight() > 400>>
+	The bed creaks ominously under your weight. 
+<</if>>
+<<sleep>>
+
+<<action "e" "next" "Wake up" "Your House">><</action>>
+
+<<action "c" "rest" "Sleep">><</action>>
+
+
+:: Southern Road [city] {"position":"2550,2275","size":"100,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+You're standing on the dirt road south of the city. To the west are the open grasslands where there are several farms near the road. To the east are the rocky foothills leading up towards the mountains. 
+
+
+<<action "c" "rest" "Rest" "Southern Road">>
+	<<set $eventCounterB = "rest">><</action>>
+
+<<if $sta > 0>>
+<<action "n" "gate" "Central Square">><<set $travel = 5>><</action>>
+<<action "e" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "ne" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "se" "hills" "Hills">><<set $travel = 5>><</action>>
+<<action "w" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+<<action "nw" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+<<action "sw" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Tailor {"position":"3150,1625","size":"100,100"}
+<<createFixedNPC "tailor">>
+<<createFixedNPC "tigerBoss" 2>>
+<<createFixedNPC "sampson" 3>>
+
+You walk into the tailor's shop. A slim $npc1.species in a finely made suit asks you, "Is there anything I can help you with $p.sir?" 
+
+<<action "c" "tailor" "Tailor your clothes" "List your clothes">>
+<</action>>
+
+<<if setup.hasItem($goldThread) >= 0>>
+	<<action "e" "quest" "Offer gold thread">><</action>>
+<</if>>
+
+<<if setup.questActive($horseQuestClothes)>>
+	<<action "se" "quest" "Repair old worn pants">><</action>>
+<</if>>
+
+<<action "s" "leave" "Market Square">>
+	<<set $travel = 1>>
+	<<addPretext "You leave the tailor's shop. ">>
+<</action>>
+
+
+:: Tailor clothing {"position":"3150,1825","size":"100,100"}
+<<if $eventCounterA == "top">><<set _clothing = $top>>
+<<elseif $eventCounterA == "btm">><<set _clothing = $btm>>
+<<else>><<set _clothing = $inventory[$eventCounterA]>>
+<</if>>
+
+<<set _size = Math.round(setup.waistDiameter() * 1.2 + 3)>>
+
+<<set _cost = Math.round((_clothing.value/_clothing.size) * (_size - _clothing.size))>>
+
+<<if _cost < 0>><<set _cost *= -1>><</if>>
+
+<<if _clothing.popped>>
+	<<set _cost += Math.round(1 + (_clothing.value*0.1))>>
+<</if>>
+
+<<if _cost > 0>>
+	Do you want to tailor this? It will cost _cost gold to tailor. 
+	<hr>
+	<<if $gld < _cost>>//(Not enough gold)//<br>
+	<<else>>
+		<<action "w" "yes" "Yes!" "Clothing tailored">>
+			<<set $eventCounterB = _cost*-1>>
+		<</action>>
+	<</if>>
+	
+	<<action "e" "no" "Nevermind" "Tailor">><</action>>
+<<else>>
+	That article of clothing doesn't need tailoring. 
+	<<action "c" "next" "Return" "Tailor">><</action>>
+<</if>>
+
+
+:: Talk to cow clothier {"position":"2925,1400","size":"100,100"}
+<<setPopupTitle "Talk to the clothier">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"My name is $npc1.Name, and I've made all the clothes you see here. My <<if $npc2.male == "male">>husband<<elseif $npc2.male == "female">>wife<<else>>partner<</if>>, $npc2.Name, is quite a bit more busy, as $npc2.he works the alterations and mending." 
+<<set $eventCounterB++>>
+
+<<case 1>>
+<<set _colorA = either("red","black","blue")>>
+<<set _colorB = either("green","white","orange")>>
+
+"If you want my opinion, I think you might try something in a nice _colorA. Or perhaps _colorB might suit your tastes?" 
+<<set $eventCounterB++>>
+
+<<default>>
+"A mage came through here a while back, asked for my most colorful cloth. I showed him a bright green bolt of fabric, but he didn't find it gaudy enough. Mages! No sense of fashion, the lot of them." 
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Talk to general store clerk {"position":"3050,1400","size":"100,100"}
+<<setPopupTitle "Talk to the general store clerk">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Name's $npc1.Name. You might've heard that I'm a hoarder. Don't believe those people; all this stuff is good, and I'm perfectly willing to give it away in exchange for gold. Or something else good." 
+<<set $eventCounterB++>>
+
+<<case 1>>
+"With times as strange as they are, I've been getting a lot more adventurers, and I tell 'em all the same things: First off, make sure you got gear. Second, make sure you got potions. Third, let me buy what you don't need." 
+<<set $eventCounterB++>>
+
+<<case 2>>
+"The potions I have are my most popular items, for true. But that doesn't mean you can't buy anything else here. If nothing catches your eye right off, give me a bit of time. I'm sure I'll have something for you to buy." 
+<<set $eventCounterB++>>
+
+<<default>>
+"Listen, little free advice for you, adventurer: If you're in over your head, escape. The goddess of courage watches out for you, sure, but there's a fine line between courage and getting eaten by something too big for you." 
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Talk to grocery clerk {"position":"2800,1400","size":"100,100"}
+<<setPopupTitle "Talk to the grocery store clerk">>
+<<switch $eventCounterB>>
+
+<<case 0>>
+"I've had to hire a lot of help lately, but there's as little shortage of folks willing to work with food as there is folks willing to eat it, so I'm set."
+<<set $eventCounterB++>>
+
+<<case 1>>
+"We're getting more food faster all the time, but it goes out faster every day, too. Can't complain, it's made me a good bit of gold, but it is starting to make me wonder." 
+<<set $eventCounterB++>>
+
+<<default>>
+"Everything here is locally grown, and all the meats are packed with magically enchanted ice to stay cold and fresh until you eat it." 
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Talk to the armorer {"position":"3175,1400","size":"100,100"}
+<<switch $eventCounterB>>
+
+<<case 0>>
+"The name's $npc1.Name. I've worked this forge since I was at me pappy's knee." 
+<<set $eventCounterB++>>
+
+<<case 1>>
+"I specialize in making steel armors. I've not the heart to make something truly dangerous, truth be told, but I do have some basic weapons for defending yerself." 
+<<set $eventCounterB++>>
+
+<<case 2>>
+"If you're looking for more dangerous kit, head westward along the road and towards the seaside town. They import more dangerous gear from an island out west, I'm told." 
+<<set $eventCounterB++>>
+
+<<default>>
+"I was in contact with a smith out east near the mountains, shared some fine knowledge with $npc2.him. Lately $npc2.he's stopped writing me, though. I do hope $npc2.he's alright." 
+<<set $eventCounterB = 1>>
+
+<</switch>>
+
+
+:: Talk to the waitress {"position":"2475,1625","size":"100,100"}
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+<<setPopupTitle "Talk to the _waiter">>
+
+<<switch $eventCounterB>>
+
+<<case 0>>
+"Name's Deb, I'll be your _waiter today, seein' as Beck and Pete both ate themselves into the hospital last night." 
+<<set $eventCounterB++>>
+
+<<default>>
+"No offense, hon, but I'm way too busy for chit-chat. Place your order or I have to get to the next customer to keep up." 
+
+<</switch>>
+
+
+:: The Armory {"position":"3175,1500","size":"100,100"}
+<<createFixedNPC "armorer">>
+<<createFixedNPC "smith" 2>>
+
+You step into the Armory, greeted by the sounds of hammer hitting anvil, the heat of a working forge, and the sight of a shirtless, thick-bodied $npc1.species at work. $npc1.He looks up at you and rumbles out, "Welcome to the Armory. Don't hesitate to ask if ye've any interest in my works." 
+<hr>
+
+<<vendor "armory vendor">>
+<<action "c" "store" "Trade" "armorer vendor">><</action>>
+
+<<action "e" "quest" "Work for the armory">><</action>>
+
+<<set $eventCounterB = 0>>
+<<icon "talk">><<popup "Talk" "Talk to the armorer">><br>
+
+<<if setup.questActive($horseQuestArmor)>>
+	<<icon "talk">>
+	<<popup "Ask about burst chainmail" "Ask about burst chainmail">><br>
+<</if>>
+
+<<action "s" "leave" "Market Square">><<set $travel = 1>><</action>>
+
+
+:: Training grounds {"position":"2225,1625","size":"100,100"}
+<<switch $eventCounterA>>
+	<<case "run">>
+	<<if $sta <= 0>>
+		You're too exhausted to even make it to the track, let alone run on it. 
+	<<elseif $fat >= 3>>
+		You run several laps around the track until your legs are sore. You feel slightly faster. 
+		<<changeStats "agi" 0.3>>
+		<<changeStats "end" 0.1>>
+		<<changeStats "fat" -3>>
+		<<doTime 30>>
+		<<stamina -20>>
+	<<else>>
+		You run several laps around the track until your legs are sore. You work up a sweat, but you don't feel any faster. 
+		<<doTime 30>>
+		<<stamina -20>>
+	<</if>>
+	
+	
+	<<case "lift">>
+	
+	
+	<<if $sta <= 0>>
+		You walk up to the weights, but you're just too exhausted to even lift them. 
+	<<elseif $fat >= 3>>
+		You go around lifting various heavy things until your whole body is sore. You feel slightly stronger. 
+		<<changeStats "str" 0.3>>
+		<<changeStats "end" 0.1>>
+		<<changeStats "fat" -3>>
+		<<doTime 30>>
+		<<stamina -20>>
+	<<else>>
+		You go around lifting various heavy things until your whole body is sore. You work up a sweat, but you don't feel any stronger. 
+		<<doTime 30>>
+		<<stamina -20>>
+	<</if>>
+	
+	
+	<<case "rest">>
+	You sit down on one of the park's benches and have a rest. 
+	<<rest>>
+	
+	
+	<<default>>
+	<p>You $walk onto the city's training grounds. There's an open field where several different musclebound furs lift weights, while several leaner furs run around a dirt track. </p>
+
+	<<if $sta <= 20>>
+	<p>Just watching them makes you realize how tired you are. You don't feel like you have the energy to exercise right now. </p>
+	<</if>>
+
+<</switch>>
+
+
+<<action "nw" "next" "Lift weights" "Training grounds">>
+	<<set $eventCounterA = "lift">><</action>>
+	
+<<action "ne" "next" "Run track" "Training grounds">>
+	<<set $eventCounterA = "run">><</action>>
+
+<<action "c" "wait" "Rest" "Training grounds">>
+	<<set $eventCounterA = "rest">><</action>>
+
+
+<<if $sta > 0>>
+<<action "se" "leave" "Central Square">><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Use golden thread {"position":"3250,1725","size":"100,100"}
+<<switch $eventCounterA>>
+
+/*===Sell for gold===*/
+<<case "gold">>
+The $npc1.species happily trades you a heavy sack of coins for your length of thread, looking very much like $npc1.he got the better end of the deal. 
+<<removeItem $goldThread>>
+<<doGld 500>>
+<<action "c" "next" "Return" "Tailor">><</action>>
+
+
+/*===Embroidery===*/
+<<case "embroider">>
+Choose something to embroider with gold thread:
+<hr>
+<<if $top.size > 0 and $top.size != null>>
+	<<link $top.Name "Embroider clothes with gold">>
+		<<set $eventCounterA = "top">>
+	<</link>> (Equipped)
+	<br>
+<</if>>
+<<if $btm.size > 0 and $btm.size != null>>
+	<<link $btm.Name "Embroider clothes with gold">>
+		<<set $eventCounterA = "btm">>
+	<</link>> (Equipped)
+	<br>
+<</if>>
+<<for _i = 0; _i < $inventory.length; _i++>>
+
+	<<capture _i>>
+		<<if $inventory[_i].size > 0 and $inventory[_i].size != null>>
+			<<link $inventory[_i].Name "Embroider clothes with gold">>
+				<<set $eventCounterA = _i>>
+			<</link>>
+			<br>
+		
+		<</if>>
+	<</capture>>
+  
+<</for>>
+<<action "c" "next" "Return" "Tailor">><</action>>
+
+/*===Bracelet===*/
+<<case "bracelet">>
+<<switch setup.questStage($foundGoldThread)>>
+<<case 0>>
+<<removeItem $goldThread>>
+<<advanceQuest $foundGoldThread>>
+Getting a quick measurement of your wrist, the $npc1.species quickly and effortlessly works the thread into a thin woven bracelet, handing it back to you. "There you go. Wearing that will definitely effect how much food you can hold on to. Also, if you happen to get more threads, I can weave them into this bracelet, increasing the effect. But there's no way I could do it more than a few times. I don't trust this magic enough to know what'll happen." 
+<<action "c" "next" "Return" "Tailor">><</action>>
+
+
+<<case 5>>
+The $npc1.species puts up $npc1.his $npc1.hands and shakes $npc1.his head, "Oh no. Sorry, but you've already got more than enough threads on that thing. I don't trust putting any more on." 
+<<action "c" "next" "Return" "Tailor">><</action>>
+
+
+<<default>>
+<<removeItem $goldThread>>
+<<advanceQuest $foundGoldThread>>
+<<set _threads = setup.questStage($foundGoldThread)>>
+With deft ease, the $npc1.species works the new thread around the old, weaving it in as if it had always belonged there. "There we go! 
+<<if _threads < 4>>
+Now, I'd say you could handle another <<print 5 - _threads>> additions. 
+<<elseif _threads == 4>>
+Now, I'd say you could handle just one more addition. 
+<<else>>
+That's about as far as I'm willing to go, otherwise the consequences could be... dire. 
+<<set $quests[setup.questIndex($foundGoldThread)].description = "You've fully upgraded your golden bracelet. ">>
+<</if>> Thanks!" 
+<<action "c" "next" "Return" "Tailor">><</action>>
+<</switch>>
+
+<</switch>>
+
+
+:: Wash dishes {"position":"2375,1425","size":"100,100"}
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+<p>You are led to the back of the kitchen, where a small pile of soap and rags are dwarfed by a massive pile of used dishes. The _waiter points to three areas and says simply, "Dirty, clean, dry. Do your best," before heading back out. You crack your knuckles and set to it, pumping water into the sink and soaping up a rag. 
+</p>
+
+<<if $agi > 35 and $end > 35>>
+As time passes, you manage to get ahead of the curve, the mountain of dishes steadily shrinking from your efforts. You manage to create a brief moment in which all the dishes are in the clean and dry piles. This lasts for about twelve seconds before more dirty dishes come in, but you consider it a victory. The _waiter comes up to you with a handful of gold. "Nice goin' there, speedy. Boss says you can have this for a job well done. Come help out again some time." $npc1.He gives you an honest smile for the first time since you walked in, and you head back out with some extra spending money. 
+<<doGld 25>>
+
+<<else>>
+As fast as you work, the pile never seems to get much smaller, even though you're quite certain that you've cleaned a huge number of them. After a few hours of this, you hang up your rag, stopping for now. The _waiter comes back up to you with a handful of gold. "Don't worry, you did alright. Boss says you can have this for your trouble. Thanks for the help, hon." $npc1.He gives an honest smile for the first time since you walked in, and you head back out with a little extra gold. 
+<<doGld 10>>
+<</if>>
+<<doTime 240>>
+<<stamina -50>>
+<<getQuest $washedDishes>>
+
+<<action "c" "next" "A job well done" "Restaurant">><</action>>
+
+
+:: Western Road [city] {"position":"1875,1850","size":"200,100"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a convenient spot to rest. 
+	<<rest>>
+	</p>
+<</if>>
+
+You're standing on the dirt road going west of the city. To the north there's is a dense forest. To the south there are open grasslands with several farms near the road.  
+
+
+<<action "c" "rest" "Rest" "Western Road">>
+	<<set $eventCounterB = "rest">><</action>>
+
+<<if $sta > 0>>
+<<action "e" "gate" "Central Square">><<set $travel = 5>><</action>>
+<<action "sw" "fenceGate" "Dairy Farm">><<set $travel = 5>><</action>>
+<<action "n" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "nw" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "ne" "forest" "Forest">><<set $travel = 5>><</action>>
+<<action "s" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+<<action "se" "grasslands" "Grasslands">><<set $travel = 5>><</action>>
+<<action "w" "road" "West Town">><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Work at the restaurant {"position":"2375,1525","size":"100,100"}
+<<set _waiter = "waiter">>
+<<if $npc1.male == "female">>
+	<<set _waiter = "waitress">>
+<</if>>
+
+<<if setup.questStarted($washedDishes) and setup.questStarted($cookedFood)>>
+"We've actually got it more or less under control for the moment, thanks to all your help. If you come back tomorrow though I'm sure we'll be fallin' right back behind though."
+
+<<else>>
+	The $npc1.species $npc1.gentleman puts $npc1.his $npc1.hands to the side and lets out a relieved sigh. "You want to help out? Thank goodness. I can cover all the orders, but we need some help in back. 
+	<<if setup.questStarted($washedDishes)>>
+	We're really falling behind on the cooking front. If you could help them out back there we could make it worth your while. 
+	<<elseif setup.questStarted($cookedFood)>>
+	We've practically run out of dishes to serve people on and it's a bit of a mad house in the dish room. 
+	<<else>>
+	Dishes, anyone can do, but you need the know-how and the speed to keep up and help $npc2.Name with the meals. We can pay you alright either way, but cookin's more in need. 
+	<</if>>
+
+What'll it be?" 
+<</if>>
+
+<<if !setup.questStarted($cookedFood)>>
+<<action "w" "quest" "Cook food">><</action>><</if>>
+
+<<if !setup.questStarted($washedDishes)>>
+<<action "c" "quest" "Wash dishes">><</action>><</if>>
+
+<<if setup.questStarted($washedDishes) and setup.questStarted($cookedFood)>>
+<<action "e" "next" "See you tomorrow" "Restaurant">>
+	<<addPretext "\"Thank you so much for the offer sweetheart. Now what can I help //you// with?\" ">>
+<</action>>
+
+<<else>>
+<<action "e" "no" "Nevermind" "Restaurant">>
+  /* annoyingly pretext doesn't seem to be able to use variables?, so had to adjust the text so it doesn't reference _waiter */
+    <<addPretext "They look a bit ruffled and say, \"Well, we can use you whenever you want to help out. What can I do for you, then?\" ">>
+<</action>>
+<</if>>
+
+
+:: Work for the armory {"position":"3275,1500","size":"100,100"}
+<<if !setup.questStarted($learningToSmith)>>
+The $npc1.species stops working for a moment, stroking $npc1.his <<if $npc1.male == "male">>shaggy mane<<else>>chin<</if>> as $npc1.he gives you a looking over. "So, yer' needin' some work are yeh? I might be able ta use an assistant for a while..." $npc1.He stands up and leads you to $npc1.his anvil before handing you $npc1.his hammer. "Give it a swing for me, let me see what it tells me of ye," $npc1.he requests. 
+<<getQuest $learningToSmith>>
+
+<<if $str > 35>>
+You swing the hammer at the metal $npc1.he was shaping. The hammer is heavy, but you manage a good swing, and get a rewarding 'clank' from it and dent the metal. The $npc1.species nods approvingly. "A bit of a wild swing, but you've an arm fer it, and that's important. I won't be teachin' yeh the finer bits of it, but yeh kin' still help me prepare the metal fer shapin'. Let me know when yeh want ta start." Looks like you qualify. 
+<<advanceQuest $learningToSmith>>
+
+<<else>>
+You swing the hammer at the metal $npc1.he was shaping, barely able to lift the surprisingly heavy hunk of iron. It gives a quiet 'tink' as you hit it. The $npc1.species shakes $npc1.his head. "I'm afraid that as yeh are, ye'd be more hindrance than help. I need an assistant, not an apprentice. If yer' desp'rate fer work, though, check the rest'raunt. They always need someone ta do the dishes." $npc1.He takes back $npc1.his hammer and sets back to work. 
+<</if>>
+
+
+<<elseif setup.questStage($learningToSmith) == 0>>
+The $npc1.species stops working for a moment, looking up at you. "Back again? Do yeh feel like ye can handle it now?" $npc1.He stands up once more, leading you to the anvil. "Give it another swing, let's see how ye've come along." $npc1.He gives you $npc1.his hammer again, and gestures to the anvil. 
+<<if $str > 35>>
+You swing the hammer at the anvil, feeling much more in control than last time. You manage a good swing, and get a rewarding 'clank' and a dent in the metal on the anvil. The $npc1.species nods approvingly. "Looks like ye've gained an arm fer it, so good on yeh. I'll not be teachin' yeh the finer bits a' smithin' fer this job, but yeh kin' help me prepare the metal fer shapin'. Just let me know when ye're ready ta start." Looks like you're strong enough to qualify now. 
+<<advanceQuest $learningToSmith>>
+<<else>>
+You give it another swing, but the hammer is still just too heavy for you to wield well. You produce another quiet 'tink' as you hit the anvil. The $npc1.species shakes $npc1.his head once more. "Still not there, I'm afraid. Don't worry, $p.lad. If ye're not cut out fer this, there's still plenty a' things ye can do. Yeh might try goin' out west and visitin' the Mage's Guild out there, seein' if ye can use yer mind instead a' yer arms." 
+<</if>>
+
+<<elseif !setup.questStarted($smithedArmor)>>
+The $npc1.species gives you a nod, and says, "Ah, good, ye're ready ta start. Come back ta th' furnace with me an' we'll get yeh goin'." With that, $npc1.he leads you into a cramped, hot room. Metal ingots line a wall and hot coals glow in a stone furnace. You are given a list of how many casts of metal are needed with each of the molds available, and set to the task of melting the metal and pouring it into the molds to be refined later. 
+<<doTime 240>>
+<<stamina -50>>
+<<getQuest $smithedArmor>>
+<<if $str > 50 and $end > 50>>
+It's hard, tiring work, but you accomplish most of what was requested alone. The $npc1.species comes back a few times, seemingly immune to the immense heat as $npc1.he works while you get a much-needed drink. After several hours of this, you are called back to the front and presented with a pouch of gold. "Mannin' the furnace is hard work, but ye did well. Here's some coin fer yer sweat today." 
+<<doGld 50>>
+<<else>>
+It's hard work, but you keep at it, not letting the heat keep you from your task. After a full and busy few hours, you find that you've cast all the pieces that were requested and head back to the front. The $npc1.species nods approvingly. "Well, ye've got the chops for this, yeh do. Ye did quite well, an' I'll be able ta easily meet me quota fer today now. If'n I'm ever lookin' for an apprentice, I do hope yeh come ta fill the role. Take some coin fer yer hard work." You are presented with a small bag of gold. 
+<<doGld 20>>
+<</if>>
+
+
+<<else>>
+"Thank ye for the offer, but ye've done quite enough fer' today. Come back by t'morrow and I should have more work for ye'." 
+
+<</if>>
+
+<<action "e" "next" "Return" "The Armory">><</action>>
+
+
+:: Your House {"position":"2425,1125","size":"200,200"}
+You're standing in the main room of your house. It's not a very nice house, but it's home. 
+
+
+<<action "w" "rest" "Sleep">><</action>>
+<<action "c" "gate" "Head into town" "Central Square">>
+	<<set $travel = 5>>
+	<<addPretext "You $walk out of your house and onto the city's central square. ">>
+<</action>>
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<action "n" "up" "Kitchen" "Kitchen">><</action>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+/* DOWNTIME MOD EDIT - START*/
+<<if $options.downtimeEnabled == true>>
+	<<action "s" "down" "Downtime" "Plan some downtime">><</action>>
+<</if>>
+/* DOWNTIME MOD EDIT - END*/
+
+
+:: armorer vendor {"position":"3175,1300","size":"100,100"}
+<<setPassageTitle "Shop at the armory">>
+
+"Here's what I have in stock. Take a look and see what you like." 
+
+<<store>>
+<<action "c" "leave" "Done" "Market Square">><</action>>
+
+
+:: central square movement {"position":"2700,1925","size":"100,100"}
+<<if $eventCounterA != "fight">>
+
+<p><<icon "rest">>[[Rest|Central Square][$eventCounterB="rest"]]<p>
+
+<<if $sta > 0>>
+<<action "c" "house" "Your House">><<set $travel = 2>><</action>>
+<<action "ne" "store" "Market Square">><<set $travel = 5>><</action>>
+<<action "n" "restaurant" "Restaurant">>
+	<<set $travel = 5>>
+	<<set $eventCounterA = "">>
+	<<addPretext "You step into the city's local restaurant. ">>
+<</action>>
+<<action "se" "hospital" "Hospital">><<set $travel = 5>><</action>>
+<<action "sw" "church" "Church">>
+	<<set $travel = 5>>
+	<<set $eventCounterB = 0>>
+<</action>>
+<<action "nw" "trainingGrounds" "Training grounds">>
+	<<set $travel = 5>>
+	<<set $eventCounterA = "">>
+<</action>>
+<<action "w" "road" "Western Road">><<set $travel = 5>><</action>>
+<<action "s" "road" "Southern Road">><<set $travel = 5>><</action>>
+<<action "e" "road" "Eastern Road">><<set $travel = 5>><</action>>	
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+<<else>>
+	<<startCombat>>
+	<<set $eventCounterA = "">>
+<</if>>
+
+
+:: clothing vendor {"position":"2925,1300","size":"100,100"}
+<<setPassageTitle "Shop at the clothing store">>
+
+"Oh, you have something for me? Let me take a look." 
+
+<<store>>
+<<action "c" "leave" "Done" "Market Square">><</action>>
+
+
+:: general store {"position":"3050,1300","size":"100,100"}
+<<setPassageTitle "Shop at the general store">>
+
+A pudgy $npc1.species fellow in slightly dirty clothes sits behind a counter that is, itself, piled high with assorted goods that $npc1.he is inspecting. 
+
+<<store>>
+<<action "c" "leave" "Done" "Market Square">><</action>>
+
+
+:: grocery store vendor {"position":"2800,1300","size":"100,100"}
+<<setPassageTitle "Shop at the grocery store">>
+
+"Let me know if you see anything you're hankering for." 
+
+<<store>>
+<<action "c" "leave" "Done" "Market Square">><</action>>
+
+
+:: market square movement {"position":"2825,1625","size":"100,100"}
+<<if $eventCounterA != "fight">>
+<<action "c" "rest" "Rest" "Market Square">>
+	<<set $eventCounterB = "rest">><</action>>
+<<if $sta > 0>>
+<<action "sw" "gate" "Central Square">><<set $travel = 5>><</action>>
+<<action "nw" "store" "The Armory">><<set $travel = 1>><</action>>
+<<action "n" "store" "Grocery Store">><<set $travel = 1>><</action>>
+<<action "ne" "store" "Clothing Store">><<set $travel = 1>><</action>>
+<<action "e" "store" "General Store">><<set $travel = 1>><</action>>
+<<action "se" "tailor" "Tailor">><<set $travel = 1>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+<<else>>
+	<<startCombat>>
+	<<set $e.exit = "Market Square">>
+	<<set $eventCounterA = "">>
+<</if>>
+
+

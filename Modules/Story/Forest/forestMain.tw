@@ -1,0 +1,918 @@
+:: Forest [forest] {"position":"3675,1775","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<p><<set $eventCounterB = "">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>></p>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($fatWolf, $obeseBear, $lemonSlime, $syrupVines, $fruitDryad)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+		<<startCombat>>
+	<<else>>
+		<<include "Ambient forest">>
+		<<include "forest randomization">>
+	<</if>>
+	
+<<else>>
+<p>The local forest has provided a constant supply of wood and game for the local populace as well as being quite serene and beautiful to travel through. Lately the forest has become a somewhat more abundant place. Trees creak under the weight of their fruit and the forest creatures have been gorging themselves on the increasingly lush forest. It's as though all the animals are fattening themselves up for a winter that never comes. The predators too are taking advantage of this bounty and have been devouring their fatter slower prey indiscriminately. The predators have even become so bold as to start attacking people who venture into the forest. More worrisome than the common predators are stories of practitioners of dark magic hiding out in the woods, kidnapping random passers by. There's also tales of strange creatures never before seen by any person alive. </p>
+
+<<include "Ambient forest">>
+<<include "forest randomization">>
+
+<</if>>
+
+
+
+
+:: Ambient forest [nobr forest] {"position":"3675,1675"}
+<<switch $daytime>>
+
+<<case "night">>
+<<switch random(1,6)>>
+<<case 1>>
+The moon rises, and its shine along with that of starlight seeps through the silver-tinted canopy leaves and scantly illuminates the mysterious nightly happenings of the forest, that include far more than just nocturnal hunting and gurgling of both carnivorous and ruminant bellies filled during midday and twilight. 
+
+<<case 2>>
+As the rustle of elusive, yet hefty <<=$bat.plural>> and likewise well-fed night time birds fills the air above, hisses and rattling start coming from the underbrush, and strange, bizarrely moving silhouettes can be spotted against the eldritch glow coming from the heart of the forest.
+
+<<case 3>>
+Unsettling whispers come from everywhere, resonating from tree to tree and floating through the bushes and grass, and the eerie shapes are moving ever closer to your hiding place that doesn't feel so secure now, and the plants themselves seem to move subtly on their own accord without any wind prompting them. 
+
+<<case 4>>
+Chittering and clicking come from inside the mossy tree stumps, and the branches above bend with creaking effort, as though reaching for something, and the ghostly murmurs around you seems so obnoxiously mocking that you cannot help feeling that those thing are making fun of you. 
+
+<<case 5>>
+As the night draws nearer the end, the frightening whispers abate and withdraw back into the sylvan depths, leaving in their place the terrible hungry noises from nocturnal beasts on the prowl, and at times you could swear you heard screams for help coming from some unlucky traveller too far away to locate, let alone lend a hand. 
+
+<<default>>
+The creatures of the deep woods have not all gone away, but are steadily retreating, lurching past the trees on the edges of your sight, and the forest air is unmistakably frosty with a promise of timely sunrise, with no other creature allowing itself to be heard or seen as the first calls of the daytime birds greet the coming morning.
+
+<</switch>>
+
+<<case "morning">>
+<<switch random(1,6)>>
+<<case 1>>
+Even the wild things consider this crispy cold hour early, and it's eerily quiet under the treecover, seeing as most of the nocturnal beasts have already crawled into their dens to sleep, and the daylight critters are still shy about leaving their dens. 
+								
+<<case 2>>
+The milky white light of the setting sun starts making its way through the dense canopy, banishing the last night birds and beasts and driving the rest to start their early foraging and hunting. 
+								
+<<case 3>>
+A hodgepodge chorus of small birds fills the morning air, and life awakens on the forest's shadowy floor, with little creatures scurrying around and larger forms rustling the bushes and cracking dry branches under their feet and paws. 
+								
+<<case 4>>
+As more light drains through the tangle of leaves and branches overhead, the most of the daylight-loving inhabitants of the woods emerge from their dense and start their food chain interplay, and you start hearing the warning cries of prey creatures and the growls of those preying on the former. 
+								
+<<case 5>>
+Even though it is still significantly shady under the tree crowns, the illumination is enough to let you see the incredible diversity of the waking wildlife from your hideout, and both the cunning, social $wolf.species packs and the jumpy $deer.species show clear signs of benefiting from the land's recent abundance, flaunting heavy bellies and jiggling rumps. 
+								
+<<default>>
+The sundry fluttering and twittering birds above gradually lose their caution as the day unfolds, sometimes darting by so low you could try and catch one, especially since the recent diets of the local aviary have made it harder for their plump rounded bodies to defy gravity. 
+								
+<</switch>>
+
+
+<<case "day">>
+<<switch random(1,6)>>
+<<case 1>>
+The forest is bustling with all sorts of activities this time of day, and the strange things one would never even associate with the sylvan habitat roam the limited spaces between the treetrunks and dangling vines, while the more conventional beasts and birds practically have to wait in line of their beastly cousins in order to follow the trail of their choosing. 
+								
+<<case 2>>
+The hunt is on in the darkened environment of arching branches, and you don't have to wait for too long before a fat feral $rabbit.species or an overweight wild $pig.species rushes past, followed by a $wolf.species equally encumbered by jiggling flab, and the traditionally swift and tense contest of speed quickly devolves into an arduous panting clash of endurances, with the victorious predators often collapsing right by their prey, unable to start feasting until they've had a good long rest. 
+								
+<<case 3>>
+Although the most prevalent representatives of the forest bestiary tend to be stout $brownBear.plural or portly $wolf.plural hunting fleshy $deer.plural and blubbery wood $pig.plural, with $badger.plural, $weasel.plural, $rat.plural, $shrew.plural, $rabbit.plural and $fox.plural in varying stages of obesity creeping, crawling and leaping between the roots, an occasional call can be heard from some of the sentient woodland explorers. 
+								
+<<case 4>>
+Not even the bushy mesh of the tall treetops can deter the sun beating down from above, although the rays sifting down only reach the forest floor as a multitude of tiny glowing dots and blotches, and the commotion of the wildlife has abated for a time being, and a kind of informal truce is proclaimed by the distant rumbling sounds of full bellies and sated belches of the predators. 
+								
+<<case 5>>
+With most of the successful hunters fed and safely docile for a while, the herbivores of all shapes and sizes cast off their morning fretfulness and start roaming and foraging in larger groups, stuffing themselves with lush foliage, berries and fruit that grow and ripen too quickly and abundantly for this biome. 
+								
+<<default>>
+An occasional sleepy $brownBear.species with a bloated midsection might be seen waddling by your observation every now and then, but the visible and audible fauna is firmly dominated by the herds and flocks prey species that don't stop their dedicated banqueting even when one of their number becomes a filling breakfast for one of the less fortunate morning hunters before their very eyes. 
+								
+<</switch>>
+
+
+<<case "evening">>
+<<switch random(1,6)>>
+<<case 1>>
+For a while, everything is quiet in the woods, with most of its inhabitants sated and at leisure, even the birds that have ceased their persistent twittering and feasting, now weighting down the tree branches with their hefty frames and lazily monitoring the dull motionless forest floor. 
+								
+<<case 2>>
+Still largely in the grasp of contented silence, the forest starts showing signs of entering its dusky phase with urgent rustling in the underbrush, wary scuttling of the $deer.species and the yawning calls of predators awakening from their siestas and getting up for the evening hunt. 
+								
+<<case 3>>
+Neither the hunter nor their quarry could be seen in the gathering dark, but the ruckus of growls, yelps, chirps and hisses permeates passages between the trees, and much stranger things crawl into view, some lacking any distinguishable limbs and flowing forwards with dogged determination, the others seemingly flowing from one tree trunk and into the other. 
+								
+<<case 4>>
+The evening birds start with their maddening symphony of trills and clicks, accompanied by the less diverse, but more relentless hum of insects that fill the gloom among the trees, and a triumphant belch of the evening hunter that has just dined rocks the air every few minutes. 
+								
+<<case 5>>
+Although it is too dark to see clearly past the nearest trees, the fireflies and some stranger, peculiar sources of luminescence can be seen flickering against the leaves and the bark, and uncanny, echoing whispering is heard above the din of the feathered and chitinous musicians of the dark. 
+								
+<<default>>
+The avian chorus has died down slightly, switching from the incessant chirping to more elaborate songs of the nightly species, with the crooning howling of the $wolf.plural entering the ensemble from far away, and despite the noisy background and rare tardy beasts rushing towards their holes and dens, the woodlands are at peace. 
+								
+<</switch>>
+
+
+<<default>>
+**Error in ambient forest**
+
+<</switch>>
+
+
+:: Forest ambush [nobr] {"position":"3625,1975","size":"100,100"}
+<<if $forestEnemies == undefined or $forestEnemies.length == 0>>
+	<<set $forestEnemies = ["wolf", "bear", "lemon", "vines", "dryad"]>>
+<</if>>
+<<set _enemy = $forestEnemies.pluck()>>
+
+<<switch _enemy>>
+
+<<case "wolf">>
+<<setEnemy $fatWolf>>
+As you come around a tree you nearly run into an obese $npc1.species, who's nearly as surprised, and much more angry, than you are.
+
+<<case "bear">>
+<<setEnemy $obeseBear>>
+You walk past a suspiciously fuzzy $npc1.furBelly boulder. Before you can reflect any further, the boulder stands up, revealing itself to be a //very// enormous $npc1.species!
+
+<<case "lemon">>
+<<setEnemy $lemonSlime>>
+With an unmistakable //shlorping// sound, a lemon colored slime pounces at you from behind a tree!
+
+<<case "vines">>
+<<setEnemy $syrupVines>>
+As you're walking through the forest, you start to notice the vines are growing strangely thick. Especially since this type of forest isn't supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
+
+<<case "dryad">>
+<<setEnemy $fruitDryad>>
+Your hear a strange melody being sung nearby. As you approach the voice, you find the source is actually a woody dryad. And they have a wicked gleam in their eye. 
+
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: Minor forest events [nobr] {"position":"3725,1975","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+<<switch random(1,8)>>
+<<case 1>>
+As you travel through the forest, you come across a small tree bearing fruit. You each up and pick the only ripe looking fruit. 
+<<if random(1,2) == 1>><<getItem $apple>>
+<<else>><<getItem $orange>>
+<</if>>
+				
+<<case 2>>
+<p>As you travel through the forest you come across a massive apple tree. All of the branches appear to have been bent under a massive bounty of fruit, but they've been picked almost completely bare. Laying on the ground around the tree are several of the fattest $deer.species, <<=$raccoon.plural>>, <<=$squirrel.species>> and other forest animals you've seen. Each of them has a bulging stomach and they are all surrounded by the chewed up remains of apples. </p>
+
+You $walk up and poke a $deer.species in the gut, eliciting an annoyed grunt from the blob-like creature. It stretches its neck out and picks up the nearest remains of an apple and starts chewing it again as it goes back to sleep. You look up and see there's one remaining apple that the other animals couldn't reach and pluck it. 
+<<getItem $apple>>
+						
+<<case 3>>	
+<p>As you travel through the forest you hear the faint sound of trickling water. As you follow the sound, you find a small waterfall pouring from a cliff above. At the base of the waterfall you find a small pile of flasks. Most of them are broken, but one of them is still in pristine condition. </p>
+
+You look around and it doesn't seem like anyone's been here recently. Whoever owned these left them here long ago. You pick up the flask and fill it up from the waterfall.
+<<getItem $waterFlask>>
+	
+<<case 4>>		
+<p>You wander into a small clearing, in the middle of which you see a large stump. You cross the clearing and approach the stump, upon which you find a small wooden box. It looks rather simple, but has a few strange words carved into the top in some language you cannot decipher. </p>		
+
+You open the lid and find a small strange diamond shaped cookie with white frosting on top, while a few crumbs lie about it from where others must have once been. You take it, and replaced the box where you found it. 
+<<getItem $oddCookie>>
+
+<<case 5>>
+<<createNPC "random" "random">>
+<p>As you $walk through the forest, you start to faintly hear the sounds of a struggle. As you stealthily make your way through the underbrush towards the noise, you come across a $npc1.species entangled in the tendrils of a mass of syrupy vines. </p>
+
+<p>$npc1.He's quite clearly fighting a losing battle as $npc1.he's become hopelessly entangled in the vines' grasp with several of them crammed in $npc1.his mouth. $npc1.His $npc1.furBelly $npc1.furred belly has shredded through $npc1.his leather armor as $npc1.his stomach has been inflated to a ludicrous size. The syrup soaked $npc1.species's movements become more and more frantic as $npc1.he approaches $npc1.his bursting point. </p>
+
+<<if $options.popping>>
+<p>You can almost see $npc1.his enormously bloated stomach stretch fuller and fuller as syrup is pumped into the helpless $npc1.species. With a final loud gurgle, the poor $npc1.species explodes in a shower of syrup. You duck for cover and when you stand back up you find nothing left behind of the $npc1.species. You pause in surprise for a moment before you carefully creep forward and survey the scene. After poking the limp vines a few times, you confirm that it's been entirely drained of syrup and merely hang limply from the tree. </p>
+
+<<else>>
+<p>There's a creaking noise which you first attribute to the $npc1.species's overstretched stomach, but soon afterwards there's a snapping noise as the vines break under $npc1.his weight. $npc1.He falls on the ground roughly and slowly rolls onto $npc1.his back with $npc1.his sticky belly sloshing back and forth. </p>
+
+<p>Before you have a chance to come out from your hiding spot, a large feral $wolf.species leaps out from some bushes on the opposite side from you. Apparently the $wolf.species had been lying in wait for its opportunity at a free meal, because before the $npc1.species realizes $npc1.he's under attack again, the $wolf.species already has $npc1.his legs in his mouth. The $npc1.species puts up a weak struggle, evidently far too painfully inflated with syrup to put up much of a fight. Before you can react, the previously slim-gutted $wolf.species has swallowed the syruped $npc1.species down and is already waddling his way back into the forest. </p>
+<</if>>
+
+Now that the maelstrom of activity is over, you leave your hiding spot in the bushes and survey the combat zone. 
+<<if random(1,2) == 1>>
+Searching the syrupy ground, you manage to find something! 
+
+<<set _randomItem = random(1,100)>>
+<<if _randomItem > 90>><<getItem $trident>>
+<<elseif _randomItem > 75>><<getItem $apple>>
+<<elseif _randomItem > 40>><<getItem $sHealthPotion>>
+<<else>><<getItem $cheeseburger>>
+<</if>>
+
+<<else>>
+Searching the syrupy ground, you manage to find a small bag of gold! 
+<<set _goldFound = random(26,33)>>
+<<doGld _goldFound>>
+<</if>>
+
+<<default>>
+<<include "Ambient forest">>
+
+<</switch>>
+
+<<include "forest randomization">>
+
+
+:: forest randomization [forest] {"position":"3875,1875"}
+/*Ticks up random events counters*/
+<<set $forestRandomization.combat += $forestRandomization.combatRate>>
+<<set $forestRandomization.special += $forestRandomization.specialRate>>
+<<set $forestRandomization.leave += $forestRandomization.leaveRate>>
+<<set $forestRandomization.minor += $forestRandomization.minorRate>>
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+<<if $forestRandomization.special > $forestRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+<<if $forestRandomization.minor > $forestRandomization.special>>
+	<<set _randomEvent = "minor">>
+<</if>>
+<<if $forestRandomization.leave > $forestRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+<<set $forestRandomization.combat = 0>>
+<<set _event = "Forest ambush">>
+
+/*A special event*/
+<<case "special">>
+<<set $forestRandomization.special = 0>>
+<<set _specialEvent = 0>>
+<<for _i=0; _i<$forestSpecialRandomization.length; _i++>>
+	<<set $forestSpecialRandomization[_i]++>>
+	<<if $forestSpecialRandomization[_i] >
+		$forestSpecialRandomization[_specialEvent]>>
+		<<set _specialEvent = _i>>
+	<</if>>
+<</for>>
+
+<<set $forestSpecialRandomization[_specialEvent] = 0>>
+<<switch _specialEvent>>
+	<<case 0>>
+	<<set _event = "Gingerbread House">>
+	<<case 1>>
+	<<set _event = "Wolf pack">>
+	<<case 2>>
+	<<set _event = "Storeroom">>
+	<<case 3>>
+	<<set _event = "Mysterious feast">>
+	<<default>>
+	''Error in special event randomization!''
+<</switch>>
+
+/*A random minor scene*/
+<<case "minor">>
+<<set $forestRandomization.minor = 0>>
+<<set _event = "Minor forest events">>
+
+/*Opportunity to leave the forest*/
+<<case "leave">>
+<<set $forestRandomization.leave = 0>>
+<<set _event = "Path out of the forest">>
+
+<<default>>
+''Error in forest randomization!!!''
+
+<</switch>>
+
+<<action "5" "rest" "Rest" "Forest">>
+	<<set $eventCounterB = "rest">><</action>>
+<<if $sta > 0>>
+<<action "4" "forest" "Forest" _event>><<set $travel = 5>><</action>>
+<<action "3" "road" "Swamp" "Path to swamplands">><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+
+:: Path to swamplands {"position":"3200,2050","size":"100,100"}
+<p>As you make your way deeper into the forest, your foot suddenly sinks into a soft, squelchy patch of mud. Pausing to free your foot, you glance up and notice the landscape subtly changing before you. In the distance, the dense foliage gives way to a sprawling bog, marking the beginning of the notorious swamplands that border the forest.</p>
+
+<p>You recall the tales you've heard about these swamps. They're said to be home to a myriad of creatures, each more perilous than the last. These beings have evolved in remarkable, sometimes frightening ways, perfectly adapted to the swamp's treacherous environment. Many are known for their ability to ensnare, inflate, or even burst their prey in mere moments, making the swamplands a place of both fascination and dread.</p>
+
+<p>Now, you find yourself at a crossroads. You can continue to brave the mysteries and dangers of the forest, or you can venture into the swamplands, a territory teeming with unknown risks and dark allure. The choice lies before you: the relative safety of the forest or the perilous unknown of the swamp.</p>
+
+<<action "4" "leave" "Go Back" "Forest">><</action>>
+<<action "6" "road" "Swamp" "Swamp">><</action>>
+
+
+
+:: Path out of the forest {"position":"3175,2000","size":"100,100"}
+You find a clearing ahead. As you approach closer you find it is one of the roads out of the city!
+
+<<include "forest randomization">>
+
+<<if random(1,2) == 1>>
+	<<action "sw" "road" "Western Road">><</action>>
+<<else>>
+	<<action "se" "road" "Eastern Road">><</action>>
+<</if>>
+
+
+:: Approach the storeroom {"position":"4375,1450","size":"100,100"}
+You approach the building and discover it to be a smallish shack. There's a door on one end and a small window up on the opposite side of the building. 
+
+<<action "w" "house" "Check the door">><</action>>
+<<action "n" "leave" "Leave" "Forest">><</action>>
+<<action "e" "house" "Check the window">><</action>>
+
+
+:: Break down the door {"position":"4625,1525","size":"100,100"}
+<<stamina -10>>
+
+<<if $str > 80>>
+<p>You look at the door, assessing its weak points before you go to ram the door. You run through several ideas of how you'll ram the door down to get inside. After you're satisfied with your brilliant plan, you do a run up and attempt to ram the door in. 
+</p>
+<<action "c" "next" "Look around" "Inside the storeroom">>
+<</action>>
+
+<<else>>
+You ram your shoulder up against the door, kick it, headbutt it and throw sticks and stones at it. The door shows no signs of budging and eventually you give up, sore and tired. 
+<<action "e" "house" "Check the window">><</action>>
+<<action "n" "leave" "Leave" "Forest">><</action>>
+
+<</if>>
+
+
+:: Check the door {"position":"4500,1525","size":"100,100"}
+You try the door, but unfortunately find it locked. 
+
+<<action "w" "next" "Break down the door">><</action>>
+<<action "n" "leave" "Leave" "Forest">><</action>>
+<<action "e" "house" "Check the window">><</action>>
+
+
+:: Check the window {"position":"4500,1400","size":"100,100"}
+You go to the back side of the shack where there's a stack of empty crates you can stand on to look through the window. When you peer through the window you find a single gas lantern illuminating a store room crammed to the rafters with food. The window is unlocked and looks just large enough for someone to fit through. 
+
+<<action "e" "next" "Climb through the window">><</action>>
+<<action "w" "house" "Check the door">><</action>>
+<<action "n" "leave" "Leave" "Forest">><</action>>
+
+
+:: Climb through the window {"position":"4625,1400","size":"100,100"}
+<<if setup.waistDiameter() > 20>>
+	You try to squeeze through, but unfortunately you're just too big to fit through the window. 
+	<<action "w" "house" "Check the door">><</action>>
+	<<action "n" "leave" "Leave" "Forest">><</action>>
+
+<<elseif setup.waistDiameter() > 15>>
+	You just barely manage to squeeze through the window, your gut brushing heavily against the window frame. 
+	<<action "c" "next" "Look around" "Inside the storeroom">><</action>>
+
+<<elseif setup.waistDiameter() > 10>>
+	With some difficulty, you manage to squeeze your way through the small window. Your gut almost grazing the bottom of the window. 
+	<<action "c" "next" "Look around" "Inside the storeroom">><</action>>
+
+<<else>>
+	You climb through the small window rather easily. 
+	<<action "c" "next" "Look around" "Inside the storeroom">><</action>>
+
+<</if>>
+
+
+:: Defeated by the feast {"position":"4300,900","size":"100,100"}
+<<consume 20 10>>
+<<rest>>
+<p>Your eyes drift open as you look up into a sea of tree branches. Looking around you find yourself laying on top of the table. You look down at your $waist stomach and finally realize how much more stuffed you were than when you passed out. </p>
+
+<p>You try to get up, but your arms and legs are pinned to the table. You look over and see your arms are are fixed to the table by makeshift manacles of bent cutlery. You try to move your jaws and also find that they're being pried open by two spoons. </p>
+
+<p>The top spoon pushes up on the roof of your mouth, forcing you to lay your head back on the table. A large flagon of mead floats into view and tips over, pouring a massive deluge of alcohol down your throat. You sputter and try to gulp it down as fast as you can, feeling your stomach slowly stretch even larger. </p>
+
+<p>No sooner have you swallowed the last of it down before you see a huge cast iron pot slowly hop down the table, making a large thud that rattles the table with every jump. A soup ladle larger than your cupped hands floats out of the massive pot before almost gently pouring a ladlefull of warm savory stew down your throat. </p>
+
+<p>You struggle to swallow it down as the ladle floats down to massage your stomach as best a floating soup ladle can. It gives you a moment to breathe before going back and pouring another huge soup ladle full of stew down your throat. It slowly repeats this process several times, each time going back and massaging your stomach. Sometimes eliciting a belch from you when you have a moment to breathe. 
+<<consume 20 10>></p>
+
+<<if $options.popping>>
+	<p>Each time you hope it's the end, but there's only more and more and more. Your stomach keeps stretching beyond it's normal limits thanks to the gentle ministrations of the soup ladle's massages. Ultimately, you simply don’t have the room to contain it all. The ladle pours a final helping into your mouth, but you are just too full to swallow it down. You feel the insistent jab of the knife prod your $p.furBelly underbelly in a futile attempt to coax you to continue, but you are in far too delicate a state for such a poke. The feast and all of it’s trappings vanish in an instant as your overstuffed gut explodes, leaving only the lingering scent of roasted meat and savory sauces to note you were ever there. </p>
+
+	<<defeated "exploded">>
+
+<<else>>
+	<p>Each time you hope it's the end, but there's only more and more and more. Your stomach keeps stretching beyond it's normal limits. Between being completely stuffed full of rich warm stew and the gentle ministrations of the soup ladle's massages, you slowly drift into unconsciousness even as the ladle dutifully serves you more stew. </p>
+
+	<<defeated "overeating">>
+<</if>>
+
+
+:: Devour the feast {"position":"4425,1025","size":"100,100"}
+<p>Speaking directly to the enchanted cutlery, you ask to be fed everything on the table. You watch eagerly as the cutlery set hovers in place for a moment before bursting into a flurry of activity. Cheek-bulging mouthfuls of ribs, burgers, fruits, steaks, and ice creams of every flavour are roughly pushed into your unresisting $p.mouth before being swallowed, your throat bulging and rippling under your chin <<if $p.male == "female">>and disappearing between your breasts<</if>>, each infinitesimally small pause for breath followed by a belch and another demand for more food. 
+<<set _eat = $eventCounterB>>
+<<set _calories = _eat * 0.5>>
+<<consume _eat _calories>>
+</p>
+
+<p>Until finally<<if $alive>>, as you let loose one last resonant belch, the cutlery falls to the denuded plates, their magic as spent as your stomach is filled. 
+<<include "forest randomization">>
+<<else>> you drop into a deepening food coma, the last thing you're aware of is the soft clattering of cutlery bouncing off of your overstuffed gut and falling to the loamy soil. 
+<<action "c" "wait" "Sleep" "Defeated by the feast">><</action>>
+<</if>></p>
+
+
+:: Dig in! {"position":"4300,1150","size":"100,100"}
+<p>You take a seat at the head of the table. The chair's even more comfortable than it looked. You eagerly pick up your knife and fork and carve yourself off a huge hunk of a ham sitting nearest you. You eagerly cram it in your mouth and are greeted by a sweet juicy explosion of flavor. You lean back and close your eyes as you savor some of the tastiest meat you've ever eaten. </p>
+
+When you open your eyes though, you are shocked to see that the chair has wrapped several varnished wooden tendrils around your arms and feet. The knife and fork fly out of your hands and of their own volition begin carving out a hunk of turkey half the size of your head! The fork slowly levitates back over to you, wobbling under the weight of it's offering. The sharp knife pokes you insistently in the gut, as if coercing you to open your mouth. 
+<<consume 3 1.5>>
+<<set $eventCounterA = 100>>
+<<set $eventCounterB = 500>>
+
+<<action "c" "attack" "Struggle" "Trying to escape the feast">><</action>>
+<<action "e" "surrender" "Wait" "Wait at the feast">><</action>>
+
+<<if $sto >= 500>>
+<<action "w" "devour" "Devour the feast" "Devour the feast">><</action>>
+<</if>>
+
+
+:: Eat the wolf [nobr] {"position":"4575,1950","size":"100,100"}
+<<setPassageTitle "Eat the $wolf.species">>
+<p>A devilish grin flickers across your face as your stomach rumbles. Continuing to rub, you walk over to the $wolf.species’s head. You squat down a bit, getting your head close to $npc1.his. You open your mouth wide, and stop rubbing, shoving the $wolf.species’s head into your mouth. </p>
+
+<<consumeQuiet 150>>
+
+<<if $alive>>
+<<consumeQuiet -150>>
+<p>The $wolf.species lets out a surprised, panicked yelp and struggles against you a little, but you push on, holding its forepaws down to make it easier to work your jaws over the $wolf.species’s body. You almost start coughing the $wolf.species up a few times due to the amount of $wolf.fur in your throat, but something feral sparks within you and you reach a second wind, pushing on $npc1.his belly to squish it into your mouth a bit easier. As $npc1.he begins to reach your stomach, you feel your midriff begin to surge outwards. You eventually reach $npc1.his hindquarters, pushing them in before sucking $npc1.his tail in like a noodle, flopping onto your rear. 
+<<consume 150 100>></p>
+
+You flick your head back and let out a huge belch that echoes throughout the forest, scaring several birds out of the trees around you. As the noise finally dies down, you hear whimpering around you. You look around and see several of the collection of $wolf.plural, surrounding you and staring in fear. As you stand up, the $wolf.plural scatter. You’ve won, it seems. 
+<<doXP 20>>
+
+<<include "forest randomization">>
+
+<<else>>
+<<consumeQuiet -150>>
+<p>The $wolf.species lets out a surprised, panicked yelp...seemingly unaware that now that you’re actually doing this, you’re beginning to panic too. You did ''NOT'' think this through. You manage to make your way past the $wolf.species’s shoulders... but your stomach’s starting to rebel. Shrugging it off, you keep pushing, to the tune of your stomach groaning and creaking. You cough a few times before you feel your consciousness drop. </p>
+
+In the dizzy, incoherent mess of senses you experience after, you feel something being pulled out of your mouth, and something else munching its way over your head. You’re uncertain if it’s the Alpha or another $wolf.species eating you, but the important thing is – what you just did majorly backfired. 
+
+<<defeated "devoured">>
+
+<</if>>
+
+
+:: Feasting in the storeroom [nobr] {"position":"4875,1525","size":"100,100"}
+<<switch $eventCounterB>>
+
+<<case 1>>
+You tear off huge hunks of succulent meat from a grilled rack of ribs, barbecue sauce covering your $p.mouth. 
+<<consume 5 2.5>>
+
+<<case 2>>
+You pick up a huge roast duck and tear off strips off juicy meat and swallow them down. 
+<<consume 4 2>>
+
+<<case 3>>
+You pick up a rope of smoked sausages and swallow them down whole, one after another. 
+<<consume 3 1.5>>
+
+<<case 4>>
+You reach into a barrel of corn and pull out several juicy cobs dripping with butter. You cram entire ears of corn in your $p.mouth and pull out the cobs, stripping all the kernels off as you do so. 
+<<consume 3 1.5>>
+
+<<case 5>>
+You pull out an armload of some of the largest juiciest red apples you've ever seen. You cram one into your $p.mouth whole and crunch down creating a sweet juicy explosion of apple. You swallow it down and repeat this process on several other apples. 
+<<consume 3 1.5>>
+
+<<case 6>>
+You cram your entire head into a bag of oats and start sucking them down with reckless abandon like a wild animal. 
+<<consume 4 2>>
+
+<<case 7>>
+You decide to quench your thirst as you hold a small keg of wine over your head. You put the tap in your $p.mouth and open it up and suck down the sweet aromatic drink, making you feel slightly tipsy. 
+<<consume 3 1.5>>
+
+<<case 8>>
+You dunk your whole head into a barrel of water and start sucking it down, your belly slowly stretching out as it fills with pure clean water. 
+<<consume 3 0>>
+
+<</switch>>
+
+/*Checks to see if you've overeaten*/
+<<if $alive>>
+<<action "1" "food" "Rack of ribs" "Feasting in the storeroom">>
+<<set $eventCounterB = 1>><</action>>
+<<action "2" "food" "Roast duck" "Feasting in the storeroom">>
+<<set $eventCounterB = 2>><</action>>
+<<action "3" "food" "Rope of sausages" "Feasting in the storeroom">>
+<<set $eventCounterB = 3>><</action>>
+<<action "4" "food" "Barrel of corn" "Feasting in the storeroom">>
+<<set $eventCounterB = 4>><</action>>
+<<action "5" "food" "Crate of apples" "Feasting in the storeroom">>
+<<set $eventCounterB = 5>><</action>>
+<<action "6" "food" "Bag of oats" "Feasting in the storeroom">>
+<<set $eventCounterB = 6>><</action>>
+<<action "7" "food" "Keg of wine" "Feasting in the storeroom">>
+<<set $eventCounterB = 7>><</action>>
+<<action "8" "food" "Barrel of water" "Feasting in the storeroom">>
+<<set $eventCounterB = 8>><</action>>
+<<action "9" "leave" "Leave" "Leave the storeroom">><</action>>
+
+<<else>>
+<p>After that last swallow you finally feel too stuffed to even stay awake any more. You //fwomp// onto your back with a ''thud'' and rub your overly full belly. </p>
+
+<p>Just as you're about to pass out, you suddenly hear someone whistling as the sound of footsteps make their way up to the shed door. You attempt to get up to try to escape, but you're practically too stuffed to keep your eyes open. </p>
+
+<<createNPC "random" "random" 1>>
+<p>As you hear someone fumbling with a set of keys, you fall back on the floor and unwillingly start drifting off to sleep. You stay awake just long enough to see $npc1.article $npc1.species walk in and shout "What the hell!" in a country drawl just before you pass out in an overstuffed stupor. </p>
+
+<<action "c" "wait" "Pass out" "Wake up in the storeroom">><</action>>
+<</if>>
+
+
+:: Follow wolves [nobr] {"position":"4325,1825","size":"100,100"}
+<<setPassageTitle "Follow the $wolf.plural">>
+You step away from the tree and into the open, looking at the trail. 
+<<skillTest $int -10>>
+
+<<if $skillCheck>>
+You see the tail of one of the $wolf.plural disappear around a corner, and decide to follow, when all of a sudden, a massive impact to your side knocks you to the ground, dazing you for a few moments. When you snap out of it, you look up to find yourself pinned to the ground by a particularly large $wolf.species – judging from its size, you assume this is probably the alpha $wolf.species. It growls, looking smug about how easily it blind-sided you like this, and it licks its chops.
+
+<<action "w" "attack" "Struggle against the $wolf.species" "Struggle against the wolf">><</action>>
+<<action "n" "surrender" "Submit to the $wolf.species" "Submit to the wolf">><</action>>
+<<action "e" "food" "Give food to the $wolf.species" "Give food to the wolf">><</action>>
+<<action "c" "next" "Give belly rubs to the $wolf.species" "Give belly rubs to the wolf">><</action>>
+
+<<else>>
+You cautiously step over to it and peer up the way they went. Your efforts to follow them to where they were headed are fruitless, because it seems that one of the heftier ones had knocked into a nearby shrub, knocking it over and blocking your path. You can't find another path around, so you can only explore elsewhere. 
+
+<<include "forest randomization">>
+<</if>>
+
+
+:: Give belly rubs to the wolf {"position":"4450,1825","size":"100,100"}
+<<setPassageTitle "Give belly rubs to the $wolf.species">>
+You manage to get a hand free. You reach down and gently begin to scratch at $npc1.his warm, $wolf.furry stomach. $npc1.He growls a little at first, but this soon stops. $npc1.He closes $npc1.his eyes, beginning to trance out. To your amazement, $npc1.he flops onto $npc1.his back, $npc1.his back foot twitching, presumably as an invitation to rub more. You look around and realise that you could probably use this opportunity to make a break for it, or take some other course of action. 
+
+<<action "n" "run" "Run from the $wolf.species" "Run from the wolf">><</action>>
+<<action "w" "wait" "Stay with the $wolf.species" "Stay with the wolf">><</action>>
+<<action "e" "devour" "Eat the $wolf.species" "Eat the wolf">><</action>>
+
+
+:: Give food to the wolf [nobr] {"position":"4450,1950","size":"100,100"}
+<<setPassageTitle "Give food to the $wolf.species">>
+<<if setup.hasItem($sausage) > -1>>
+	<<set _distraction = $sausage>>
+<<elseif setup.hasItem($steak) > -1>>
+	<<set _distraction = $steak>>
+<<elseif setup.hasItem($meatballSub) > -1>>
+	<<set _distraction = $meatballSub>>
+<<elseif setup.hasItem($hamSandwich) > -1>>
+	<<set _distraction = $hamSandwich>>
+<<elseif setup.hasItem($cheeseburger) > -1>>
+	<<set _distraction = $cheeseburger>>
+<<else>>
+	<<set _distraction = $apple>>
+<</if>>
+
+/*You don't have a distraction*/
+<<if _distraction.name == $apple.name>>
+You manage to get a hand free and rummage around for some other food that the $wolf.species might want instead of you. However, nothing in your backpack seems to interest the $wolf.species, who has run out of patience. $npc1.He rolls onto $npc1.his back, so you’re on top of $npc1.his mountainous belly, tilting back so you slide headfirst into $npc1.his maw. $npc1.He only has to swallow a few times, gravity doing most of the work for $npc1.him. 
+
+<<defeated "devoured">>
+
+/*You do have a distraction*/
+<<else>>
+You just about manage to get a hand free. Remembering that you have _distraction.article _distraction.name in your backpack, you give the $wolf.species a basic "Wait" gesture. It looks a bit annoyed and bemused until you take the food out of your backpack. It whines, then pants, looking at you. You just about manage to flick it away from you, making it land a few feet away. It looks between the food and you a few times, then decides to go for the foodstuff with less clothes and $p.fur on it. It bounds off you, gnawing on the food. You carefully sneak off while $npc1.he's preoccupied and happy. You’ve escaped, but at the cost of your food. 
+<<removeItem _distraction>>
+<<doXP 5>>
+
+<<include "forest randomization">>
+
+<</if>>
+
+
+:: Hide from wolves [nobr] {"position":"4200,1700","size":"100,100"}
+<<setPassageTitle "Hide from the $wolf.plural">>
+<<skillTest $int -10>>
+
+<<switch $skillCheck>>
+
+<<case true>>
+<p>Keeping your breathing shallow to keep any noise down, you wait for a few minutes to make sure there’s nothing waiting for you. Letting out a sigh of relief, you head back on your way. </p>
+
+<<include "forest randomization">>
+
+<<default>>
+<p>You hear a creaky slithering noise behind you. You realise all too late that this probably wasn’t the best place to hide – An amber-coloured vine jabs itself into your mouth, letting out a jet of sweet syrup into your mouth before you bat it away in alarm. 
+<<consume 2 1>></p>
+
+<p>Quickly stepping away from the tree, you see that you’ve disturbed a nearby Syrup Vine! </p>
+
+<<startCombat $syrupVines>>
+
+<</switch>>
+
+
+:: Inside the storeroom {"position":"4750,1450","size":"100,100"}
+You you step through the broken door and rub your $p.hands together greedily upon the sight of the massive hoards of food. 
+
+<<action "1" "food" "Rack of ribs" "Feasting in the storeroom">>
+<<set $eventCounterB = 1>><</action>>
+<<action "2" "food" "Roast duck" "Feasting in the storeroom">>
+<<set $eventCounterB = 2>><</action>>
+<<action "3" "food" "Rope of sausages" "Feasting in the storeroom">>
+<<set $eventCounterB = 3>><</action>>
+<<action "4" "food" "Barrel of corn" "Feasting in the storeroom">>
+<<set $eventCounterB = 4>><</action>>
+<<action "5" "food" "Crate of apples" "Feasting in the storeroom">>
+<<set $eventCounterB = 5>><</action>>
+<<action "6" "food" "Bag of oats" "Feasting in the storeroom">>
+<<set $eventCounterB = 6>><</action>>
+<<action "7" "food" "Keg of wine" "Feasting in the storeroom">>
+<<set $eventCounterB = 7>><</action>>
+<<action "8" "food" "Barrel of water" "Feasting in the storeroom">>
+<<set $eventCounterB = 8>><</action>>
+<<action "9" "leave" "Leave" "Leave the storeroom">><</action>>
+
+
+:: Leave the feast {"position":"4425,1275","size":"100,100"}
+You decide caution is the better part of valor and leave the weird forest food alone. 
+
+<<include "forest randomization">>
+
+
+:: Leave the storeroom [nobr] {"position":"4875,1400","size":"100,100"}
+Having decided that you've eaten enough, you pick yourself up and prepare to leave. As you do so though, you begin to hear whistling in the distance that sounds like it's getting closer. You quickly turn and jump for the window 
+
+/*Thin enough to get out*/
+<<if setup.waistDiameter() < 20>>
+and fit through. After landing on the outside you run of into the forest. 
+
+<<include "forest randomization">>
+
+/*Too fat to get out*/
+<<else>>
+<<set $eventCounterA = (setup.waistDiameter() - 20) * 25>>
+<<set $eventCounterB = 1>>
+, but you get stuck halfway through. 
+
+<<if $eventCounterA <= 40>>
+It seems you've gotten somewhat larger since you first entered the window and have become slightly stuck. 
+<<elseif $eventCounterA <= 80>>
+It seems you've grown quite a bit larger since you first entered the window and have become pretty stuck. 
+<<elseif $eventCounterA <= 120>>
+It seems you've grown a whole //lot// larger since you first entered the window and have become very stuck. 
+<<else>>
+It seems you've grown //humongously// larger since you first entered the window and have become incredibly stuck. 
+<</if>>
+
+<<action "c" "attack" "Struggle through the window">><</action>>
+
+<</if>>
+
+
+:: Mysterious feast {"position":"4300,1275","size":"100,100"}
+<p>You come accross a mysterious table sitting in a clearing near the woods. Perhaps even more mysteriously, it is covered by a feast fit for a dozen high class noble types. </p>
+
+<p>There is only one place set at the table. On the end nearest you there is a very ornate and old looking wooden chair is set in front a table setting of fine silverware. </p>
+
+You can't help but feel this is somewhat suspicious. 
+
+<<action "c" "food" "Dig in!">><</action>>
+<<action "n" "forest" "Leave the feast">><</action>>
+
+
+:: Run from the wolf [nobr] {"position":"4575,1825","size":"100,100"}
+<<setPassageTitle "Run from the $wolf.species">>
+<p>Standing up as quietly as you possibly can, you continue scratching for a few moments before quickly turning tail.</p> 
+<<set _playerSkill = ($int + $agi)*0.5>>
+<<skillTest _playerSkill -10>>
+
+<<if $skillCheck>>
+You bolt as quickly and quietly as you can (which isn’t saying much) towards a nearby bush, throwing yourself over it. You get back on your feet and keep running, hoping to make the $wolf.species lose your trail. You soon realise however, you aren’t being pursued and can only hear the $wolf.species’s mournful whimpers piercing the overgrowth. 
+
+<<include "forest randomization">>
+
+<<else>>
+<p>As soon as your $p.hand leaves the $wolf.species’s $wolf.fur, it snaps out of its daydreaming, looking at you. You run for a nearby bush and try to jump over it, but the $wolf.species leaps after you with surprising agility and bites your ankle, cutting your momentum short and making you fall into the bush, thankfully not causing any lasting damage to your face. You blink the dazedness out of your eyes and spit out a few leaves, but already you can feel a wet, slobbery embrace around your $p.feet. </p>
+
+Surrendering to your fate, you feel the $wolf.species’s jaws work their way past your back and over your shoulders. $npc1.He pauses, licking at your face as best $npc1.he can, before tilting $npc1.his head back and swallowing the rest of you into the warm, tight confines of $npc1.his insides. 
+
+<<defeated "devoured">>
+
+<</if>>
+
+
+:: Stay with the wolf [nobr] {"position":"4575,1700","size":"100,100"}
+<<setPassageTitle "Stay with the $wolf.species">>
+<p>For some insane reason, you find yourself willing to comply with the $wolf.species’s wishes. You reach both hands over and continue petting and stroking $npc1.his soft, ample middle. All of a sudden, however, you feel a sharp pain in your rump. Another $wolf.species, evidently looking for the Alpha, doubled back and found you, and decided the best course of action to get you away from $npc1.him was to bite and drag you off. You flop onto the floor, disorientated and in pain. After all that work, all you’ve done is delay the inevitable. </p>
+
+<<skillTest 80>>
+
+<<if $skillCheck>>
+<p>But then, you hear a commanding, angry bark from the Alpha, looking angrily at the other $wolf.species. It growls, but after another harsher bark from the large $wolf.species, it releases its grip and backs off, whimpering. The Alpha looks at you kindly and gestures its head away. You take it’s cue and run off as quickly as you can. </p>
+
+<<include "forest randomization">>
+
+<<else>>
+<p>The $wolf.species growls at it’s Alpha master, refusing to listen to $npc1.his orders. You feel yourself get dragged backwards further into the woods. The $wolf.species drops you, repositions himself, and starts to devour you from the feet up. The last thing you see before darkness swallows you is the Alpha trotting over, looking utterly enraged. From the feelings of tumbling and sounds of barking, struggling and whining you hear from outside, you can only assume that the Alpha ate the disobedient $wolf.species for its trespass. You usually aren’t the one to engage in schadenfreude, but as your consciousness drifts away, you give a smug elbow to the stomach wall you’re trapped in, glad that your thwarted escape attempt was at least avenged somewhat. </p>
+
+<<defeated "devoured">>
+
+<</if>>
+
+
+:: Storeroom {"position":"4250,1450","size":"100,100"}
+As you adventure through the forest, you come upon a building in a small clearing ahead. 
+
+<<action "c" "house" "Approach" "Approach the storeroom">><</action>>
+<<action "n" "leave" "Leave" "Forest">><</action>>
+
+
+:: Struggle against the wolf [nobr] {"position":"4450,1700","size":"100,100"}
+<<setPassageTitle "Struggle against the $wolf.species">>
+
+<<set _playerSkill = $str + 50>>
+<<skillTest _playerSkill $e.str>>
+
+<<if $skillCheck>>
+You suddenly yell wordlessly at the $wolf.species and headbutt $npc1.him in $npc1.his face, making $npc1.him yowl and momentarily lose $npc1.his concentration. You push hard at the mass of warm flab trapping you, and, to your delight, find yourself just about able to roll $npc1.him off of you onto $npc1.his back. You quickly get up and run, leaving the angry and dazed $wolf.species to howl in fury and try to get back onto $npc1.his feet, with no success.
+<<doXP 10>>
+
+<<include "forest randomization">>
+
+<<else>>
+You grunt and headbutt the $wolf.species in $npc1.his face, but end up knocking your own lights out. The $wolf.species shakes $npc1.his head, snapping out of the dazedness a lot easier than you do, then looks at you, more amused than annoyed at your escape attempt. $npc1.He opens $npc1.his mouth wide, stretching $npc1.his jaws over your head, slowly backing off of you so $npc1.he can get the rest of you into $npc1.his mouth. Your consciousness flickers in and out before finally failing, and you’re unconscious before you’re even fully inside $npc1.him. 
+
+<<defeated "devoured">>
+
+<</if>>
+
+
+:: Struggle through the window [nobr] {"position":"5000,1400","size":"100,100"}
+<<set $eventCounterA -= $str>>
+
+<<switch $eventCounterB>>
+/*First attempt*/
+<<case 1>>
+You can definitely tell the whistling is getting closer as you try to wrestle your gut through the window. 
+<<if $eventCounterA > 0>>
+You struggle to squeeze your overstuffed form out of the window, but only manage to make a little headway. 
+<<action "c" "attack" "Keep struggling" "Struggle through the window">>
+<<set $eventCounterB++>><</action>>
+
+<<else>>
+You struggle to push yourself out and manage to break free. You waddle off into the forest just in the nick of time.  
+<<include "forest randomization">>
+<</if>>
+
+/*Second attempt*/
+<<case 2>>
+You can hear footsteps approaching the door. 
+<<if $eventCounterA > 0>>
+Your continued attempts to escape your stuck fate manages to splinter the window frame, but even still you remain trapped by your swollen gut. 
+<<action "c" "attack" "Keep struggling" "Struggle through the window">>
+<<set $eventCounterB++>><</action>>
+
+<<else>>
+<p>You continue to try and pull your widened form out of the window and finally manage to pop out. You waddle off into the forest just in the nick of time. </p>
+
+<<include "forest randomization">>
+<</if>>
+
+/*Third and final attempt*/
+<<case 3>>
+You can hear someone fumbling with keys. If you're going to get out of here, you better do it now. 
+<<if $eventCounterA > 0>>
+<<setEnemy $storeRoomOwner>>
+With a final heave you desperately try to break free of your confinement, but your huge gut remains stalwart in it's attempts to anchor you in the window.
+
+<p>You hear a voice behind you angrily $npc1.angry "What the hell are you doin' 'ere?" before you're yanked back inside. You're face to face with an angry $npc1.species. $npc1.He's brandishing a big walking stick and appears none too happy with your prescence here. Looks like you're going to have to fight your way out. </p>
+
+<<startCombat>>
+
+<<else>>
+<p>In a hail of splinters, you finally manage to get your fat gut through the smashed out window. As you waddle as fast as you can to the cover of the woods, you can hear loud angered shouting coming from the storeroom. </p>
+
+<<include "forest randomization">>
+<</if>>
+
+<</switch>>
+
+
+:: Submit to the wolf {"position":"4325,1700","size":"100,100"}
+<<setPassageTitle "Sumbit to the $wolf.species">>
+
+Realising that the area is probably crawling with $wolf.plural that would object to aggression or escape, you give up the fight and don’t struggle. The Alpha pauses, puzzled, before giving the closest thing to a shrug $npc1.he can give and opening wide. $npc1.He eases $npc1.his jaws over your head, rolling onto $npc1.his backside, carefully pushing you into $npc1.his maw, tilting $npc1.his head back and swallowing you over, burping in quiet satisfaction and rubbing $npc1.his middle, pleasantly surprised at the lack of resistance $npc1.his latest quarry gave. 
+
+<<defeated "devoured">>
+
+
+:: Trying to escape the feast [nobr] {"position":"4300,1025","size":"100,100"}
+<<set $eventCounterA -= $str>>
+
+/*Still in the feast*/
+
+<<if $eventCounterA > 0>>
+	<p>You struggle against the the thick wooden tendrils of the chair. 
+<<if $eventCounterA < 80>>
+	They give slightly but you still can't quite break free. 
+<</if>>
+</p>
+
+<p>You turn your head away and clench your mouth shut as the fork drunkenly tries to jab the juicy hunk of turkey in your mouth. The knife jabs you in the gut again, almost hard enough to draw blood, and you yelp in pain. The fork seizes this opportunity to cram the whole hunk of turkey in your mouth. You reflexively close your mouth as another explosion of rich savory flavor hits your tastebuds. The fork hovers around your throat menacingly, clearly threatening you into swallowing. 
+</p>
+
+<p>After weighing your options for a short while, you're overcome by the deliciousness and swallow hard, sending the massive hunk of bird down your throat, stretching it out painfully. 
+<<consume 8 4>></p>
+
+<<if $alive>>
+Seemingly pleased with this, the knife zooms off again and struggles to pick up a one inch thick slab of steak. The knife flys off to join him. 
+<<action "c" "attack" "Struggle" "Trying to escape the feast">><</action>>
+<<action "e" "surrender" "Wait" "Wait at the feast">><</action>>
+<<if $sto >= 500>>
+<<action "w" "devour" "Devour the feast" "Devour the feast">><</action>>
+<</if>>
+
+<<else>>
+Your stomach stretches around it as well and you realize you've reached your limit. Your stomach is stuffed absolutely full and you're having trouble staying conscious. Your cutlery captors are unmoved by your bloated groans of protest. Once again the fork wobbles into view, carrying another large chunk of food. Your eyes drift shut even as the fork crams more food in your mouth. 
+<<action "c" "wait" "Sleep" "Defeated by the feast">><</action>>
+<</if>>
+
+/*Escaping the feast*/
+<<else>>
+You struggle against your bonds and manage to break free from your wooden captor, sending splinters flying in the air. You decide haste is the better part of valor and make a hasty exit from the forest clearing. The knife begins to follow you, the fork trailing behind while still wielding a huge hunk of food. They don't follow you far though before they dejectedly make their way back to their table. 
+
+<<include "forest randomization">>
+
+<</if>>
+
+
+:: Wait at the feast {"position":"4175,1025","size":"100,100"}
+<p>You watch as the forks and knives dance about the table, clinking and clattering against the plates as they cut, carve, and lift. Bite sized portions of food are pushed into your $p.mouth as you wait, your limbs passive in their wooden restraints. </p>
+<<set _eat = random(25,35)>>
+<<set _calories = _eat * 0.5>>
+<<consume _eat _calories>>
+<<set $eventCounterB -= _eat>>
+
+<<if !$alive>>
+<p>You don't resist the floating cutlery, even as they bring flesh slabs of steak, and dripping cups of water to your mouth, even as your belly swells out across your lap, even as the restraints dig harshly into your swelling limbs. Even as the darkness of unconsciousness creeps across your vision, the last thing you are aware of before the void takes you is a ladlefull of stew being poured into your mouth. </p>
+<<action "c" "wait" "Sleep" "Defeated by the feast">><</action>>
+
+
+<<elseif $eventCounterB > 0>>
+
+<<action "c" "attack" "Struggle" "Trying to escape the feast">><</action>>
+<<action "e" "surrender" "Wait" "Wait at the feast">><</action>>
+<<if $sto >= 500>>
+<<action "w" "devour" "Devour the feast" "Devour the feast">><</action>>
+<</if>>
+
+<<else>>
+<p>Finally, as you let loose one last resonant belch, the cutlery falls to the denuded plates, their magic as spent as your stomach is filled. </p>
+<<include "forest randomization">>
+<</if>>
+
+
+:: Wake up in the storeroom {"position":"5000,1525","size":"100,100"}
+<p><<rest>>
+<<stuffToBursting>>
+An hour later you groggily wake up. As you blink the sleep from your eyes you begin to notice the room swaying back and forth slightly. You also swiftly notice how tremendously overstuffed your gut feels. </p>
+
+<p>You look down at your $waist stomach and it's even larger than you remembered it being before you passed out. Finally reminded of your recent predicament, you snap your head around to figure out what happened. The sudden movement causes the room to sway even more as you finally realize you've hanging from the store room rafters by your feet. Your vision finally clears and focuses in on your captor grinning evilly at you. </p>
+
+<p>"Well, nice to see ya'll finally woken up!" $npc1.he says in a mock jovial tone. "I've just been takin' the liberty of helpin' you enjoy my //bounteous// provisions. I hope you don't mind." $npc1.He motions to a now significantly emptier store room, and the source of your extremely swollen gut is now much less of a mystery. You attempt to shout at $npc1.him but your attempts are muffled by a gag in your mouth. </p>
+
+<p>"Oh, no need to thank me." $npc1.he laughs darkly and rubs your swollen gut, "I'm just doin' my part to help a fellow food connoisseur out. Speakin' o' which, if your appetite is quite satisfied, I think it's about time I have my supper." </p>
+
+With that, the $npc1.species opens $npc1.his jaws wider than you would have thought possible as $npc1.he engulfs your head and begins swallowing you down. $npc1.He stops only for a moment at your bulging gut before finally swallowing you down whole, your vision fading to black as $npc1.he does so. 
+
+<<defeated "devoured">>
+
+
+:: Wolf pack {"position":"4200,1825","size":"100,100"}
+<<setPassageTitle "<<=setup.getSpeciesData('wolf').species.toUpperFirst()>> pack">>
+<p>While making your way through the forest, you begin to notice a lot more noise around you than normal. Looking through the overgrowth, you can see a pack of $wolf.plural walking through the forest. You quickly hide behind a tree as best you can, waiting for the pack to pass. </p>
+
+You peek out, seeing if they’re gone, and can see that their massive, dragging bellies have made a small pathway through the growth, leading somewhere. 
+
+<<action "c" "run" "Hide from the $wolf.plural" "Hide from wolves">><</action>>
+<<action "n" "next" "Follow the $wolf.plural" "Follow wolves">><</action>>
+
+

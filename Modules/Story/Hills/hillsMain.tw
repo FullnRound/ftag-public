@@ -1,0 +1,632 @@
+:: Captured by the Dessert Villagers [nobr] {"position":"3725,2950","size":"100,100"}
+<p>You wake up tied down with a bunch of restraints around your arms, legs and head. You can barely move your head, but you can see hundreds or maybe even thousands of these small dessert creatures and even some much larger ones - even though they are still at most half your size. One of them shouts "Begin the sacrifice!" as a device opens your mouth impossibly wide. You panick as the dessert people begin piling themselves inside of your maw and going down your throat. Your eyes widen in confusion, but your mouth salivates at how insanely delicious they are. You have no idea why they are doing this, but you don't care. 
+</p>
+
+<p>Even though the dessert people are fairly small, they seem to be much more... filling than you'd expect.You feel the pressure in your stomach as it swells out drastically, bulging around the restraints across your body. You enter a state of bliss as you are forcibly devouring an entire race of delicious little people. 
+<<consume 40 30>></p>
+
+<<if $alive>>
+<p>In a matter of minutes your stomach has bulged out massively and the restraints across your torso snap and fly off. You can't see how many of them are left, but all of the sudden, even though you feel thoroughly stuffed, you want to eat them all. No, you NEED to eat them all. If you weren't in restraints you'd be doing the same thing they are forcing you to do now, eat them and become massive. 
+<<consume 275 200>></p>
+
+<<if $alive>>
+<p><<rest>>
+<<rest>>
+Hours pass by and eventually only one dessert person remains. Your stomach has grown tremendously and the final restraints on your wrists and ankles are practically stretched to the limit as your fat bulges around them. The final dessert person undoes the restraints as you lay there like a blubberous land-whale. 
+<<consume 550 400>></p>
+
+<<if $alive>>
+<p>You struggle to get to your feet, your center of gravity drastically changing from eating an entire race of delicious dessert people. After you manage to get to your feet, you belch thunderously. They were the most delicious race of people you had ever eaten. Just then you realize... there's still one more. </p>
+
+<<action "c" "devour" "Eat the last Dessert person">><</action>>
+<<action "n" "leave" "Leave the villagers">>
+<<set $eventCounterA = 1>><</action>>
+
+<<else>>
+<<if $options.popping>>
+<p>You hope to devour the entire race of dessert people, but your stomach starts to protest as the last of the dessert people pile into your mouth. You just want to eat them all, but it seems you won't be able to. A little muffin-man struggles to climb down your throat, but your overtaxed gut has run out of room. A gingerbread $p.species begins to help, using a candy-cane to prod the muffin deeper down your gullet. It was too much. Your pastry-packed belly rumbles and groans, swelling out to suddenly detonate like a batter-filled bomb! </p>
+<<defeated "exploded">>
+<<else>>
+<p>You hope to devour the entire race of dessert people, but your stomach starts to protest as the last of the dessert people pile into your mouth. You just want to eat them all, but it seems you won't be able to... </p>
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+<<else>>
+<<if $options.popping>>
+<p>Your stomach becomes so large that you practically can't see past it. Looking up at the mountainous swell, you can just see a cupcake person has clambered all the way to the top. It looks down at you before kicking off. It slides down the mighty curve of your belly like a rollercoaster leading straight into your mouth. It was too much. Your pastry-packed belly rumbles and groans, swelling out to suddenly detonate like a batter-filled bomb! </p>
+<<defeated "exploded">>
+<<else>>
+<p>You pass out after your stomach becomes so large that you practically can't see past it. </p>
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+<<else>>
+<<if $options.popping>>
+<p>The dessert people continually stuff themselves into your maw, filling your stomach and fattening you up. There seems to be no end to them. You find yourself woefully short of stomach capacity before you’ve made a dent in the que. A particularly large donut person just made its way to join the rest of the party when your gut lets out a mighty groan. The assembled dessert people seem agitated. Some flee while others try to shove their way to your mouth, hoping to get inside before it too late. But just a few seconds later, your pastry-packed belly rumbles, swelling out to suddenly detonate like a batter-filled bomb! </p>
+
+<p>The dessert village is left in a sugary mess. At ground zero a gingerbread $p.species limps back towards the village though bits of frosting and dough using a candy cane, having lost one of its cookie legs in the blast. </p>
+<<defeated "exploded">>
+<<else>>
+You doze off as the dessert people continually stuff themselves into your maw, filling your stomach and fattening you up. 
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+:: Dessert village [hills] {"position":"3725,2700","size":"100,100"}
+As you crest the next hill, you come across a tiny town in the next valley that looks to be populated with small creatures made up of various desserts. As you admire them, a few of townsfolk come up to see you and beckon you to follow. 
+
+<<action "w" devour "Eat the villagers!">><</action>>
+
+<<action "c" "quest" "Follow the villagers">><</action>>
+
+<<action "n" "leave" "Leave the villagers">>
+<<set $eventCounterA = 0>><</action>>
+
+
+:: Drink wishing well water [nobr] {"position":"3425,2950","size":"100,100"}
+<p>You glance at the sign, then at the well, and lick your lips. Well, it doesn't say you //CAN'T//... Leaning over the edge of the well you plunge your cupped $p.hands into the cold, clear water and scoop some up, slurping it down messily. </p>
+
+<<switch random(1,8)>>
+
+<<case 1>>
+<p>It tastes... just like water. Apart from quenching your thirst, nothing even slightly supernatural happens. 
+<<consume 5 0>>
+<<stamina 30>></p>
+
+
+<<if $alive>>
+With a rather guilty glance around you turn and hurriedly make your way back down the tunnel and out into the hills. 
+
+<<else>>
+Something regular natural //does// happen though. You're stomach groans and rebels as you realize you drank too greedily and too deep. You slump to the floor, far too full to even think straight anymore. As you slowly lose concsiousness, you can only hope somebody finds you in this remote place....
+
+<<defeated "overeating">>
+<</if>>
+
+<<case 2>>
+<<if $p.height <= 132>>
+<<changeStats "height" 12 true>>
+<p>It tastes sweeter than you'd expected. In fact, it tastes almost exactly like lemonade! Weird! You're still rubbing your damp chin when a wave of nausea runs through you, and you double up around your stomach. A deep rumbling emerges from it, growing louder and louder. 
+</p>
+
+<p>//"Oorgh,"// you think to yourself, //"M-maybe I sh-shouldn't have drunk the wa-oh... woah... woah...! WOAH...!"// As the rumbling from your middle becomes deafening, you feel your body SURGE upwards, the ground retreating from you at an alarming rate. You stumble unsteadily as you try to stand upright, feeling like you're in an earthquake
+<<if $p.height > 72>>, and promptly bang your head on the ceiling<</if>>. The weird rumbling, trembling sensation abruptly dies away, and you're left standing there, panting. Looking around you, the world feels... smaller. Quite a lot smaller. You've GROWN! Looking down at the well, you think you must be at least <<sayDistance 12>> taller than you were a few seconds ago! 
+
+<<if $top.name != $shirtless.name or $btm.name != $pantsless.name>>
+Glancing down, you realise that none of your clothes fit you properly any more- you look like you've borrowed them from your little $p.brother. <</if>></p>
+
+<<else>>
+<p>It tastes... just like water. Apart from quenching your thirst, nothing even slightly supernatural happens. 
+<<consume 5 0>>
+<<stamina 30>></p>
+
+<<if $alive>>
+With a rather guilty glance around you turn and hurriedly make your way back down the tunnel and out into the hills. 
+
+<<else>>
+Something regular natural //does// happen though. You're stomach groans and rebels as you realize you drank too greedily and too deep. You slump to the floor, far too full to even think straight anymore. As you slowly lose concsiousness, you can only hope somebody finds you in this remote place....
+
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+<<case 3>>
+<<set $fat += 150>>
+<<updateStats>>
+<p>The water slides down your throat like syrup, amazingly sweet. You blink in surprise, then cough. You weren't expecting THAT. Then you feel a tectonic rumbling deep in your guts, and a deep, rolling BURRP escapes from you, echoing off the cave walls and making the well-water ripple. The rumbling is replaced by a strange tingling, the cold water sitting in your stomach like ice. You suddenly feel... so FULL... With another stuffed //belch// you put your $p.hands to your stomach, only to feel it swelling in your grip! </p>
+
+<p>Your eyes boggle as you grab and shake your middle, but it is definitely growing! And not just filling- you're gaining weight! The tingling in the pit of your stomach seems to spread throughout your body, and as you stand there you feel ALL of you starting to put on weight- arms, legs, back, neck, the lot! You have to widen your stance to accommodate your swelling belly and thickening thighs. You lumber heavily to the well and stare at your reflection, and gawp as your features plump up before your very eyes. </p>
+
+<p>Finally the cold tingling sensation subsides, and you stop growing. But you're been left a good <<sayWeight 150>> fatter. You're now downright $fatness! Whoever said that drinking water was good for you? You poke at your sizably-expanded gut in disbelief, then slowly shake your head (feeling your cheeks wobble as you do so). Turning, you waddle unsteadily down the tunnel, and emerge rather dazedly into the $daytime. You REALLY weren't expecting THAT... </p>
+
+<<case 4>>
+<p>It tastes... WONDERFUL! You smack your lips, feeling a big, silly smile plaster itself across your face. It's the most divine thing you've ever tasted! It's... IRRESISTIBLE! You grab hold of the well wall with both $p.hands and PLUNGE your face underwater, gulping it down like some kind of suction pump. You feel your belly fill quickly with the cold water, then grow taut, but you don't care- you just HAVE to keep drinking! You gulp down gallon after gallon, completely unable to stop yourself, your belly swelling bigger and bigger against the side of the well. A couple of times you're forced up for air, but after a couple of ragged breathes you dive back down again, slurping and gulping for all that you're worth. You guzzle well water until it HURTS! 
+<<set _water = ($sto * 1.1)>>
+<<consume _water 0>></p>
+
+<<if $alive>>
+<p>The sloshing weight of your waterlogged stomach finally drags your face clear of the water- to an accompanying $p.angry of disappointment. The supernatural compulsion you were under abruptly fades, and you let out a rolling //BURRRRP// that shakes the cave! You totter back a couple of paces before falling onto your backside, moaning and weakly rubbing at your new waterballoon of a belly. </p>
+
+<p>Oogh, you feel almost fit to burst! What came OVER you? With a stifled groan you manage to roll to your feet and stumble back down the tunnel to the outside world, 
+sloshing heavily with each lumbering step you take. Out in the fresh air you feel a little better, but you won't want another drink for a long, long time. </p>
+
+<<else>>
+<<if $options.popping>>
+<p>The ache in your stomach grows stronger and stronger as you swell out like a balloon, rising up onto your belly as it fills, until you're actually leaning down to keep in contact with the water. Your hide stretches as you continue to suck down gallon after gallon, all the while your body growing out and up. Finally, you feel something sharp press against your flank. A pointy stalactite reaching down from the ceiling makes contact with your waterlogged gut, but you are unable to stop. A few more gulps send the rocky tip straight through your waterballooned hide. You split open in a flood of water, which slowly drains back down to the depths from where it came. </p>
+
+<p>In the aftermath, water comes dripping down from the ceiling, growing the stalactites a tiny bit more as little bits of mineral get left behind...</p>
+<<defeated "exploded">>
+
+<<else>>
+<p>The ache in your stomach grows stronger and stronger as you swell out like a balloon, actually rising up onto your belly as it fills, until you're actually leaning down to keep in contact with the water. Finally the weight of all that water drags your face clear, and you gasp with disappointment- and then with agony as the supernatural compulsion gripping you abruptly fades. You wheeze and let out a watery BURRRRP, your body rolling onto its back as it finds its new centre of gravity. You lay there, pinned by your now enormous waterballoon belly, weighing down on you painfully, your vision going blurry at the edges as you try to breathe, the pressure inside you increasing until it seems you're going to POP. Mercifully, before that happens you lose consciousness, and everything fades to black. </p>
+
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+<<case 5>>
+<p>For a moment you swill it rather gingerly round your mouth to warm it, and then, reassured that it does just seem to be water, swallow it down. It's only as you feel it go down your throat does it start to fizz and bubble angrily, but by then it's far, far too late, and you gulp heavily. With a sense of foreboding you turn to look at the well, and the water in that is doing just same, roiling like a pan of boiling water! Suddenly it glows as if powerfully lit from underneath, making your eyes ache. </p>
+
+<p>The water begins to spiral around, but rather than sinking down in the center it rises UP. And up, and up, until you're staring at a figure made of glowing water, like the most delicately-made glass statue ever. You realise with a jolt that it's a highly-idealised rendering of a $p.male $p.species- or, in other words, YOU. And the spirit inhabiting it does not appear pleased with you. </p>
+
+<p>"Sacrilege!" $p.he exclaims, rather waterily. $p.He extends an arm at you, and a jet of icy-cold water sprays forward, smacking straight into your gaping mouth. The force of it knocks you back against the cave wall, spluttering as you gulp water, and gulp, and gulp, and gulp. Your cheeks bulge out, continually swollen by the cateract of water swilling through them. You try to get out from under the deluge, but two more jets pummel at your arms and shoulders, pinning you in place while your stomach swells visibly. 
+<<set _water = ($sto + 125) * 2>>
+<<consume _water 0>></p>
+
+<p>"You dare to drink from my sacred waters," the spirit intones maliciously, "so THAT shall be your punishment!" You struggle uselessly, feeling yourself ballooning bigger and bigger and bigger, stretching far more than a mortal body SHOULD be able to. Pretty soon your stomach is resting on the cave floor and you feel your legs lifted uselessly into the air, buoyed up by the pressure from your stomach and backside, while your arms have become swollen and stubby, useless. You bob there, totally unrecognisable as a $p.species, a living waterballoon, still being forced larger and larger by the unforgiving spirit, until you're filling nearly half the cave! The spirit's avatar grows increasingly tall and massive as you expand, eye-to-eye with you as $p.he gushes water into you. Your hide reaches the limits of whatever magical elasticity is maintaining it, and you feel yourself trembling from the tension, the pressure inside you growing greater and greater and greater. 
+<<consume _water 0>></p>
+
+<<if $options.popping>>
+<p>A deep, ominous, watery gurgling begins deep inside you, and you clench your eyes shut, but even with them tightly closed as you feel your body suddenly give way. For just a fraction of a second, a perfect sphere of water hangs in the air. Now freed from its fleshy prison that was you, it erupts in all directions soaking the cave in a cascade of water. </p>
+
+<<defeated "exploded">>
+
+<<else>>
+<p>A deep, ominous, watery gurgling begins deep inside you, and you clench your eyes shut, but even with them tightly closed as you feel yourself about to burst even the darkness behind your eyelids begins to turn to blinding light... </p>
+
+<<defeated "overeating">>
+<</if>>
+
+
+<<case 6>>
+<<if $ate > 0 or $inf > 0 or $fat > 0>>
+
+	<<set _weightLost = setup.weight()>>
+	<<set $ate = 0>>
+	<<set $inf = 0>>
+	<<set $infMass = 0>>
+	<<set $cal = 0>>
+	<<set $fat -= 30>>
+	<<if $fat < 0>><<set $fat = 0>><</if>>
+	<<updateStats>>
+	<<set _weightLost -= setup.weight()>>
+
+	<p>BLEAURGH! It tastes bitter! You swallow it before you can stop yourself. You spit out what you can, feeling your cheeks suck in with distaste. Oogh, that was horrible! You can even feel your insides clench as the cold water pools in your stomach. You put your $p.hands to your middle- then your eyes bulge as you feel your stomach shrinking! No word of a lie, you're getting thinner! Your fingers close together as your $waist stomach reduces in your grip, the cold water chilling you to the bone. By the time the feeling wears off, you must have lost <<sayWeight _weightLost>>! Talk about a diet plan. </p>
+
+<p>Still queasy, you stagger down the tunnel and out into the fresh air, feeling disturbingly light on your feet and your stomach disturbingly empty. </p>
+
+<<else>>
+<p>It tastes... just like water. Apart from quenching your thirst, nothing even slightly supernatural happens. 
+<<consume 5 0>>
+<<stamina 30>></p>
+
+<<if $alive>>
+<p>With a rather guilty glance around you turn and hurriedly make your way back down the tunnel and out into the hills. </p>
+
+<<else>>
+<p>Something regular natural //does// happen though. You're stomach groans and rebels as you realize you drank too greedily and too deep. You slump to the floor, far too full to even think straight anymore. As you slowly lose concsiousness, you can only hope somebody finds you in this remote place....</p>
+
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+<<case 7>>
+<<if $p.height >= 52>>
+
+<<changeStats "height" -12 true>>
+<p>Ick! That tastes HORRIBLE! You spray the water across the cave (and yourself), wiping at your mouth to get rid of the taste, then trying to pat your damp hide dry. That's when you feel a strange tremor run through your body, and with a grunt of surprise your hold up one arm for your inspection, only to watch it... shrink. Along with the rest of you. <<if $top.name != $shirtless.name or $btm.name != $pantsless.name>>Your clothes start to rumple as you sink down into them. <</if>></p>
+
+<p>By the time whatever crazy curse this is has finished with you, you've shrunk in height by about <<sayDistance 12>>! Suddenly the cave seems quite a bit taller, and then it echoes with unseen laughter. You high-tail it out of there before anything else can happen, discovering on your way out that people with shorter legs have to walk more. </p>
+
+<<else>>
+<p>It tastes... just like water. Apart from quenching your thirst, nothing even slightly supernatural happens. 
+<<consume 5 0>>
+<<stamina 30>></p>
+
+<<if $alive>>
+<p>With a rather guilty glance around you turn and hurriedly make your way back down the tunnel and out into the hills. </p>
+
+<<else>>
+<p>Something regular natural //does// happen though. You're stomach groans and rebels as you realize you drank too greedily and too deep. You slump to the floor, far too full to even think straight anymore. As you slowly lose concsiousness, you can only hope somebody finds you in this remote place....</p>
+
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+<<case 8>> 
+<p>The moment the water from the sacred well touches your lips, its unexpected sweetness, reminiscent of a rich, honeyed liqueur, takes you by surprise. This isn't the simple, refreshing water you anticipated. A cough escapes you, a reaction to the unexpected flavor. Almost immediately, a deep, unsettling rumbling starts in your abdomen, sending a resonant burp echoing off the cave walls, causing the surface of the well to ripple in response.</p>
+
+<p>This internal turbulence quickly transforms into a peculiar, tingling sensation, spreading from the pit of your stomach. A cold, intense fullness begins to take over your body. Alarmingly, you feel your stomach begin to swell, inflating rapidly like a balloon being filled to the brink. Your $p.hands instinctively grasp your midsection, feeling the tautness of your skin as it stretches, accommodating your increasingly prominent belly. The growth is relentless, your belly expanding outward, forming a pronounced, round bulge.</p>
+
+<p>But the swelling doesn't stop there. It swiftly extends to your hips and <<if $p.male=="female">>breasts<<else>>chest<</if>>. Your hips widen noticeably, ballooning out to create a more voluptuous, rounded shape. This bizarre sensation, as though your body is being silently filled with air, is both surreal and unsettling. Simultaneously, your chest starts to expand as well, your <<if $p.male=="female">>breasts<<else>>chest<</if>> swelling in tandem with your belly and hips. Panic sets in as you realize the transformation shows no sign of slowing. Your clothing strains against your rapidly increasing girth, seams popping and fabric pulling tight.</p>
+
+<p>The swelling feels unstoppable, a relentless force rapidly reshaping your body. With each passing moment, you grow larger, your once-familiar form becoming unrecognizable. The realization that you are rapidly losing control over your own body instills a deep, visceral fear.</p>
+
+<p>Panicked by this unexpected transformation, you attempt to flee the cave. However, your swollen legs and ballooning body make movement increasingly difficult. Each step is heavier, more laborious, as your belly, thighs, and back continue to gain mass, contributing to your growing roundness.</p>
+
+<p>Hindered by your rapidly expanding form, your attempts to escape become increasingly futile. As you try to shuffle towards the cave exit, the swelling relentlessly continues. Your body feels like an overfilled water balloon, each part filling with an impossible amount of liquid.</p>
+
+<p>Your crotch begins to swell downward, pushing against the fabric of your clothing, creating an uncomfortable pressure. This swelling forces your legs apart, making it difficult to maintain a waddling gait towards the cave exit. Each step becomes a laborious effort as the swollen mass between your legs grows, hindering your ability to move.</p>
+
+<p>Simultaneously, your arms start to lift upward, hoisted by the expanding sides of your body. They become increasingly useless, more like floating appendages on the sides of your ballooning form. The sheer size of your body at this point is staggering – you're like a $p.species water balloon, each part of you engorged and stretched to the brink.</p>
+
+<p>As the swelling continues unabated, the expanded mass of your crotch presses against the cave floor with each strained step, forcing your feet even further apart. This bizarre and cumbersome development makes movement near impossible. Your steps become more like awkward shuffles, your feet struggling to find purchase on the ground as they are pushed outward and upward by the swelling mass of your lower body.</p>
+
+<p>Finally, your feet lose contact with the ground entirely, lifted off the floor by the sheer volume of your lower body. In this helpless state, you begin to roll backward, your body having become so round and inflated that it moves on its own accord. You try to stop the motion, but it's futile – your limbs are too swollen to provide any leverage.</p>
+
+<p>Slowly rolling back deeper into the cave, your inflated form bounces gently off the walls. The sensation of rolling, utterly out of control, is surreal – you're at the mercy of your own bloated body, unable to do anything but watch as the cave's entrance grows further and further away. With each rotation, the realization sets in: you are trapped in this inflated state, a prisoner of the sacred well's magic, rolling helplessly into the depths of the cavern from which you sought to escape.</p>
+
+<p>In the dimness of the cavern, as you come to a stop, you're left in a state of round, immobile defeat. The well's mysterious magic has transformed you into a living sphere, rolled back into the depths from which you sought to escape. You take a moment to examine your new body.</p>
+
+<p>Trapped within the confines of your own inflated form, you find yourself unable to do much beyond making small, flapping motions with your $p.hands and feet. These pitiful gestures, barely noticeable on the vast surface of your ballooned body, are a futile effort against your immense size. Each muffled grunt you emit is a muted cry of frustration, muffled by the sheer volume of your swollen form. The reality of your situation is stark – you are now a colossal, helpless being, unable to move or communicate effectively, reduced to the most basic, ineffectual attempts at motion. Your vision fades as the fullness of your entire being becomes overwhelming...</p>
+
+<<defeated "overeating">>
+<</switch>>
+
+<<if$alive>>
+<<include "hills randomization">>
+
+<</if>>
+
+
+:: Eat the last Dessert person [nobr] {"position":"3850,2950","size":"100,100"}
+You grab ahold of the last dessert person. He gives a tiny triumphant cheer of glee before you stuff him in your mouth and gulp him down. 
+<<consume 10 7>>
+
+<<if $alive>>
+Hopefully there are more where that came from. 
+
+<<include "hills randomization">>
+
+<<else>>
+<<if $options.popping>>
+<p>His muffled cheers travel down your throat and just as they're silenced completely, you realize what a mistake that last bite was. You stomach stretches those last painful few inches and you begin to feel dizzy from fullness. You collapse over on your back, crushing the tiny village homes as your overtaxed gut wobbles over you. The rough jostling is too much and your pastry-packed belly swells out to suddenly detonate like a batter-filled bomb! </p>
+<<defeated "exploded">>
+<<else>>
+<p>His muffled cheers travel down your throat and just as they're silenced completely, you realize what a mistake that last bite was. You stomach stretches those last painful few inches and you begin to faint from fullness. You collapse over on your back, crushing the tiny village homes as your overtaxed gut wobbles over you and you pass out from gluttonous pain. </p>
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+
+:: Eat the villagers! [nobr] {"position":"3725,2825","size":"100,100"}
+You ignore their puny request and grab ahold of the few delicious dessert people talking to you and stuff them in mouth. 
+<<consume 12 8>>
+
+<<if $alive>>
+	<<include "hills randomization">>
+
+<<else>>
+	<p>You pat your stomach for a job well done, but as soon as you take one step, you stumble. You attempt to regain your footing, but you're just //far// too stuffed to stay standing anymore. You eventually flop over onto your back, ready to fall into a sugar coma. As you pass out, you see yet more tiny villagers making their way towards you....</p>
+
+	<<action "c" "wait" "Sleep" "Captured by the Dessert Villagers">>
+	<</action>>
+
+<</if>>
+
+
+:: Follow the villagers [nobr] {"position":"3850,2825","size":"100,100"}
+You follow the dessert creatures into their small village, your stomach growling as their delicious smells enter your nostrils. You can barely hear them, but it sounds like they want to worship you. As you lose yourself in their smells you realize all of them have disappeared. Just as you're looking around you fall unconcious. 
+
+<<action "c" "wait" "Sleep" "Captured by the Dessert Villagers">><</action>>
+
+
+:: Hills [hills] {"position":"3650,2300","size":"200,200"}
+<<if $eventCounterB == "rest">>
+	<<set $eventCounterB = "">>
+	You find a comfortable spot to sit down and rest. 
+	<<rest>>
+
+	<<if random(1,5) == 1>>
+		<<set _enemy = either($milkMachine, $blueberrySlime, $honeySlime, $meatMonster, $bloatBees)>>
+		<<setEnemy _enemy>>
+		You are awoken from your sleep by $e.article $e.name! 
+	
+		<<startCombat>>
+
+	<<else>>
+		
+		<<include "hills randomization">>
+	<</if>>
+
+<<else>>
+You're standing in the rolling hills. The frequent changes in elevation make it hard to find a bearing on your location, as the top of every hill seems to be surrounded by even taller hills. Several large rocky outcroppings jut from the earth along with several small thickets of trees. Across the distant southeastern horizon the tall dark mountains loom overhead. 
+
+<<include "hills randomization">>
+<</if>>
+
+
+:: Hills ambush [hills] {"position":"3600,2575","size":"100,100"}
+/*Increase enemy find rates when on specific quests later*/
+<<if $hillsEnemies == undefined or $hillsEnemies.length == 0>>
+	<<set $hillsEnemies = ["milk", "blueberry", "honey", "meat", "bee"]>>
+<</if>>
+<<set _enemy = $hillsEnemies.pluck()>>
+
+<<switch _enemy>>
+
+<<case "milk">>
+<<setEnemy $milkMachine>>
+You're adventuring when you start to hear a sudden strange metallic whirring. The source is quickly revealed as some malevolent metal contraption suddenly springs out in front of you!
+
+<<case "blueberry">>
+<<setEnemy $blueberrySlime>>
+As you're travelling you're greeted by the scent of blueberries. You look around to see if you can find a blueberry bush anywhere, but as the scent becomes more and more powerful, you're suddenly set upon by a massive blue slime!
+
+<<case "honey">>
+<<setEnemy $honeySlime>>
+A delicious and mouth-watering scent begins pervading before the approach of your foe - a honey slime! Drooling over the captivating scent, you catch yourself wiping your mouth. The slime, lumbering, approaches you with viscous sweetness and fierceness! Or is it the honey that gives the vibe? 
+
+<<case "meat">>
+<<setEnemy $meatMonster>>
+As you're travelling through the rolling hills outside town, you being to smell the unmistakable scent of a barbecue. You look around for any trails of smoke to guide you, but as you turn around you come face to... face(?) with an animate man made of meat!
+
+<<case "bee">>
+<<setEnemy $bloatBees>>
+As you adventure through the hills, you hear a quiet buzzing noise over your shoulder. As you turn to investigate you see a swarm of <<=setup.getSpeciesData("bee").plural>> crest the previous hill and fly towards you menacingly. 
+
+<<default>>
+''Error in enemy randomization''
+
+<</switch>>
+
+<<startCombat>>
+
+
+:: Investigate well [nobr] {"position":"3425,2825","size":"100,100"}
+<p>Intrigued, you push further into the rocky gap, which leads into a natural-looking tunnel of some kind. 
+
+<<if $p.height > 72>>You have to duck slightly to get through the cave entrance without banging your head. 
+<<elseif $p.height > 48>>You can just touch the top of the cave mouth with your fingertips. 
+<<else>>You try to reach up to the entrance’s ceiling, but can’t. 
+<</if>>
+
+<<if setup.waistDiameter() > 36>>Squeezing your ample backside between the walls most of the way, 
+<<elseif setup.waistDiameter() > 8>>Having to breathe in at a couple of points to get through, 
+<<else>>Strolling along with ease, 
+<</if>>
+
+after a few dozen paces you emerge into a circular cave, with 
+
+<<switch $daytime>>
+<<case "morning">>morning sunlight slanting in 
+<<case "day">>midday sun shining straight down 
+<<case "evening">>evening light glowing 
+<<case "night">>bright moonlight diffusing 
+<</switch>>
+
+through a high gap in the crowning rock walls above. What looks like an old well sits in the middle of the cave, apparently bubbling up from an underground spring somewhere below. A rough, low, crumbling wall encloses the water, looking old enough to be from Ancient times. The sparkling water fills it to the very brim, barely held in by surface tension, rivulets of it occasionally trickling out over the coping, glinting like mercury in the low light. You deduce from the scuffed tracks in the sandy floor that you’re not the only person to have adventured down here. 
+</p>
+
+<p>You slowly make a circuit around its circumference, seeing nothing unusual except for three strange stone heads built at equal distances around the edge. Time and splashes of water have eroded almost all the detail, so you can’t tell much beyond the fact that they all seem vaguely plump. A couple of cracked and crumbling pieces of masonry might or might-not have traces of writing carved on them. Leaning over the edge, you discover that at least some of the sparkle is coming from quite large accumulations of old coins down there, glinting up through the luminously clear water. </p>
+
+<p>Just as you're about to complete your circuit, you come across a much more recent item, a wooden board nailed to a post in the time-honoured 'This is a sign' tradition. On it is badly painted: </p>
+
+<p><i>1 gold 4 LucK <br>
+10 4 StR3nGtH <br>
+20 4 Siz3 <br>
+30 4 GiRtH</i> </p>
+
+<p>Wow, whoever heard of a wishing-well with a PRICE LIST? You catch sight of your reflection in the rippling water, and give yourself an ironic grin. It's true what they say, tourism ruins everything. </p>
+
+
+<<if $gld >= 1>>
+<<action "1" "gold" "Throw in 1 gold" "Throw in gold">><<set $eventCounterA = 1>><</action>><</if>>
+
+<<if $gld >= 10>>
+<<action "2" "gold" "Throw in 10 gold" "Throw in gold">><<set $eventCounterA = 10>><</action>><</if>>
+
+<<if $gld >= 20>>
+<<action "3" "gold" "Throw in 20 gold" "Throw in gold">><<set $eventCounterA = 20>><</action>><</if>>
+
+<<if $gld >= 30>>
+<<action "4" "gold" "Throw in 30 gold" "Throw in gold">><<set $eventCounterA = 30>><</action>><</if>>
+
+<<action "sw" "drink" "Drink wishing well water">><</action>>
+
+<<action "se" "leave" "Leave well">><<set $eventCounterA = 1>><</action>>
+
+
+:: Leave the villagers [nobr] {"position":"3850,2700","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 0>>
+	You ignore the miniature dessert people and go on your merry way. They were kind of creepy anyway. 
+
+<<case 1>>
+	You thank the dessert person and leave, not wanting to risk accidental eruption. You waddle from side to side with every step as your gigantic belly sloshes around. 
+
+<</switch>>
+
+
+<<include "hills randomization">>
+
+
+:: Leave well {"position":"3550,2825","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 0>>
+	With a shrug you withdraw from the hole and head on your way. It’s almost certainly not worth investigating- absolutely NOTHING happens in these thar hills...
+
+<<default>>
+	You decide against parting with any cash on this occasion- besides, you'd rather not mess with things that you don't understand. With a rather guilty glance back at the well, you head back down the tunnel and out into the $sunlight. 
+<</switch>>
+
+<<include "hills randomization">>
+
+
+:: Minor Hills events [hills] {"position":"3800,2575","size":"100,100"}
+<<setPassageTitle "A discovery?">>
+
+As you travel through the forest, you come across a small tree bearing fruit. You reach up and pick the only ripe looking fruit. 
+<<if random(1,2) == 1>><<getItem $apple>>
+<<else>><<getItem $orange>>
+<</if>>
+
+<<include "hills randomization">>
+
+
+:: Throw in gold [nobr] {"position":"3550,2950","size":"100,100"}
+<<switch $eventCounterA>>
+
+<<case 1>>
+<p><<doGld -1>>
+You flip a single coin into the well, hearing the solitary 'gloop' it makes as it hits the water. It sinks without a trace, not even a bubble. With a shrug, you turn and make your way back down the tunnel and into the $sunlight. Maybe it WILL bring you luck, but for one measly gold coin you can't help but feel that whatever spirit watches over that well is going to be all that impressed by your generosity. </p>
+
+<<case 10>>
+<<doGld -10>>
+<p>You count out 10 pieces of gold into your palm and tip them into the water, where they make a rattling splash as they hit. You stand there for a moment, wondering if you should offer up some kind of prayer, or at least close your eyes
+
+<<if random(1,2) == 1 and $status.str < 30>>, when you start to feel a little funny. It takes a couple of moments but you realise that it's your <<if $top.name == $shirtless.name>>shoulders! All of a sudden your skin feels tight across shoulders. <<else>>clothes! All of a sudden your $top.name feels tight across the shoulders. <</if>>
+
+<p>You flex them uncomfortably, and blink at how powerful they feel all of a sudden. That tingly feeling spreads down your arms, and you do a double-take as they grow noticeably thicker and more powerful, too. The tingling spreads down your spine too, and glancing over your shoulder you watch as your $fatness backside firms up noticeably- proved by a little flex of your cheeks. "The feeling goes all the way through you from the tips of your fingers to the ends of your $p.feet, leaving you feeling quite a bit tougher. With a smile on your face, you stride back down the tunnel and into the $sunlight. 
+<<buff "str" 30 360>></p>
+
+<<else>>
+. In the end you do shut them for a bit, but when you open them nothing seems to have changed. Ah, phooey. You head back outside. Maybe the lesson here is that if you want to be stronger you should work out more, rather than relying on wishes! 
+
+<</if>>
+
+
+<<case 20>>
+<<doGld -20>>
+<p>You count out 20 gold pieces- a sizeable double-handful- and drop them into the water with a rock-like //splosh//, a few bubbles rising to the surface in their wake. You wait a few moments, holding your breath. </p>
+
+<<if random(1,2) == 1 and $p.height < 100>>
+<<changeStats "height" 2 true>>
+<p>You start to feel funny a few paces down the tunnel, almost like an ache in your spine, but you keep on going. Two more steps down the tunnel and the feeling has spread all the way through your back, shoulders and legs, like you've been for a long run- or someone has given you one hell of a massage. Although the air in the tunnel isn't that warm, you break into a sweat. You can see the mouth of the tunnel ahead, and press on
+<<if $p.height >= 100>>, squeezing down the tunnel<</if>>
+. When you reach the opening the funny feeling abruptly stops, but it's only when you step out that you realise something HAS changed! </p>
+
+<p>Blinking in the $sunlight you examine yourself in astonishment, comparing yourself to a conveniently-placed tree. You've shot up in height by a good <<sayDistance 2>>. Not too shabby! Grinning at your good fortune, you breezily head on your way. </p>
+
+<<else>>
+Then, when it becomes painfully apparent that nothing's happening, you let it out with an audible sigh. Shame- you've always had a hankering to be taller. It looks like the spirits of the well like you just the way you are. Turning, you head back down the tunnel and out into the $sunlight. 
+<</if>>
+
+
+<<case 30>>
+<p><<doGld -30>>
+Counting out 30 gold- quite the heap of coin, you reach out over the water, 
+<<if $fat > 100>>stomach rolling across the top of the wall, <</if>>
+and let it fall into the centre of the pool with a loud //Ger-BLOOSH!//. The ripples it makes spread all the way to the edge, slopping water around your $p.feet. </p>
+
+<<set $randNum = random(1,3)>>
+<<if $randNum == 1>>
+<p><<set $fat += 90>>
+You stand there for a couple of moments, arms braced on the well, unsure about what to do next. The uneasy silence is broken by a deep gurgle from your middle. Glancing down at it, you catch sight of your reflection in the water, and blink. Your face looks... fuller than you remember. In fact, it looks to be getting fuller by the minute! Another subterranean gurgle from your $waist waist. Standing up, you put your $p.hands to it and find that you can feel it swelling bigger! As you stand there, you can feel your entire body supernaturally packing on pounds- your backside swells outwards, your legs grow thicker and your belly rolls out against the coping stones. After a few pounding heartbeats the feeling stops, and you stagger back a couple of paces, experimentally hefting at your new bulk. It's hard to say, but you've probably just put on a good <<sayWeight 90>>. You stumble a little unsteadily back to the outside world, the tunnel feeling distinctly less roomy than it did earlier. </p>
+
+<p>In the <<if $sun == "sun">>warm daylight<<else>>cool night air<</if>> you take a deep breath, relishing the way your enlarged stomach bows out further than ever. It's true what they say- you have to give a little to get a little. </p>
+
+<<elseif $randNum == 2>>
+<<inflate 30 -100>>
+<p>You step back from the well, unsure about what to do next. When suddenly you feel a sensation of bubbling from your middle. 
+</p>
+
+<<else>>
+<p>But apart from getting you wet, your gift doesn't seem to impress whatever spirits inhabit this place- you wait a good few minutes, but nothing happens. You don't even feel particularly hungry right now (for once). With a grunt of disappointment you turn and head back down the tunnel, emerging into the $sunlight. Wishing well, smishing well... </p>
+
+<</if>>
+
+<</switch>>
+
+<<include "hills randomization">>
+
+
+:: Wishing well [hills] {"position":"3475,2700","size":"100,100"}
+As you $walk through the hills, you notice a hole in the rockface just ahead, the surrounding rocks shaggy with moss. At first you think it’s just a natural crack in the hillside, but when you stick your head closer you get a sense of depth from the darkness beyond. Maybe it’s some kind of tunnel. 
+
+<<action "c" "next" "Investigate well">><</action>>
+<<action "n" "leave" "Leave well">><<set $eventCounterA = 0>><</action>>
+
+
+:: hills randomization {"position":"3700,2575","size":"100,100"}
+/*Ticks up random events counters*/
+<<set $hillsRandomization.combat += $hillsRandomization.combatRate>>
+
+<<set $hillsRandomization.special += $hillsRandomization.specialRate>>
+
+<<set $hillsRandomization.leave += $hillsRandomization.leaveRate>>
+
+<<set $hillsRandomization.minor += $hillsRandomization.minorRate>>
+/**/
+
+/*Selects highest counter*/
+<<set _randomEvent = "combat">>
+
+<<if $hillsRandomization.special > $hillsRandomization.combat>>
+	<<set _randomEvent = "special">>
+<</if>>
+
+<<if $hillsRandomization.minor > $hillsRandomization.special>>
+	<<set _randomEvent = "minor">>
+<</if>>
+
+<<if $hillsRandomization.leave > $hillsRandomization.minor>>
+	<<set _randomEvent = "leave">>
+<</if>>
+/**/
+
+/*Executes selected event and resets counter*/
+<<switch _randomEvent>>
+
+/*A random combat*/
+<<case "combat">>
+	<<set $hillsRandomization.combat = 0>>
+	<<set _event = "Hills ambush">>
+
+/*A special event*/
+<<case "special">>
+	<<set $hillsRandomization.special = 0>>
+
+	<<switch random(1,4)>>
+		<<case 1>>
+			<<set _event = "Dessert village">>
+		<<case 2>>
+			<<set _event = "Wishing well">>
+		<<case 3>>
+			<<set _event = "Wishing well">>
+		<<case 4>>
+			<<set _event = "Wishing well">>
+		<<default>>
+		''Error in special event randomization!''
+	<</switch>>
+
+/*A random minor scene*/
+<<case "minor">>
+ 	<<set $hillsRandomization.minor = 0>>
+	<<set _event = "Minor Hills events">>
+
+/*Opportunity to leave the forest*/
+<<case "leave">>
+  	<<set $hillsRandomization.leave = 0>>
+	<<set _event = "Path out of the hills">>
+
+<<default>>
+  ''Error in hills randomization!!!''
+
+<</switch>>
+
+
+<<action "c" "rest" "Rest" "Hills">>
+<<set $eventCounterB = "rest">><</action>>
+
+<<if $sta > 0>>
+<<action "1" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "2" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "3" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "4" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "6" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "7" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "8" "hills" "Hills" _event>><<set $travel = 5>><</action>>
+<<action "9" "mountain" "Mountains">><<set $travel = 5>><</action>>
+<<else>>
+	<p>''You're too tired to move''</p>
+<</if>>
+
+

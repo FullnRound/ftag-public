@@ -1,0 +1,930 @@
+:: bear ai {"position":"4900,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is an enormous $npc1.species that's clearly prepared for several years worth of hibernation. Thick layers of fat ripple accross $npc1.his entire body, $npc1.his gut nearly dragging on the floor. $npc1.He bares $npc1.his $npc1.teeth at you, clearly eager to add even more to $npc1.his ponderous waist. 
+
+/*===Attack actions===*/
+<<case "attack">>
+	<<doEdmg>>
+	<<set _random to random(1,4)>>
+
+	/*Devour attack*/
+	<<if _random == 1 and $npc1.hea < 20>>
+  	<li>''Devour''</li>
+  
+  	<<if setup.dodgeInstantDeath()>>
+  	The overfed $npc1.species senses a moment of weakness and lunges at you, but you deftly manage to dodge out of the way. 
+  
+  	<<else>>
+	The overfed $npc1.species senses a moment of weakness and grabs you. $npc1.He clumsily picks you up in $npc1.his paws and pulls you into $npc1.his massive maw. You struggle against $npc1.him, but $npc1.he proves too strong for you as your slowly pulled into $npc1.his waiting mouth. $npc1.He swallows you down whole in several large gulps as you slide into $npc1.his stomach.
+
+	<<if setup.weight() < 200>>You barely make a bulge in $npc1.his tremendously fat frame. 
+	<<elseif setup.weight() < 500>>You make a significant bulge in $npc1.his gut, even through the several inches of fat. 
+	<<else>>You make a tremendous bulge in the $npc1.species's already well widened frame. $npc1.His gut stretches out to the sides and rests solidly on the ground. 
+	<</if>>
+	<br><br>
+
+	The $npc1.species sleepily smacks $npc1.his lips and rolls over to sleep off $npc1.his most recent feast in preparation for the next one. Your vision fades to black as you drift into unconsciousness. 
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+	<</if>>
+
+	/*Roar*/
+	<<elseif _random == 2>>
+  	<li>''Roar''</li>
+  	The massive $npc1.species lets out a similarly massive roar, causing you to shake in fear, temporarily lowering your strength and speed. 
+ 	<<set _debuff = random(-1,-3)>>
+ 	<<tempBuff "str" _debuff>>
+ 
+ 	<<set _debuff = random(-1,-3)>>
+	<<tempBuff "agi" _debuff>>
+
+	/*Normal attack*/
+	<<else>>
+  	<li>''Attack!''</li>
+  	The fat $npc1.species lets out a roar and swipes at you with $npc1.his massive paw. 
+  	<<damage $edmg>>
+
+	<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+	You lunge at your enemy in an attempt to devour the obese $npc1.species and you succeed in tackling $npc1.him to the ground. You approach the massive $npc1.species as it rests on its back, its belly moving up and down as $npc1.he pants. You grab $npc1.his front paws and pull them so $npc1.he sits up. Holding them, you pull backwards, lifting them and stuffing them into your mouth. Your mouth stretches wider and wider as you use your arms to pull the $npc1.species inward, slowly engulfing $npc1.him bit by bit. 
+<br><br>
+
+	It is a massive undertaking, your feet digging grooves into the ground as you fight the $npc1.species's inertia. Your jaws strain as you engulf the $npc1.species's flabby head and neck. Your stomach grumbles in anticipation of the feast, causing you to drool copiously. You slowly and agonizingly work your way across the chest and around the gut, your lips making a deep groove in $npc1.his adipose. 
+<<set _calories = $e.weight*0.5>>
+<<consume $e.weight _calories>>
+<br><br>
+
+	<<if $alive>>
+	As the $npc1.species's arms enter your stomach, $npc1.he begins to curl up. Your gut begins to splay out as you swallow more, the size of the $npc1.species's gut making it almost impossible to swallow, but somehow, you manage. As you get your jaws around the widest part, gravity takes over and causes the $npc1.species to surge into your mouth, knocking you onto your rump as you no longer need to pull the bear in. As your jaws close around $npc1.his feet, you lay back down to rest, giving one final swallow to curl $npc1.him in your gut, which heaves up and down as you breathe like the $npc1.species's did. 
+	<<include "Victory">>
+	<hr>
+	<<include "forest randomization">>
+
+	<<else>>
+	As the $npc1.species's arms enter your stomach, you begin to struggle as the arms fill it completely. Your feet slip at the sudden stop in motion, and as you fall on your back, the $npc1.species pulls itself out of your maw and stands, an angry, hungry look in $npc1.his eyes. 
+	<<set _undo = $e.weight * -1>>
+	<<set _calories *= -1>>
+	<<consume _undo _calories>>
+
+	<br><br>
+	The overfed $npc1.species senses a moment of weakness and grabs you. $npc1.He clumsily picks you up in $npc1.his paws and pulls you into $npc1.his massive maw. You struggle against $npc1.him, but $npc1.he proves too strong for you as your slowly pulled into $npc1.his waiting mouth. $npc1.He swallows you down whole in several large gulps as you slide into $npc1.his stomach.
+							
+	<<if setup.weight() < 200>>
+	You barely make a bulge in $npc1.his tremendously fat frame. 
+
+	<<elseif setup.weight() < 500>>
+	You make a significant bulge in $npc1.his gut, even through the several inches of fat. 
+					
+	<<else>>
+	You make a tremendous bulge in the $npc1.species's already well widened frame. $npc1.His gut stretches out to the sides and rests solidly on the ground. 
+<</if>>
+<br><br>
+
+	The $npc1.species sleepily smacks $npc1.his lips and rolls over to sleep off $npc1.his most recent feast in preparation for the next one. Your vision fades to black as you drift into unconsciousness.
+
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+	<</if>>
+
+/*===Run success===*/
+<<case "run succeed">>
+	<li>Escaped!</li>
+	You flee from the battle. The rotund $npc1.species chases after you for a while, looking like a roiling sea of $npc1.furBack fat, but $npc1.he quickly becomes tired and decides to look for easier prey. 
+	<<endCombat>>
+	<<include "forest randomization">>
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+	You slump to the ground, too weak to continue fighting. The overfed $npc1.species senses a moment of weakness and grabs you. $npc1.He clumsily picks you up in $npc1.his paws and pulls you into $npc1.his massive maw. You struggle against $npc1.him, but $npc1.he proves too strong for you as your slowly pulled into $npc1.his waiting mouth. $npc1.He swallows you down whole in several large gulps as you slide into $npc1.his stomach.
+	<<if setup.weight() < 200>>You barely make a bulge in $npc1.his tremendously fat frame. 
+	<<elseif setup.weight() < 500>>You make a significant bulge in $npc1.his gut, even through the several inches of fat. 				
+	<<else>>You make a tremendous bulge in the $npc1.species's already well widened frame. $npc1.His gut stretches out to the sides and rests solidly on the ground. <</if>>
+	<br><br>
+	The $npc1.species sleepily smacks $npc1.his lips and rolls over to sleep off $npc1.his most recent feast in preparation for the next one. Your vision fades to black as you drift into unconsciousness. 
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+
+/*===You lose===*/
+<<case "defeat">>
+	You slump to the ground, too weak to continue fighting. The overfed $npc1.species senses a moment of weakness and grabs you. $npc1.He clumsily picks you up in $npc1.his paws and pulls you into $npc1.his massive maw. You struggle against $npc1.him, but $npc1.he proves too strong for you as your slowly pulled into $npc1.his waiting mouth. $npc1.He swallows you down whole in several large gulps as you slide into $npc1.his stomach.
+	<<if setup.weight() < 200>>You barely make a bulge in $npc1.his tremendously fat frame. 
+	<<elseif setup.weight() < 500>>You make a significant bulge in $npc1.his gut, even through the several inches of fat. 				
+	<<else>>You make a tremendous bulge in the $npc1.species's already well widened frame. $npc1.His gut stretches out to the sides and rests solidly on the ground. <</if>>
+	<br><br>
+	The $npc1.species sleepily smacks $npc1.his lips and rolls over to sleep off $npc1.his most recent feast in preparation for the next one. Your vision fades to black as you drift into unconsciousness. 
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+
+/*===You win!===*/
+<<case "victory">>
+	The obese $npc1.species is too weak to continue fight and collapses to the ground with a tremendous thud that nearly shakes you off your feet. 
+	<<include "Victory">>
+	<hr>
+	<<include "forest randomization">>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "forest randomization">>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+	''Error in enemy ai''
+	
+<</switch>>
+
+
+:: dryad ai {"position":"5275,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Standing before you is only what you can describe as an otherworldly beautiful $p.species. $npc1.He is a definite pear shape, in a long flowing gown that flows over $npc1.his features effortlessly. $npc1.He wears a wooden tiara brimming with delicious looking fruit, though to be honest they appear as if they are literally growing from $npc1.his head rather then simply decorative. $npc1.He chants a beautiful melodious song in some language you cannot identify. <br><br>You are entranced for a few seconds before the oddest sensation comes over you. You look down and see your $p.fur starting to change color, starting from the base becoming a brilliant blue. You also feel a gurgling sensation in the pit of your stomach, which you can only describe as //"funny"//...
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<switch random(1,3)>>
+	<<case 1>>
+	<li>Charm</li>
+	The Dryad turns its gaze on you batting her eyelashes as she looks you in the eyes as she continues her song, which becomes exceedingly sweet. <br><br>
+	<<set _player = $int+50>>
+	<<set _enemy = $eint>>
+	
+	<<switch setup.skillTestRange(_player,_enemy,25,90)>>
+		<<case true>>
+		Unphased by the haunting innocence, you continue your assault. Though you feel the gurgle in your stomach as the melody continues working it’s magic on you, and you continue changing blue as your body swells. 
+		<<default>>
+		As you bare your $wea.name at her, you feel the sudden compulsion to stop, and find yourself reluctant to harm this innocent creature, even as your body continues to swell and change blue, growing bigger and heavier by the moment. 
+		<<tempBuff "stun" 1>>
+		
+	<</switch>>
+	<<set _enemy = random(2,4)>>
+	<<consume _enemy 1>>
+	
+	<<switch random(1,3)>>
+		<<case 1>>
+		<<tempBuff "end" -1>>
+		<<tempBuff "str" -1>>
+		<<case 2>>
+		<<tempBuff "str" -1>>
+		<<tempBuff "agi" -1>>
+		<<default>>
+		<<tempBuff "agi" -1>>
+		<<tempBuff "end" -1>>
+	<</switch>>
+	
+	<<default>>
+	<li>Chant</li>
+	The Dryad continues its beautiful melody, which echoes about like a heavenly choir. You feel the sensation in your stomach growing at a steady pace, as you continue turning blue. You body swells with a gurgling slosh, your features filling out as whatever strange power continues its work on you. You feel heavier and slower from the unaccustomed weight and pressure this strange effect is having on your body. 
+	<<set _enemy = random(2,4)>>
+	<<consume _enemy 1>>
+	
+	<<switch random(1,3)>>
+		<<case 1>>
+		<<tempBuff "end" -1>>
+		<<tempBuff "str" -2>>
+		<<case 2>>
+		<<tempBuff "str" -1>>
+		<<tempBuff "agi" -2>>
+		<<default>>
+		<<tempBuff "agi" -1>>
+		<<tempBuff "end" -2>>
+	<</switch>>
+	
+<</switch>>
+
+<<if $agi <= 0 or $str <= 0 or $end <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn and run, your belly sloshing with every bound as you attempt to escape the dryad, who calmly follows after, singing all the while. However, you manage to outdistance her, and soon her singing fades away in the distance as you feel the strange sensation begin to fade. As you watch the swelling recedes and the color starts fading back to your normal $p.furBelly hue. 
+<<endCombat>>
+<<include "forest randomization">>
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You turn and run, your belly sloshing with every bound as you attempt to escape the dryad who calmly follows after, singing all the while. Unfortunately, your growing frame has put you off balance, and a misstep sends you tumbling onto your growing stomach. You rise to your feet, but the dryad is upon you once more. 
+<<enemyAction "attack">>
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<endCombat>>
+<p>You relax and take in the music, ignoring the sensation throughout your body as you swell and change color. Slowly and steadily you swell outward as the dryad serenades you with the haunting and beautiful melody. </p>
+
+<p>Your legs fill out first, becoming thick and heavy as your stomach grows outward. The effect works it’s way up your body, all the while your $p.fur changing to a vivid blue. Soon it reaches your arms and face, which fill out and sag, becoming heavy and sloshy. From here it intensifies, and your body begins rapidly expanding. </p>
+
+<p>Your legs are forced apart as they become as thick as tree trunks while your belly surges out like a tide. Pretty soon, even the slightest motion causes you to wobble, and you finally lose balance, toppling backward. Your body wobbles back and forth like a great tide as it becomes completely blue. <<stuffToBursting>></p>
+
+You begin to think that maybe, just maybe, you're in trouble, as you watch your body grow. When your stomach is $waist, the pressure becomes too much for you and you pass out. 
+
+<<action "c" "wait" "Sleep" "dryad submit 2">><</action>>
+
+/*===You lose===*/
+<<case "defeat">>
+As the Dryads song continues to echo around you, <<if $hea <= 0>>
+the pressure in your swelling gut starts to overpower you, sending you to your knees as you clutch at it, as if you could stop it from getting any fuller by doing so. Even so the Dryad doesn’t let up, her features looking triumphant, reflecting in her chant as it picks up tempo. The pressure builds and you fall to the ground, losing consciousness as you continue swelling. Your $p.fur becomes unnaturally blue before you pass out completely. 
+								
+<<elseif $agi <= 0>>
+you feel yourself swelling even more, the sensation of heavy thickness weighing on you. As you try to move, you find resistance daunting every attempt to bend your extremities as they swell and grow beyond your now limited dexterity. Even your face feels like its bloated and tight as your $p.fur turns a complete shade of blue. You frantically try to cause some motion in your body, but only manage to roll onto your back, the pressure in your body building as you swell and swell. You are helpless to listen to the Dryad chant and watch as your waist becomes $waist, before finally the pressure overwhelms you and you lose consciousness. 
+								
+<<elseif $str <= 0>>
+you feel yourself swelling even more becoming heavier and heavier as you do. As you try to muster your next move, your movements become sluggish, slowing to a crawl before you find your limbs weighing down on you. Panicking, you pour all your energy into budging yourself, only to find yourself losing ground, your movements managing only to send waves of rolling flab through your $p.fur. You find yourself rolling onto your back, pinned underneath the weight. Your frantic motions generate less and less of an effect, until even all of your might doesn’t cause even a ripple through your bloated frame. You are helpless to listen to the Dryad chant and watch as you grow larger and larger with each passing moment, your $p.fur becoming completely blue. When your waist is $waist, you finally pass out from the pressure. 
+
+<<else>>
+you feel yourself swelling even more, weighing you down and making every move difficult. You find yourself soft of breath, your sagging arms and legs sweating as their load only grow greater with every moment. Even as you try to make your next move, your limb rebel, and you sag onto your back like a bloated water balloon, panting as your frame continues to spread. Even as you try to muster the energy to try and move, any attempt just leaves you lightheaded and panting. You are helpless to listen to the Dryad chant watch as your body continues to bloat outward, your $p.fur becoming completely blue. When you become $waist, the pressure is finally to much for you, and you pass out. 
+								
+<</if>>
+
+<<action "c" "wait" "Pass out" "dryad submit 2">><</action>>
+
+/*===You win!===*/
+<<case "victory">>
+As your last attack hits, the dryad stumbles, her song coming to an abrupt end as she grasps at her wound. She looks at you briefly, anger blazing in her eyes, before she turns toward the nearest tree and sprints gracefully into it. She slides into it as effortlessly as if it was air and is gone without a trace. You begin to feel somewhat normal again as the last of the dryad's words fade from your mind. You look at yourself and see the color staining your $p.fur starting to fade as your swelling subsides. Within a few moments you're back to you original shade of $p.furBelly. 
+<<include "Victory">>
+
+<<include "forest randomization">>
+	
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "resister" false "forest randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: dryad submit 2 {"position":"5275,125","size":"100,100"}
+<<setPassageTitle "At nature's mercy">>
+
+<<set _berried = $sto + 4000>>
+<<consumeQuiet _berried 0>>
+<<endCombat>>
+<p>As you begin to regain consciousness, you become aware of an extremely bloated sensation all over. As you try to shift, you can only feel the sensation of muscle working, but you get no sense of motion out of any part of your body. You are almost afraid to open your eyes, but realize that there is no escaping it. As color floods back into the world, you notice an overwhelming amount of blue. You are confused for a moment before you realize that what you are looking at is yourself. </p>
+
+<p>You don’t recognize yourself, as you resemble little more then an enormous blimp. Every feature about you is bloated beyond anything you thought capable. Your cheeks resemble beach balls for all their size. Your hands and fingers are thick little balls incapable of movement, and your arms and legs are little more than tires half swallowed up by your enormously round body. Your stomach and chest have blown outward, until they are spherical in nature, encasing your limbs in a vice-like grip which makes any attempt at motion an impossibility. Honestly with your vibrant blue hue, you resemble a giant piece of fruit more then anything else. You attempt a shout, but only get a muffled mumble, your head too bloated to talk, let alone make such a yell. </p>
+
+<p>Your eyes dart about, for the first time taking in your surroundings after the shock of finding yourself in this state. Wherever you are, it seems very green. There are trees plants and vines everywhere, though the configuration seem a little more structured then one would expect from wild undergrowth. The vines above form a natural cathedral ceiling, trees acting as pillars, while their roots carpet the ground, forming tiers around the central feature of the area. The middle of the cathedral is a pit that all the roots and vines seem to gravitate towards. How deep it is you can’t tell, as it is filled with some sort of multi-colored liquid that swirls about in different shades of the rainbow. </p>
+
+<<action "c" "wait" "Look around" "dryad submit 3">><</action>>
+
+
+:: dryad submit 3 [nobr] {"position":"5150,125","size":"100,100"}
+<<setPassageTitle "At nature's mercy">>
+
+<<createNPC "random" "random" 2>>
+You're also not the only one here. Littered about, you see a number of giant fruit-like spheres of different colors. You suddenly realize you’re not the only one who has ended up in this predicament. Everyone seems to be at different stages of bloat. You see a $npc2.species that seems halfway full, gut spreading outward over the ground like a water balloon with short limbs wobbling helplessly, while others, like you are little more then rounded balls. Then there are the Dryads, many of them wandering about and inspecting their 'harvest' of helpless fruit people. Occasionally, you see them singing to a fur, and watch them slowly fill out. 
+<br><br>
+
+Then you see the dryad that you had faced, inspecting you. "You look about ripe," she says, before she begins chanting once more. 
+<br><br>
+
+As the chanting begins again, you feel the pressure in you intensify, as if it could get any worse, and your features swell even more, swallowing up your limbs and almost swallowing your face in the folds of your cheeks. That is not the only thing happening, as the vines in the ceiling come alive, snaking their way through the air towards you, encircling you and lifting you even as you bloat outward, your insides sloshing violently. 
+<br><br>
+
+<<if $options.popping>>
+It carries you toward the center pit, holding you there as the pressure in you builds tremendously. You feel a gurgle in the pit of your stomach, and a strange stretching sound like an overfilled balloon. Your cheeks start enveloping your head as you feel liquid rising from your throat. You taste juice as it begins dribbling from your mouth and nose, even as you begin tearing up, you see the same color flowing from your tear ducts. 
+<br><br>
+
+The pressure surges even more, and the flow of juice from your orifices, intensifies, as your body swells outwards one last time, and the vines drop you. You fall, your body suddenly springing leaks, juice spraying violently before you hit the surface of the juice filled pit, exploding in a tsunami of juice like a water balloon. 
+<<else>>
+It carries you toward the center pit, wrapping around you again and again before tilting you towards the pit, where you can see the colored liquid swirling. You pick up a sweet fruity smell, and recognize it as juice. Your view suddenly becomes blocked as your swelling body envelops your head, and just as you think you are about to burst, the vines start squeezing. 
+<br><br>
+
+The vines around your middle start tightening, both ends of you bulging as your inside are force both ways. You feel the pressure building even more, before the vine at you bottom end start tightening as well, forcing everything one way towards your top end. You feel a surge of liquid flowing outwards, and finally, it erupts from your mouth like a geyser, shooting into the pit like a fire hose of blue water. You taste a huge amount of fruit juice as it if forced out of your body, the vines constricting gradually as you feel the unbearable internal pressure lesson slowly. Like a deflating balloon, your body sags and shrinks, slowly starting to regain some of its features. And the vines squeeze more and more out of you, juicing you until the flow starts to recede, first to a slow stream, then a trickle. Finally, only a few drops fall from your mouth, even as the vines shake you downward. Seemingly satisfied, it deposits you onto the ground, disorientated and shaking on the ground nearby. 
+<br><br>
+
+Exhausted, you fall over and pass out. 
+							
+<</if>>
+<<defeated "transformed">>
+
+
+:: fatWolf ai {"position":"4775,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a decidedly overweight $wolf.species. $npc1.He has a coat of thick $wolf.furBack $wolf.fur over a layer of fat several inches thick. $npc1.He jiggles with every labored move $npc1.he makes and $npc1.he's eyeing you hungrily. 
+
+<<case "attack">>
+  <<doEdmg>>
+  <<set _random to random(1,6)>>
+
+  /*Devour attack*/
+  <<if _random == 1 and $hea < 20>><li>''Devour''</li>
+  <<if setup.dodgeInstantDeath()>>
+  The $wolf.species senses an opportunity and $npc1.He rears back and attempts to tackle you, $npc1.his jaws opened wide, but you are able to fight $npc1.him off and throw $npc1.him to the ground. 
+
+  <<else>>
+  Your opponent sees that you are weakened. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. You try to dodge him, but $npc1.he's too strong and fast for you. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. From the outside, the $wolf.species's stomach stretches to the ground and then some. The $wolf.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $wolf.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. <br><br>
+
+  You can only pray that someone up there is looking out for you.
+
+  <<endCombat>>
+  <<defeated "devoured">>
+  <</if>>
+
+  /*Do nothing*/
+  <<elseif _random == 2>><li>''Wait''</li>
+  The fat $wolf.species pants to catch $npc1.his breath. 
+
+  /*Heal*/
+  <<elseif _random == 3>><li>''Heal''</li>
+  The fat $wolf.species pauses to lick $npc1.his wounds.
+  <<eHealth 10>>
+
+  /*Normal attack*/
+  <<else>>
+  <<if random(1,2) == 1>><li>''Swipe!''</li>
+  The fat $wolf.species waddles up and swipes at you with $npc1.his paw, dealing $edmg damage. 
+
+  <<else>><li>''Bite!''</li>
+  The fat $wolf.species licks $npc1.his chops before jumping forward and biting you, dealing $edmg damage. 
+  <</if>>
+
+  <<damage $edmg>>
+
+  <</if>>
+
+<<case "vore">>
+	You lunge at your enemy in an attempt to devour the fat $wolf.species and you succeed in tackling $npc1.him to the ground. You pick the $wolf.species up in your hands and stuff $npc1.him into your cavernous mouth. $npc1.He begins to writhe in your grasp trying to get away, $npc1.his body jiggling wildly with the motion. You pull the $wolf.species further in and pin $npc1.his legs to $npc1.his chest. $npc1.His tail is clenched between $npc1.his hind legs in a position of fear as you reach $npc1.his stomach. 
+	<br><br>
+
+	Your gut juts forward as $npc1.his $wolf.mouth emerges into your stomach. You slurp $npc1.him further in as you gulp, pulling $npc1.his flabby stomach in for the last few swallows. $npc1.He kicks a bit as you reach $npc1.his hind legs. Holding $npc1.his feet like drumsticks, you push the $wolf.species down your gullet without bothering to swallow, and only give one last massive gulp as you push the hind $wolf.feet to the back of your throat. 
+	<<set _calories = $e.weight*0.5>>
+	<<consume $e.weight _calories>>
+
+	<<if $alive>>
+	$npc1.He finishes the descent into your belly, which heaves wildly as $npc1.he struggles for freedom. Your stomach finally settles after a few good pats and burps, letting you continue on your way.
+
+	<<include "Victory">>
+	<<include "forest randomization">>
+
+	<<else>>
+	You immediately feel a tightening in your belly as the $wolf.species surges into it. It escalates into discomfort and then pain as your stomach strains around a meal it was never meant to hold, and you pass out gripping your writhing gut.
+	<<endCombat>>
+	<<defeated "overeating">>
+
+	<</if>>
+  
+<<case "run succeed">>
+	<li>Escaped!</li>
+	You flee from the battle. The $wolf.species chases after you for a moment, $npc1.his fat gut wobbling like a sea of jello, but $npc1.he quickly runs out of breath and gives up the chase.
+	<<endCombat>>
+	<<include "forest randomization">>
+
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+<<case "submit">>
+<li>Submit</li>
+	You surrender to your opponent and $npc1.he's quick to rear back and lunge toward you, $npc1.his jaws stretched almost impossibly wide. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. 
+	<br><br>
+
+	From the outside, the $wolf.species's stomach stretches to the ground and then some. The $wolf.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $wolf.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. 
+	<br><br>
+
+	You can only pray that someone up there is looking out for you. 
+	<<endCombat>>
+	<<defeated "devoured">>
+
+<<case "defeat">>
+	You slump to the ground in defeat. Your opponent sees that you are weakened. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. You try to dodge him, but $npc1.he's too strong and fast for you. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. From the outside, the $wolf.species's stomach stretches to the ground and then some. The $wolf.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $wolf.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast.
+	<br><br>
+
+	You can only pray that someone up there is looking out for you.
+	<<endCombat>>
+	<<defeated "devoured">>
+
+<<case "victory">>
+	<p>The fat $wolf.species pants with exertion before collapsing to the ground, too weak to continue fighting. $npc1.He hits the ground $npc1.his body jiggles like a large jello mold before finally settling. </p>
+
+	<<include "Victory">>
+	<<include "forest randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_tryFeedEnemy "hunter" false>>
+	<<if $feeder_feedCheck>>
+		/* Narrate the feeding */
+		<<feeder_enemyHasWeaknessToFedFood>>
+		<<if $feeder_hasWeakness>>
+			You manage to cram a $feeder_itemFed.name into the $wolf.species's gnashing jaws. $npc1.He pauses for a moment to savour the taste, and you notice $npc1.his $wolf.tail wagging.
+		<<else>>
+			You manage to cram a $feeder_itemFed.name into the $wolf.species's gnashing jaws, which $npc.he wolfs down. 
+		<</if>>
+		
+		/* Use up the item */
+		<<feeder_tryRemoveFedItem>>
+		
+		/*Add food to belly*/
+		<<feeder_enemyConsume $feeder_fedAmount>>
+		
+		/* Handle special item effects */
+		<<feeder_genericSpecialItemProcess _archetype _isBoss>>
+
+		/*Check to see if has won*/
+		<<feeder_genericActionDefeatCheck "forest randomization" "After such a stuffing, the hunger in the $wolf.species's eyes seems to be gone. With a satisfied sigh, $npc1.he flops over onto $npc1.his side, jiggling as $npc1.he hits the forest floor.">>
+		<<if $e.ate < $e.sto>> /*Not defeated from stuffing, so continue*/
+			/*Check to see if should trigger halfway debuffs*/
+			<<feeder_genericActionHalfFullCheck "The $wolf.species's panting grows heavier alongside $npc1.his filling belly. With a lick of $npc1.his lips, $npc1.he returns to $npc1.his hunt, though $npc1.his movements are a bit more sluggish and labored than before.">>
+			
+			/*Check to see if the enemy should be stunned*/
+			<<feeder_genericActionStunCheck "hunter" false>>
+			
+			/* Perform their turn (which will be interrupted if they were stunned from the feeding) */
+			<<enemyAction "attack">>
+		<</if>>
+	<<else>>
+		<<feeder_genericActionText "hunter" false false>> /* Never seen, because can't fail to feed wolf atm */
+		<<enemyAction "attack">>
+	<</if>>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+	''Error in enemy ai''
+	
+<</switch>>
+
+
+:: lemon ai {"position":"5150,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a large gelatinous cube about <<sayDistance 36>> long on each side. The translucent yellow blob smells deliciously lemony! 
+
+/*===Attack actions===*/
+<<case "attack">>
+<li>Feed</li>
+The slime monster draws back in on itself before spraying a blast of slime directly into your mouth. You can't help but swallow several mouthfuls and feel it slide into your gut. It tastes delightfully fruity! 
+<<set _fill = random(1,3)>>
+<<set _calories = _fill * 0.5>>
+<<consume _fill _calories>>
+<<eDamage _fill>>
+
+<<if $e.hea <= 0 and $alive>>
+<br><br>
+What's remaining of the slime monster slides down your throat. With nothing left to fight, I guess you can call this a victory?
+
+<<include "Victory">>
+<hr>
+<<include "forest randomization">> 
+
+<<elseif $e.hea > 0 and !$alive>>
+<br><br>
+You fall to the ground, too painfully full to stand. You wince in pain and grab your achingly bloated gut. When you open your eyes, you look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively.  
+<<set _fill = $e.hea>>
+<<set _calories = _fill * 0.5>>
+<<consume _fill _calories>>
+
+<<endCombat>>
+<hr>
+<<defeated "overeating">>						
+
+<<elseif $e.hea <= 0 and !$alive>>
+<br><br>
+The last of the slime monster slides down your throat. For a moment you feel a sense of triumph, but you swiftly realize you're practically too full to stand. You collapse to the ground and roll over onto your back before passing out in an overstuffed coma. 
+
+<<endCombat>>
+<hr>
+<<defeated "overeating">>					
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You flee from the battle. The slime chases after you in a weird jumping/sloshing motion, like an ocean wave on land, but it can't manage to keep up with you. 
+<<endCombat>>
+<<include "forest randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<endCombat>>
+You open your mouth wide and beckon the slime monster in. It seems to cheerily oblige as a large tendril flys out and slides down your throat. You don't even have to swallow as the slime forcefully pumps itself into you. You rub your $waist stomach as it stretches outward with sentient lemony sweetness. 
+<<set _calories = $e.hea * 0.6>>
+<<consume $e.hea _calories>>
+<br><br>
+
+<<if $alive>>
+You slurp up the last of the slime monster down. With nothing left to fight, I guess you can call this a victory? 
+<br>
+<<include "Victory">>
+<<include "forest randomization">>
+
+<<else>>
+Your stomach keeps growing larger and larger, but there's still more lemon slime to go. You hold onto your aching gut as lemon goo pumps almost endlessly down your gullet. You slowly lower yourself down and sit on the ground as you feel your stomach stretch painfully bloated. You're not sure how much more you can take, but you're determined to win this gastronomical battle. If you can just hold out a little longer. 
+<br><br>
+
+You begin losing the test of will though as you become too painfully full to stay awake. You collapse on your back on the ground and pass out even as the rest of the slime monster slides down your throat. 
+<hr>
+<<defeated "overeating">>
+
+<</if>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $e.hea > 0>>
+You fall to the ground, too painfully full to stand. You wince in pain and grab your achingly bloated gut. When you open your eyes, you look up to see the slime monster rising over you like a tidal wave. You look on in horror as the monster crashes down upon you, cramming it's entire mass down your throat. Your stomach starts groaning and gurgling as it stretches massively.  
+<<set _fill = $e.hea>>
+<<set _calories = _fill * 0.5>>
+<<consume _fill _calories>>
+<<defeated "overeating">>	
+
+<<else>>
+<br><br>
+The last of the slime monster slides down your throat. For a moment you feel a sense of triumph, but you swiftly realize you're practically too full to stand. You collapse to the ground and roll over onto your back before passing out in an overstuffed coma. 
+<<defeated "overeating">>	
+<</if>>
+
+
+/*===You win!===*/
+<<case "victory">>
+Your final attack splatters what remains of the slime, sending lemony flavored goo across the ground. Rather than reforming, the goo quickly soaks into the ground, leaving you the victor! 
+<<include "Victory">>
+
+<<if setup.questActive($slimeQuest1) and setup.hasItem($lemonSampleItem) < 0>>
+	You just manage to scoop up some for Bronk the innkeeper before it completely disappears. 
+	<<getItem $lemonSampleItem>>
+<</if>>
+
+<hr>
+<<include "forest randomization">>
+
+/*===Capture a slime===*/
+<<case "capture">>
+<li>Capture</li>
+<<if setup.skillTestRange($agi+$str+$int, $e.agi+$e.str+$e.int+$e.hea, 10, 90)>>
+	You lunge for the large lemon cuboid and land on top of it, squashing it down with a //THRRRRRRP// noise as though it were a whoopee cushion. The slime monster squirts lemon-scented goo and bounces frantically beneath you, but you 
+	<<if setup.weight() < 150>>cling on frantically like a rodeo rider 
+	<<elseif setup.weight() < 300>>keep it pinned beneath you with your sizeable belly while it wriggles and wobbles 
+	<<else>>use your enormous weight to squash it into submission 
+	<</if>>
+	until it eventually subsides, apparently exhausted. Getting up cautiously, you prize the inert jello-like cuboid from the ground with a rather unpleasant sucking noise. 
+	<<include "Victory">>
+	<<getItem $lemonSlimeItem>>
+	
+	<hr>
+	<<include "forest randomization">>
+<<else>>
+	You make a lunge for the large yellow cuboid, but it proves to be particularly slippery- and wobbly! Making a strange squeaking noise the slime squeezes out of your grip like a bar of soap, landing on the forest floor a couple of feet away and leaving your arms and chest covered in citrus-smelling gunge. 
+	<<enemyAction "attack">>
+<</if>>
+
+
+<<default>>
+	''Error in enemy ai''
+	
+<</switch>>
+
+
+:: store room ai {"position":"5525,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is presumably the storeroom owner, and $npc1.he seems none to happy with you breaking into $npc1.his storeroom and helping yourself. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<li>Attack</li>
+<<switch random(1,4)>>
+	<<case 1>>
+		"Think you can get away with eatin' all my food eh!?", $npc1.he shouts before whacking you in the head with $npc1.his stick. 
+		
+	<<case 2>>
+		"Think ye can just gobble up all my hard work jus' like that!?" $npc1.He jabs you hard in the gut with $npc1.his stick, eliciting a pained grunt from you. 
+		
+	<<case 3>>
+		"I was gonna have myself a grand 'ol feast and you had to cram it all in your fat face!" $npc1.he slaps you across the face with $npc1.his walking stick. 
+		
+	<<default>>
+		"Eat this!" $npc1.He picks up a nearby apple and pegs you right in the head with it. 
+		
+<</switch>>
+<<damage $edmg>>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower your defences and admit defeat."Well that's mighty kind of 'ya, but I think it's a bit too late for apologies now." $npc1.he whacks you over the head and you fall to the floor. You collapse flat on your back and start panting as the angered local looms over you. "Oh I'm gonna' have some fun with you, heh heh heh." Your vision slowly fades to black as you lose consciousnes and the $npc1.species laughs maliciously over your head. 
+
+<<endCombat>>
+<<action "c" "wait" "Some time later..." "Wake up in the storeroom">><</action>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+Unable to take anymore of $npc1.his onslaught, you slowly sink to the ground. You collapse flat on your back and start panting as the angered local looms over you. "Oh I'm gonna' have some fun with you, heh heh heh." Your vision slowly fades to black as you lose consciousnes and the $npc1.species laughs maliciously over your head. 
+<<endCombat>>
+<<action "c" "wait" "Some time later..." "Wake up in the storeroom">><</action>>
+
+/*===You win!===*/
+<<case "victory">>
+Your opponent stumbles and falls to $npc1.his knees! You see the open door behind $npc1.him and take this opportunity to beat a hasty retreat. 
+<<include "Victory">>
+<<include "forest randomization">>
+
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "eater" false "forest randomization">>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: vine ai {"position":"5025,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a mass of deep amber colored vines. There are several vines that taper off and ooze some kind of sweet smelling syrup. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $grapple > 0>>
+<li>Feed!</li>
+The vines that are crammed in your mouth start oozing huge globs of sickeningly sweet syrup down your throat. 
+<<set _fed = random(2,5)>>
+<<set _calories = _fed * 0.6>>
+<<consume _fed _calories>>
+<<set $e.weight -= _fed>>
+
+<<if $e.weight <= 0 and $alive>>
+You notice the rate of syrup flow is slowly dwindling before coming to a stop. The vines seem to loose their strength as they start limply falling to the ground. Cautiously picking up a vine, you notice that it appears you've actually sucked the entire mass of vines dry. Apparently you've won! 
+
+<<include "Victory">>
+<hr>
+<<include "forest randomization">>
+<</if>>
+
+<<else>>
+
+<<if random(1,2) == 1 and $agi > 6>>
+<li>Syruped</li>
+Sweet amber syrup leaks from the ends of several vines, covering whatever parts of you they touch in sticky syrup and slowing you down. 
+<<set _debuff = random(-2,-6)>>
+<<tempBuff "agi" _debuff>>
+
+
+<<else>>
+<li>Grab</li>
+The vines coil in upon themselves before leaping out at you
+<<if setup.dodge()>>, but you manage to dodge out of their way.
+<<else>> and wrap themselves around your arms and legs. In your constricted state, several tentacles cram themselves between your jaws. 
+<<set $grapple = $e.agi + $e.str>>
+<<enemyAction "attack">>
+<</if>>
+
+<</if>>
+
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You attempt to escape from the syrup vines. As you try to run you trip over several vines on the ground as they gently attempt to stop you, but you manage to dodge through them and eventually escape. The vines are too anchored to their spot to chase after you. 
+<<endCombat>>
+<<include "forest randomization">>
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+<<endCombat>>
+<p>You lower your defences and fall into the tangle of vines. They quickly wrap around your arms and legs as one large vine crams itself into your mouth. You bite down on the vine and start sucking down sweet thick syrup. Just like maple syrup and yet somehow intoxicating, like this could be all you eat for the rest of your days and you'd be fine. 
+<<set _calories = $e.weight * 0.6>>
+<<consume $e.weight _calories>></p>
+
+<<if $alive>>
+You gladly suck down more and more syrup. Your stomach is now $waist. The vines seem to weaken and you're slowly lowered to the ground. You continue sucking on the vine in your mouth, but the flow of syrup slows down to a trickle before finally stopping. Disappointedly, you pull the vine out of your mouth and it flops to the ground. Apparently you were able to drain the creature dry and it now appears to just be a tangle of ordinary vines. 
+<br><br>
+<<include "Victory">>
+<<include "forest randomization">>
+
+<<else>>
+<p>You keep sucking down more and more syrup, yet there seems to be almost no end in sight. Your stomach starts feeling dangerously full yet more and more syrup continues to pour from this creature. You can no longer force yourself to swallow due to the intense fullness stretching your wobbly gut. A vine wraps around your waist and periodically squeezes your $waist stomach as it's slowly pumped fuller and fuller. </p>
+
+<p>You try to open your jaws to spit out the vines, but your mouth is practically welded to the vine with sticky syrup. The vines sense you're no longer sucking down any syrup and begins actively pumping it down your throat. You can't help but swallow despite your aching groaning stomach. </p>
+
+  <<if $options.popping>>
+	<p>The wobbles of your gut decrease as it becomes more taut, and the squeezing from the vine puts more and more pressure on your belly until it just can't handle it anymore. Your gut explodes, and globs of syrup leak out of you as the vine continues pumping, trying to refill its suddenly empty container. </p>
+	<<defeated "exploded">>
+  <<else>>
+	<p>In little time you're just too full to stay awake and you eventually drift off to sleep as you are slowly inflated with globs sticky syrup. </p>
+	<<defeated "overeating">>
+  <</if>>
+<</if>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+You're so full you no longer have the strength to fight the vines. The syrup is so sweet you find yourself only craving more even as your stomach slowly inflates larger and larger. You slowly close your eyes and finally enjoy the flavor as you drift into unconsciousness. 
+<<endCombat>>
+<hr>
+<<defeated "overeating">>
+
+
+/*===You win!===*/
+<<case "victory">>
+Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don't seem to react aside from leeking sweet smelling syrup accross the ground. 
+<br><br>
+<<include "Victory">>
+<hr>
+<<include "forest randomization">>
+	
+<<default>>
+	''Error in enemy ai''
+	
+<</switch>>
+
+
+:: witch ai {"position":"5400,250","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a hunched over witch with an evil grin and a cackling laugh. $npc1.He's wielding a gnarled stick at you in a menacing manner. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<set _random to random(1,6)>>
+<li>Feed</li>
+<<switch _random>>
+
+<<case 1>>
+The witch cackles as a slice of cake appears in a puff of purple smoke and flies towards your mouth, cramming itself down your throat. You swallow instinctively and lick your face clean. Against your will, you open your mouth, waiting for more. 
+<<consume 4 2>>
+
+<<case 2>>
+The witch grins evilly as a cupcake poofs into existence in a shower of green sparks and flies towards your face, practically leaping down your throat. You swallow instinctively, the sweet taste of the cupcake filling your mouth. Against your will, you open your mouth, waiting for more. As the cupcake settles in your stomach, you can feel a noticeable increase in your fullness. Your belly feels heavier, and you can't help but place a hand on it, feeling it gently expand from the additional volume.
+<<consume 3 1.5>>
+
+<<case 3>>
+A shower of red sparks heralds a lemon meringue pie rocketing out of thin air and smacking you in the face. You swallow large sweet and tart globs of lemon and meringue. As the pie settles in your stomach, you can feel a noticeable increase in your fullness. Your belly feels tight and bloated, and you can't help but place a hand on it, feeling it distend from the additional volume. You feel stuffed, the pie filling you up more than you thought possible.
+<<consume 5 2.5>>
+
+<<case 4>>
+With a flourish of her wand, the witch conjures a large donut out of a burst of blue sparks. The donut floats in the air momentarily before it propels itself towards you, finding its way into your mouth. You can't help but swallow, the rich sweetness of the donut filling your senses. Despite yourself, you find your mouth opening in anticipation of more. As the donut settles in your stomach, you become acutely aware of your increasing fullness. Your belly feels denser, and you instinctively rub it, feeling the subtle expansion from the added volume. Your clothes tighten around your swelling form, a clear indication of the donut's impact.
+<<consume 4 2>>
+
+<<case 5>>
+A mischievous glint in the witch's eye precedes a deluge of jelly doughnuts, raining from a sudden purple cloud above you. They plop into your open mouth, one after another, their sugary filling oozing down your throat. You can't help but chew and swallow, even as your stomach protests with a dull ache. Each doughnut makes your belly rounder and more distended, the skin stretched tight as it tries to accommodate the sudden influx of sugary treats. You groan softly, feeling uncomfortably full and heavy.
+<<consume 5 2.5>>
+
+<<case 6>>
+The witch waves her wand, and a series of thick, chocolate milkshakes appear, floating in the air. They tip over one by one, their thick, creamy contents flowing into your mouth. You have no choice but to gulp them down, feeling the cold liquid fill your stomach to the brim. Your belly becomes increasingly tight and swollen, each shake making you feel more and more like an overstuffed balloon. The sensation of fullness is overwhelming, leaving you feeling sluggish and heavy.
+<<consume 6 3>>
+
+
+<<default>>
+The witch raises $npc1.his arms in the air and you hear the ceiling above you quake. You look up just as a large hunk of gingerbread ceiling falls down and lands in your mouth, the momentum painfully ramming down it your throat and crashing into your stomach. 
+<<consume 6 3>>
+
+<</switch>>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+"That's a good dear. I think you deserve a reward. Here-" the witch raises $npc1.his arms over $npc1.his head as a swirling orb of thick chocolate coalesces into being. Just the smell is enough to make your mouth water and you open your mouth without even thinking. 
+<br><br>
+
+A thick tendril of warm chocolate spirals out from the orb and pours itself down your throat. You feel your stomach slowly swell with warm sweet chocolate and as your gut expands larger and larger you find yourself unable to stay awake.
+<<stuffToBursting>>
+You eventually collapse to the floor, too full and contented to stay awake. 
+
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+Your overtaxed stomach can handle no more. You stumble and fall to the ground, holding on to your overstuffed belly as you fall. The witch stands over you. 
+<br><br>
+
+"Don't tell me you're full already, I was just getting ready for the second course! Hee hee hee hee!" You attempt to stand again, but you're just too full. You pass out in a food coma as the witch stands over you, cackling evilly.
+
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+
+/*===You win!===*/
+<<case "victory">>
+<<switch $e.special>>
+<<case "book">>
+"Oh what a world!" the witch screams as $npc1.he collapses to the floor. As soon as $npc1.he does so, the house is stricken with an ominous rumbling. The shaking quickly intensifies and you start to have trouble staying on your feet. You look around and see the walls cracking and tearing apart as they seem to fall upwards. 
+<br><br>
+
+You struggle to make it down the stairs. Out of the corner of your eye you notice the witch has mysteriously vanished without a trace. You brace yourself against the walls as you shakily make your way to the front door. Furniture and bits of wall burst into green flame as they fall upward. There's a deep and ominous cracking sound as the floor tears in half and starts drifting upward as it's eaten at the edges by cold green flames. 
+<br><br>
+
+You barely make it to the front door before the floor beneath your feet tilts upward and burns away. You dive out of the front door as what remains of the sundered gingerbread house burns away into nothing. You keep running and don't stop until you reach the cover of the trees. The last of the house vanishes in a puff of strange sweet smelling green smoke in the sky. 
+<br><br>
+
+A moment later you see a distant figure crawl out of the hole where the house once stood. $npc2.He looks away perplexedly before hefting $npc2.his considerable bulk and running off into trees on the far side of the clearing.
+<<include "Victory">>
+<hr>
+<<include "forest randomization">>
+
+<<case "no captive">>
+"Oh what a world!" the witch screams as $npc1.he collapses to the floor. As soon as $npc1.he does so, the house is stricken with an ominous rumbling. The shaking quickly intensifies and you start to have trouble staying on your feet. You look around and see the walls cracking and tearing apart as they seem to fall upwards. You struggle to make it through the kitchen and out of the corner of your eye you notice the witch has mysteriously vanished without a trace. 
+<br><br>
+
+You brace yourself against the walls as you shakily make your way to the front door. Furniture and bits of wall burst into green flame as they fall upward. There's a deep and ominous cracking sound as the floor tears in half and starts drifting upward as it's eaten at the edges by cold green flames. You barely make it to the front door before the floor beneath your feet tilts upward and burns away. You dive out of the front door as what remains of the sundered gingerbread house burns away into nothing. You keep running and don't stop until you reach the cover of the trees. The last of the house vanishes in a puff of strange sweet smelling green smoke in the sky. A moment later you see a distant figure crawl out of the hole where the house once stood. $npc2.He looks away perplexedly before hefting $npc2.his considerable bulk and running off into trees on the far side of the clearing. 
+<br><br>
+
+<<include "Victory">>
+<hr>
+<<endCombat>>
+<<include "forest randomization">>
+
+
+<<case "yes captive">>
+"Oh what a world!" the witch screams as $npc1.he collapses to the floor. As soon as $npc1.he does so, the house is stricken with an ominous rumbling. The shaking quickly intensifies and you start to have trouble staying on your feet. You look around and see the walls cracking and tearing apart as they seem to fall upwards. You quickly turn around and attempt to pick up your overstuffed companion. $npc2.He was heavy enough when $npc2.he could stand, now that $npc2.he's out cold $npc2.he's like a sack of soft bricks. It takes some doing but, you eventually pick $npc2.him up and sling $npc2.his arm over your shoulder. A weak groan lets you know that $npc2.he's at least slowly regaining consciousness. 
+<br><br>
+
+None too soon either as every bit of candy around you begins crumbling to pieces and floating upwards as green flames consume them. You slowly shuffle your way towards the front door. You notice that that witch has vanished without a trace when you weren't looking. You get through the door and have to wait as your bloated $npc2.species in distress has become wedged in the front door. With a few pulls you manage to pull $npc2.him through as the entire floor breaks in half and gently drifts upwards. $npc2.He pops out of the door frame and the momentum flings $npc2.him into you. You both roll down the hill to the tree line. You stumble dizzily up to your feet and $npc2.he follows suit, albeit somewhat slower. You both stand there and watch as the last of the house drifts into the sky and burns up in a puff of sweet smelling green smoke. 
+<br><br>
+
+"Hhhhhhhhhhuh." the $npc2.species says ineffectualy. "Well, that was certainly strange." $npc2.He stumbles back and leans against a nearby tree. "Well thank you so much." $npc2.he says as $npc2.he rubs $npc2.his taut stomach. "I never would have made it out of there alive if it weren't for you." $npc2.He holds onto $npc2.his gut as $npc2.he slowly sinks to the ground. "I think I can make it back home from here, I don't live far. You should go. I just need a moment to rest. And here, take this with you." $npc2.He reaches into pants you couldn't even tell $npc2.he was wearing and pulls out a small bag of coins from $npc2.his pocket. $npc2.He tosses it on the ground and with that, $npc2.he passes out in a food coma. 
+<br><br>
+
+<<include "Victory">>
+<<doGld 25>>
+<hr>
+<<endCombat>>
+<<include "forest randomization">>
+
+
+<<default>>
+''Witch victory error''
+
+<</switch>>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+

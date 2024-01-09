@@ -1,0 +1,1223 @@
+:: cheese ai {"position":"5850,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+You’ve never seen a cheese quite like this. It looks hard and crumbly, with a reddish rind and swiss-cheese type holes. It seems to be quivering slightly, with steam rising off it. It doesn’t look too dangerous, although you can’t help but notice a dagger sticking out of the top of it like a cheese-knife, and a number of other cut-marks in the rind. You take a step towards it, then back up hurriedly as the rind cracks to reveal a kind of mouth set in a feral, hungry grin, strands of soft cheese hanging between the jaws. 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+
+<<switch random(1,3)>>
+
+<<case 1>>
+<li>Charge</li>
+<<if setup.dodge()>>
+You see the huge cheese hurtling towards you through the air, but dodge to one side. The cheese flies past you and smacks hard into a wooden beam, making a crack appear in the rind. It crashes to the floor and sits dazed for a moment, then seems to shake itself and bounces around to face you again. This thing just doesn't give up! 
+
+<<else>>
+The wheel of cheese bounces heavily on the wooden floor in front of you, snarling, making the boards shake. Then it suddenly launches itself at you in a furious bound and catches you squarely in the stomach! You let out a loud ''OOF'' and are knocked backwards, winded. The cheese rebounds off your $waist belly, flips through the air like a gigantic coin and lands back on the boards with a thud. 
+<<damage $edmg>>
+
+<</if>>
+
+<<case 2>>
+<<if ($e.hea * 2) < $e.maxHea and random(1,2) == 1>>
+<li>Melt</li>
+Sitting on the floor, the battle-damaged cheese quivers on the spot, seeming to strain in effort. As you watch, the rind begins to reseal itself, and some of the gouges in the wheel begin to refill as surrounding cheese softens and flows into the cracks before rehardening. When it stops straining, the cheese looks a lot less nibbled than it did. Looks like you've still got a lot on your plate. 
+<<set $e.maxhea -= 25>>
+<<set _healing = random(45,55)>>
+<<eHealth _healing>>
+
+<<else>>
+<li>Roar</li>
+As you approach the cheese like someone trying to wrestle a bronco, it lets out a bellow- deep and bassy, but with an edge of goat's bleat, a throaty hint of a lion's roar and the piercing keen of a hunting eagle thrown in. It echoes in the confined space and saws across your ears, making spots appear before your eyes. You stumble back, clutching your ears. The cheese's bellow drops into what sounds suspiciously like a snigger. 
+<<set _debuff = random(-4,-8)>>
+<<tempBuff "agi" _debuff>>
+
+<</if>>
+
+<<case 3>>
+<li>Stench</li>
+You advance on the cheese, but it quivers on the spot and snorts out a cloud of steam which envelops you. You're overwhelmed by the foulest, cheesiest stench you've even encountered, and you stagger back, coughing and clutching your nose. Urgh, you think you can even smell it though your ''EARS'', it's that vile. It's like Limburger, Munster and Camembert, cubed! You feel your face going green, and you're left feeling distinctly unwell. A smell like that is enough to make you lose your appetite. 
+<<set _debuff = random(-6,-10)>>
+<<tempBuff "sto" _debuff>>
+
+<<set $edmg *= 0.25>>
+<<damage $edmg>>
+
+<</switch>>
+
+/* FIXES AND EDITS */
+/* Since there's no cap to the cheese's debuffing ability, it can be assumed that it's intended to be able to take the player out by reducing their stat below 0 like all the other enemies. Add in the missing check to make that happen: */
+<<if $agi <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+/*===Vore actions===*/
+<<case "vore">>
+As the cheese lunges at you, you grab hold. As it struggles and bucks in your arms, you open wide and take a BIG bite out of it, your mouth sinking through the tough rind and into the hard cheese beneath. The cheese lets out a squeaky keen of anguish. It tastes strong, sharp and slightly fruity- a bit like <<set _cheese = either("caerphilly","wensleydale","gouda","pecorino","manchego")>>_cheese, perhaps?- but you don't really have much time to concentrate on the flavour as the cheese lets out a furious growl and wrenches itself out of your grip. You swallow your mouthful hurriedly, feeling the highly-calorific contents slide down to fill your stomach, just in time to carry on the fight. 
+
+<<set _calories = $e.weight * 0.6>>
+<<consume $e.weight _calories>>
+<<set $e.maxhea -= 12>>
+<<eDamage 12>>
+
+<<if !$alive>>
+<br>
+<<if !$options.popping>>
+Letting out a stuffed, painful ''BELCH'', you fall back onto your butt and sprawl on the milking shed floor, weakly rubbing at your massively overstuffed belly. The cheese bounces to and fro, growling at you, but you're too full to pay it any more attention, and it seems to realise the fact. As the world begins to spin around you, your last coherent thought is that you're going to have some pretty spectacular nightmares tonight. The cheese suddenly launches itself into the air, and bounces on your aching, over-pressurised belly with a heavy ''BWOOMPH!'' You let out a weak cry and mercifully black out... 
+<<endCombat>>
+<<defeated "overeating">>
+
+<<else>>
+Letting out a stuffed, painful ''BELCH'', you fall back onto your butt and sprawl on the milking shed floor, weakly rubbing at your massively overstuffed belly. The cheese bounces to and fro, growling at you, but you're too full to pay it any more attention, and it seems to realize the fact. The cheese suddenly launches itself into the air, and bounces on your aching, over-pressurized belly with a heavy ''BWOOMPH!'' Your gut bulges outward from the hefty blow and explodes with a gooey "BANG!"
+<<endCombat>>
+<<defeated "exploded">>
+<</if>>
+
+
+<<elseif $e.hea <= 0>>
+The demonic cheese is finally weakening, large cracks appearing across its rind as it tries to keep itself together. You make a grab for it, catch hold of a gash in its side with your fingers and ''HEAVE''. With a noise like a tree-trunk splitting apart you tear the remains of the cheese in two, right down the middle. You then viciously stuff one of the chunks into your mouth, and chew, and chew, and chew... 
+<br><br>
+
+Eventually you're found sitting on the floor, legs spread apart, swollen belly sitting in your lap. All that remains of your adversary is a single solitary chunk of cheese in your hand, and a rather unpleasantly lingering smell. You gulp this last mouthful heavily, and feel the lump heading down to join the queue for your stomach. Bits of gnawed rind litter the floor, and there are little heaps of cheesy crumbs scattered around. 
+<<include "Victory">>
+<<action "c" "next" "Dairy Farm">><</action>>
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+Catching the cheese off guard, you turn and sprint for the shed door. With the cheese in hot pursuit, you slam it shut behind you and lean on it, hard. The doors resound with a mighty ''THUD'' as the cheese collides with them. You listen for a few minutes, breathing hard, but there's no further noises from inside the shed. Panting, you look up to find that the bull standing in front of you- evidently he returned to find out how the fight was going. He gives you a worried look as your expression says it all. 
+
+<<endCombat>>
+<<action "c" "next" "Dairy Farm">><</action>>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You turn and try to make a dash for the shed door, but the cheese cannons into the back of your knees, dropping you onto your front. As you try to stagger upright, the cheese launches itself at you again, smacking into your $fatness rump, sending you sprawling to the floor again. As you try to scramble on your hands and knees towards the door, it lands on your back like some kind of wrestling move, squashing you to the floorboards and squeezing the air out of you. 
+<br><br>
+
+You're not getting away from this dairy derivative without a fight! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You give up. With a groan, you slump to your knees, resigned to the fact that you've bitten off more than you can chew here. The cheese bounces on the spot and hoots at you in triumph, seeming to grow slightly bigger. Then it thuds forwards and launches itself high into the air. You look up to follow it, and the last thing you see before the world turns black is the underside of a large wheel of cheese, hurtling down towards your head, getting bigger and bigger and bigge- 
+
+<<defeated "battle">>
+
+/*===You lose===*/
+<<case "defeat">>
+<<if $ful > $maxFul>>
+Letting out a stuffed, painful BELCH, you fall back onto your butt and sprawl on the milking shed floor, weakly rubbing at your massively overstuffed belly. The cheese bounces to and fro, growling at you, but you're too full to pay it any more attention, and it seems to realise the fact. As the world begins to spin around you, your last coherent thought is that you're going to have some pretty spectacular nightmares tonight. The cheese suddenly launches itself into the air, and bounces on your aching, over-pressurised belly with a heavy ''BWOOMPH!'' You let out a weak cry and mercifully black out... 
+<<defeated "overeating">>					
+
+<<else>>
+You stagger drunkenly, stomach aching and head ringing from the overpowering smell of cheese in your nostrils. You never want to touch the stuff again! As you drop your guard, the cheese senses your weakness and suddenly launches itself toward you at head height, spinning like a discus! By the time you look up and see it you're too slow and fuddled to react in time. You manage to get your arm half up to defend yourself but the cheese whizzes past your guard and cannons into the side of your head. You drop to your knees, seeing stars and feeling the room spin around you. It's all too much, and you gratefully let yourself fall forwards into the black unconsciousness that rushes up to greet you... 
+<<defeated "battle">>			
+<</if>>
+
+
+/*===You win!===*/
+<<case "victory">>
+The demonic cheese is finally weakening, large cracks appearing across its rind as it tries to keep itself together. You make a grab for it, catch hold of a gash in its side with your fingers and ''HEAVE''. With a noise like a tree-trunk splitting apart you tear the remains of the cheese in two, right down the middle. You then viciously stuff one of the chunks into your mouth, and chew, and chew, and chew... 
+<br><br>
+
+Eventually you're found sitting on the floor, legs spread apart, swollen belly sitting in your lap. All that remains of your adversary is a single solitary chunk of cheese in your hand, and a rather unpleasantly lingering smell. You gulp this last mouthful heavily, and feel the lump heading down to join the queue for your stomach. Bits of gnawed rind litter the floor, and there are little heaps of cheesy crumbs scattered around. 
+<<include "Victory">>
+<<action "c" "next" "Dairy Farm">><</action>>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: cheetah ai {"position":"4900,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent is an extremely well fed $npc1.species whose stomach hangs down from $npc1.his otherwise sleek frame like a lead balloon. $npc1.His bulging belly sways back and forth with every step as $npc1.he eyes you hungrily, apparently still wanting to cram even more into $npc1.his overstretched gut. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+
+/*Vore attack*/
+<<if random(1,4) == 1 and $hea < 20>>
+  <li>''Devour''</li>
+  
+  <<if setup.dodgeInstantDeath()>>
+  Your opponent believes you are weakened. $npc1.He rears back and attempts to tackle you, $npc1.he jaws opened wide, but you are able to fight $npc1.him off and throw $npc1.him to the ground. 
+  
+  <<else>>
+  Your opponent senses $npc1.his opportunity. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. You try to dodge $npc1.him, but $npc1.he's too strong and fast for you. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. From the outside, the $npc1.species's stomach stretches to the ground and then some. The $npc1.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $npc1.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. You can only pray that someone up there is looking out for you. 
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+  <</if>>
+
+/*Normal attack*/
+<<else>>
+  <<if random(1,2) == 1>>
+	<li>Bite</li>
+	The bloated $npc1.species waddles up and swipes at you with $npc1.his claws, dealing $edmg damage. 
+  <<else>>
+	<li>Swipe</li>
+	The bloated $npc1.species licks $npc1.his chops before jumping forward and biting you, dealing $edmg damage. 
+  <</if>>
+  
+  <<damage $edmg>>
+
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You lunge at your enemy in an attempt to devour the gorged $npc1.species and you succeed in tackling $npc1.him to the ground. You circle around to the front of the $npc1.species. $npc1.He struggles to back away, but after the battle $npc1.his legs are too tired to do more than scrape the ground, much less pick $npc1.himself back up. Opening your mouth, you kneel forward, engulfing the $npc1.species's $npc1.mouth.
+<<set _calories = $e.weight*0.5>>
+<<consume $e.weight _calories>>
+<br><br>
+
+With a loud snap, your jaw dislocates and begins to stretch around $npc1.his head. As you swallow the big <<if $npc1.nspecies == "cheetah">>cat<<else>>$npc1.species<</if>> down, you force its legs back, but begin to have a bit of trouble as you reach the stomach. Packed as tight as it is, the round dome has no give whatsoever, and you've no choice but to work the $npc1.species's stomach in bit by bit. Moving your jaws like a snake would, you gradually work your way to the widest point of the stomach. As you work past the widest point, your overstretched mouth begins to rapidly close, causing the $npc1.species to shoot down your gullet - you've passed the point of no return. 
+
+<<if $alive>>
+The $npc1.species surges into your stomach like a ton of bricks, and as you swallow more, $npc1.he is curled into a tight ball, thrashing with desperation in a vain attempt for freedom. You swallow down the hind $npc1.feet, and suck down the twitching tail like a wet noodle. As the struggles slow, you let out a quiet burp and slowly heave yourself to your feet. Waddling forward, you rub your rounded gut as you lumber onward. 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+							
+<<else>>
+The $npc1.species surges into your stomach like a ton of bricks, and as you swallow more, you feel a jolt of pain as you realize your stomach has gone way past its limits. You gag and fall forward, passing out as your stomach surges outward. 
+<<endCombat>>
+<hr>
+<<defeated "overeating">>
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You flee from the battle. The $npc1.species attempts to chase you down, but $npc1.his heavy swaying belly makes it too hard for $npc1.him to chase after you and $npc1.he quickly gives up. 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Your opponent senses $npc1.his opportunity. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. From the outside, the $npc1.species's stomach stretches to the ground and then some. The $npc1.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $npc1.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. You can only pray that someone up there is looking out for you. 
+<<endCombat>>
+<hr>
+<<defeated "devoured">>
+
+/*===You lose===*/
+<<case "defeat">>
+You collapse to the ground, too battered to stay awake, as the $npc1.species pads towards you.
+<<endCombat>>
+<hr>
+<<defeated "battle">>
+
+/*===You win!===*/
+<<case "victory">>
+The bloated $npc1.species is panting from exhaustion. $npc1.He turns and attempts to run away, but $npc1.his swaying stomach gets the better of $npc1.him and $npc1.he topples to the ground. $npc1.He tries to get up, but $npc1.he's too weakened from the fight to lift $npc1.his tremendous stomach. 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: elephant ai {"position":"5150,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+You feel the ground shaking beneath you, making the grass around you sway sibilantly. Suddenly ahead of you out bursts a rampaging $npc1.nspecies! <<if $npc1.nspecies == "elephant">>$npc1.He is quite possibly the roundest pachyderm you’ve ever seen, stomach swollen so much that that famously wrinkled hide is stretched completely taut and smooth. You notice that their trunk is curled around peculiarly purple fruit.<<else>>$npc1.He is quite possibly the roundest creature you’ve ever seen, stomach swollen so much that it looks like a perfectly smooth sphere of $npc1.fur. You notice that $npc1.he's clutching a peculiarly purple fruit in $npc1.his grip.<</if>> As you watch, the $npc1.nspecies greedily stuffs it into $npc1.his mouth. The liberal purplish staining around $npc1.his lips suggests that they’ve already eaten far too many of those things. Even as that belly gurgles and stretches slightly larger before your very eyes, the highly elastic $npc1.nspecies advances ponderously towards you, eyes gleaming hungrily. It’s going to take more just than peanuts to fill ''THAT'' stomach now. In fact, it looks like $npc1.he thinks $npc1.he'll stretch enough to fit ''YOU'' in, as well! 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+
+/*Non-grapple attacks*/
+<<if $grapple <= 0>>
+
+<<switch random(1,4)>>
+
+<<case 1>>
+<li>Charge</li>
+<<if setup.dodge()>>
+As the <<if $npc1.nspecies == "elephant">>$npc1.species’s tusks scythe<<else>>$npc1.species swipes<</if>> at you, you dodge away from them, rolling neatly in the dust, safely out of range, for now. The $npc1.species squeals in outrage at being cheated in this way. 
+<<else>>
+Eyes crazed with the feral need to stuff itself, the $npc1.species lowers $npc1.his mighty head and charges you, the impact almost knocking you off your $p.feet! However, the $npc1.species seems a little surprised when $npc1.he rebounds slightly with a rubbery 'BWOING!', their charge stopped dead. Not half as surprised as you are. $npc1.He rears up to try to trample you underfoot, but you manage to dodge back to a safe distance. 
+<<set $edmg *= Math.round(0.75)>>
+<<damage $edmg>>
+
+<</if>>
+
+<<case 2>> /* icy - okay, I realise it'll be hard to remove all the elephantness from these attacks, so I won't bother */
+<li>Gore</li>
+<<if setup.dodge()>>
+As the <<if $npc1.nspecies == "elephant">>$npc1.species’s tusks scythe<<else>>$npc1.species swipes<</if>> at you, you dodge away from them, rolling neatly in the dust, safely out of range, for now. The $npc1.species squeals in outrage at being cheated in this way. 
+<<else>>
+Enraged, the $npc1.species brings $npc1.his head down and tries to spear you on their gleamingly-white tusks. Those at least don’t seem to have become rubbery yet! You manage to dodge enough to avoid being impaled, but one tusk hits your side. 
+<<damage $edmg>>
+<</if>>
+
+<<case 3>>
+<li>Trumpet</li>
+Eyes narrowing, the $npc1.species suddenly extends $npc1.his trunk and lets out a deafening trumpeting. You reel back, clutching your ears to try to blot out some of the awful noise. 
+<<if $agi > 3>>
+<<set _debuff = random(-1,-3)>>
+<<tempBuff "agi" _debuff>>
+<</if>>
+
+<<if random(1,5) == 1>>
+<<tempBuff "stun" 1>>
+<</if>>
+
+<<case 4>>
+<li>Grab</li>
+<<if setup.dodge()>>
+As the $npc1.species’s tusks scythe at you, you dodge away from them, rolling neatly in the dust, safely out of range, for now. The $npc1.species squeals in outrage at being cheated in this way. 
+<<else>>
+The $npc1.species suddenly lunges forwards. You step back, anticipating another attack, but- too slow! $npc1.His bloated trunk lunges out and wraps around your shoulders and stomach, pinning you in place! The trunk tightens its grip on you, and you wheeze- it’s like being in the coils of a grey <<=setup.getSpeciesData("anacondaSpecies").species>>! You find yourself face-to-nostrils with the business end of the $npc1.species’s trunk, panting for breath as you struggle. Then with what sounds suspiciously like an evil chuckle, the tip of the trunk jams itself in your gasping mouth! 
+<br><br>
+
+A sudden, shocking blast of air fills your cheeks until they’re straining, and you groan as you feel your chest and middle beginning to bloat out too
+<<if $arm.name != $unarmored.name>>
+, your $arm.name beginning to feel increasingly tight around your stomach and under your armpits
+<</if>>
+. This stretch-crazy $npc1.species is trying to blow you up like a party balloon! 
+<<set _inf = random(2,5)>>
+<<inflate _inf 0>>
+<<set $grapple = $e.str * 3>>
+<</if>>
+
+<</switch>>
+
+/*Grappled attacks*/
+<<else>>
+<li>Blow</li>
+Behind you you can hear the $npc1.species drawing in a deep breath through $npc1.his mouth. Then you’re given ''ANOTHER'' long, hard puff through the trunk, your body slowly being forced to stretch larger and larger, your $waist belly blowing up even larger! 
+<<set _inf = random(2,5)>>
+<<inflate _inf 0>>
+
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+Your stomach letting out an intimidating roar, you launch yourself at the bemused $npc1.species, colliding so hard that it bounces onto its back! You grab one of the $npc1.species’s hind legs and embark on one of the biggest meals of your life, cramming its foot into your mouth and working your way from there. Getting the other hind foot into your mouth isn’t easy, but you manage it, aided by the $npc1.species’s own elasticity. By the time the stunned creature realises what you’re doing, you’ve managed to stuff both legs AND its collosal hiney into your mouth, stretching your cheeks and stomach to ludicrous proportions. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	It squeals and quivers as it thrashes its legs and trunk, but you’ve now reached its equator, jaws stretching hugely around it, suggesting that you’ve picked up some of the $npc1.species’s own elasticity. It certainly helps you to shovel more and more of the pooltoy pachyderm down your gullet, inching slowly forward. Then you’re over the hump so to speak, and with the greatest bulk of the $npc1.species inside you, its more of a challenge to stop the rest of it being pulled in too quickly! Like a balloon being squeezed most of the way through a narrow opening the $npc1.species’s bulk now literally drags its front end into your mouth after it, your body stretched to colossal proportions but somehow keeping it together. The $npc1.species’s front feet frantically scrabble at the packed earth for a moment, looking for purchase, and then it’s pulled in further, only its trunk sticking out of your mouth like a periscope. And then that too is gone, sliding down your throat like thick spaghetti. Your stomach lets out a huge GURGLE, whether of complaint or contentment you’re unsure. Wow, you’ve just eaten a whole <<=$npc1.species.toUpperCase()>>! 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<hr>
+	<<include "grasslands randomization">>
+<<else>>
+	But then you find that you’ve bitten off more than you can chew- quite literally! You realise that your overstretched jaws are wedged around the $npc1.species’s equator-like waist: it’s too large to swallow and you’re stuck, unable to let go! The $npc1.species recovers from its shock and lets out an outraged, trumpeting bellow. Then you hear a noisy sucking sound, and feel the $npc1.species’s middle growing bigger between your jaws! It’s blowing itself up like a balloon! You feel your body creeak and begin to change shape as the $npc1.species pumps itself bigger and bigger, that part of it you’ve swallowed blowing up larger and larger inside you. Your hide starts to straaiiin to contain such an enormous volume and your eyes water, jaws getting stretched wider and wider and wider. The world starts to spin around you as you become nothing more than a balloon yourself. 
+	<<if $options.popping>>
+		You feel the $npc1.species suck in another breath through its trunk, and it all becomes too much- the world starts to turn white at the edges of your vision as you feel seams inside your body beginning to pop apart as the $npc1.species fills you, then overfills you! You begin to swell faster now, out of control, and as the world fades to a blinding, pure white you feel and hear what might be the start of a devastating explosi-
+	<hr>
+	<<defeated "exploded">>
+	<<else>>
+		Mercifully, the immense pressure inside you finally causes you to black out, sinking into unconsciousness with a deep longing for some bicarbonate of soda...
+	<hr>
+	<<defeated "overeating">>
+	<</if>>
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You manage to get out of range of that flailing trunk and turn and run into the grassland. With a furious bellow the $npc1.species sets after you, but almost immediately you hear a squeal of satisfaction. Risking a look over your shoulder, you see the $npc1.species clasping a pile of stretchy-fruits in $npc1.his trunk, which $npc1.he stuffs into $npc1.his mouth. As they’re gulped down that huge grey belly swells even larger, and the $npc1.species finally beaches itself on $npc1.his own stomach, trumpeting after you as you get safely out of range- either from being eaten, or from the $npc1.species exploding! 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You try to flee from this overly-elasticated $npc1.species, but $npc1.his trunk whips out and tangles with your legs, sending you sprawling on the hard ground. You roll and heave yourself upright, this time careful not to take your eyes off your opponent. 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+With an exhausted sigh you lower your arms from their defensive stance
+<<if $wea.name != $unarmed.name>>
+, your $wea.Name falling to the ground
+<</if>>
+.  The $npc1.species flaps its ears and trumpets in triumph, while you lower your head, an acknowledgement that you are beaten. You lift your $fatness arms out from your sides as if to embrace your fate, and the $npc1.species tramples towards you. As $npc1.his shadow falls across you you close your eyes and are knocked to the ground with a tremendous swipe from its trunk. 
+<br><br>
+
+Exhausted from the fight, a final, contemptuous swipe from the $npc1.species’s trunk sends you sprawling to the ground, too weak to even get up. Something wraps around your ankle and you’re suddenly hoisted upwards, and find yourself dangling upside-down in front of the $npc1.species’s jaws. You swear those lips curve into a smile before $npc1.he stuffs you in greedily, like the biggest peanut in history! It takes some cramming 
+<<if setup.waistDiameter() > 15>>
+- in particular your $waist belly is quite a mouthful - 
+<</if>>
+but the $npc1.species’s mouth and throat both seem to stretch around you to let $npc1.him force you down. You feel the $npc1.species’s trunk shoving on your $fatness butt as $npc1.he attempts to squeeze you in. Finally though, despite your struggles you feel yourself slip all the way into the pachyderm’s highly-elastic gullet, and you slowly surf down $npc1.his throat like a grapefruit that’s been swallowed by a worm until you hit the cramped surroundings of $npc1.his stomach. 
+<br><br>
+
+You feel the sides of the $npc1.species around you quiver, and you realise the creature that’s eaten you must have just let out a huge burp of satisfaction. If it’s any consolation, from the feel of it $npc1.he's now beached on $npc1.his stomach, so with a bit of luck you’ll weigh them down for a good long time to come. With a sigh you close your eyes, and try not to think about what’s going to happen to you now... 
+<<endCombat>>
+<hr>
+<<defeated "devoured">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+/*If you're overfilled*/
+<<if $ful > $maxFul>>
+The pneumatic pachyderm delivers puff after puff into you, swelling you up into the land’s one-and-only $p.species-balloon! You squirm helplessly, but nothing seems to stop your expansion, and quite soon your arms and legs become helplessly bloated and taut, sticking out from your body at right angles. The $npc1.species blows you up bigger and bigger until you’re a parade-float parody of a $p.species, vast, round body floating off the ground, 'tethered' by the $npc1.species’s trunk as $npc1.he empties even more hot air into you! Finally you feel your hide begin to creak and strain, unwilling to stretch any further. 
+<br><br>
+
+<<if $options.popping>>
+But the $npc1.species seems too far gone to realise this- to your horror you see $npc1.him drawing in yet another deep breath to puff into you! You desperately try to shake your head, but you’re so swollen you can’t budge an inch! You whimper and shut your eyes as the $npc1.species’s trunk trembles with pent up force, and another gout of stretchy-fruit scented air blasts into you! You feel your body trembling with tension as you grudgingly stretch even further, swelling out of shape, no longer even recognisable as $p.article $p.species but just a huge round $p.furBack balloon in the sky. The $npc1.species’s breath seems to go on and on, and as you feel yourself stretch too far you open your eyes, only to see everything white-out followed by a deafening...''BANG'' 
+<<endCombat>>
+<<defeated "exploded">>
+
+<<else>>
+With a drunken gleam in their eye the $npc1.species puffs one last lungful of air into you that sets you creaking, before your lips finally ''POP'' free of their trunk, bobbing above their head like some huge novelty balloon. The $npc1.species reaches up with $npc1.his trunk and ''BONG''s it against your side, setting you tumbling up, up and away, completely unable to stop yourself and terrified that if you let all that air out at once you’ll blow yourself to Bermuda! 
+<<endCombat>>
+<hr>
+<<defeated "floating">>
+
+<</if>>
+
+/*If you're not overfilled*/
+<<else>>
+Exhausted from the fight, a final, contemptuous swipe from the $npc1.species’s trunk sends you sprawling to the ground, too weak to even get up. Something wraps around your ankle and you’re suddenly hoisted upwards, and find yourself dangling upside-down in front of the $npc1.species’s jaws. You swear those lips curve into a smile before $npc1.he stuffs you in greedily, like the biggest peanut in history! It takes some cramming 
+<<if setup.waistDiameter() > 15>>
+- in particular your $waist belly is quite a mouthful - 
+<</if>>
+but the $npc1.species’s mouth and throat both seem to stretch around you to let $npc1.him force you down. You feel the $npc1.species’s trunk shoving on your $fatness butt as $npc1.he attempts to squeeze you in. 
+<br><br>
+
+Finally though, despite your struggles you feel yourself slip all the way into the pachyderm’s highly-elastic gullet, and you slowly surf down $npc1.his throat like a grapefruit that’s been swallowed by a worm until you hit the cramped surroundings of $npc1.his stomach. You feel the sides of the $npc1.species around you quiver, and you realise the creature that’s eaten you must have just let out a huge burp of satisfaction. If it’s any consolation, from the feel of it $npc1.he's now beached on $npc1.his stomach, so with a bit of luck you’ll weigh them down for a good long time to come. With a sigh you close your eyes, and try not to think about what’s going to happen to you now... 
+<<endCombat>>
+<hr>
+<<defeated "devoured">>
+
+<</if>>
+
+/*===You win!===*/
+<<case "victory">>
+The $npc1.species eventually tires, and with a final ''THUMP'' you at last manage to send it staggering back. You follow up the blow with a haymaker to the $npc1.species’s rubbery chin that actually causes the thing to fall backwards and roll right over onto its back! Squealing and trumpeting in rage, the pneumatic pachyderm waggles its bloated, stubby legs in the air helplessly as it rocks from side to side, unable to right itself! 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: lion ai {"position":"4775,375","size":"100,100"}
+<<switch $aiAction>>
+
+/* FIXES AND EDITS - Correct Lion's narration to use NPC gender */
+
+/*===Description===*/
+<<case "description">>
+Your opponent is a large $npc1.male $npc1.species who has a huge round belly that reaches halfway to the ground. $npc1.He's eyeing you hungrily, apparently ready to add a little more to $npc1.his overstretched stomach. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<set _chance = random(1,4)>>
+
+/*Vore attack*/
+<<if _chance == 1 and $hea < 20>>
+  <li>''Devour''</li>
+  
+  <<if setup.dodgeInstantDeath()>>
+  Your opponent believes you are weakened. $npc1.He rears back and attempts to tackle you, $npc1.his jaws opened wide, but you are able to fight $npc1.him off and throw $npc1.him to the ground. 
+  
+  <<else>>
+	Your opponent senses $npc1.his opportunity. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. You try to dodge $npc1.him, but $npc1.he's too strong and fast for you. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. 
+	<br><br>
+	
+	From the outside, the $npc1.species's stomach stretches to the ground and then some. The $npc1.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $npc1.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. You can only pray that someone up there is looking out for you. 
+	<<endCombat>>
+	<hr>
+	<<defeated "devoured">>
+  <</if>>
+
+/*Debuff attack*/
+<<elseif _chance == 2 and $agi > 5>>
+<li>Roar!</li>
+The bloated $npc1.species lets out a deafening ''roar'', leaving you feeling weak in the knees and slowed. 
+<<tempBuff "agi" -5>>
+
+/*Normal attack*/
+<<else>>
+  <<if random(1,2) == 1>>
+	<li>Bite</li>
+	The bloated $npc1.species licks $npc1.his chops before jumping forward and biting you, dealing $edmg damage. 
+  <<else>>
+	<li>Swipe</li>
+	The bloated $npc1.species waddles up and swipes at you with $npc1.his paw, dealing $edmg damage. 
+  <</if>>
+  
+  <<damage $edmg>>
+
+<</if>>
+
+
+/*===Vore actions===*/
+<<case "vore">>
+You lunge at your enemy in an attempt to devour the $e.name and you succeed in tackling $npc1.him to the ground. Sitting down, you grasp the $npc1.species's hind paws in your hands. You guide them to your mouth and open wide, shoving them down your throat.	With each swallow, the $npc1.species is pulled in a bit further. Progress slows as you reach the stomach, as you have to constantly push the $npc1.species's corpulent belly over your teeth. The hindpaws enter your stomach as you finally get the majority of $npc1.his gut into your maw, and work your way to $npc1.his <<if $npc1.male == "male">>mane<<else>>head<</if>>. 
+<<consume $e.weight 0>>
+<<if $alive>>
+	<<if $npc1.male == "male">>You pin it to $npc1.his body so that it doesn't mess with your face as you swallow.<</if>> You're able to finally close your mouth over $npc1.his maw, and finish up by working $npc1.his fore legs in. With one final gulp, $npc1.he is sent on a one way trip into your rounded stomach, which heavily hangs much closer to the ground, much as <<if $npc1.male == "male">>his<<else>>hers<</if>> did earlier. 
+	<<set _calories = $e.weight*.6>>
+	<<set $cal += _calories>>
+	<<include "Victory">>
+	<hr>
+	<<include "grasslands randomization">>
+<<else>>
+	You feel a constriction in your gut as your reach it, however. Try as you might, you are unable to swallow a single bit more; it seems you are at your limit! To make things worse, the $npc1.species chooses this exact moment to awaken. Thrashing wildly, $npc1.he manages to lurch $npc1.his way out, slowly deflating your gut. 
+	Your opponent senses $npc1.his opportunity. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. You try to dodge $npc1.him, but you're too busy recovering from your failed attempt to devour $npc1.him. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. From the outside, the $npc1.species's stomach stretches to the ground and then some. The $npc1.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $npc1.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. You can only pray that someone up there is looking out for you. 
+	<hr>
+	<<defeated "devoured">>
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You flee from the battle. The $npc1.species waddles after you, but the weight in $npc1.his stomach slows $npc1.him down and $npc1.he decides $npc1.he's too stuffed and lazy to chase anything down. 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Your opponent senses $npc1.his opportunity. $npc1.He rears back and lunges toward you, $npc1.his jaws stretched almost impossibly wide. $npc1.He tackles you to the ground and locks $npc1.his mouth around your head. $npc1.He slowly and laboriously swallows you whole as you struggle against $npc1.him. You feel yourself slide into $npc1.his large stomach as $npc1.he swallows you down. $npc1.His stomach stretches massively to contain you. 
+<br><br>
+	
+From the outside, the $npc1.species's stomach stretches to the ground and then some. The $npc1.species grunts and rolls onto $npc1.his side as $npc1.his humongous stomach towers several feet over $npc1.him. The $npc1.species lets out a pained but contented sigh as $npc1.he sets about digesting $npc1.his painfully large feast. You can only pray that someone up there is looking out for you. 
+<<endCombat>>
+<hr>
+<<defeated "devoured">>
+
+/*===You lose===*/
+<<case "defeat">>
+You collapse to the ground, too battered to stay awake, as the $npc1.species pads towards you.
+<<endCombat>>
+<hr>		
+<<defeated "battle">>
+
+/*===You win!===*/
+<<case "victory">>
+The bloated $npc1.species heaves out a sigh and collapses to the ground, too weakened by the fight to hold up $npc1.his heavy stomach. $npc1.He rolls on $npc1.his side and passes out. 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "hunter" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: lizard wizard ai {"position":"5975,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+This smallish $npc1.species is dressed in snappy, colorful garb. It fails to hide $npc1.his pudgy belly, but between the feathered cap, colorful patterns, and the wand that leaves slight magical trails as $npc1.he waves it idly, it does the job of letting you know that you&#39;re up against a wizard. The wicked grin lets you know that $npc1.he&#39;s a confident one, at that. 
+
+/*===Attack actions===*/
+<<case "attack">>
+/*Attacks while not grappled*/
+<<if $grapple <= 0>>
+
+<<switch random(1,3)>>
+
+<<case 1>>
+<li>Leaden</li>
+The $npc1.species flicks $npc1.his wand at an odd angle, then points it at you. Your flesh seems to stiffen and your body slows; $npc1.his magic is adversely affecting your mobility! 
+<<set _debuff = random(-3,-6)>>
+<<tempBuff "agi" _debuff>>
+
+<<case 2>>
+<li>Soften</li>
+The wizard slowly curves $npc1.his wand to point at you, and your gear grows heavy. $npc1.His magic is causing your strength to fade, formerly hard muscles becoming soft! 
+<<set _debuff = random(-3,-6)>>
+<<tempBuff "str" _debuff>>
+
+<<case 3>>
+<li>Grasp</li>
+<<set _player = $int + $agi + 50>>
+<<set _enemy = $e.int + $e.int>>
+
+<<if setup.skillTestRange(_player, _enemy, 10, 90)>>
+The wizard twirls $npc1.his wand, but you circle about $npc1.him as $npc1.he points towards you. The plants reach out for you, but only manage to scrape lightly against you as you deftly evade them. $npc1.He growls in frustration, $npc1.his grin becoming an angry scowl at this. 
+
+<<else>>
+The wizard twirls $npc1.his wand as $npc1.he raises it above $npc1.his head, $npc1.his free $npc1.hand pointing at you. Before you can react, the mass of limbs and vines ensnares you, and $npc1.his grin spreads wider as the plants begin to force their enormous fruit into your mouth! 
+<<set $grapple = $e.int * 3>>
+
+<</if>>
+
+<</switch>>
+
+/*Attacks while grappled*/
+<<else>>
+<li>Feed!</li>
+The $npc1.species taunts you as several fruits are rammed into your mouth and face. You have no choice but to take a bite and gulp it down to clear your view and get some air. 
+<<set _stuff = random (3,6)>>
+<<set _calories = _stuff * 0.5>>
+<<consume _stuff _calories>>
+
+<</if>>
+
+
+<<if $agi <= 0 or $str <= 0 or $end <= 0>>
+	<<set $alive = false>>
+<</if>>
+
+/*===Vore actions===*/
+<<case "vore">>
+You decide to solve this conflict in short order and lunge for the little $npc1.species. Caught off guard, $npc1.he lets out a squeak as you grasp $npc1.his round body. As you lift $npc1.him up towards your hungering maw, $npc1.he cries out, weakly beating you on the head with $npc1.his wand. It avails $npc1.him not, your mouth closing about $npc1.his head as you begin to force $npc1.his flailing body down your throat. With a bit of a shove, you work your jaws to slide $npc1.him up to $npc1.his chest, $npc1.his muffled cries stifled inside you. Putting a hand to $npc1.his squishy belly, you upend $npc1.him and tilt your head back, sending $npc1.him sliding towards your stomach. $npc1.His writhing tickles your insides as your stomach muscles work to squeeze $npc1.him into $npc1.his new place as a rolled-up lump in your stretched gut. You give your belly a pat and a rub as $npc1.he struggles inside you... 
+<<consume 30 10>>
+
+<<if $alive>>
+As $npc1.he suddenly goes still, you realize that you've swallowed $npc1.his wand along with $npc1.him; $npc1.his grasp on it never failed the whole time. Before you can be impressed by $npc1.his tenacity, you can feel the warm tingling of a spell going to work inside you. Your $waist belly suddenly begins to swell, something dense and squishy stretching you from inside. You let out a groan as the mass in your stomach redoubles, making you bulge and round out, your stomach sagging as it grows and over-fills. You are $hungry when it stops, but it appears that that was all the little wizard had. The farm fades away around you, and an empty cart led by a $horse.species begins to roll away into the distance. 
+<<set $cal += 18>>
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+
+<<else>>
+<<if $options.popping>>
+As the struggle in your belly stops, you have just enough time to realize that $npc1.he never released $npc1.his magic wand. The tell-tale warm tingling of magic suddenly spreading through your stomach confirms your fears, and your $waist belly begins to stretch anew. You fall to your knees as your stomach bloats and fills, a pained groan escaping your lips as you fill far beyond your capacity. You grasp your swelling belly in both $p.hands, rubbing it desperately as the pressure mounts. Alas, your treatments are in vain, and you soon fall to your back, your overfull belly rising into the air above you. As your hide stretches thinner, you can just make out the glow of the wizard’s wand through your overtaxed $p.fur before you burst with a thunderous BANG!
+<br><br>
+
+The little wizard brushes $npc1.himself off, collects $npc1.his feathered cap and heads off into the grasslands.
+<hr>
+<<defeated "exploded">>
+
+<<else>>
+As the struggle in your belly stops, you have just enough time to realize that $npc1.he never released $npc1.his magic wand. The tell-tale warm tingling of magic suddenly spreading through your stomach confirms your fears, and your $waist belly begins to stretch anew. You fall to your knees as your stomach bloats and fills, a pained groan escaping your lips as you fill far beyond your capacity. You grasp your swelling belly in both $p.hands, rubbing it desperately as the pressure mounts. Alas, your treatments are in vain and you soon fall to your back, your overfull belly rising into the air above you as you lose consciousness. 
+<hr>
+<<defeated "overeating">>
+<</if>>
+
+<</if>>
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+With great effort, you rip your limbs from the mass of plants, sending several fruits crashing to the ground. The $npc1.species screeches angrily at you as you make a mess of $npc1.his farm. 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against the plants, but to no avail, the sheer amount of vines, bushes, and tree limbs and roots encircling your body proving too much for you. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn to make a run for it. Vines claw at your $p.feet but eventually you manage to outrun their grasp leave the $npc1.species wizard behind!
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Surrounded and overwhelmed by magic and plants, you lower yourself to the ground, bowing your head in submission. The $npc1.species just cocks $npc1.his head in confusion and frowns. 
+<br><br>
+
+"You give up?" $npc1.he asks, a slightly annoyed tone in $npc1.his voice. "Shame," $npc1.he sighs, "I was going to play with you more." The smile comes back across $npc1.his face as $npc1.he continues, "But I suppose we can skip straight to the part where I punish you for theft." 
+<br><br>
+
+$npc1.He taps your head with $npc1.his wand, then pokes it into your belly as $npc1.his plants wrap around you to hold you in place. Your belly seems to loosen just in time for the plants to begin forcing their fruit into your mouth, and you find yourself without the will to resist. 
+<<stuffToBursting>>
+
+You can only watch as your belly stretches bigger and bigger, an endless stream of delicious flavors parading into your mouth. Against your desire and better judgement, you find yourself slowly chewing and swallowing down enormous fruit after enormous fruit. Oranges, pears, grapes, apples, watermelon, all of it is swallowed down as you are stuffed to the brim, and pushed beyond it again and again. It seems to last for days, all the while the little $npc1.species is laughing softly and playing with your oversized belly like it was $npc1.his own personal plaything. 
+<<consume 200 0>>
+
+At length, your jaw stops moving, your body seeming to be unable to take anymore and simply halting entirely. You should have burst what seems like a few hundred gigantic feedings ago, but your tremendous gut rests on the ground now. 
+<br><br>
+
+Giving it a scrutinizing look and letting out an appraising hum, the $npc1.species pats it, and declares, "That'll do, I think." Gently, $npc1.he places $npc1.his wand on your head. "Now I'm going to be nice and let you sleep. Take a good rest, for your bulk will be serving me well..." Your consciousness slowly fades, and your body begins to feel stiff. Where you touch the ground, you seem to sink into it, and as your vision goes dark, the last thing you see is your skin turning to bark and a leafy growth sprouting from it. 
+<hr>
+<<defeated "transformed">>
+
+
+/*===You lose===*/
+<<case "defeat">>
+With your will to fight sapped to nothing, you are left at the mercy of a wizard that you have wronged. While there are concievably worse situations to be in, this is certainly near the top of the list, and the wide grin on the $npc1.species's face shows that $npc1.he means to prove it. 
+<br><br>
+
+"You wanted to eat my fruit?" $npc1.He taunts, $npc1.his plants wrapping around you and lowering you to your knees. "Well, you're going to have to eat a whole lot of it if you're going to be of use around here," $npc1.he continues, tapping your head with $npc1.his wand, then poking it into your belly. Though the pressure inside it seems to lessen, your helplessness does not fade, and the plants begin to feed you their fruit. 
+<<stuffToBursting>>
+
+You can only watch as your belly stretches bigger and bigger, an endless stream of delicious flavors parading into your mouth. Against your desire and better judgement, you find yourself slowly chewing and swallowing down enormous fruit after enormous fruit. Oranges, pears, grapes, apples, watermelon, all of it is swallowed down as you are stuffed to the brim, and pushed beyond it again and again. It seems to last for days, all the while the little $npc1.species is laughing softly and playing with your oversized belly like it was $npc1.his own personal plaything. 
+<<consume 200 0>>
+
+At length, your jaw stops moving, your body seeming to be unable to take anymore and simply halting entirely. You should have burst what seems like a few hundred gigantic feedings ago, but your tremendous gut rests on the ground now. 
+<br><br>
+
+Giving it a scrutinizing look and letting out an appraising hum, the $npc1.species pats it, and declares, "That'll do, I think." Gently, $npc1.he places $npc1.his wand on your head. "Now I'm going to be nice and let you sleep. Take a good rest, for your bulk will be serving me well..." Your consciousness slowly fades, and your body begins to feel stiff. Where you touch the ground, you seem to sink into it, and as your vision goes dark, the last thing you see is your skin turning to bark and a leafy growth sprouting from it. 
+<hr>
+<<defeated "transformed">>	
+
+
+/*===You win!===*/
+<<case "victory">>
+As your last attack connects, the little wizard suddenly disappears. With a hurried glance, you see that the plants have returned to their original, spaceous placement. The $npc1.species is a ways away from you, picking $npc1.himself up and dusting $npc1.his hat off. 
+<br><br>
+
+"You're lucky this time!" $npc1.he growls angrily, and with a snap of $npc1.his wrist, $npc1.he points $npc1.his wand straight upward. With a brilliant flash and disorienting sound somewhere between a rush of wind and an explosion, the farm is gone, and a distant cart is hurrying away towards the horizon. 
+<br><br>
+
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "resister" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: ritualist ai {"position":"5275,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+A $npc1.species wildling with colored markings painted on $npc1.him in vaguely ritualistic designs. Behind $npc1.him is a large bag of assorted foods, presumably taken from society. After many years in the wild, $npc1.he has become very adept in their methods of preparing the perfect sacrifice. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<set _chance = random(1,4)>>
+
+<<if _chance == 1 and ($e.hea * 2) <= $e.maxhea and $e.mana < $heal2.cost>>
+<li>Heal</li>
+The wildling kneels down and quietly chants to $npc1.himself as he's enveloped in a soft green light. $npc1.His injuries visibly heal as $npc1.he restores $edmg health. 
+<<enemyCast $heal2>>
+
+<<else>>
+<li>Feed</li>
+<<set $eventCounterB = either($cupcake,$cake,$sausage)>>
+The wildling grabs $eventCounterB.article $eventCounterB.name from $npc1.his bag and runs at a frightening speed towards you. Before you know it, the entire $eventCounterB.name has been shoved down your gullet, the wildling already heading back for more of the contents of $npc1.his bag. 
+
+<<set _eat = ($eventCounterB.eat * 2)>>
+<<set _calories = $eventCounterB.calories>>
+<<consume _eat _calories>>
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You attempt to flee from the battle and manage to escape from the yelling wild $npc1.man. 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower your defences and surrender to your opponent. $npc1.He grins widely before saying something you can almost understand and smashing a watermelon over your head. Your vision fades to black and you fall to the ground unconscious. 
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by wildlings">><</action>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+As $eventCounterB.article $eventCounterB.name is pushed down your throat, your gut seems to groan with the pain of being pushed over the limit. You struggle to keep your stomach at ease while fending off the force-feeding wildling. You try to constantly avoid the ready $eventCounterB.name in the wildling's hand. Fed up with having to struggle with you, the wildling grabs a watermelon and smacks it against your head. You notice the wild glee on the wildling's face as your vision fades to unconsciousness. 
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by wildlings">><</action>>
+
+
+/*===You win!===*/
+<<case "victory">>
+Upon realising defeat, the wildling runs away, throwing one final cupcake in your direction as a distraction. As you try to catch the cupcake, you see the wildling flee to the undergrowth in the corner of your eye. 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "resister" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: shaman ai {"position":"5400,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Walking out of the long grass, you come unexpectedly upon a canine figure standing with their back to you, staring into the distance. A ragged loincloth and blanket makes you think that this is a wilding, and you tense to defend yourself, but you relax slightly when you observe that $npc1.he carries no weapon, and not even any food. The only thing you can see is an old, gnarled staff and a small medicine-bag at their feet. The creature slowly turns to face you- soot black, hatchet-muzzled and quite the thinnest creature you’ve seen in a long time, $npc1.his face is decorated with tribal markings that even you can interpret. A shaman! Err... whoops! $npc1.He regards you with an inscrutable, hawk-like expression for a few moments, then $npc1.his weathered muzzle breaks slowly into a fathomless, predatory smile. This doesn’t look good...
+
+/*===Attack actions===*/
+<<case "attack">>
+<<set _attack = random(1,3)>>
+
+<<if $grapple <= 0 and _attack == 1>>
+<li>Grab</li>
+The shaman fixes $npc1.his piercing gaze on you and their lips begin to move soundlessly. You feel a breeze pick up and swirl fitfully around you, sweeping across your $p.furBelly $p.fur. At the same time $npc1.he brings $npc1.his paws up as if holding a ball, and then slowly moves them closer together. The air around you seems to set like stone- you feel as though you’re clamped in the fingers of an invisible giant! You can’t move! 
+<<set $grapple = 1 + $e.int * 3>>
+<<enemyAction "attack">>
+
+<<else>>
+
+/*Attack when you're not fattened*/
+<<if $tfat <= 0>>
+<li>Chant</li>
+The shaman slowly raises one scrawny paw towards you, as if in greeting. $npc1.he smiles as your stomach lets out a deep gurgle, and you feel your $waist belly bulge even bigger!
+
+<<set _food = random(3,6)>>
+<<set _calories = random(2,4)>>
+<<set _fat = _food * 2>>
+
+<<tempBuff "fat" _fat>>
+<<consume _food _calories>>
+
+You stumble slightly, unbalanced by the extra weight, and a deep ''BURP'' forces its way up grudgingly from inside you. Hefting your growing gut, you realise that you’re not getting much fuller, but you ARE getting a lot fatter! This shamanistic stuffing leaves you feeling $hungry. 
+
+/*Attack when you are fattened*/
+<<else>>
+
+
+<<set _food = random(3,6)>>
+<<set _calories = random(2,4)>>
+<<set _fat = _food * 2>>
+
+<<if random(1,2) == 1>>
+<li>Chant</li>
+The shaman raises $npc1.his paw once again, chanting soundlessly in an unknown language. Another loud ''BELCH'' escapes your muzzle, and your $p.hands go to your belly as you bulge with yet more added bulk, your stomach and sides spreading wider while your caboose balloons behind you. 
+<<tempBuff "fat" _fat>>
+<<consume _food _calories>>
+
+<<else>>
+The shaman raises $npc1.his paw once again, chanting soundlessly in an unknown language. You struggle to bite down a deep, rolling ''BURRRP'' as another jolt of forced-fullness hits you. 
+
+<<tempBuff "fat" _fat>>
+<<consume _food _calories>>
+
+More blubber 'softening' your now downright $fatness girth to even greater curvaceousness. You feel your thickening arms push up slightly from your sides, while your stance widens to accommodate your increasingly chubby thighs. 
+<</if>>
+
+As your expansion subsides, you are left feeling $hungry. 
+
+<</if>>
+
+<</if>>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+You manage to break free from your enemy's grasp! 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+You struggle against your captor and loosen their grasp, but you can't quite break free. 
+<<enemyAction "attack">>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn on your tail and run into the long grass, leaving your foe standing. As the distance lengthens you risk a glance over your shoulder to check for pursuit, but the shaman is merely watching your hurried departure with interest, head to one side. Just before $npc1.he vanishes into the distance $npc1.he smiles and raises one paw in a meaning that you can guess all too well- //'be seeing you'//. It looks like you’ve been let go, but why? 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You turn on your tail and run into the long grass, leaving your foe standing. Hearing no sounds of pursuit, you come to a halt after a few minutes, panting and wiping your brow. But when you stand up and happen to glance to your side you nearly jump out of your skin to find the shaman standing there exactly as before, apparently without having moved a muscle. You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Your ears and shoulders droop, and you spread your arms in a gesture of resignation. The shaman cocks $npc1.his head and regards you with an inscrutable stare for a few moments, then slowly reaches into $npc1.his medicine bag and produces an old wooden flute. $npc1.He brings it to $npc1.his lips and begins to play. You don’t hear anything but almost immediately you start to feel fuller. Looking down, you see your $waist belly begin to soften and swell larger. You heft it in your $p.hands and just stand there as you steadily balloon fatter, and fatter, and fatter. 
+
+<<tempBuff "fat" 500>>
+<br>
+
+Within minutes you’ve grown enormously fat, your chubby features jiggling as you look down at your obese frame 
+
+<<if $top.name != $shirtless.name or $btm.name != $pantsless.name>>
+<<if $top.popped or $btm.popped>>
+bulging out of the ripped and torn remains of your burst clothing
+<</if>><</if>>
+
+, arms struggling to support the increasing weight of your belly while your backside is rapidly approaching barn-sized. With a soft groan you feel your belly-blubber beginning to slip through your fingers, and it finally touches ground, bouncing and then spreading. Your chubby legs widen and begin to ache from the effort of holding so much of you up, so you slowly topple onto your oh-so-generous rump, causing the ground to shake and raising a crater of dust around you. As the shaman continues to play your eyelids begin to droop irresistibly. You feel so, sooo sleepy... 
+<hr>
+<<endCombat>>
+<<action "c" "wait" "Sleep" "wildlingShaman submit 2">>
+<<tempBuff "fat" 5000>>
+<</action>>
+
+
+/*===You lose===*/
+<<case "defeat">>
+You pant and groan as you struggle to keep standing on your own two increasingly porky $p.feet. Another tonsil-rattling ''BURRRRP'' forces itself out from between your jaws, and you feel the underside of your ever-increasing belly bounce against the hard-packed ground, then spread. 
+
+<<set _stuffing = random(75,125)>>
+<<set _fattening = _stuffing * 2>>
+
+<<consume _stuffing 0>>
+<<tempBuff "fat" _fattening>>
+
+You desperately try to haul yourself backwards, belly dragging, but the weight of your still-swelling butt presses down through your tired legs, and you finally sink to the floor, exhausted, landing with an earth-shaking plop onto your expansive backside. Seeing that you’re not going anywhere, the shaman produces an old wooden flute from their medicine bag, and begins to play. Absolutely no sound hits your ears, but almost at once your eyelids begin to droop irresistibly. You feel so, sooo sleepy... 
+<hr>
+<<endCombat>>
+<<action "c" "wait" "Sleep" "wildlingShaman submit 2">>
+<<tempBuff "fat" 5000>>
+<</action>>
+
+
+/*===You win!===*/
+<<case "victory">>
+You prove too big a mouthful for the shaman to tackle. $npc1.He slips away from your last attack, $npc1.his eyes still fixed on you coldly. You lunge forwards in an attempt to grab $npc1.him before $npc1.he gets away, but land flat on your face in the dust, $fatness arms wrapped around thin air! You look up from your prone position on the floor laying atop your $waist belly, but all you see is the outline of a soaring eagle as it disappears into the horizon. 
+<<include "Victory">>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "resister" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: shaman boss ai {"position":"5625,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+You face the wilding shaman, as skinny and dark as a shadow at noon, with ritualistic markings across the hatchet-like planes of $npc1.his chiselled canine features and adorned with a full ceremonial headdress and robe. Scrawny and completely unarmed, carrying only an old wooden flute, you still feel the skin crawl on the back of your neck when those eyes fix on you speculatively. The face is expressionless, but $npc1.his eyes are alight at this turn of good fortune. TWO captives for sacrifice... Looks like you'll have to fight your way out! 
+
+
+/*===Attack actions===*/
+<<case "attack">>
+<<if $tfat == 0>>
+<li>Feed</li>
+The shaman slowly raises one scrawny $npc1.hand towards you, as if in greeting. $npc1.He smiles as your stomach lets out a deep gurgle, and you feel your $waist belly bulge even bigger! You stumble slightly, unbalanced by the extra weight, and a deep ''BURP'' forces its way up grudgingly from inside you. Hefting your growing gut, you realise that you're not getting much fatter, but you ARE getting a lot fuller! 
+<<tempBuff "fat" 1>>
+<<set _feed = random(4,8)>>
+<<set _calories = random(3,6)>>
+<<consume _feed _calories>>
+
+<<else>>
+
+<<if $grapple <= 0 and random(1,3) == 1>>
+<li>Grab</li>
+The shaman fixes $npc1.his piercing gaze on you and their lips begin to move soundlessly. You feel a breeze pick up and swirl fitfully across your $p.furBack $p.fur. At the same time $npc1.he brings $npc1.his $npc1.hands up as if holding a ball, and then slowly moves them closer together. The air around you seems to set like stone- you feel as though you're clamped in the fingers of an invisible giant! You can't move! 
+<<set $grapple = $e.int * 3>>
+
+<<else>>
+<li>Feed</li>
+The shaman raises $npc1.his $npc1.his once again, chanting soundlessly in an unknown language. 
+
+<<if random(1,2) == 1>>
+Another loud ''BELCH'' escapes your muzzle, and your $p.hands go to your belly as you bulge with yet more added bulk, your stomach and sides spreading wider while your caboose balloons behind you. 
+<<else>>
+You struggle to bite down a deep, rolling BURRRP as another jolt of forced-fullness hits you, more blubber 'softening' your now downright $waist girth to even greater curvaceousness. You feel your thickening arms push up slightly from your sides, while your stance widens to accommodate your increasingly chubby thighs. 
+<</if>>
+
+<<set _calories = random(3,6)>>
+<<set _feed = _calories + random(1,2)>>
+<<set _fat = _feed * 2>>
+<<consume _feed _calories>>
+<<tempBuff "fat" _fat>>
+
+<</if>>
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You turn on your tail and run into the long grass, leaving your foe standing. As the distance lengthens you risk a glance over your shoulder to check for pursuit, but the shaman is merely watching your hurried departure with interest, head to one side. Obviously they must have their hands full with just one prisoner- and given the size of $npc2.him, you're not surprised. You can still just hear the faint, frantic pleading of the enormous captive from the enclosure. You keep running, coward that you are. Just before the shaman vanishes from sight $npc1.he smiles and points a sticklike finger toward you in a gesture you can interpret only too well- 'next time it could be you'. 
+<br><br>
+
+You lost your pride, but at least you escaped! 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Grapple Escape===*/
+<<case "grapple succeed">>
+Sweating with exertion, your heave and strain your shoulders and with a mighty effort of will manage to break free of the shaman's magical grip! You shout in triumph while the shaman growls angrily. 
+<<include "player attack">>
+
+
+/*===Grapple Fail===*/
+<<case "grapple fail">>
+Under the amused gaze of your foe, you squirm and flex inside the vice-like grip of the magical wind, but are left panting for breath, unable to break free of whatever spell is holding you to the spot. 
+<<enemyAction "attack">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You turn on your tail and run into the long grass, leaving your foe standing. Hearing no sounds of pursuit, you stagger to a stop after a few minutes, panting and wiping your brow. But when you stand up and happen to glance to your side you nearly jump out of your skin to find the shaman standing there exactly as before, apparently without having moved a muscle. You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+Your shoulders droop, and you spread your arms in a gesture of resignation. The shaman cocks $npc1.his head and regards you with an inscrutable stare for a few moments, then slowly brings the flute $npc1.he's carrying to $npc1.his lips, and begins to play. You don't hear anything but almost immediately you start to feel fuller. Looking down, you see your $fatness gut begin to soften and swell larger. You heft it in your $p.hands and just stand there as you steadily balloon fatter, and fatter, and fatter. <<stuffToBursting>>
+<br><br>
+
+Within minutes you've grown enormously fat, your chubby features jiggling as you look down at your obese frame,arms struggling to support the increasing weight of your belly while your backside is rapidly approaching barn-sized. With a soft groan you feel your belly-blubber beginning to slip through your fingers, and it finally touches ground, bouncing and then spreading. Your chubby legs widen and begin to ache from the effort of holding so much of you up, so you slowly topple onto your oh-so-generous rump, causing the ground to shake and raising a crater of dust around you. As the shaman continues to play your eyelids begin to droop irresistibly. You feel so, sooo sleepy... 
+<hr>
+<<endCombat>>
+<<action "c" "wait" "Sleep" "wildlingShamanBoss submit 2">>
+	<<tempBuff "fat" 5000>>
+	<<consume 100 0>>
+<</action>>
+
+/*===You lose===*/
+<<case "defeat">>
+You pant and groan as you struggle to keep standing on your own two increasingly porky $p.feet. Another tonsil-rattling ''BURRRRP'' forces itself out from between your jaws, and you feel the underside of your ever-increasing belly bounce against the hard-packed ground, then spread. 
+<<consume 25 0>><br><br>
+
+You desperately try to haul yourself backwards, belly dragging, but the weight of your still-swelling butt presses down through your tired legs, and you finally sink to the floor, exhausted, landing with an earth-shaking plop onto your expansive backside. Seeing that you're not going anywhere, the shaman brings the flute $npc1.he's carrying to $npc1.his lips, and begins to play. Absolutely no sound hits your ears, but almost at once your eyelids begin to droop irresistibly. You feel so, sooo sleepy... 
+<<endCombat>>
+<<action "c" "wait" "Sleep" "wildlingShamanBoss submit 2">>
+	<<tempBuff "fat" 5000>>
+	<<consume 100 0>>
+<</action>>
+
+
+
+/*===You win!===*/
+<<case "victory">>
+
+<<switch $e.special>>
+/*If you haven't freed the captive*/
+<<case $wildlingShamanBoss.special>>
+You prove too tough a piece of meat for it to be worth chewing. The shaman lowers $npc1.his paw and slowly backs away from you, keeping between you and the stockade. The message in that fathomless stare is clear- 'leave now, before I change my mind'. You cautiously back away to the edge of the clearing, still locked in a stare. Then you turn and make a break for it, pounding through the long grass. 
+<<include "Victory">>
+<hr>
+<<include "grasslands randomization">>
+
+/*If you have freed the captive*/
+<<default>>
+With a snarl the shaman jumps back from your last attack, beaten, and utters a shrill cry of rage. You lunge forwards in an attempt to grab $npc1.him, but land flat on your face in the dust as a flock of ravens scatters in all directions, cawing and shrieking. 
+<br><br>
+
+A hollow rumbling shakes the ground beneath you, and you look up into the super-fattened features of probably the world's fattest $npc2.species still beached on $npc2.his mind-bogglingly big belly. "Oof! S-sorry, guess all that excitement worked up an appetite" $npc2.he comments. $npc2.He blinks, and a smile stretches $npc2.his swollen features. "Hey! I'm not getting any BIGGER!" $npc2.He whoops and punches the air, sending a heavy wobble through $npc2.his blimped-up form. With an immense effort, and some shoulder-work from you, $npc2.he manages to roll back onto $npc2.his feet, although $npc2.his stomach is still spread firmly on the ground. 
+<br><br>
+
+"Thanks $p.buddy, you've just saved my bacon! I owe you, BIG TIME! I lost most of my gear back there-" you don't offer to go and retrieve it, and $npc2.he doesn't look surprised. "I don't even have the clothes I stand up in! But..." $npc2.he reaches up, with difficulty, around $npc2.his neck and fumbles with something, "...I can offer you THIS as a reward! With a final tug, a cord hidden beneath $npc2.his juicy chins comes loose and a money-pouch drops down into the valley between $npc2.his collosally bloated pecs. $npc2.He picks it up and tosses it to you, and it makes a satisfying //'chink'// in your $p.hands.
+
+<<set _reward = random(34,47)>>
+<<doGld _reward>><br>
+
+Just at that moment, the $npc2.species's cavernous stomach growls at $npc2.him again. $npc2.He absent-mindedly slaps a hand to $npc2.his belly, sinking in a couple of feet at least. "Oof... don't you worry about me, I'll be fine from here. At least, I WILL be once I find some FOOD. There's gotta be a snack-bar or something around here..." And with that, the colossal ex-captive ploughs laboriously away into the grasslands in search of a meal. 
+
+<<include "Victory">>
+<<include "grasslands randomization">>
+
+<</switch>>
+
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: wildling ai {"position":"5025,375","size":"100,100"}
+<<switch $aiAction>>
+
+/*===Description===*/
+<<case "description">>
+Your opponent was once a $npc1.species member of your society who has for some reason left to live in the wilderness. $npc1.He is wearing tattered rags of what were clothes manufactured in the city. $npc1.He is grinning at you malevolently as $npc1.he points a wooden spear at you. 
+
+/*===Attack actions===*/
+<<case "attack">>
+<<doEdmg>>
+<<set _chance = random(1,3)>>
+
+/*Self heal*/
+<<if _chance == 1 and $e.item != "" and $e.hea < ($e.maxhea - $e.item.heal)>>
+<li>Potion</li>
+The wildling pulls out a glass bottle full of red liquid. $npc1.He chugs it down and $npc1.his wounds start healing. 
+<<eHealth 25>>
+<<set $e.item = "">>
+
+<<else>>
+
+/*Normal attack*/
+<<if random(1,2) == 1>>
+<li>Jab</li>
+The wildling jabs at you with $npc1.his spear. 
+
+<<else>>
+<li>Whack</li>
+The wildling swings the spear around and catches you off guard, whacking you in the head. 
+<</if>>
+
+<<damage $edmg>>
+
+<</if>>
+
+
+/*===Run success===*/
+<<case "run succeed">>
+<li>Escaped!</li>
+You attempt to flee from the battle and manage to escape from the yelling wild $npc1.man. 
+<<endCombat>>
+<<include "grasslands randomization">>
+
+
+/*===Run Fail===*/
+<<case "run fail">>
+<li>Run failed!</li>
+You failed to escape! 
+<<enemyAction "attack">>
+
+
+/*===Surrender===*/
+<<case "submit">>
+<li>Submit</li>
+You lower your defences and surrender to your opponent. $npc1.He grins widely before saying something you can almost understand and whacking you hard over the head with the butt of $npc1.his spear. Your vision fades to black and you fall to the ground unconscious. 
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by wildlings">><</action>>
+
+/*===You lose===*/
+<<case "defeat">>
+Your vision fades to black and you fall to the ground unconscious. 
+<<endCombat>>
+<<action "c" "wait" "Sleep" "Captured by wildlings">><</action>>
+
+/*===You win!===*/
+<<case "victory">>
+Your opponent senses $npc1.his eminent defeat and decides to kick some dirt into your eyes. You cough and spit as you wipe the dirt out of your eyes and by the time you can see again, your foe seems to have vanished into the wilderness. 
+<<include "Victory">>
+<<include "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - START */
+<<case "feed">>
+	<<feeder_genericActionFull "resister" false "grasslands randomization">>
+/* FEEDER EXPANSION EDIT - END */
+<<default>>
+''Error in enemy ai''
+	
+<</switch>>
+
+
+:: wildlingShaman submit 2 [nobr] {"position":"5500,375","size":"100,100"}
+<<setPassageTitle "At the shaman's mercy">>
+<<rest>><<rest>>
+You jerk awake with a start. From the position of the $sun
+you must have been fast asleep for hours! Feeling something pressing softly under your chin, you try to look down, but find that you can’t. When you eventually do manage to crane your neck forwards, it slowly dawns on you that you must have been putting on weight all the time that you were dozing. You’re a $p.furBelly ''BALL''! Your truly colossal chest fills the base of your vision like a pair of rounded foothills, perched atop the absolutely mountainous blob that your belly has become. It sticks far out in front of you, the sides rolling on top of your widespread, hamlike legs. Vast, doughy lovehandles bulge atop your massive backside, which you can feel covering an embarrassingly large half-circle of ground behind you. Your obese arms stick out uselessly at your sides, too soft and bloated now to even bend, and unable to reach past the curve of your spreading sides and belly even if they could. Rocking your head from side to side you can feel the thick collar of blubber bloating out your neck- it’s an effort to just lean your head back. Even your ''FACE'' feels big and fat. 
+<br><br>
+
+The shaman is sitting to one side, still playing $npc1.his pipe. A small shudder runs through your jumbo-sized bulk and you feel yourself swell even fatter. Your hide //creeeaks// in protest, and you manage to let out a little whimper. $npc1.He lower the flute from $npc1.his lips, much to your super-rounded relief. Then you hear a rustling in the long grass around you, and a group of wilding braves emerges in a loose circle. You gulp. You feel paws, shoulders and backs press against your mind-blowingly blubberous bulk, and with a muffled $p.angry of protest you tip sideways, and find yourself being literally ROLLED out of there! It’s slow, and squashy, but boy do you pick up momentum! They roll you along like some gargantuan rubber ball, leaving a trail of flattened grass wide enough to drive a $horse.species and cart along. You have the nasty certainty that you’ve just become the biggest, fattest sacrificial animal that their tribe have ever had. The constant rolling makes you dizzy, and your final thought before you pass out is that at least you won’t have to go on a diet plan... 
+<hr>
+<<defeated "devoured">>
+
+
+:: wildlingShamanBoss submit 2 [nobr] {"position":"5725,375","size":"100,100"}
+<<setPassageTitle "At the shaman's mercy">>
+<<rest>>
+You finally surface to wakefulness again, blinking and smacking your lips sleepily, feeling very warm and comfortable, although for the moment you can't quite remember where yo- 
+<br><br>
+
+You jolt fully awake, and at the same time realise what's keeping you so warm and comfortable is ''YOU''! With an effort you manage to lean your chin forward, meeting resistance from your apparently-sizable chest, and are confronted by the huge, curving vista of your stomach. You're ''HEW-MUNG-GOUS''- you can feel the underside of your $p.furBelly belly pressing on the ground, spreading your legs wide apart, while your backside is taking up an awful lot of room by the feel of it. Worse than that, you're surrounded by a circle of wooden stakes. With an audible ''GULP'' you slowly twist your head, and to one side catch sight of the $npc2.species who asked for your help, likewise penned, but even bigger than $npc2.he was before! Mobility obviously well beyond $npc2.him, $npc2.his now-stubby arms have lifted above horizontal by the sheer amount of blubber surrounding them and pressing up from underneath, while $npc2.his backside is in danger of pushing the enclosure down all by itself. $npc2.His gargantuan girth makes you look merely a bit chunky. $npc2.His superfattened features cast you a wordless look of disgust, and with visible effort turns $npc2.his gaze away from you. Just then the pair of you stifle slightly out-of-synch belches, and you immediately feel yourself expand, gut and butt both inching outwards across the ground. Panicking, you try to run, to stand, to move ''ANYTHING'', but straining your muscles only produces a few wobbles on your weighed-down frame, your backside not even leaving the floor. Even that leaves you panting and in a sweat. You're BOTH captives now. 
+<<sleep>>
+<br><br>
+
+You both remain in silence throughout the following day, gradually getting fatter, and fatter, and fatter. By sundown you've grown considerably more massive, while your fellow captive is now so obesely spherical the stockade holding $npc2.him looks ready to burst if $npc2.he so much as breathes deeply. At that time a procession of wildings arrives, carrying torches and strange symbols, headed by the shaman who captured the pair of you. At a gesture from $npc1.him, a number of the 'heftier' wildings lumber forward and prize open the pen holding your friend, the stakes tumbling down in their paws. Then after a few ritual dances and some ceremonial-looking drinking, they form up and with obvious practice begin to roll the $npc2.species away into the gathering gloom, presumably for sacrifice. 
+<br><br>
+
+It's a long, slow, above all heavy job, and under any other circumstances would be hilarious, if not for the thought that this was likely to happen to YOU, too. With their captive making muffled protests all the way and leaving a furrow pressed into the earth that they can all fit in, the remaining members of the procession leave, trailing their victim. As night falls completely another small //burrrp// escapes your increasingly chubby lips, and as you begin to drift off to sleep, still inflating with flab, you're rather depressingly certain that you've just seen the 'fat' that 'a-weights' you come tomorrow... 
+<hr>
+<<defeated "devoured">>
+
+

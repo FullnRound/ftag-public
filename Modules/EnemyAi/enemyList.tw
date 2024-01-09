@@ -1,0 +1,1347 @@
+:: beach enemies {"position":"4475,675","size":"100,100"}
+<<set $hydra = {
+
+  Article: "A",
+  article: "a",
+  Name: "Hydra",
+  name: "hydra",
+  gender: "random",
+  
+  str: 60,
+  agi: 40,
+  int: 20,
+  def: 5,
+  maxhea: 400,
+  lvl: 15,
+  damageResistance: ["bashing"],
+  damageWeakness: [],
+
+  gld: 150,
+  xp: 300,  
+  item: $spectrumGem,
+  itemChance: 100,
+
+  voreable: false,
+  runnable: true,
+
+  ai: "hydra ai",
+  
+  species: "hydra",
+}>>
+
+<<set $waterElemental = {
+
+  Article: "A",
+  article: "a",
+  Name: "Water Elemental",
+  name: "water elemental",
+  
+  str: 18,
+  agi: 18,
+  int: 14,
+  def: 3,
+  maxhea: 260,
+  lvl: 4,
+  damageResistance: ["piercing","slashing"],
+  damageWeakness: ["lightning"],
+
+  gld: 12,
+  xp: 16,  
+  item: $waterJug,
+  itemChance: 35,
+
+  voreable: false,
+  runnable: true,
+
+  itemFound: "You do however find a jug of water mysteriously sitting on the ground. You're pretty sure it wasn't there before...?",
+  ai: "water elemental ai",
+}>>
+
+
+<<set $sandSnake = {
+
+  Article: "A",
+  article: "a",
+  Name: "Sand Snake",
+  name: "sand snake",
+  
+  str: 18,
+  agi: 18,
+  int: 14,
+  def: 3,
+  maxhea: 120,
+  lvl: 5,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 15,
+  xp: 30,  
+  item: $snakeVenom,
+  itemChance: 40,
+
+  voreable: true,
+  weight: 200,
+  runnable: true,
+
+  itemFound: "You're about to turn away and go on your way but you notice the snake’s fangs are dripping orange venom. You get an empty drink bottle from your bag and hold it up to the fang and the venom oozes into it. You could probably use this for more controlled use later. ",
+  ai: "sand snake ai",
+  
+  species: "snake",
+}>>
+
+
+<<set $bubbleOrca = {
+	Name: "Bubble Orca",
+	name: "bubble orca", 
+	Article: "A",
+	article: "a",
+	image: "bubbleOrcaImage", 
+	species: "orca",
+	gender: "random",
+	voreable: true,
+	weight: 220,
+	str: 20, 
+	agi: 18, 
+	int: 12, 
+	def: 3, 
+	maxhea: 120, 
+	lvl: 5,
+	damageWeakness: ["piercing"],
+	gld: 15, 
+	xp: 30,
+
+	ai: "bubble orca ai",
+}>>
+
+
+<<set $sphericalShark = {
+	Name: "Spherical Shark",
+	name: "spherical shark", 
+	Article: "A",
+	article: "a",
+	image: "sphereSharkImage", 
+	species: "shark",
+	gender: "random",
+	voreable: true,
+	weight: 240,
+	str: 20, 
+	agi: 18, 
+	int: 12, 
+	def: 3, 
+	maxhea: 120, 
+	lvl: 5,
+	gld: 15, 
+	xp: 30,
+
+	ai: "spherical shark ai",
+}>>
+
+
+:: city enemies {"position":"4475,375","size":"100,100"}
+<<set $drunk = {
+	Name: "Drunk",
+	name: "drunk",
+	Article: "A",
+	article: "a",
+	gender: "random",
+	species: "random",
+	voreable: true,
+	weight: 125,
+	str: 15, 
+	agi: 5, 
+	int: 10, 
+	def: 2, 
+	maxhea: 60, 
+	lvl: 2,
+	gld: 3, 
+	xp: 8,
+	ai: "drunk ai",
+	exit: "Central Square",
+}>>
+
+
+<<set $thief = {
+	Name: "Thief",
+	name: "thief",
+	Article: "A",
+	article: "a",
+	gender: $male,
+	species: "random",
+	voreable: true,
+	weight: 120,
+	str: 10, 
+	agi: 15, 
+	int: 15,
+	def: 3, 
+	maxhea: 70, 
+	lvl: 3,
+	gld: 0, 
+	xp: 12,
+	ai: "thief ai",
+	exit: "Central Square",
+}>>
+
+
+<<set $takeoutTerror = {
+	Name: "Takeout Terror",
+	name: "takeout terror", 
+	Article: "A",
+	article: "a",
+	gender: $male,
+	species: "random",
+	voreable: true,
+	weight: 250,
+	str: 24, 
+	agi: 10, 
+	int: 15, 
+	def: 2, 
+	maxhea: 140, 
+	lvl: 5,
+	gld: 15, 
+	xp: 30,
+	ai: "takeout terror ai",
+	exit: "Central Square",
+}>>
+
+
+:: enemy stats {"position":"4475,250","size":"200,100"}
+<<include "city enemies">>
+<<include "forest enemies">>
+<<include "grasslands enemies">>
+<<include "hills enemies">>
+<<include "mountain enemies">>
+<<include "beach enemies">>
+<<include "jungle enemies">>
+
+
+:: enemy variables {"position":"4475,125","size":"100,100"}
+<<set $inCombat = false>>
+<<set $dmg = 500>>
+<<set $edmg = 12>>
+
+
+:: forest enemies [nobr] {"position":"4475,475","size":"100,100"}
+<<set $fatWolf = {
+
+  Article: "A",
+  article: "a",
+  Name: "Fat wolf",
+  name: "fat wolf",
+  species: "wolf",
+  gender: "random",
+  image: "wolfImage",
+  
+  str: 10,
+  agi: 10,
+  int: 7,
+  def: 1,
+  maxhea: 40,
+  lvl: 1,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 4,
+  xp: 8,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 120,
+  runnable: true,
+
+  ai: "fatWolf ai",
+}>>
+
+<<set $obeseBear = {
+
+  Article: "An",
+  article: "an",
+  Name: "Obese bear",
+  name: "obese bear",
+  species: "brownBear",
+  gender: "random",
+  image: "bearImage",
+  
+  str: 15,
+  agi: 13,
+  int: 12,
+  def: 2,
+  maxhea: 70,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 8,
+  xp: 15,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 160,
+  runnable: true,
+
+  ai: "bear ai",
+}>>
+
+<<set $syrupVines = {
+
+  Article: "A bunch of",
+  article: "a bunch of",
+  Name: "Syrup vines",
+  name: "syrup vines",
+  
+  str: 8,
+  agi: 5,
+  int: 4,
+  def: 1,
+  maxhea: 55,
+  lvl: 1,
+  damageResistance: [],
+  damageWeakness: ["slashing"],
+  
+  gld: 5,
+  xp: 10,  
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  weight: 100,
+  runnable: true,
+
+  ai: "vine ai",
+}>>
+
+<<set $lemonSlime = {
+
+  Article: "A",
+  article: "a",
+  Name: "Lemon slime",
+  name: "lemon slime",
+  image: "lemonslime",
+  
+  str: 5,
+  agi: 10,
+  int: 10,
+  def: 4,
+  maxhea: 70,
+  lvl: 1,
+  damageResistance: [],
+  damageWeakness: ["lightning"],
+  
+  gld: 4,
+  xp: 8,  
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  weight: 100,
+  runnable: true,
+
+  ai: "lemon ai",
+}>>
+
+<<set $fruitDryad = {
+
+  Article: "A",
+  article: "a",
+  Name: "Fruit dryad",
+  name: "Fruit dryad",
+  species: "random",
+  gender: "female",
+  
+  str: 4,
+  agi: 7,
+  int: 17,
+  def: 0,
+  maxhea: 60,
+  lvl: 2,
+  edamageResistance: ["bashing", "piercing"],
+  edamageWeakness: ["fire"],
+  
+  gld: 7,
+  xp: 12,  
+  item: $bloatedBlueberry,
+  itemChance: 25,
+  itemFound: "It looks like the dryad dropped something during $npc1.his escape. ",
+
+  voreable: false,
+  runnable: true,
+
+  ai: "dryad ai",
+}>>
+
+/*===Bosses===*/
+
+<<set $gingerbreadWitch = {
+
+  Name: "Witch",
+  name: "witch",
+  Article: "The",
+  article: "the",
+  str: 5,
+  agi: 15,
+  int: 25,
+  def: 2,
+  maxhea: 120,
+  lvl: 4,
+  gld: 25,
+  xp: 20,
+  species: "random",
+  gender: "random", /* FIXES AND EDITS - make random - why not? */
+  runnable: false,
+  item: "",
+  itemChance: 0,
+  damageResistance: ["lightning", "fire", "ice"],
+  damageWeakness: [],
+
+  voreable: false,
+  runnable: false,
+  special: "book",
+
+  ai: "witch ai",
+
+}>>
+
+<<set $storeRoomOwner = {
+	Name: "Angry Local",
+	name: "angry local",
+	Article: "An",
+	article: "an",
+	gender: "random", /* FIXES AND EDITS - Set to random because there's no reason not to */
+	species: "random",
+	runnable: false,
+	str: 15, 
+	agi: 10, 
+	int: 10, 
+	def: 2, 
+	maxhea: 150, 
+	lvl: 3,
+	gld: 25, 
+	xp: 16,
+	ai: "store room ai",
+}>>
+
+
+:: grasslands enemies [nobr] {"position":"4575,475","size":"100,100"}
+<<set $bloatedLion = {
+
+  Article: "A",
+  article: "a",
+  Name: "Bloated lion",
+  name: "bloated lion",
+  species: "lion",
+  gender: "male",
+  image: "lionImage",
+  
+  str: 10,
+  agi: 15,
+  int: 10,
+  def: 2,
+  maxhea: 60,
+  lvl: 2,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 5,
+  xp: 10,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 140,
+  runnable: true,
+
+  ai: "lion ai",
+}>>
+
+<<set $gorgedCheetah = {
+
+  Article: "A",
+  article: "a",
+  Name: "Gorged cheetah",
+  name: "gorged cheetah",
+  species: "cheetah",
+  gender: "random",
+  image: "cheetahImage",
+  
+  str: 7,
+  agi: 18,
+  int: 10,
+  def: 2,
+  maxhea: 60,
+  lvl: 2,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 5,
+  xp: 10,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 120,
+  runnable: true,
+
+  ai: "cheetah ai",
+}>>
+
+<<set $expandedElephant = {
+
+  Article: "An",
+  article: "an",
+  Name: "Expanded elephant",
+  name: "expanded elephant",
+  gender: "random",
+  image: "",
+  species: "elephant",
+  
+  str: 20,
+  agi: 8,
+  int: 13,
+  def: 3,
+  maxhea: 80,
+  lvl: 4,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 11,
+  xp: 16,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 2000,
+  runnable: true,
+
+  ai: "elephant ai",
+}>>
+
+<<set $wildling = {
+
+  Article: "A",
+  article: "a",
+  Name: "Wildling",
+  name: "wildling",
+  species: "random",
+  gender: "random",
+  image: "",
+  
+  str: 15,
+  agi: 15,
+  int: 10,
+  def: 3,
+  maxhea: 80,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 5,
+  xp: 14,  
+  item: $sHealthPotion,
+  itemChance: 100,
+
+  voreable: false,
+  runnable: true,
+ 
+  itemFound:"In $npc1.his haste to leave $npc1.he happened to have left a small health potion behind. ",
+  ai: "wildling ai",
+}>>
+
+<<set $wildlingRitualist = {
+
+  Article: "A",
+  article: "a",
+  Name: "Wildling ritualist",
+  name: "wildling ritualist",
+  species: "random",
+  gender: "random",
+  image: "",
+  
+  str: 10,
+  agi: 17,
+  int: 20,
+  def: 2,
+  maxhea: 80,
+  maxMana: 50,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 5,
+  xp: 14,  
+  item: $cupcake,
+  itemChance: 100,
+
+  voreable: false,
+  runnable: true,
+  
+  itemFound:"Fortunately you&#39;re able to at least catch that final cupcake before it hits the ground. ",
+  ai: "ritualist ai",
+}>>
+
+<<set $wildlingShaman = {
+
+  Article: "A",
+  article: "a",
+  Name: "Wildling shaman",
+  name: "wildling shaman",
+  species: $dog,
+  gender: "random",
+  image: "",
+  
+  str: 10,
+  agi: 17,
+  int: 27,
+  def: 2,
+  maxhea: 110,
+  lvl: 5,
+  damageResistance: ["bashing","slashing","piercing"],
+  damageWeakness: ["fire","ice","lightning","arcane"],
+  
+  gld: 12,
+  xp: 24,  
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  runnable: true,
+
+  ai: "shaman ai",
+}>>
+
+/*===Bosses===*/
+
+<<set $wildlingShamanBoss = {
+
+	Name: "Wise wildling shaman",
+	name: "wise wildling shaman",
+	Article: "A",
+	article: "a",
+	str: 13,
+	agi: 20,
+	int: 34,
+	def: 3,
+	maxhea: 160,
+	lvl: 7,
+	gld: 19,
+	xp: 38,
+	species: $dog,
+	gender: "random",
+	item: "",
+	itemChance: 0,
+	damageResistance: ["bashing","slashing","piercing"],
+	damageWeakness: ["fire","ice","lightning","arcane"],
+
+	voreable: false,
+	runnable: true,
+	special: "no captive",
+
+	ai: "shaman boss ai",
+
+}>>
+
+<<set $lizardWizard = {
+
+	Name: "Lizard wizard",
+	name: "lizard wizard",
+	Article: "The",
+	article: "the",
+	str: 5,
+	agi: 10,
+	int: 30,
+	def: 2,
+	maxhea: 160,
+	lvl: 3,
+	gld: 13,
+	xp: 17,
+	gender: "male",
+	item: "",
+	itemChance: 0,
+	damageResistance: [],
+	damageWeakness: [],
+    
+    species: "lizard",
+
+	voreable: true,
+	weight: 180,
+	runnable: true,
+
+	ai: "lizard wizard ai",
+
+}>>
+
+
+<<set $cheeseMonster = {
+
+	Name: "Monster cheese",
+	name: "monster cheese",
+	Article: "The",
+	article: "the",
+	str: 35,
+	agi: 15,
+	int: 10,
+	def: 6,
+	maxhea: 300,
+	lvl: 10,
+	gld: 0,
+	xp: 0,
+	gender: "male",
+	item: "",
+	itemChance: 0,
+	damageResistance: [],
+	damageWeakness: [],
+
+	voreable: true,
+	weight: 12,
+	runnable: true,
+	
+	ai: "cheese ai",
+
+}>>
+
+
+:: hills enemies [nobr] {"position":"4475,575","size":"100,100"}
+<<set $milkMachine = {
+
+  Article: "The",
+  article: "the",
+  Name: "Malevolent Milk Machine",
+  name: "malevolent milk machine",
+  image: "milkmachine",
+  
+  str: 30,
+  agi: 5,
+  int: 5,
+  def: 8,
+  maxhea: 150,
+  lvl: 4,
+  damageResistance: ["piercing", "slashing"],
+  damageWeakness: ["lightning", "bashing"],
+  
+  gld: 15,
+  xp: 35,  
+  item: $milkBottle,
+  itemChance: 60,
+  itemFound: "With one last cough and sputter, a single milk bottle falls out of a hatch on the side of the machine and rolls towards you. ",
+
+  voreable: false,
+  runnable: true,
+
+  ai: "milk machine ai",
+}>>
+
+<<set $blueberrySlime = {
+
+  Article: "A",
+  article: "a",
+  Name: "Blueberry Slime",
+  name: "blueberry Slime",
+  
+  str: 15,
+  agi: 20,
+  int: 10,
+  def: 5,
+  maxhea: 220,
+  lvl: 4,
+  damageResistance: [],
+  damageWeakness: ["ice"],
+  
+  gld: 8,
+  xp: 16,  
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  runnable: true,
+
+  ai: "blueberry slime ai",
+}>>
+
+<<set $honeySlime = {
+
+  Article: "A",
+  article: "a",
+  Name: "Honey Slime",
+  name: "honey Slime",
+  species: "none",
+  gender: "thing",
+  
+  str: 15,
+  agi: 10,
+  int: 15,
+  def: 1,
+  maxhea: 250,
+  lvl: 4,
+  damageResistance: ["piercing"],
+  damageWeakness: ["fire"],
+  
+  gld: 86,
+  xp: 17,  
+  item: $honeyDipper,
+  itemChance: 7,
+  itemFound: "You find a wooden honey dipper in the honey lumps! ",
+
+  voreable: false,
+  runnable: true,
+
+  ai: "honey slime ai",
+}>>
+
+<<set $meatMonster = {
+
+  Article: "A",
+  article: "a",
+  Name: "Meat monster man",
+  name: "meat monster man",
+  species: "none",
+  gender: "thing",
+  
+  str: 15,
+  agi: 10,
+  int: 5,
+  def: 2,
+  maxhea: 130,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 8,
+  xp: 10,  
+  item: $sausage,
+  itemChance: 30,
+  itemFound: "You look down and notice a single lonely sausage on the ground that hasn't been damaged from the fight and isn't too dirty. Considering it probably falls within the 5 second rule, you pick up the sausage and dust it off. ",
+
+  voreable: false,
+  runnable: true,
+
+  ai: "meat monster ai",
+}>>
+
+<<set $bloatBees = {
+
+  Article: "A swarm of",
+  article: "a swarm of",
+  Name: "Bloat Bees",
+  name: "bloat bees",
+  species: "bee",
+  gender: "none",
+  attackStat: "str",
+  
+  str: 4,
+  agi: 15,
+  int: 5,
+  def: 1,
+  maxhea: 100,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 6,
+  xp: 15,  
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  runnable: true,
+
+  ai: "bloat bee ai",
+}>>
+
+
+:: jungle enemies {"position":"4575,675","size":"100,100"}
+<<set $anaconda = {
+	Name: "Massive anaconda",
+	name: "massive anaconda",
+	Article: "A",
+	article: "a",
+	gender: "random",
+	voreable: true,
+	weight: 650,
+	str: 40, 
+	agi: 35, 
+	int: 17, 
+	def: 5, 
+	maxhea: 200, 
+	lvl: 9,
+	gld: 25, 
+	xp: 55,
+	ai: "massive anaconda ai",
+	special: false,
+    
+    species: "anaconda",
+}>>
+
+
+<<set $fatJaguar = {
+	Name: "Fat Jaguar",
+	name: "fat jaguar",
+	Article: "A",
+	article: "a",
+	gender: "random",
+	voreable: true,
+	weight: 350,
+	str: 25, 
+	agi: 45, 
+	int: 20,
+	def: 3, 
+	maxhea: 190, 
+	lvl: 9,
+	gld: 25, 
+	xp: 55,
+	ai: "fat jaguar ai",
+    
+    species: "jaguar",
+}>>
+
+
+<<set $gluttonSeparatist = {
+	Name: "Glutton Separatist",
+	name: "glutton separatist",
+	Article: "A",
+	article: "a",
+	species: "dinosaur",
+	gender: "random",
+	voreable: true,
+	weight: 250,
+	str: 45, 
+	agi: 15, 
+	int: 15, 
+	def: 4, 
+	maxhea: 250, 
+	lvl: 9,
+	gld: 35, 
+	xp: 70,
+	ai: "glutton seperatist ai",
+}>>
+
+
+<<set $dinosaurRider = {
+	Name: "Dinosaur Rider",
+	name: "dinosaur rider",
+	Article: "A",
+	article: "a",
+	species: "dinosaur", 
+	gender: "random",
+	voreable: true,
+	weight: 250,
+	str: 48, 
+	agi: 20, 
+	int: 14, 
+	def: 5, 
+	maxhea: 275, 
+	lvl: 10,
+	gld: 40, 
+	xp: 80,
+	ai: "dinosaur rider ai",
+}>>
+
+
+<<set $shamanBossNormal = {
+	Name: "Glutton Shaman", 
+	name: "glutton shaman", 
+	Article: "A",
+	article: "a",
+	species: "dinosaur",
+	gender: "random",
+	voreable: true,
+	weight: 350, 
+	bossOf: "cultistVillage",
+	runnable: false,
+	str: 20, 
+	agi: 20, 
+	int: 55,
+	def: 3, 
+	maxhea: 220, 
+	lvl: 9,
+	gld: 40, 
+	xp: 75,
+	ai: "shaman boss normal ai",
+	special: 0,
+}>>
+
+
+<<set $gluttonSeparatistBoss = {
+	Name: "Glutton Separatist",
+	name: "Glutton Separatist",
+	Article: "The",
+	article: "the",
+	species: "dinosaur",
+	voreable: true,
+	weight: 250, 
+	bossOf: "cultistVillage",
+	str: 45, 
+	agi: 15, 
+	int: 15, 
+	def: 4, 
+	maxhea: 250, 
+	lvl: 9,
+	gld: 35, 
+	xp: 70,
+	ai: "glutton seperatist boss ai",
+}>>
+
+
+<<set $anacondaBoss = {
+	Name: "Giant Anaconda",
+	name: "giant anaconda",
+	Article: "A",
+	article: "a",
+	voreable: true,
+	weight: 1500, 
+	str: 50, 
+	agi: 30, 
+	int: 20, 
+	def: 7, 
+	maxhea: 450, 
+	lvl: 15,
+	gld: 60, 
+	xp: 110, 
+	item: $whiteGoldChunk, 
+	itemChance: 100,
+	ai: "anaconda boss ai",
+	special: false,
+    
+    species: "anaconda",
+}>>
+
+
+<<set $golemBoss = {
+	Name: "Obsidian Golem",
+	name: "obsidian golem",
+	Article: "An",
+	article: "an",
+	str: 65, 
+	agi: 10, 
+	int: 20,
+	def: 10, 
+	maxhea: 450, 
+	lvl: 15, 
+	damageResistance: ["bashing","slashing","piercing"],
+	gld: 60, 
+	xp: 110, 
+	item: $magicalObsidian, 
+	itemChance: 100,
+	ai: "golem boss ai",
+	special: 0,
+}>>
+
+
+<<set $starShaman = {
+	Name: "Star Shaman",
+	name: "Star Shaman",
+	Article: "The",
+	article: "the",
+	species: "raptor", 
+	gender: "male",
+	voreable: true,
+	weight: 250, 
+	str: 20, 
+	agi: 20, 
+	int: 60,
+	def: 5, 
+	maxhea: 400, 
+	lvl: 15,
+	gld: 60, 
+	xp: 110, 
+	item: $fallenStar, 
+	itemChance: 100,
+	ai: "star shaman ai",
+	specialA: 0,
+	specialB: 2,
+	victims: 10,
+	attacked: false,
+}>>
+
+
+:: mountain enemies {"position":"4575,575","size":"100,100"}
+<<set $soldierAnts = {
+	Name: "Soldier Ants",
+	name: "soldier ants",
+	Article: "A swarm of",
+	article: "a swarm of",
+	itemFound: "Fortunately, you manage to grab some before they all escape you! ",
+	str: 20, 
+	agi: 15, 
+	int: 10, 
+	def: 3, 
+	maxhea: 250, 
+	lvl: 10,
+	gld: 60, 
+	xp: 70, 
+	itemChance: 100,
+	ai: "soldier ant ai",
+    species: "ant",
+}>>
+
+
+<<set $thinFur = {
+	Name: "Crazed thin person",
+	name: "crazed thin person",
+	Article: "A",
+	article: "a",
+	species: "random",
+	gender: "random",
+	voreable: true,
+	weight: 98,
+	itemFound: "One of the daggers appears to still be in decent shape. ",
+	str: 20, 
+	agi: 50, 
+	int: 10,
+	def: 3, 
+	maxhea: 175, 
+	lvl: 10,
+	gld: 40, 
+	xp: 75, 
+	item: $nastyDagger, 
+	itemChance: 15,
+	ai: "thin fur ai",
+}>>
+
+
+<<set $toughFur = {
+	Name: "Crazed tough person",
+	name: "crazed tough person",
+	Article: "A",
+	article: "a",
+	species: "random",
+	gender: "random",
+	voreable: true,
+	weight: 350,
+	itemFound: "$npc1.His spear is lying on the ground and in good shape. ",
+	str: 35, 
+	agi: 15, 
+	int: 10, 
+	def: 5, 
+	maxhea: 300, 
+	lvl: 10, 
+	damageResistance: ["ice","piercing","bashing","slashing"],
+	gld: 40, 
+	xp: 75, 
+	item: $obsidianSpear, 
+	itemChance: 15,
+	ai: "tough fur ai",
+}>>
+
+
+<<set $magicalFur = {
+	Name: "Crazed magic person",
+	name: "crazed magic person",
+	Article: "A",
+	article: "a",
+	species: "random",
+	gender: "random",
+	voreable: true,
+	weight: 120,
+	itemFound: "The ugly wand is still in as good a shape as could be expected. ",
+	str: 10, 
+	agi: 25, 
+	int: 55,
+	def: 2, 
+	maxhea: 250, 
+	lvl: 10,
+	gld: 40, 
+	xp: 75, 
+	item: $charredWand, 
+	itemChance: 15,
+	ai: "magical fur ai",
+}>>
+
+
+<<set $muscleFur = {
+	Name: "Crazed muscular person",
+	name: "crazed muscular person",
+	Article: "A",
+	article: "a",
+	species: "random",
+	gender: "random",
+	voreable: true,
+	weight: 250,
+	itemFound: "Looks like that gigantic club is still in usable condition, too. You take it with you. ",
+	str: 45, 
+	agi: 15, 
+	int: 5, 
+	def: 4, 
+	maxhea: 250, 
+	lvl: 10,
+	gld: 40, 
+	xp: 75, 
+	item: $greatClub, 
+	itemChance: 15,
+	ai: "muscle fur ai",
+}>>
+
+
+
+<<set $feederAnt = {
+	Name: "Feeder Ant",
+	name: "feeder ant",
+	Article: "A",
+	article: "a",
+	itemFound: "Thinking quickly and creatively, you grab an empty, dried eggshell and scoop some of the honey into it to take with you, then quickly show yourself out.",
+	str: 30, 
+	agi: 20, 
+	int: 15, 
+	def: 5, 
+	maxhea: 350, 
+	lvl: 12,
+	gld: 70, 
+	xp: 90, 
+	item: $magicalHoney, 
+	itemChance: 100,
+	ai: "feeder ant ai",
+    
+    species: "ant",
+}>>
+
+
+<<set $manticore = {
+	Name: "Manticore",
+	name: "manticore",
+	Article: "A",
+	article: "a",
+	gender: "male", /* icy - I'll leave it as only male, if only so I don't have to bother considering whether a female manticore should have a mane :p */
+    species: "manticore",
+	voreable: true,
+	weight: 650,
+	str: 45, 
+	agi: 40, 
+	int: 30, 
+	def: 6, 
+	maxhea: 400, 
+	lvl: 13,
+	gld: 70, 
+	xp: 100,
+	ai: "manticore ai",
+}>>
+
+
+<<set $snookums = {
+	Name: "Snookums",
+	name: "Snookums",
+	Article: "Ms.",
+	article: "Ms.",
+	species: "squirrel", 
+	gender: "female", 
+	str: 40, 
+	agi: 17, 
+	int: 13, 
+	def: 6, 
+	maxhea: 320, 
+	lvl: 13, 
+	damageResistance: ["ice","piercing","bashing","slashing"],
+	gld: 50, 
+	xp: 90,
+	ai: "snookums ai",
+}>>
+
+
+<<set $fatWyvern = {
+	Name: "Fat Wyvern",
+	name: "fat wyvern",
+	Article: "A",
+	article: "a",
+	gender: "random", 
+	voreable: true,
+	weight: 600,
+	str: 45, 
+	agi: 30, 
+	int: 15, 
+	def: 6, 
+	maxhea: 275, 
+	lvl: 14, 
+	damageResistance: ["lightning"],
+	gld: 60, 
+	xp: 115,
+	ai: "fat wyvern ai",
+    species: "wyvern",
+}>>
+
+
+<<set $royalGuardWasp = {
+	Name: "Royal Guard Wasp",
+	name: "royal guard wasp", 
+	Article: "A",
+	article: "a",
+	str: 60, 
+	agi: 50, 
+	int: 20, 
+	def: 6, 
+	maxhea: 500, 
+	lvl: 14,
+	gld: 120, 
+	xp: 120,
+	ai: "royal guard wasp ai",
+    species: "wasp",
+}>>
+
+
+<<set $smarty = {
+	Name: "Smarty",
+	name: "Smarty",
+	Article: "Mr.",
+	article: "Mr.",
+	species: "rabbit", 
+	gender: "male", 
+	str: 10, 
+	agi: 25, 
+	int: 80,
+	def: 3, 
+	maxhea: 260, 
+	lvl: 14,
+	gld: 50, 
+	xp: 100,
+	ai: "smarty ai",
+}>>
+
+
+<<set $mountainousTiger = {
+	Name: "Mountainous Tiger Sorcerer",
+	name: "mountainous tiger sorcerer",
+	Article: "The",
+	article: "the",
+	species: "tiger", 
+	gender: "male",
+	voreable: true,
+	weight: 600,
+	itemFound: "You scour the area to see if there's anything you missed, and find a long strand of the same gold thread that the sack had been embroidered with. ",
+	str: 70, 
+	agi: 35, 
+	int: 60,
+	def: 6, 
+	maxhea: 450, 
+	lvl: 17,
+	gld: 200, 
+	xp: 350, 
+	item: $goldThread, 
+	itemChance: 100,
+	ai: "mountainous tiger ai",
+}>>
+
+
+<<set $cabalDragon = {
+	Name: "Rogue Cabal Dragon",
+	name: "rogue cabal dragon",
+	Article: "The",
+	article: "the",
+	species: "blackDragon", 
+	gender: "male",
+	itemFound: "With the dragon beaten, you are now able to return the cauldron to the Cabal, and will surely be rewarded handsomely for it. On closer inspection, the simplistic cauldron is quite compact and light, certainly due to the magical enchantments on it. It is easy enough to safely stash in your pack, and the lid is secured by a simple lock to prevent its contents from spilling forth. ",
+	special: 1,
+	str: 60, 
+	agi: 30, 
+	int: 50,
+	def: 8, 
+	maxhea: 400, 
+	lvl: 21, 
+	damageResistance: ["bashing","slashing","fire","ice","arcane"],
+	gld: 300, 
+	xp: 425, 
+	item: $cabalCauldron, 
+	itemChance: 100,
+	ai: "cabal dragon ai",
+	attacked: false,
+	immobile: 0,
+	special: 0,
+}>>
+
+

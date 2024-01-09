@@ -1,0 +1,376 @@
+:: Approach Gingerbread House {"position":"3775,1275","size":"100,100"}
+You find a small cottage that appears to be made entirely of... candy and gingerbread? One corner of the house appears to have been heavily chewed on. The house does look quite delicious.
+
+<<action "s" "building" "Go Inside" "Enter Gingerbread House">><</action>>
+<<action "c" "food" "Eat some house">><</action>>
+<<action "n" "forest" "Leave" "Leave Gingerbread house">><</action>>
+
+
+:: Captured by the witch {"position":"3775,900","size":"100,100"}
+<<sleep>>
+<<if $hea > 0>><<set $alive = true>><</if>>
+
+<p>You groggily wake up and try to wipe the sleep from your eyes but only manage to whack yourself in the head with something cold and metallic. You snap awake and look around you. You see that you're sitting in what looks like an oversized wrought iron birdcage suspended from a ceiling in a basement. Your wrists are locked in manacles attached to the top of the cage and your mouth is gagged. 
+
+<<if setup.waistDiameter() > 24>>Your belly is so large it pushes hard against the bars of the cage and oozes around them. 
+<<elseif setup.waistDiameter() > 20>>Your belly is so large it pushes solidly against the bars of the cage. 
+<<elseif setup.waistDiameter() > 16>>Your belly is large enough that it brushes against the cage bars.
+<</if>></p>
+
+<p>You smell the unmistakable and powerful scent of gingerbread and realize you must be in the basement of the gingerbread house. Looking to your right theres another cage with a corpulent $npc2.species in it, but $npc2.he's sleeping like a rock. You hear footsteps coming down the stairs as a hunched over $npc1.species witch enters the basement. </p>
+
+<p>"How's my fat little piggy doing, hmmmm?" $npc1.he asks in a high pitched voice. $npc1.He walks up to you and grabs your gut and jiggles it roughly. "My my, you're practically skin and bones! I'll just have to fatten you up!" You try to say something, but you can only mumble through the gag in your mouth. </p>
+
+<p>"What's that? You're starving?" the witch asks with mock concern. "How about some cake?" The witch holds out $npc1.his other hand and in a sparkling swirl of magic, a large white cake apears in $npc1.his hand. A slice of it levitates up in the air and floats towards your face. </p>
+
+<p>"Now open wide." The gag in your mouth mysteriously falls away and before you can say anything, the entire slice of cake crams itself into your mouth. You reflexively try to chew through it and find yourself overwhelmed by the sweet rich flavors. You eventually chew up the massive mouthful of food down and manage to swallow. You gaze longingly at the remaining cake, practically hypnotized. </p>
+
+<p>"Ready for seconds?" the witch asks sarcastically. You can only nod emphatically as your eyes remain locked on the cake, your tongue lolling from your mouth. The witch laughs cruelly as another huge slice of cake floats into your eagerly waiting mouth. You chomp it down as though you haven't eaten in days and swallow the entire wedge. You open your mouth wide, wordlessly begging for the next slice as your eyes remain transfixed on the mesmerizing cake. The witch cackles again and obliges you by levitating another slice into your mouth. $npc1.He repeats this process several times, each time you swallow it down and open your mouth, desperate for more. 
+<<consume 10 5>></p>
+
+<<if $alive>>
+	<<action "c" "food" "The feeding continues">><</action>>
+<<else>>
+	<<action "c" "food" "Fully stuffed">><</action>>
+<</if>>
+
+
+:: Eat some house {"position":"3900,1150","size":"100,100"}
+<p>You decide a house made of gingerbread is too good a meal to pass up and start tearing hunks off a wall and cramming them in your mouth. It's just about the sweetest and most delicious thing you've ever tasted, you can hardly believe how good it is. You can only think of eating more.
+<<consume 4 2>></p>
+
+<<if $alive>>
+<<action "c" "food" "Keep eating" "Eat some more house">><</action>>
+<<action "n" "next" "Stop eating the house">><</action>>
+
+<<else>>
+That last bite proves too much for your stomach to handle though and you lie down on your back, falling into an overstuffed stupor. Even as you fall asleep you try to cram more gingerbread into your mouth. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+<</if>>
+
+
+:: Eat some more house {"position":"4025,1150","size":"100,100"}
+<p>You tear off a huge chunk of wall and dip it in gobs of exposed icing before stuffing it down your throat. You just can't seem to help yourself, it tastes //sooooo// good!
+<<consume 5 2.5>></p>
+
+<<if $alive>>
+<<action "c" "food" "Keep eating" "Eat some more house">><</action>>
+<<action "n" "next" "Stop eating the house">><</action>>
+
+<<else>>
+That last bite proves too much for your stomach to handle though and you lie down on your back, falling into an overstuffed stupor. Even as you fall asleep you try to cram more gingerbread into your mouth. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+<</if>>
+
+
+:: Eat the food {"position":"3650,1025","size":"100,100"}
+<p>You sit down on the peppermint kitchen chair, noting that you stick to it slightly. You pick up the peppermint untensils and start thinking this place's decor is a little too silly. Shrugging your shoulders, you cut yourself out a large slice of cake. When you raise the piece of cake to your lips and take your first taste, your mind spins with the sensation of the richest moistest sweetest confection you've ever eaten. </p>
+
+After a brief pause in amazement that something could taste so good, you begin shoveling cake into your mouth as fast as you can. As you swallow down the last of the slice of cake you even chomp down the eating utensils. 
+<<consume 4 2>>
+
+<<if $alive>>
+<<action "c" "food" "Keep eating" "Keep eating cookies">><</action>>
+<<action "n" "no" "Get up">><</action>>
+
+<<else>>
+The last bite proves to much for your overtaxed stomach to handle however and you lean back in your chair and slowly drift off to sleep. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+<</if>>
+
+
+:: Enter Gingerbread House {"position":"3775,1150","size":"100,100"}
+<p>You $walk into the living room and it's furnished entirely with junk food. Gingerbread is used as though it were wood and everything appears to be held together with icing and peppermint for support. </p>
+
+<p>You see a set of stairs going up to a door and a doorway that leads to the kitchen. </p>
+
+<<action "n" "up" "Go upstairs" "Upstairs Ginger Bread">><</action>>
+<<action "w" "door" "Kitchen" "Gingerbread Kitchen">><</action>>
+
+
+:: Escape the house [nobr] {"position":"3525,1400","size":"100,100"}
+<<set $eventCounterA -= $str>>
+<<set $eventCounterB +=1>>
+<<switch $eventCounterB>>
+
+<<case 1>>
+With $npc2.his arm over your shoulder, you both start slowly making your way up the stairs. The entire time $npc2.he's still cramming cake into $npc2.his mouth. 
+<<action "c" "run" "Escape the house">><</action>>
+
+<<case 2>>
+It's slow going but you finally get to the kitchen. As you pass by the kitchen table $npc2.he tosses the cake over $npc2.his shoulder and picks up the plate of cookies and starts eating those. 
+<<action "c" "run" "Escape the house">><</action>>
+
+<<case 3>>
+You make slow progress hauling your living boulder into the living room. As you pass through the kitchen door way, $npc2.he tosses the last few cookies behind $npc2.him and tears off a piece of the doorway and starts chowing down. 
+<br>
+"I don't //wheeze// think I can //pant// eat much more before I pass out again. //sigh// All this food is making my stomach //gulp// hurt." Surely enough, whenever $npc2.his stomach bumps into you, you can feel it's stuffed tight as a balloon, even under the layers of fat. You better get this $npc2.guy out of here before $npc2.he explodes. 
+<<action "c" "run" "Escape the house">><</action>>
+
+<<case 4>>
+<<if $eventCounterA <= 0>>
+With a final triumphant burst of speed, you haul your porcine $npc2.species through the front door and outside, although $npc2.his belly almost doesn't fit through the door. You both quickly jog down the hillside, your combined momentum almost too much to stop at the bottom. You travel a little further into the woods and out of sight of the gingerbread house. Finally out of the reach of the houses power, the $npc2.species tosses the last bit of gingerbread to the ground in disgust. 
+<br><br>
+
+"//Urrrrp// Oh, thank you so much! I don't think I would have survived another day in there." $npc2.He rubs $npc2.his overstretched stomach in an attempt to console it. "I think I can make it back from here, I don't live far. I don't want to burden you any more, you should go. I just... need a moment to rest. And here, take this. It's all I have on me. You deserve it." $npc2.He reaches into pants you couldn't even tell $npc2.he was wearing and pulls out a small bag of coins from $npc2.his pocket. $npc2.He tosses it on the ground and with that, $npc2.he passes out in a food coma. 
+<br><br>
+
+As you backtrack to look at the gingerbread house, you see only a barren hill with no sign of the mysterious structure that once stood there. Without much else to do, you travel back into the woods.
+<<doXP 20>>
+<<doGld 25>>
+<hr>
+<<include "forest randomization">>
+
+<<else>>
+Just as you make it to the front door and make your triumphant escape, your heart sinks as the door flies open and a lemon meringue pie flies in, hitting your $npc2.species compatriot in the face. Against $npc2.his will, $npc2.he swallows most of the pie down as the pie plate slides off $npc2.his face and hits the floor. $npc2.He slowly licks the meringue off of $npc2.his muzzle and with a loud //grooaaaaan// $npc2.his arm slips off of your shoulder as $npc2.he rubs $npc2.his bloated gut. Without your support, $npc2.he falls over into a candy cane chair, causing the chair legs to crack slightly and send off shards of candy. With a final moan $npc2.he passes out into a food coma as $npc2.he rubs $npc2.his stomach. Apparently that final pie was too much for $npc2.his stomach to handle. 
+<br><br>
+
+Some of the meringue splattered onto your face when $npc2.he got hit with the pie. Reflexively you lick it off as a scrawny old witch walks into the room. 
+<br><br>
+
+"Did you enjoy my pie eh? Hee hee hee!" You smack your lips and before you can answer your mind reels with the sweet explosion of flavor from just that tiny dab of meringue. You start trying to lick as much of the meringue off your face that you can reach before you finally shake yourself out of it, not wanting to end up like your overstuffed comatose friend. "There's so much more where that came from my pet, let me show you!" 
+<br><br>
+
+It appears you have a fight on your hands.
+
+/*<<setEnemy $gingerbreadWitch>>*/
+<<set $e.special = "yes captive">>
+<<startCombat>>
+<</if>>
+
+<</switch>>
+
+
+:: Fully stuffed {"position":"3775,775","size":"100,100"}
+"Are you all nice and full, hmmm?" You pause and nod slowly. "Do you have a tummy ache?" You let out a small belch and nod your head slowly again. "Well I'll just rub your belly and see if that makes it feel better." $npc1.He grabs your belly and starts squishing and rubbing it all over. You feel a gurgling and roiling sensation in your stomach. As you look down you see your bulging stomach shrink as your body slowly but steadily inflates with fat. 
+<<digest 1440>>
+<br><br>
+
+"There, now that's how a growing piglet should look! Feel better now?" You simply nod and open your mouth again. "Ah ah ah, I think you've had enough little piggy, now it's time I've had my dinner." $npc1.He waves $npc1.his hand and the bottom of the cage flops open, dropping you hard onto your ass. Before you can recover, the floor surrounding you turns pitch black. The witch's $npc1.hands glow with dark energy as $npc1.he rubs $npc1.his stomach. Slowly you begin to sink into the floor. You stare blankly at your erstwhile caretaker and watch as $npc1.his stomach swiftly balloons outwards as you slowly sink into the floor. $npc1.His robes are quickly stretched to their limit and start tearing down the sides. 
+<br><br>
+
+As your head slowly sinks through the floor, the witch falls back on $npc1.his ass with $npc1.his belly towering over $npc1.him. Finally you're fully transported into the witches stomach and you vision slowly fades to black. 
+<hr>
+<<defeated "devoured">>
+
+
+:: Get up {"position":"3650,900","size":"100,100"}
+You attempt to stand up but find yourself stuck to the candy chair. You put your hands on the armrests to try and pull yourself up, but only manage to get your $p.hands stuck as well. Looking up you see the cake and cookies floating in the air of their own accord. 
+<br><br>
+
+Your mouth hangs agape in surprise and a cookie launches itself into your mouth. You cough and choke it down and find yourself opening your mouth without you thinking about it. A hunk of cake tears free from the rest of itself and similarly flings itself into your waiting jaws. You chew this down as well and once again your mouth hangs open of it's own accord. 
+<<consume 6 3>>
+<br><br>
+
+Cake and cookies alternate cramming themselves into your mouth and no matter how full you get you find yourself opening your mouth for more. 
+<<stuffToBursting>>
+
+Your stomach is finally stretched to it's limits and as you start to lose consciousness a particularly large hunk of cake floats up and crams itself into your mouth. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+
+:: Gingerbread Cellar {"position":"3650,1275","size":"100,100"}
+You throw caution to the wind and open the cellar door and $walk down the stairs. As you go down you notice that the candy bulding motif finally ends as you enter a regular dirt basement. 
+<br><br>
+
+When you reach the bottom of the stairs you are quite surprised to find an incredibly fat $npc2.species stuffing cake into $npc2.his face. What makes it particularly surprising is that said $npc2.species is locked up in what looks like an oversized iron birdcage suspended from the ceiling. The $npc2.species is so rotund that $npc2.his belly is pushing hard against the cage bars. You wonder how someone in such a state could keep on eating. The $npc2.species picks up a hunk of cake from a table placed next to $npc2.his cage and reluctantly crams it into $npc2.his mouth before $npc2.he notices you. 
+<br><br>
+
+"Hemf ooh!" $npc2.he attempts to say as $npc2.he forces $npc2.himself to swallow the mouthful of cake. "Could you please help me out of here!?" $npc2.he quickly shouts before cramming yet another handful of cake into $npc2.his mouth.
+
+@@#activity;@@
+<hr>
+<<icon "talk">><<link "Why are you here?">>
+	<<replace #activity>>
+
+	"I was exploring the forest a couple days ago and I came across this bizzare house." $npc2.He picks up a cookie from next to $npc2.him and starts eating it, "//mmf// So, not one to waste an opportunity, I start eating the side of the house." $npc2.He picks up a glass of chocolate milk and chugs some of it down. "//gulp// Well it just tasted so good I couldn't stop eating it. I tried to leave but I just felt like I had to keep eating. Eventually I ate so much I passed out with a massive stomach ache," $npc2.he says as $npc2.he sticks $npc2.his paw into a tub of icing and starts licking it off, "//smack// and when I woke up, I was locked in here."
+	<</replace>>
+<</link>><br>
+
+<<icon "talk">><<link "Why are you still eating?">>
+	<<replace #activity>>
+	
+	"There's something weird about the food here. Once you start eating it, you just can't stop." $npc2.He reluctantly picks up a wad of cotton candy and stuffs the whole handful into $npc2.his mouth. "//smacksmack// When I woke up in this cage, this witch is standing there in front of me and stuffs some more gingerbread in my mouth and ever since then I've felt compelled to just keep eating." True to $npc2.his word, $npc2.he picks up a caraffe of chocolate syrup and pours it down $npc2.his throat. "//glug// I just wake up, eat until I'm too stuffed and bloated to stay awake, pass out, and wake up to a table full of food again. I've grown even fatter and made more room in my stomach to stuff myself even more." $npc2.He picks up a handful of jelly beans and tosses them all into $npc2.his mouth. "//gulp// I've been full to bursting with candy for //days// now. I think that witch is fattening me up to eat me! So are you gonna help me out of here?" 
+	<</replace>>
+<</link>><br>
+
+
+<<action "c" "next" "\"Sure, I'll help you out.\"" "Help captive escape">><</action>>
+<<action "n" "leave" "\"I should probably go...\"" "Leave captive behind">><</action>>
+
+
+:: Gingerbread House {"position":"3775,1400","size":"200,100"}
+As you adventure through the forest, you come upon a building in a small clearing ahead.
+
+<<action "c" "building" "Approach" "Approach Gingerbread House">><</action>>
+<<action "n" "forest" "Leave" "Leave Gingerbread house">><</action>>
+
+<<createNPC "random" "random" 2>>
+/* FIXES AND EDITS - moved the set enemy to here so all paths will have access to the random npc's data */
+<<setEnemy $gingerbreadWitch>>
+
+
+:: Gingerbread Kitchen {"position":"3650,1150","size":"100,100"}
+<p>You $walk into the kitchen and find it, of course, made of candy. The countertops are made of peppermint which seems like it would get really sticky if you tried to actually cook anything in here. Although this place doesn't seem to have much need for logic. </p>
+
+There's a door that has a gingerbread sign. The sign says, "CELLAR: Do Not Enter!" written in white frosting, which makes it pretty hard to take seriously. There's also a large cake and a plate of cookies sitting on the kitchen table, the only thing you've found in this house which seems to actually be meant as food instead of building material. 
+
+<<action "n" "down" "Gingerbread Cellar">><</action>>
+<<action "c" "food" "Eat the food">><</action>>
+<<action "e" "door" "Living Room" "Enter Gingerbread House">><</action>>
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true and setup.questStarted($feeder_questWitchSpice) and setup.questCompleted($feeder_questWitchSpice) == false >>
+	<<action "s" "inventory" "Search the Cupboards" "Search the Cupboards">><</action>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+
+:: Help captive escape {"position":"3525,1275","size":"100,100"}
+<p>"Great! There's a key on the wall over there, and please hurry. I don't know when $npc1.he'll be back." $npc2.He points to a keyring on the wall with one $npc2.hand as the other stuffs a hunk of cake into $npc2.his mouth. You quickly run over and get the key and come back to unlock the cage. The bottom swings up and the $npc2.species falls on the ground and rolls to $npc2.his back. $npc2.He tries to roll over and get up, but $npc2.his stomach is pinning $npc2.him to the ground. </p>
+
+"Erm, sorry, a little help here? I wasn't nearly this heavy last time I was walking around." You $walk over, and with a lot of grunting and wheezing you finally pull $npc2.him up to stand wobbily on $npc2.his feet. "Alright, let's get out of here." Even as $npc2.he's saying that $npc2.he picks up the plate of cake and continues stuffing $npc2.himself.
+
+<<set $eventCounterA = random(80,160)>>
+<<set $eventCounterB = 0>>
+
+<<action "c" "run" "Escape the house">><</action>>
+
+
+:: Jump out the window {"position":"4025,1025","size":"100,100"}
+In a panic, you jump out the spun glass window and land harshly on the ground outside. You hurt yourself, but at least you escaped.
+<hr>
+<<include "forest randomization">>
+
+
+:: Keep eating cake {"position":"3650,775","size":"100,100"}
+You look over to the pristine white cake. Your mouth waters and you pick up handfuls of cake in both hands and shovel them into your mouth. 
+<<consume 4 2>>
+After you finish off the hunk of cake, you look up and see that the plate is once again heaped to overflowing with cookies. 
+
+<<if $alive>>
+<<action "c" "food" "Keep eating" "Keep eating cookies">><</action>>
+<<action "n" "no" "Get up">><</action>>
+
+<<else>>
+The last bite proves to much for your overtaxed stomach to handle however and you lean back in your chair and slowly drift off to sleep. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+<</if>>
+
+
+:: Keep eating cookies {"position":"3525,1025","size":"100,100"}
+You look over to the heaping plate of chocolate chip cookies. Your mouth waters and you pick up cookies in both hands and shovel them into your mouth. 
+<<consume 4 2>>
+
+<<if $alive>>
+<<action "c" "food" "Keep eating" "Keep eating cake">><</action>>
+<<action "n" "no" "Get up">><</action>>
+
+<<else>>
+The last bite proves to much for your overtaxed stomach to handle however and you lean back in your chair and slowly drift off to sleep. 
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+<</if>>
+
+
+:: Leave Gingerbread house {"position":"3900,1275","size":"100,100"}
+You decide to leave other people's property alone and head back into the forest.
+
+<<include "forest randomization">>
+
+
+:: Leave captive behind {"position":"3650,1400","size":"100,100"}
+<<set _grandma = "grandma">>
+<<if $npc1.male == "male">>
+	<<set _grandma = "grandpa">>
+<</if>>
+
+<p>Not wanting to get involved with this mess. You leave the captive $npc2.species to continue stuffing $npc2.his face. Between mouthfuls of food $npc2.he pleads with you for help. As you come through the cellar door you are hit square in the face with a lemon meringue pie. Reflexively, you lick up as much of the sweet insides as you can and swallow it down. You almost black out from the intense lemony flavors and the only thing keeping you up is the desire to eat more of this insanely delicious pie. You're about to pick the fallen pie plate off of the floor when your eyes meet with those of the scrawny old witch standing in front of you. </p>
+
+<p>"Rootin' around in 'ol _grandma's cellar eh? If you were hungry you should have just asked." You stare at $npc1.him in a daze before you shake yourself free from whatever sway that pie held over you. "There's plenty here to eat, why don't you let dear old _grandma fix you a twelve course dinner hmmm? Hee hee hee hee!" It appears you have a fight on your hands. 
+</p>
+
+/*<<setEnemy $gingerbreadWitch>>*/
+<<set $e.special = "no captive">>
+<<startCombat>>
+
+
+:: Read the book {"position":"3900,1025","size":"100,100"}
+<p>You start looking through the book. Most of it is written in strange symbols beyond your comprehension, but you can definitely tell this book has something to do with magic. The last few pages are written as a diary though. It seems that whoever lives here is capturing people and fattening them up to devour them. Something about absorbing people as a natural source of magical energy, and the bigger they are, the more power you get. </p>
+
+/* FEEDER EXPANSION EDIT - START */
+<<if $options.feeder_expansionEnabled == true>>
+	<<if setup.hasItem($feeder_witchDiaryNotes) == -1>>
+		<p>Since you've already gone so far as to snoop through someone's diary, you figure stealing some research on top of that can't be much worse, right? You quickly copy down some passages that look like they might be of use to you, even if you can't immediately make sense of it at the moment.</p>
+		<<getItem $feeder_witchDiaryNotes>>
+	<</if>>
+<</if>>
+/* FEEDER EXPANSION EDIT - END */
+
+<p>As you scan over the last few pages you hear the front door open and the sound of footsteps. </p>
+
+<<action "w" "run" "Run" "Run into the witch">><</action>>
+<<action "e" "forest" "Jump out the window">><</action>>
+
+
+:: Run into the witch {"position":"3900,900","size":"100,100"}
+You make a break for the bedroom door, but before you can reach it someone else busts in. You run almost headlong into a scrawny $npc1.man dressed in shabby dark purple and black robes with a floppy black hat. 
+<br><br>
+
+"Well, looks like some oaf has been sticking their nose where it doesn't belong. And I was just preparing for dinner too, hee hee hee." 
+<br><br>
+
+It looks like if you want to escape you'll have to fight your way out.
+<hr>
+<<setEnemy $gingerbreadWitch>>
+<<startCombat>>
+
+
+:: Stop eating the house {"position":"4025,1275","size":"100,100"}
+<p>You decide you've eaten enough and start to get up to leave, but after taking a step away from the house you find your eyes uncontrollaby drawn back. You immediately dive back to the house and start cramming hunks of gingerbread and icing into your mouth with manic vigor. </p>
+
+<p>You've just lost complete control of yourself and you madly try to stuff as much of this delicious house into your face as possible. Your stomach groans and gurgles as it is crammed to it's bursting point with rich chewy gingerbread. </p>
+
+<p>Eventually you're too full too stay awake, but that doesn't stop you from still trying to eat the house, even as you drift off to sleep. 
+<<stuffToBursting>></p>
+
+<<action "c" "wait" "Sleep" "Captured by the witch">><</action>>
+
+
+:: The feeding continues {"position":"3900,775","size":"100,100"}
+<p>As you swallow down the last bite, the witch walks up and squeezes your belly between $npc1.his $npc1.hands once again. 
+
+<<if $ful > 120>>
+	Your belly squishes in, but just barely. 
+<<elseif $ful > 110>>
+	Your belly squishes in a bit, but not much. 
+<<else>>
+	Your belly squishes in quite a bit. 
+<</if>></p>
+
+<p>"Well you're quite the bottomless pit, aren't you dear?" You just nod absent mindedly, your mouth hanging open for more. "Well we'll just have to see if we can fill you up!" In an austentatious flash of sparkles, a glass jug full of chocolate appears above your head. You tilt your head back and open your jaws wide as the huge jug of chocolate syrup tips over and starts dumping hug blobs of chocolate syrup down your throat. </p>
+
+<p>Your stomach slowly swells outward as gallons of chocolate pour down your gullet. The witch squishes your belly as it expands, waiting until you reach the proper fullness.
+<<stuffToBursting>>
+Satisfied that you've reached your absolute limit, the witch stops pouring the chocolate syrup and rubs your incredibly bloated stomach. 
+
+<<if setup.waistDiameter() > 24>>Your belly is so large it pushes hard against the bars of the cage and oozes around them. 
+<<elseif setup.waistDiameter() > 20>>Your belly is so large it pushes solidly against the bars of the cage. 
+<<elseif setup.waistDiameter() > 16>>Your belly is large enough that it brushes against the cage bars.
+<</if>></p>
+
+<<action "c" "food" "Fully stuffed">><</action>>
+
+
+:: Upstairs Ginger Bread {"position":"3775,1025","size":"100,100"}
+<p>You $walk up the stairs and through the door at the top. Inside you find a bedroom built with a continuing candy motif. The bedsheets are even made of cotton candy. You can't imagine this is a comfortable place to live, in spite of its deliciousness. </p>
+
+<p>You see a book left open on a desk in the corner. The book looks to be the only thing not made of candy here.</p>
+
+<<action "c" "spells" "Read the book">><</action>>
+<<action "s" "down" "Go back downstairs" "Enter Gingerbread House">><</action>>
+
+
