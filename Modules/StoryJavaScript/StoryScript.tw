@@ -56,7 +56,7 @@ window.getPlayerContext = function() {
 
 
 window.makeOpenAIRequest = async function(character, promptText) {
-    const apiKey = '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'; 
+    const apiKey = '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'; 
     const endpoint = 'https://api.openai.com/v1/chat/completions';
 
     try {
