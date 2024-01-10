@@ -207,6 +207,7 @@
 :: enemy stats {"position":"4475,250","size":"200,100"}
 <<include "city enemies">>
 <<include "forest enemies">>
+<<include "swamp enemies">>
 <<include "grasslands enemies">>
 <<include "hills enemies">>
 <<include "mountain enemies">>
@@ -219,6 +220,40 @@
 <<set $dmg = 500>>
 <<set $edmg = 12>>
 
+
+
+:: swamp enemies [nobr] {"position":"4475,475","size":"100,100"}
+
+<<set $obeseBear = {
+
+  Article: "An",
+  article: "an",
+  Name: "Obese bear",
+  name: "obese bear",
+  species: "brownBear",
+  gender: "random",
+  image: "bearImage",
+  
+  str: 15,
+  agi: 13,
+  int: 12,
+  def: 2,
+  maxhea: 70,
+  lvl: 3,
+  damageResistance: [],
+  damageWeakness: [],
+  
+  gld: 8,
+  xp: 15,  
+  item: "",
+  itemChance: 0,
+
+  voreable: true,
+  weight: 160,
+  runnable: true,
+
+  ai: "bear ai",
+}>>
 
 :: forest enemies [nobr] {"position":"4475,475","size":"100,100"}
 <<set $fatWolf = {

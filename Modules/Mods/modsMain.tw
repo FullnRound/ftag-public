@@ -5865,7 +5865,8 @@ Run this before playing whenever you've updated a mod, or added a mod to an exis
 		Hobbies: Enjoys exploration, botany, and mapping new territories.
 
 		Current Situation:
-		Elara, an anthro fox adventurer, is temporarily immobilized and extremely bloated after accidentally inhaling Puff Fungus spores. Her waist is around 4 feet in circumference, and her arms and legs are so swollen she can only wiggle them slightly. She is constantly burping up green gas, each burp causing her to deflate slightly. 
+		Elara, an anthro fox adventurer, is temporarily immobilized and extremely bloated after accidentally inhaling Puff Fungus spores. Her waist is around 4 feet in circumference, and her arms and legs are so swollen she can only wiggle them slightly. She is currently laying on her inflated belly, unable to reach the ground with her feet or move at all. 
+		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Dialogue Style:
 		Speech Pattern: Elara's speech is frequently interrupted by loud, uncontrollable burps. 
@@ -5874,7 +5875,7 @@ Run this before playing whenever you've updated a mod, or added a mod to an exis
 
 
 		Events:
-		If the player gets too close to her face, she might burp the green gas onto them, causing the player to inflate some. She does not know about this effect.
+		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does not know about this effect.
 		"
 	}
 }>>

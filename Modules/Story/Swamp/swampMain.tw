@@ -55,7 +55,6 @@
 <<set $hasRun = false>>
 <<set $request = "">>
 
-Chat with the swollen adventurer:
 <div class="block--background">
 	<div class="chatbot__overview">
 		<ul class="chatlist"/>
@@ -67,8 +66,10 @@ Chat with the swollen adventurer:
 				<<run 
 					addChat($character, {"role": "user","content": $request});
 					makeOpenAIRequest($character, $request);
-					$request = "";
-					>>
+				>>
+				<<script>>
+					document.getElementById('textbox-request').value = '';
+				<</script>>
 			<</link>>
 		</form>
 	</div>
@@ -122,8 +123,7 @@ As the morning mist hangs low over the swamp, you spot a group of unusually roun
 								
 <<case 3>>
 A hodgepodge chorus of small birds fills the morning air, and life awakens on the forest's shadowy floor, with little creatures scurrying around and larger forms rustling the bushes and cracking dry branches under their feet and paws. 
-								 
-								
+								 								
 <</switch>>
 
 
@@ -284,7 +284,7 @@ You find a clearing ahead. As you approach closer you find it is one of the trai
 :: Minor swamp events [nobr] {"position":"3725,1975","size":"100,100"}
 <<setPassageTitle "A discovery?">>
 
-<<switch random(1,8)>>
+<<switch random(1,10)>>
 <<case 1>>
 As you wade deeper into the swamp, you notice a peculiar plant with vibrant, luminescent flowers. Carefully reaching out, you pluck one of the glowing blooms. The flower's light seems to pulsate gently in your hand, emitting a soft, ethereal glow. Tucking it into your bag, you feel a sense of warmth emanating from it.
 <<getItem $luminousFlower>>
