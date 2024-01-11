@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// This finds all .tw files within the Modules folder
 function findTwFiles(dir, fileList = []) {
     const files = fs.readdirSync(dir);
 
@@ -18,7 +19,7 @@ function findTwFiles(dir, fileList = []) {
     return fileList;
 }
 
-// Replace 'your_directory_path' with the path of your target directory
+// This takes the list of files and outputs them to twFilesList.txt
 const directoryPath = 'Modules/';
 const twFiles = findTwFiles(directoryPath);
 fs.writeFileSync('twFilesList.txt', twFiles.join(' '), 'utf8');

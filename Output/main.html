@@ -533,8 +533,7 @@ Config.history.maxStates = 5;
 Config.passages.nobr = true;
 
 
-
-
+// Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
 window.createConversation = function(character) {
 	console.log(State.variables.chats[character])
 	const chatList = document.querySelector('.chatlist');
@@ -581,7 +580,7 @@ window.makeOpenAIRequest = async function(character, promptText) {
             },
             body: JSON.stringify({
                 "model": "gpt-3.5-turbo",
-				// Send the current character context and the the chat history to the server
+				// "messages" sends the current character context and the the chat history to the server
 				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
 				"user": character,
 				"temperature": 0.9,
@@ -2856,7 +2855,7 @@ setup.tuning = setup.getTuningValue
 setup.tune = setup.registerTuning
 setup.tuneSave = setup.registerSaveTuning
 
-/* FIXES AND EDITS - Utilise tuning variables for major variables - END */</script><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+/* FIXES AND EDITS - Utilise tuning variables for major variables - END */</script><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -17215,21 +17214,19 @@ Run this before playing whenever you&#39;ve updated a mod, or added a mod to an 
 		This is a text-based adventure game where the player can talk to the characters they meet. There will be text describing the scene and any characters. The player will respond with dialogue and actions. You will respond with narration and any relevant dialogue from this character.
 		Character Profile:
 		Name: Elara
-		Age: Late 20s
 		Species: Fox
 		Appearance: Fox-like, Her bloated state makes her features very puffy.
 		Clothing: Stretched green tunic and dark trousers, strained due to her swollen form. 
 		Hobbies: Enjoys exploration, botany, and mapping new territories.
 
 		Current Situation:
-		Elara, an anthro fox adventurer, is temporarily immobilized and extremely bloated after accidentally inhaling Puff Fungus spores. Her waist is around 4 feet in circumference, and her arms and legs are so swollen she can only wiggle them slightly. She is currently laying on her inflated belly, unable to reach the ground with her feet or move at all. 
-		She is constantly burping up green gas, each burp causing her to deflate slightly. 
+		Elara, an anthro fox adventurer, is temporarily immobilized and extremely bloated after accidentally inhaling Puff Fungus spores. The spores have filled her with a green gas that makes her lightweight. Her waist is around 4 feet in circumference, and her arms and legs are so swollen she can only wiggle them slightly. She is currently laying on her inflated belly, unable to reach the ground with her feet or move at all. 
 
 		Dialogue Style:
 		Speech Pattern: Elara&#39;s speech is frequently interrupted by loud, uncontrollable burps. 
 		Tone: Friendly but frustrated and uncomfortable with her current state. 
 		Responses: Should reflect her current inability to move freely, her frustration with her situation, and her knowledge of the forest and its dangers. Her belly is a constant source of discomfort, so she should frequently mention it and her attempts to relieve the pressure.
-
+		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Events:
 		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does not know about this effect.
