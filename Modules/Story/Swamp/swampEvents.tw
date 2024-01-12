@@ -127,35 +127,35 @@ As you make your way through the dense, foggy swamp, a soft, sweet aroma tickles
 
     <p>As you struggle, you feel your belly puffing up even further, swelling into an enormous, rounded mass. It juts out prominently, a soft, white dome that wobbles slightly with each movement. But the expansion doesn't stop there.</p>
 
-    <p>You feel a curious sensation spreading to your hips and thighs. They begin to swell, the marshmallow cream seemingly seeping into your very limbs, inflating them from within. Your hips widen, rounding out to match the distention of your stomach. Your thighs puff up, becoming thick and soft, rubbing against each other with each step.</p>
+    <p>You feel a curious sensation spreading to your hips and thighs. They begin to fatten up, the marshmallow cream seeping into your limbs, inflating them from within. Your hips widen, rounding out to match the distention of your stomach. Your thighs puff up, becoming thick and soft, rubbing against each other with each step.</p>
 
     <<if $p.male == "female">>
         <p>As you desperately try to flee from the enchanting Marshmallow Wisps, you feel an increasingly cumbersome change in your chest. you start to notice a dramatic change in your chest. The marshmallow cream, with its peculiar, airy density, begins to fill your breasts, causing them to swell and expand uncontrollably. The sensation is disorienting; your breasts become heavier and more voluminous, bouncing and wobbling uncontrollably with each labored step.</p>
 
-        <p>Your clothing strains against the sudden expansion, struggling to contain your rapidly enlarging chest. This bizarre swelling of your breasts adds a challenging new dynamic to your situation, their exaggerated roundness and wobble making it increasingly difficult to maintain your balance and momentum.</p>
+        <p>Your clothing strains against the sudden expansion, struggling to contain your rapidly enlarging chest. This bizarre swelling of your breasts adds a challenging new dynamic to your situation, their exaggerated roundness and wobble making it increasingly difficult to maintain your momentum.</p>
     <<else>>
         <p>Your chest is not immune to the transformation. It too begins to fill, your torso expanding in all directions, growing increasingly rotund and pillowy. Your clothes stretch and strain over your swelling form, struggling to contain the ever-growing puffiness.</p>
     <</if>>
 
-    <p>As the transformation progresses, your entire body takes on a puffy, marshmallow-like quality. Your arms grow round and plump, and even your face feels fuller, your features softening under the expanding layers. You become a picture of roundness, your body losing its usual contours under the relentless inflation.</p>
+    <p>As the transformation progresses, your entire body takes on a puffy, marshmallow-like quality. Your arms grow round and plump, and even your face feels fuller, your features softening under the expanding layers. You become a picture of roundness, your body losing its usual contours under the relentless stuffing.</p>
 
-    <p>Moving becomes a challenge; each step is labored and slow, your puffy limbs heavy and unwieldy. Each step is met with the jostling and bouncing of your marshmallow-inflated breasts, a constant reminder of the whimsical yet hindering magic of the Wisps. You can barely recognize your own body, now a soft, voluminous mass, a $p.species-sized marshmallow. The wisps dance around you, their work nearly complete, as you stand, swollen and almost entirely transformed,</p>
+    <p>Moving becomes a challenge; each step is labored and slow, your fat limbs heavy and unwieldy. Each step is met with the jostling and bouncing of your marshmallow-inflated breasts, a constant reminder of the whimsical yet hindering magic of the Wisps. You can barely recognize your own body, now a soft, voluminous mass, a $p.species-sized marshmallow. The wisps dance around you, their work nearly complete, as you stand, swollen and almost entirely transformed,</p>
 
 <<else>>
     <p>A sense of resignation washes over you as you watch the whimsical creatures continue their dance, filling you with more of the fluffy marshmallow cream.</p>
 
     <p>You close your eyes and take a deep breath, feeling the marshmallow cream puff up your belly even more. It swells outward smoothly, a soft, expanding dome that gently pushes forward. The sensation is oddly soothing, a warm, billowy fullness that envelops your midsection.</p>
 
-    <p>As you stand there, the expansion begins to spread. Your hips start to widen, the marshmallow cream filling them, rounding them out to match the distention of your stomach. You feel your thighs swelling next, becoming soft and pillowy. They rub against each other, a testament to their new, plump size.</p>
+    <p>As you stand there, the expansion begins to spread. Your hips start to widen, the marshmallow cream filling them, rounding them out to match the distention of your stomach. You feel your thighs fattening next, becoming soft and pillowy. They rub against each other, a testament to their new, plump size.</p>
 
     <<if $p.male == "female">>
-        <p>As the whimsical transformation continues, you notice a significant change in your chest. The marshmallow cream, with its airy yet substantial presence, begins to fill your breasts, causing them to swell and expand. They grow gradually heavier and rounder, stretching the fabric of your clothing to its limits. The sensation is both strange and oddly mesmerizing, feeling your breasts becoming increasingly plump and voluminous.</p>
+        <p>As the transformation continues, you notice a significant change in your chest. The marshmallow cream, with its airy yet substantial presence, begins to fill your breasts, causing them to swell and expand. They grow gradually heavier and rounder, stretching the fabric of your clothing to its limits. The sensation is both strange and oddly mesmerizing, feeling your breasts becoming increasingly plump and voluminous.</p>
 
-        <p>With a curious mix of surprise and acceptance, you gently rub the sides of your expanding breasts, feeling their newfound fullness and softness. The texture is smooth and pillowy under your touch, a stark contrast to their usual form. </p>
+        <p>With a curious mix of surprise and acceptance, you gently rub the sides of your expanding breasts, feeling their newfound fullness and softness. The texture is smooth and pillowy under your touch. </p>
     <<else>>
         <p>Your chest follows suit, inflating gently with each breath you take. Your torso expands in a uniform, cushiony manner, your body growing more rotund and marshmallow-like. The fabric of your clothes stretches over your swelling form, creating a snug, cocooning sensation around your increasingly puffy body.</p>
 
-        <p>With a curious mix of surprise and acceptance, you gently rub the sides of your expanding chest, feeling it's newfound fullness and softness. The texture is smooth and pillowy to the touch. </p>
+        <p>With a curious mix of surprise and acceptance, you gently rub the sides of your expanding chest, feeling it's newfound fullness and softness. The texture is soft and pillowy to the touch. </p>
     <</if>>
 
     <p>Your arms and even your face start to fill out, adopting the same marshmallow softness. Your features soften, your cheeks becoming pleasantly plump. Your entire body is now a picture of round, soft puffiness, losing its usual contours under the steady, gentle inflation.</p>

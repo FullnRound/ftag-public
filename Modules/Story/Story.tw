@@ -1552,6 +1552,25 @@ $wea.description<br>
 	<<sizing 100%>>
 <</newmeter>>
 
+
+/* AI MOD - Initialize Metadata - START */
+/* Load the AI Config metadata. */
+/* This will also establish the defaults if used for the first time */
+
+<<set setup.aiconfig = recall('aiconfig', {
+	text: {
+		url: "https://api.openai.com/v1/chat/completions",
+		apikey: "",
+		temperature: 0.9,
+		frequency_penalty: 0.2,
+		max_tokens: 400,
+		extra_parameters: {},
+	},
+	image: {},
+})>>
+/* AI MOD - Initialize Metadata - END */
+
+
 /* FIXES AND EDITS - Add dedicated passage for loading mod passages - START */
 <<include "mods patch and update">>
 /* FIXES AND EDITS - Add dedicated passage for loading mod passages - END */
@@ -1648,6 +1667,7 @@ Intelligence- $int<br>
 <<popupButton "Quests" "Quests">><br>
 <<popupButton "Status" "Status">><br>
 <<popupButton "Options" "Options">><br>
+<<popupButton "AI Settings" "AI Settings">><br>
 <<popupButton "Instructions" "Instructions">>
 
 <</if>>

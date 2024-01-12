@@ -1,0 +1,195 @@
+:: AI Widget [script startup] {"position":"2000,400","size":"300,300"}
+console.log("AI Widget");
+
+
+// Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
+window.createConversation = function(character) {
+	console.log(State.variables.chats[character])
+	const chatList = document.querySelector('.chatlist');
+	const npc1 = State.variables.npc1;
+
+	if (State.variables.chats[character] == undefined) {
+		State.variables.chats[character] = [];
+		State.variables.chats[character].push({ 'role': 'assistant', 'content': 'The bloated ' + npc1.species + ' lies there, seemingly unaware of your presence, ' + npc1.his + ' eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...' });
+	}
+
+	// Create input bubble for each message in chat arr
+	for (const chat of State.variables.chats[character]) {
+		const chatBubble = document.createElement('li');
+
+		if (chat.role == 'user') {
+			chatBubble.classList.add('user_input');
+		} else {
+			chatBubble.classList.add('bot_output');
+		}
+
+		chatBubble.innerHTML = chat.content;
+		chatList.appendChild(chatBubble);
+	}
+}
+
+window.getPlayerContext = function() {
+	const player = State.variables.p;
+	// Provide a context for describing the player character to the chatbot
+	const paragraph = [];
+	paragraph.push(`The player is a ${player.male} ${player.species}. They are a ${State.variables.bodyFatTier} weight with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
+}
+
+
+window.makeOpenAIRequest = async function(character, promptText) {
+	const apiKey = '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'; 
+    const endpoint = 'https://api.openai.com/v1/chat/completions';
+
+    try {
+		const response = await fetch(endpoint, {
+			method: 'POST',
+            headers: {
+				'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+				"model": "gpt-3.5-turbo",
+				// "messages" sends the current character context and the the chat history to the server
+				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
+				"user": character,
+				"temperature": 0.9,
+				"frequency_penalty": 0.2
+            })
+        });
+
+        if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+		if (data) {
+			addChat(character, data.choices[0].message);
+		} else {
+			addChat(character, {"role": "assistant","content": "An error occurred."});
+		}
+    } catch (error) {
+		console.error('Request failed:', error);
+        return null;
+    }
+};
+
+window.addChat = function(character, messageObj) {
+	console.log(State)
+	State.variables.chats[character].push(messageObj);
+	createBubble(messageObj.content, messageObj.role == 'user');
+
+	console.log(State.variables.chats[character])
+}
+
+window.createBubble = function(inputText, user = true) {
+	const chatList = document.querySelector('.chatlist');
+
+	//create input bubble
+	const chatBubble = document.createElement('li');
+	user ? chatBubble.classList.add('user_input') 
+	: chatBubble.classList.add('bot_output');
+
+	//adds input of textarea to chatbubble list item
+	chatBubble.innerHTML = inputText;
+
+	//adds chatBubble to chatlist
+	chatList.appendChild(chatBubble)
+}
+
+
+
+:: AI Settings [nobr] {"position":"2100,400","size":"300,300"}
+
+/* CREATE PASSAGE FOR (whatever) */
+
+<<setPopupTitle "AI Options">>
+
+<<set _aiconfig = setup.aiconfig>> /* input boxes require state variables to work. This is just a dummy copy. We won't actually be using the real input box functionality, instead handling the setting etc. with scripts. */
+
+/* Prepare the JSON section */
+<<set _aiconfig.text.extra_parameters = JSON.stringify(_aiconfig.text.extra_parameters, null, "\t")>>
+
+<b><u>Text Generation</u></b><br>
+<u>Generation Service</u><br>
+Include the URL (and optional API key) of the service to use for text generation. Text generation uses the OpenAI API standard, which can be used locally in programs like Oobabooga.<br>
+<label>URL: <<textbox "_aiconfig.text.url" _aiconfig.text.url>></label><br>
+<label>API Key: <<textbox "_aiconfig.text.apikey" _aiconfig.text.apikey>></label><br>
+<br>
+<u>Settings</u><br>
+<label>Temperature: <<numberbox "_aiconfig.text.temperature" _aiconfig.text.temperature>></label><br>
+<label>Frequency Penalty: <<numberbox "_aiconfig.text.frequency_penalty" _aiconfig.text.frequency_penalty>></label><br>
+<label>Maximum Tokens: <<numberbox "_aiconfig.text.max_tokens" _aiconfig.text.max_tokens>></label><br>
+<br>
+<u>Additional Parameters</u><br>
+Enter additional API parameters here in the form of JSON Object.<br>
+<<textarea "_aiconfig.text.extra_parameters" _aiconfig.text.extra_parameters>>
+
+
+<<script>>
+
+function onTextStandardChanged(key, newValue, elementId) {
+	/* Do any clamping of values etc. here */
+    switch(key) {
+    	case "temperature":
+        	newValue = Math.clamp(newValue, 0, 2);
+            break;
+        case "frequency_penalty":
+        	newValue = Math.clamp(newValue, -2, 2);
+            break;
+        default:
+        	break;
+    }
+	
+	/* Set the new value */
+	setup.aiconfig.text[key] = newValue;
+	
+	/* Manually update the input box value */
+	$(elementId).val(newValue);
+}
+
+/* Trigger saving to metadata */
+function onClosed() {
+	/* Attempt to save what was entered into the JSON section (we don't bother trying to save this on each input like the other options) */
+	try {
+        let newValue = JSON.parse($('#textarea--aiconfigtextextra-parameters').val());
+		/* Set the new value */
+		setup.aiconfig.text.extra_parameters = newValue;
+		
+	} catch (error) {
+		/* Do nothing*/
+        console.log("Input JSON was incorrectly formatted - discarding");
+	} finally {
+		
+      	/* Save the AI Config in metadata */
+     	 State.metadata.set('aiconfig', setup.aiconfig);
+    };
+}
+
+/* Save changes *whenever* the user changes the input */
+$(document).ready(function() {
+  $('#textbox--aiconfigtexturl').on('input', function() {
+    onTextStandardChanged("url", $(this).val(), "#textbox--aiconfigtexturl");
+  });
+	$('#textbox--aiconfigtextapikey').on('input', function() {
+    onTextStandardChanged("apikey", $(this).val(), "#textbox--aiconfigtextapikey");
+  });
+	
+	$('#numberbox--aiconfigtexttemperature').on('input', function() {
+    onTextStandardChanged("temperature", $(this).val(), "#numberbox--aiconfigtexttemperature");
+  });
+	$('#numberbox--aiconfigtextfrequency-penalty').on('input', function() {
+    onTextStandardChanged("frequency_penalty", $(this).val(), "#numberbox--aiconfigtextfrequency-penalty");
+  });
+	$('#numberbox--aiconfigtextmax-tokens').on('input', function() {
+    onTextStandardChanged("max_tokens", $(this).val(), "numberbox--aiconfigtextmax-tokens");
+  });
+	
+	/* (extra parameters aren't processed in this same way, and are only attempted to save upon dialog close) */
+	
+	$(document).one(':dialogclosing', function() {
+    onClosed();
+  });
+});
+
+<</script>>
