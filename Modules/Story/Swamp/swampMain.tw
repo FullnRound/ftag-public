@@ -92,7 +92,7 @@ postdisplay['createConversation'] = function (taskName) {
 <<switch $daytime>>
 
 <<case "night">>
-<<switch random(1,6)>>
+<<switch random(1,5)>>
 <<case 1>>
 The moon rises, and its shine along with that of starlight seeps through the silver-tinted canopy leaves and scantly illuminates the mysterious nightly happenings of the swamp, that include far more than just nocturnal hunting and gurgling of both carnivorous and ruminant bellies filled during midday and twilight. 
 
@@ -103,13 +103,10 @@ As the rustle of elusive, yet hefty <<=$bat.plural>> and likewise well-fed night
 Unsettling whispers come from everywhere, resonating from tree to tree and floating through the bushes and grass, and the eerie shapes are moving ever closer to your hiding place that doesn't feel so secure now, and the plants themselves seem to move subtly on their own accord without any wind prompting them. 
 
 <<case 4>>
-Chittering and clicking come from inside the mossy tree stumps, and the branches above bend with creaking effort, as though reaching for something, and the ghostly murmurs around you seems so obnoxiously mocking that you cannot help feeling that those thing are making fun of you. 
-
-<<case 5>>
-As the night draws nearer the end, the frightening whispers abate and withdraw back into the sylvan depths, leaving in their place the terrible hungry noises from nocturnal beasts on the prowl, and at times you could swear you heard screams for help coming from some unlucky traveller too far away to locate, let alone lend a hand. 
+A chill creeps along your spine, unsettling you. In a swift motion, you whirl around, half-expecting to find someone behind you, but the trail lies empty and silent. The sensation of a hand gripping your shoulder lingers in your mind. As you resume your walk, the event replays in your thoughts. You swear you jumped and then felt the hand on your shoulder, but that doesn't make sense... You're not sure anymore...
 
 <<default>>
-The creatures of the deep woods have not all gone away, but are steadily retreating, lurching past the trees on the edges of your sight, and the swamp air is unmistakably frosty with a promise of timely sunrise, with no other creature allowing itself to be heard or seen as the first calls of the daytime birds greet the coming morning.
+You feel like you should leave...
 
 <</switch>>
 
@@ -154,7 +151,7 @@ Occasionally, a heavily-set otter or a round-bellied raccoon can be seen waddlin
 As night falls over the swamp, the atmosphere shifts from lethargic to sinister. The moon casts an eerie glow on the water, and the shadows seem to move with a life of their own. Suddenly, the quiet is shattered by a ferocious splashing as a massive, bloated crocodile lunges at an unsuspecting, overweight capybara. The swamp becomes a stage for deadly predators, their hefty forms surprisingly agile in the hunt, turning the still night into a symphony of predatory prowess and desperate escape attempts.
 
 <<case 2>>
-Under the cover of night, while the swamp is alive with the sounds of nocturnal creatures, you spot a pair of eyes glowing in the darkness. Approaching cautiously, you discover a raccoon stuck in a narrow gap between two trees. Its body is inflated to the point of immobility, round and tight as a drum. It looks at you with a mix of embarrassment and plea, a silent testament to the strange and unpredictable nature of the swamp.
+Under the cover of night, while the swamp is alive with the sounds of nocturnal creatures, you spot a pair of eyes glowing in the darkness. Approaching cautiously, you discover a raccoon stuck in a narrow gap between two trees. Its body is inflated to the point of immobility, round and tight as a drum. It looks at you with a mix of embarrassment and plea, evidence of the strange and unpredictable nature of the swamp.
 
 <<case 3>>
 A deep, rumbling growl resonates through the air, followed by a frenzied splashing as one of these formidable creatures successfully captures its plump prey. The night air is filled with the sounds of struggle and conquest, reminding you of the swamp's perilous nature after dark.
@@ -178,20 +175,23 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 
 
 :: Swamp ambush [nobr] {"position":"3625,1975","size":"100,100"}
-<<if $swampEnemies == undefined or $swampEnemies.length == 0>>
-	<<set $swampEnemies = ["vines"]>>
-<</if>>
+/* Dark dangers in the swamp at night */
+<<switch $daytime>>
+	<<case "night">>
+		<<set $swampEnemies = ["vines"]>>
+	<<default>>
+		<<set $swampEnemies = ["vines"]>>
+<</switch>>
 <<set _enemy = $swampEnemies.pluck()>>
 
 <<switch _enemy>>
 
-<<case "vines">>
-<<setEnemy $syrupVines>>
-As you're walking through the swamp, you start to notice the vines are growing strangely thick. Especially since this type of swamp isn't supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
+	<<case "vines">>
+	<<setEnemy $syrupVines>>
+	As you're walking through the swamp, you start to notice the vines are growing strangely thick. Especially since this type of swamp isn't supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
 
-<<default>>
-''Error in enemy randomization''
-
+	<<default>>
+	''Error in enemy randomization''
 <</switch>>
 
 <<startCombat>>
@@ -240,7 +240,7 @@ As you're walking through the swamp, you start to notice the vines are growing s
 <<set $swampSpecialRandomization[_specialEvent] = 0>>
 <<switch _specialEvent>>
 	<<case 0>>
-	<<set _event = "Gingerbread House">>
+	<<set _event = "Marshmallow Wisps">>
 	<<case 1>>
 	<<set _event = "Wolf pack">>
 	<<case 2>>
@@ -296,6 +296,7 @@ As you wade deeper into the swamp, you notice a peculiar plant with vibrant, lum
 
 
 <<case 3>>	
+/* Need to change this case */
 <p>As you travel through the swamp you hear the faint sound of trickling water. As you follow the sound, you find a small waterfall pouring from a cliff above. At the base of the waterfall you find a small pile of flasks. Most of them are broken, but one of them is still in pristine condition. </p>
 
 You look around and it doesn't seem like anyone's been here recently. Whoever owned these left them here long ago. You pick up the flask and fill it up from the waterfall.
@@ -303,6 +304,7 @@ You look around and it doesn't seem like anyone's been here recently. Whoever ow
 	
 
 <<case 4>>		
+/* Need to change this case */
 <p>You wander into a small clearing, in the middle of which you see a large stump. You cross the clearing and approach the stump, upon which you find a small wooden box. It looks rather simple, but has a few strange words carved into the top in some language you cannot decipher. </p>		
 
 You open the lid and find a small strange diamond shaped cookie with white frosting on top, while a few crumbs lie about it from where others must have once been. You take it, and replaced the box where you found it. 
@@ -315,10 +317,11 @@ You open the lid and find a small strange diamond shaped cookie with white frost
 
 <p>The gator snaps viciously at the air, but with each bite, more of the leeches latch onto its thick hide. They begin to inflate the gator with an odd, gaseous substance. The reptile's tough skin stretches grotesquely, its body ballooning outwards at an alarming rate. The gator's once menacing form is now comically round, and it floats helplessly on the water's surface, unable to right itself or fend off the relentless leeches.</p>
 
-<p>You watch, mesmerized, as the gator's belly swells larger and larger, the surface of its skin shining tight under the moonlight. The Bubble Leeches continue their attack relentlessly, pumping the gator full until it resembles a giant, floating ball. With a final effort, the gator lets out a muffled roar, its voice distorted by its inflated state, before resigning to its fate as a buoyant spectacle in the moonlit swamp.</p>
+<p>You watch, mesmerized, as the gator's belly swells larger and larger, the surface of its skin shining tight under the moonlight. The Bubble Leeches continue their attack relentlessly, pumping the gator full until it resembles a giant, floating ball. With a final effort, the gator lets out a muffled roar, its voice distorted by its bloated body, before resigning to its fate as a buoyant spectacle in the moonlit swamp.</p>
 
-<p>In the aftermath, the gator floats motionlessly, a bizarre testament to the swamp's strange and dangerous ecosystem. You take a moment to absorb the surreal scene before quietly backing away, leaving the inflated reptile to its fate amidst the murky waters and eerie whispers of the swamp.</p>
+<p>In the aftermath, the gator floats motionlessly, proof of the swamp's strange and dangerous ecosystem. You take a moment to absorb the surreal scene before quietly backing away, leaving the inflated reptile to its fate amidst the murky waters and eerie whispers of the swamp.</p>
 
+/* Old section */
 Now that the maelstrom of activity is over, you leave your hiding spot in the bushes and survey the combat zone. 
 <<if random(1,2) == 1>>
 Searching the marshy ground, you manage to find something! 

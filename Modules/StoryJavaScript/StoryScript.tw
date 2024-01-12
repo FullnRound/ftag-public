@@ -55,18 +55,18 @@ window.getPlayerContext = function() {
 
 
 window.makeOpenAIRequest = async function(character, promptText) {
-    const apiKey = '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'; 
+	const apiKey = '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'; 
     const endpoint = 'https://api.openai.com/v1/chat/completions';
 
     try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
+		const response = await fetch(endpoint, {
+			method: 'POST',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+				'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "model": "gpt-3.5-turbo",
+				"model": "gpt-3.5-turbo",
 				// "messages" sends the current character context and the the chat history to the server
 				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
 				"user": character,
@@ -76,7 +76,7 @@ window.makeOpenAIRequest = async function(character, promptText) {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+			throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
@@ -87,12 +87,13 @@ window.makeOpenAIRequest = async function(character, promptText) {
 			addChat(character, {"role": "assistant","content": "An error occurred."});
 		}
     } catch (error) {
-        console.error('Request failed:', error);
+		console.error('Request failed:', error);
         return null;
     }
 };
 
 window.addChat = function(character, messageObj) {
+	console.log(State)
 	State.variables.chats[character].push(messageObj);
 	createBubble(messageObj.content, messageObj.role == 'user');
 

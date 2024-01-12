@@ -191,13 +191,12 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 
 <p>At first, the swelling is slow, your belly rounding out slightly, creating a small bulge. But as moments pass, the bulge becomes more pronounced, your skin stretching to accommodate the growing pressure inside. You can feel a lightness within you, as if an invisible air tank is filling you up like a balloon.</p>
 <<inflate 10 -50>>
-<<CallAPI>>
 <<action "c" "wait" "Wait" "Lab balloon">><</action>>
 
 
 :: Lab balloon {"position":"2100,2250","size":"100,100"}
 
-<p>The expansion continues, your belly growing larger and rounder. It's an odd sensation, both weightless and unnerving. You place your hands on your inflated abdomen, feeling the tightness of your skin, stretched and filled with the mysterious gas. Your belly becomes a prominent, ballooning sphere, dominating your once proportional figure.</p>
+<p>The expansion continues, your belly growing larger and rounder. It's an odd sensation, both weightless and unnerving. You place your $p.hands on your inflated abdomen, feeling the tightness of your skin, stretched and filled with the mysterious gas. Your belly becomes a prominent, ballooning sphere, dominating your once proportional figure.</p>
 
 <p>As your belly swells further, you start to feel a lifting sensation. The realization hits you – the gas filling you up is making you buoyant. Panic sets in as your feet gradually lose contact with the desk's surface. You're floating, lifted skyward by your own inflating belly.</p>
 
@@ -207,10 +206,10 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 
 <p>Trapped and floating, you're left to ponder the unexpected turn of events that led to this unusual and precarious situation. Your escape attempt has ironically resulted in a complete loss of mobility, leaving you adrift and at the mercy of the whims of the lab's environment.</p>
 <<inflateToFloating>>
-<<action "c" "wait" "Wait" "Lab balloon2">><</action>>
+<<action "c" "wait" "Wait" "Lab balloon 2">><</action>>
 
 
-:: Lab balloon2 {"position":"2100,2275","size":"100,100"}
+:: Lab balloon 2 {"position":"2100,2275","size":"100,100"}
 <<createFixedNPC "scientist" 1>>
 
 <p>As you float helplessly against the ceiling, bobbing slightly from the gentle air currents in the lab, the mad scientist finally notices your predicament. $npc1.His eyes widen in fascination as $npc1.he sees you, inflated and suspended. $npc1.He approaches with an intrigued smile, reaching up to grasp your $p.foot and pull you down from the ceiling.</p>
@@ -229,10 +228,10 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 
 <p>You're left feeling vulnerable and exposed as $npc1.he scrutinizes your condition. The sensation of being so unnaturally expanded and studied so intently is both uncomfortable and humiliating. As the scientist scribbles down notes, you realize that you have become little more than an interesting phenomenon to $npc1.him, a subject for $npc1.his bizarre experiments.</p>
 
-<<action "c" "wait" "Wait" "Lab balloon3">><</action>>
+<<action "c" "wait" "Wait" "Lab balloon 3">><</action>>
 
 
-:: Lab balloon3 {"position":"2100,2300","size":"100,100"}
+:: Lab balloon 3 {"position":"2100,2300","size":"100,100"}
 <p>Your heart races as you see the scientist reaching for another spray bottle. Panic sets in as $npc1.he turns towards you, the bottle in hand. A sense of dread overwhelms you; the memory of your recent uncontrollable inflation is still fresh in your mind. You let out a faint whimper, the fear evident in your voice as you plead, "No, please, no more..."</p>
 
 <p>Despite your protests, the scientist approaches with a clinical detachment, $npc1.his curiosity overriding any empathy. $npc1.He sprays a fine mist of another chemical towards you. As the droplets settle on your already stretched skin, a new and unfamiliar sensation begins.</p>
@@ -248,7 +247,7 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 <p>The scientist, meanwhile, observes with rapt attention, making notes and occasionally muttering to $npc1.himself. "Incredible... the reaction is even more pronounced than anticipated," $npc1.he remarks, almost in awe.</p>
 
 <p>As the transformation reaches its peak, leaving you massively inflated and grotesquely disproportionate, the overwhelming sensations become too much to bear. The intense pressure, the tightness of your skin stretched to its limits, and the sheer absurdity of your condition converge into a tidal wave of sensory overload. Unable to cope with the extreme stress, you feel consciousness slipping away. Your vision blurs, the lab and the looming figure of the scientist fading into darkness as you succumb to a merciful faint, overwhelmed by the enormity of your transformation.</p>
-<<consume 50 300>>
+<<consume 50 30>>
 <<defeated "transformed">>
 
 
@@ -277,17 +276,17 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 
 <p>Your middle begins to distend outward, a strong sense of bloating accompanies the sudden increase in volume. The sensation is bewildering and disorienting as your body accommodates the swelling sphere, ballooning outwards from the center where the orange resides. The pressure builds, a mix of stretching and fullness, as your middle expands in all directions.</p>
 
-<p>You place your $p.hands on your sides, feeling the tautness of your skin as it accommodates the rapidly growing orange. It's an odd sensation, like being stuffed, but even denser. Your stomach now bulges out significantly, resembling the curvature of a large ball. The expansion continues, pushing outwards relentlessly, your body rounding out in every direction, becoming increasingly spherical.</p>
+<p>You place your $p.hands on your sides, feeling the tautness of your skin as it accommodates the rapidly growing orange. It's an odd sensation, like being stuffed with food, but even denser. Your stomach now bulges out significantly, resembling the curvature of a large ball. The expansion continues, pushing outwards relentlessly, your body rounding out in every direction, becoming increasingly spherical.</p>
 
 <p>The growth of the orange inside you shows no sign of slowing down. Your whole torso is now entirely round and still pushing outwards. Your body swells to an almost comical size, your limbs slowly being absorbed into the vast expanse of your ballooning middle. The tightness around your midsection is intense, a constant reminder of the strange, uncontrollable transformation you're undergoing.</p>
 
 <p>As you grow larger and rounder, the feeling of becoming helplessly swollen to such an extreme degree is overwhelming. You're at the mercy of the orange's relentless expansion, your body reshaping into an ever-increasing sphere. The scientist watches with an analytical eye, making notes, seemingly indifferent to your distress.</p>
 
 <p>In this bizarre and precarious situation, you're left wondering how much more your body can expand before reaching its limit. The fear of the unknown, coupled with the physical sensation of being stretched and filled, leaves you in a state of shock and disbelief.</p>
-<<consume 100 1000>>
-<<action "c" "wait" "Wait" "Orange growth2">><</action>>
+<<consume 1000 1000>>
+<<action "c" "wait" "Wait" "Orange growth 2">><</action>>
 
-:: Orange growth2 {"position":"2150,2200","size":"100,100"}
+:: Orange growth 2 {"position":"2150,2200","size":"100,100"}
 <p>As the relentless swelling of your body finally begins to slow, you find yourself transformed into a spherical shape, your limbs completely swallowed your inflated form. Only your $p.hands and feet remain visible, sticking out comically from the sides and bottom of your now massive, round body. You're now a $p.species orb, your diameter easily matching your previous height. The pressure inside you is immense, yet surprisingly not painful – it's more of a profound tightness, a sensation of being filled to the brim.</p>
 
 <p>With a mixture of fascination and clinical interest, the scientist carefully lifts you from the glass bowl. The sensation of being moved is odd; your body feels impossibly round. $npc1.He places you gently on the desk, and you feel the cool surface beneath your taut skin.</p>
@@ -296,7 +295,7 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 
 <p>You try to respond, but the feeling of $npc1.his $npc1.hands on your inflated body is overwhelming, each touch sending peculiar sensations through you.</p>
 
-<p>$npc1.He continues $npc1.his inspection, seemingly intrigued by your predicament. "Can you move at all? Try to wiggle your fingers or toes for me," $npc1.he instructs, $npc1.his tone clinical yet curious.</p>
+<p>$npc1.He continues $npc1.his inspection, seemingly intrigued by your predicament. "Can you move at all? Try to wiggle your $p.hands for me," $npc1.he instructs, $npc1.his tone clinical yet curious.</p>
 
 <p>You make a feeble attempt, managing only slight movements, your extremities almost fully engulfed in your swollen form.</p>
 
@@ -328,7 +327,7 @@ There's a rack of potions and pills next to the reception desk with a box in fro
 <p>You struggle to maintain your balance as the combined weight of your swelling body parts anchors you in place. The weight becomes too much to bear and you plop down onto your plump backside. The sensation of being helplessly inflated with flab, your body growing heavier and rounder by the second, is both surreal and terrifying. The chaos around you fades into the background as you grapple with the reality of your rapidly changing form.</p>
 
 <p>As the green gas thickens, obscuring everything around you, you're left feeling isolated in your own inflated world, unsure of what will happen next in the midst of this unforeseen and uncontrollable transformation.</p>
-<<consume 100 700>>
+<<tempBuff 'fat' 800>>
 <<action "c" "wait" "Wait" "Lab fat gas">><</action>>
 
 :: Lab fat gas {"position":"2250,2250","size":"100,100"}
