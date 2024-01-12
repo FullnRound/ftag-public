@@ -1,5 +1,24 @@
 :: AI Widget [script startup] {"position":"2000,400","size":"300,300"}
-console.log("AI Widget");
+
+
+/* AI MOD - Initialize Metadata - START */
+/* Load the AI Config metadata. */
+/* This will also establish the defaults if used for the first time */
+
+setup.aiconfig = recall('aiconfig', {
+	text: {
+		url: "https://api.openai.com/v1/chat/completions",
+		model: "gpt-3.5-turbo",
+		apikey: "",
+		temperature: 0.9,
+		frequency_penalty: 0.2,
+		max_tokens: 500,
+		extra_parameters: {},
+	},
+	image: {},
+})
+/* AI MOD - Initialize Metadata - END */
+console.log(setup.aiconfig)
 
 
 // Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
@@ -32,29 +51,34 @@ window.getPlayerContext = function() {
 	const player = State.variables.p;
 	// Provide a context for describing the player character to the chatbot
 	const paragraph = [];
-	paragraph.push(`The player is a ${player.male} ${player.species}. They are a ${State.variables.bodyFatTier} weight with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
+	paragraph.push(`The player is a ${player.male} ${player.species}. Their weight is: ${State.variables.bodyFatTier} with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
 }
 
 
 window.makeOpenAIRequest = async function(character, promptText) {
-	const apiKey = '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'; 
-    const endpoint = 'https://api.openai.com/v1/chat/completions';
+	const settings = setup.aiconfig.text;
+
+	const requestBody = {
+		"model": settings.model,
+		// "messages" sends the current character context and the the chat history to the server
+		"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
+		"user": character,
+		"temperature": settings.temperature,
+		"frequency_penalty": settings.frequency_penalty,
+		"max_tokens": settings.max_tokens,
+	}
+
+	// Add any extra parameters to the request body
+	Obejct.assign(requestBody, settings.extra_parameters);
 
     try {
-		const response = await fetch(endpoint, {
+		const response = await fetch(settings.url, {
 			method: 'POST',
             headers: {
-				'Authorization': `Bearer ${apiKey}`,
+				'Authorization': `Bearer ${settings.apikey}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-				"model": "gpt-3.5-turbo",
-				// "messages" sends the current character context and the the chat history to the server
-				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
-				"user": character,
-				"temperature": 0.9,
-				"frequency_penalty": 0.2
-            })
+            body: JSON.stringify(requestBody)
         });
 
         if (!response.ok) {
@@ -114,6 +138,7 @@ window.createBubble = function(inputText, user = true) {
 <u>Generation Service</u><br>
 Include the URL (and optional API key) of the service to use for text generation. Text generation uses the OpenAI API standard, which can be used locally in programs like Oobabooga.<br>
 <label>URL: <<textbox "_aiconfig.text.url" _aiconfig.text.url>></label><br>
+<label>Model: <<textbox "_aiconfig.text.model" _aiconfig.text.model>></label><br>
 <label>API Key: <<textbox "_aiconfig.text.apikey" _aiconfig.text.apikey>></label><br>
 <br>
 <u>Settings</u><br>

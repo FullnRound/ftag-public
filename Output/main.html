@@ -2763,7 +2763,24 @@ setup.tuneSave = setup.registerSaveTuning
 
 /* FIXES AND EDITS - Utilise tuning variables for major variables - END */
 /* twine-user-script #2: "AI Widget" */
-console.log("AI Widget");
+/* AI MOD - Initialize Metadata - START */
+/* Load the AI Config metadata. */
+/* This will also establish the defaults if used for the first time */
+
+setup.aiconfig = recall('aiconfig', {
+	text: {
+		url: "https://api.openai.com/v1/chat/completions",
+		model: "gpt-3.5-turbo",
+		apikey: "",
+		temperature: 0.9,
+		frequency_penalty: 0.2,
+		max_tokens: 500,
+		extra_parameters: {},
+	},
+	image: {},
+})
+/* AI MOD - Initialize Metadata - END */
+console.log(setup.aiconfig)
 
 
 // Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
@@ -2796,29 +2813,34 @@ window.getPlayerContext = function() {
 	const player = State.variables.p;
 	// Provide a context for describing the player character to the chatbot
 	const paragraph = [];
-	paragraph.push(`The player is a ${player.male} ${player.species}. They are a ${State.variables.bodyFatTier} weight with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
+	paragraph.push(`The player is a ${player.male} ${player.species}. Their weight is: ${State.variables.bodyFatTier} with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
 }
 
 
 window.makeOpenAIRequest = async function(character, promptText) {
-	const apiKey = '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'; 
-    const endpoint = 'https://api.openai.com/v1/chat/completions';
+	const settings = setup.aiconfig.text;
+
+	const requestBody = {
+		"model": settings.model,
+		// "messages" sends the current character context and the the chat history to the server
+		"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
+		"user": character,
+		"temperature": settings.temperature,
+		"frequency_penalty": settings.frequency_penalty,
+		"max_tokens": settings.max_tokens,
+	}
+
+	// Add any extra parameters to the request body
+	Obejct.assign(requestBody, settings.extra_parameters);
 
     try {
-		const response = await fetch(endpoint, {
+		const response = await fetch(settings.url, {
 			method: 'POST',
             headers: {
-				'Authorization': `Bearer ${apiKey}`,
+				'Authorization': `Bearer ${settings.apikey}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-				"model": "gpt-3.5-turbo",
-				// "messages" sends the current character context and the the chat history to the server
-				"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
-				"user": character,
-				"temperature": 0.9,
-				"frequency_penalty": 0.2
-            })
+            body: JSON.stringify(requestBody)
         });
 
         if (!response.ok) {
@@ -2859,7 +2881,7 @@ window.createBubble = function(inputText, user = true) {
 
 	//adds chatBubble to chatlist
 	chatList.appendChild(chatBubble)
-}</script><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+}</script><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -32109,24 +32131,6 @@ $wea.description&lt;br&gt;
 &lt;&lt;/newmeter&gt;&gt;
 
 
-/* AI MOD - Initialize Metadata - START */
-/* Load the AI Config metadata. */
-/* This will also establish the defaults if used for the first time */
-
-&lt;&lt;set setup.aiconfig = recall(&#39;aiconfig&#39;, {
-	text: {
-		url: &quot;https://api.openai.com/v1/chat/completions&quot;,
-		apikey: &quot;&quot;,
-		temperature: 0.9,
-		frequency_penalty: 0.2,
-		max_tokens: 400,
-		extra_parameters: {},
-	},
-	image: {},
-})&gt;&gt;
-/* AI MOD - Initialize Metadata - END */
-
-
 /* FIXES AND EDITS - Add dedicated passage for loading mod passages - START */
 &lt;&lt;include &quot;mods patch and update&quot;&gt;&gt;
 /* FIXES AND EDITS - Add dedicated passage for loading mod passages - END */</tw-passagedata><tw-passagedata pid="527" name="StoryInterface" tags="" position="2825,925" size="200,100">&lt;body class=&quot;dark-theme || light-theme&quot;&gt;
@@ -42861,6 +42865,7 @@ Searching the marshy ground, you manage to find a small bag of gold!
 &lt;u&gt;Generation Service&lt;/u&gt;&lt;br&gt;
 Include the URL (and optional API key) of the service to use for text generation. Text generation uses the OpenAI API standard, which can be used locally in programs like Oobabooga.&lt;br&gt;
 &lt;label&gt;URL: &lt;&lt;textbox &quot;_aiconfig.text.url&quot; _aiconfig.text.url&gt;&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;Model: &lt;&lt;textbox &quot;_aiconfig.text.model&quot; _aiconfig.text.model&gt;&gt;&lt;/label&gt;&lt;br&gt;
 &lt;label&gt;API Key: &lt;&lt;textbox &quot;_aiconfig.text.apikey&quot; _aiconfig.text.apikey&gt;&gt;&lt;/label&gt;&lt;br&gt;
 &lt;br&gt;
 &lt;u&gt;Settings&lt;/u&gt;&lt;br&gt;
