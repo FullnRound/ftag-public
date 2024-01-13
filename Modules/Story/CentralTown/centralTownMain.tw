@@ -1,4 +1,12 @@
 :: Ambient city {"position":"2625,1500","size":"100,100"}
+<<set $windowText = "">>
+<<script>>
+	State.variables.windowText = getAmbientText("centralTown");
+<</script>>
+
+<<if $windowText !== "" && $windowText !== undefined && $windowText !== null>>
+	<<print $windowText>>
+<<else>>
 <<createNPC "random" "random" 1>>
 
 <<switch $daytime>>
@@ -126,10 +134,15 @@ A $npc1.species sits on a bench outside the grocery store and $npc1.he's busily 
 
 
 <<default>>
-**Error in ambient forest**
+**Error in ambient city**
 
 <</switch>>
 
+<</if>>
+
+<<script>>
+	generateAmbientText("centralTown");
+<</script>>
 
 /*===Random fight===*/
 <<if $daytime == "night" and random(1,5) == 1>>

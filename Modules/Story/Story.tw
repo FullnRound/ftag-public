@@ -5977,6 +5977,9 @@ Status effects:
 <<set $spells = []>>
 <<set $quests = []>>
 <<set $chats = {}>>
+<<set $ambientText = {}>>
+<<set $ambientPrompts = {}>>
+
 
 /*Player species descriptors*/
 <<set $p = {

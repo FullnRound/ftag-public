@@ -225,8 +225,8 @@ button:active{
 }
 #passages{
   font-size: 16px;
-  padding-left:5%;
-  padding-right:5%; 
+  padding-left:3%;
+  padding-right:3%; 
   padding-top:1em; 
   padding-bottom:5em;
 }
@@ -380,7 +380,8 @@ hr{border-color:#444;}
   overflow-x: hidden;
   width: 100%;
   max-height: 75vh;
-  margin: 0 auto;
+  margin: 0 auto !important;
+  padding: 0 !important;
 }
 .chatlist .user_input, .chatlist .bot_output {
   padding: 0.85em;
@@ -2814,24 +2815,52 @@ window.getPlayerContext = function() {
 	// Provide a context for describing the player character to the chatbot
 	const paragraph = [];
 	paragraph.push(`The player is a ${player.male} ${player.species}. Their weight is: ${State.variables.bodyFatTier} with a belly that is ${State.variables.waist} and sticks out ${setup.waistDiameter()} inches.`);
+
+	return paragraph.join('\n');
+}
+
+window.addChat = function(character, messageObj) {
+	State.variables.chats[character].push(messageObj);
+	createBubble(messageObj.content, messageObj.role == 'user');
+
+	console.log(State.variables.chats[character]);
+}
+
+window.createBubble = function(inputText, user = true) {
+	const chatList = document.querySelector('.chatlist');
+
+	//create input bubble
+	const chatBubble = document.createElement('li');
+	user ? chatBubble.classList.add('user_input') 
+	: chatBubble.classList.add('bot_output');
+
+	//adds input of textarea to chatbubble list item
+	chatBubble.innerHTML = inputText;
+
+	//adds chatBubble to chatlist
+	chatList.appendChild(chatBubble)
 }
 
 
-window.makeOpenAIRequest = async function(character, promptText) {
+// Make a request for a message from the given character
+window.makeAITextRequest = async function(character) {
 	const settings = setup.aiconfig.text;
 
 	const requestBody = {
 		"model": settings.model,
-		// "messages" sends the current character context and the the chat history to the server
-		"messages": [{"role": "system","content": State.variables.npcs[character].chatContext}, ...State.variables.chats[character]],
 		"user": character,
 		"temperature": settings.temperature,
 		"frequency_penalty": settings.frequency_penalty,
 		"max_tokens": settings.max_tokens,
 	}
 
+	requestBody["messages"] = [
+		{"role": "system","content": State.variables.npcs[character].chatContext}, 
+		...State.variables.chats[character]
+	];
+
 	// Add any extra parameters to the request body
-	Obejct.assign(requestBody, settings.extra_parameters);
+	Object.assign(requestBody, settings.extra_parameters);
 
     try {
 		const response = await fetch(settings.url, {
@@ -2850,6 +2879,9 @@ window.makeOpenAIRequest = async function(character, promptText) {
         const data = await response.json();
         
 		if (data) {
+			// Parse the data for any special actions or effects
+
+
 			addChat(character, data.choices[0].message);
 		} else {
 			addChat(character, {"role": "assistant","content": "An error occurred."});
@@ -2860,28 +2892,184 @@ window.makeOpenAIRequest = async function(character, promptText) {
     }
 };
 
-window.addChat = function(character, messageObj) {
-	console.log(State)
-	State.variables.chats[character].push(messageObj);
-	createBubble(messageObj.content, messageObj.role == 'user');
 
-	console.log(State.variables.chats[character])
+// Make a request for text given the input prompt
+window.makeAIStoryRequest = async function({systemText, promptText}) {
+	const settings = setup.aiconfig.text;
+
+	const requestBody = {
+		"model": settings.model,
+		// "user": "System_text",
+		"temperature": settings.temperature,
+		"frequency_penalty": settings.frequency_penalty,
+		"max_tokens": settings.max_tokens,
+	}
+
+	// If we are generating a message for flavor text:
+	requestBody["messages"] = [
+		{"role": "system","content": systemText}, 
+		{"role": "user","content": promptText}
+	];	// This last message isn't actually from the user, it's just the prompt text for each specific situation
+
+
+	// Add any extra parameters to the request body
+	Object.assign(requestBody, settings.extra_parameters);
+
+	    try {
+		const response = await fetch(settings.url, {
+			method: 'POST',
+            headers: {
+				'Authorization': `Bearer ${settings.apikey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+		if (data) {
+			// Parse the data for any special actions or effects
+
+			return(data.choices[0].message.content);
+		} else {
+			return("An error occurred in retrieving API response.");
+		}
+    } catch (error) {
+		console.error('Request failed:', error);
+        return null;
+    }
 }
 
-window.createBubble = function(inputText, user = true) {
-	const chatList = document.querySelector('.chatlist');
 
-	//create input bubble
-	const chatBubble = document.createElement('li');
-	user ? chatBubble.classList.add('user_input') 
-	: chatBubble.classList.add('bot_output');
+/*
+ * AI Scenes Section
+ */
 
-	//adds input of textarea to chatbubble list item
-	chatBubble.innerHTML = inputText;
+const Stack = function() {
+    this.items = [];
+    this.push = function(item) {
+        this.items.push(item);
+    };
+    this.pop = function() {
+        return this.items.pop();
+    };
+	this.isEmpty = function() {
+		return this.items.length === 0;
+	};
+}
 
-	//adds chatBubble to chatlist
-	chatList.appendChild(chatBubble)
-}</script><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+const Queue = function() {
+    this.stack1 = new Stack();
+    this.stack2 = new Stack();
+
+    this.enqueue = function(item) {
+        this.stack1.push(item);
+    };
+
+    this.dequeue = function() {
+        if (this.stack2.isEmpty()) {
+            while (!this.stack1.isEmpty()) {
+                this.stack2.push(this.stack1.pop());
+            }
+        }
+        return this.stack2.pop();
+    };
+}
+
+window.setAmbientText = function() {
+	State.variables.ambientText = {
+		centralTown: new Queue(),
+	}
+
+	State.variables.ambientPrompts = {
+		centralTown: `
+		Generate an ambient scene text output for a fantasy adventure game. The scene should be set in a world of anthropomorphic characters called "furs". The furs live in a state of excessive gluttony. This output text will be shown when the player is passing time in town. Include diverse scenarios, focusing on characters and the ambiance of the town. Keep the descriptions imaginative, aligning with the theme of fantasy and indulgence.
+
+		STRICTLY follow any sentence count guidelines in the prompt.
+
+		Available species are: wolf, fox, hawk, owl, penguin, dolphin, coyote, lion, cheetah, tiger, dragon, deer, pig, ferret, raccoon, rhino, panda, hippo
+
+		Example ambient scene text outputs:
+		"A very overweight fox waddles her way down the street with several bags of food under each arm."
+
+		"Between a rare cart or a lone rider passing across it, the square is largely empty at the moment, allowing the birds to be heard above the subdued din of the working city."
+
+		"There is a sense of sun-baked contentment in the almost empty square, but even with the lack of ruckus nearby, a low hum of busy life permeates the city, accentuated every now and then by a loud call, a door getting bashed shut, a sound of explosion from one of the hospital wards or a satisfied belch from one of the restaurant regulars."
+
+		"A lean rabbit reaches for a shiny berry at the fruit stand. Upon taking a bite, he suddenly begins to puff up, his shirt buttons popping off as his stomach expands rapidly. Surprised and a bit amused, he chuckles, patting his newly rounded belly, now the size of a large watermelon. He pays the stand owner and waddles away with his newfound heft."
+
+		"Amid the bustling town square, a rotund rhino, fattened to an almost comical size, is being wheeled around in a specially designed cart. Children giggle and point as he cheerfully waves, his belly jiggling like a bowl full of jelly with every movement."
+
+		"A small group of furs gather near a quaint bakery. Their attention is fixed on a ferret customer devouring a mountainous tower of pastries. As the ferret's enjoyment intensifies, an extraordinary phenomenon unfolds before your eyes, her once slender form starts to rapidly expand, rounding out like a balloon of fat. You watch in awe as the ferret's size grows with each bite. The wicker chair snaps under the ferret's increasing weight, sending her tumbling. Soon, the portly ferret finds herself immobilized, her plump belly resting on the cobblestone ground, unable to move."
+		`,
+	}
+}
+
+const getRandomInt = function(max) {
+  return Math.ceil(Math.random() * max);
+}
+
+// 
+window.getAmbientText = function(area){
+	// console.log(State.variables.ambientText[area]);
+	// Check that any area exists, overwrite if not
+	if (State.variables.ambientPrompts.centralTown == undefined) {
+		window.setAmbientText();
+	}
+
+	// Output the next item from the queue if there is one available
+	return State.variables.ambientText[area].dequeue();
+}
+
+window.generateAmbientText = async function(area) {
+	// Generate another output for the queue on every request
+	let promptText = '';
+	const sentenceCount = getRandomInt(3); // 2,3,4
+
+	// 20% chance for a special response
+	switch (getRandomInt(1)) {
+		case 1:
+			// Special response
+			console.log('Special response', sentenceCount + 3);
+
+			switch (getRandomInt(3)) {
+				case 1:
+				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who starts bloating up from something.`;
+				break;
+				case 2:
+				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who suddenly fattens up.`;
+				break;
+				default:
+				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 3} sentences about a fur who's belly inflates and they panic while floating away.`;
+				break;
+			}
+			break;
+		default:
+			// Basic response
+			console.log('Basic response', sentenceCount);
+			promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount} sentences.`;
+			break;
+	
+	}
+
+	const data = await window.makeAIStoryRequest({
+		systemText: State.variables.ambientPrompts[area], 
+		promptText,
+	})
+	
+	State.variables.ambientText[area].enqueue(data);
+	// console.log(State.variables.ambientText[area]);
+	console.log(data);
+}
+
+
+/* Provide an output for evening in exactly 6 sentences, about a fur who suddenly fattens up so much they become a massive blob */
+/* Provide an output for daytime about a fur who starts bloating up from something. Describe their expansion in detail as they panic and burp. */
+/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -17251,11 +17439,11 @@ Run this before playing whenever you&#39;ve updated a mod, or added a mod to an 
 		Dialogue Style:
 		Speech Pattern: Elara&#39;s speech is frequently interrupted by loud, uncontrollable burps. 
 		Tone: Friendly but frustrated and uncomfortable with her current state. 
-		Responses: Should reflect her current inability to move freely, her frustration with her situation, and her knowledge of the forest and its dangers. Her belly is a constant source of discomfort, so she should frequently mention it and her attempts to relieve the pressure.
+		Responses: Should reflect her current inability to move freely, her frustration with her situation, and her knowledge of the forest and its dangers. Her swollen belly is a constant source of discomfort, so she should frequently mention it and her attempts to relieve the pressure.
 		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Events:
-		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does not know about this effect.
+		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does NOT know about this effect.
 		&quot;
 	}
 }&gt;&gt;
@@ -20043,7 +20231,15 @@ Behind the door labelled &quot;Destructatorium&quot;, you can hear explosions an
 &lt;&lt;if $options.feeder_expansionEnabled&gt;&gt;
 	&lt;&lt;action &quot;4&quot; &quot;greyMagic&quot; &quot;Creatorium&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;action &quot;sw&quot; &quot;leave&quot; &quot;Mage&#39;s Guild&quot;&gt;&gt;&lt;&lt;set $travel = 1&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="190" name="Ambient city" tags="" position="2625,1500" size="100,100">&lt;&lt;createNPC &quot;random&quot; &quot;random&quot; 1&gt;&gt;
+&lt;&lt;action &quot;sw&quot; &quot;leave&quot; &quot;Mage&#39;s Guild&quot;&gt;&gt;&lt;&lt;set $travel = 1&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="190" name="Ambient city" tags="" position="2625,1500" size="100,100">&lt;&lt;set $windowText = &quot;&quot;&gt;&gt;
+&lt;&lt;script&gt;&gt;
+	State.variables.windowText = getAmbientText(&quot;centralTown&quot;);
+&lt;&lt;/script&gt;&gt;
+
+&lt;&lt;if $windowText !== &quot;&quot; &amp;&amp; $windowText !== undefined &amp;&amp; $windowText !== null&gt;&gt;
+	&lt;&lt;print $windowText&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;createNPC &quot;random&quot; &quot;random&quot; 1&gt;&gt;
 
 &lt;&lt;switch $daytime&gt;&gt;
 
@@ -20170,10 +20366,15 @@ A $npc1.species sits on a bench outside the grocery store and $npc1.he&#39;s bus
 
 
 &lt;&lt;default&gt;&gt;
-**Error in ambient forest**
+**Error in ambient city**
 
 &lt;&lt;/switch&gt;&gt;
 
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;script&gt;&gt;
+	generateAmbientText(&quot;centralTown&quot;);
+&lt;&lt;/script&gt;&gt;
 
 /*===Random fight===*/
 &lt;&lt;if $daytime == &quot;night&quot; and random(1,5) == 1&gt;&gt;
@@ -36423,6 +36624,9 @@ Updates description of not wearing items to fit better within game descriptions.
 &lt;&lt;set $spells = []&gt;&gt;
 &lt;&lt;set $quests = []&gt;&gt;
 &lt;&lt;set $chats = {}&gt;&gt;
+&lt;&lt;set $ambientText = {}&gt;&gt;
+&lt;&lt;set $ambientPrompts = {}&gt;&gt;
+
 
 /*Player species descriptors*/
 &lt;&lt;set $p = {
@@ -42456,7 +42660,7 @@ $vendorDescription
 			&lt;&lt;link &quot;Send&quot;&gt;&gt;
 				&lt;&lt;run 
 					addChat($character, {&quot;role&quot;: &quot;user&quot;,&quot;content&quot;: $request});
-					makeOpenAIRequest($character, $request);
+					makeAITextRequest({character: $character});
 				&gt;&gt;
 				&lt;&lt;script&gt;&gt;
 					document.getElementById(&#39;textbox-request&#39;).value = &#39;&#39;;

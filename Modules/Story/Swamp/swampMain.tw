@@ -65,7 +65,7 @@
 			<<link "Send">>
 				<<run 
 					addChat($character, {"role": "user","content": $request});
-					makeOpenAIRequest($character, $request);
+					makeAITextRequest({character: $character});
 				>>
 				<<script>>
 					document.getElementById('textbox-request').value = '';
