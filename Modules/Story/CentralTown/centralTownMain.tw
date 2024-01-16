@@ -1,7 +1,9 @@
 :: Ambient city {"position":"2625,1500","size":"100,100"}
 <<set $windowText = "">>
 <<script>>
-	State.variables.windowText = getAmbientText("centralTown");
+	if (ambientEnabled()) {
+		State.variables.windowText = getAmbientText("centralTown");
+	}
 <</script>>
 
 <<if $windowText !== "" && $windowText !== undefined && $windowText !== null>>
@@ -141,7 +143,9 @@ A $npc1.species sits on a bench outside the grocery store and $npc1.he's busily 
 <</if>>
 
 <<script>>
-	generateAmbientText("centralTown");
+	if (ambientEnabled()) {
+		generateAmbientText("centralTown");
+	}
 <</script>>
 
 /*===Random fight===*/

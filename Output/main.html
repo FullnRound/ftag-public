@@ -2772,16 +2772,22 @@ setup.aiconfig = recall('aiconfig', {
 	text: {
 		url: "https://api.openai.com/v1/chat/completions",
 		model: "gpt-3.5-turbo",
-		apikey: "",
+		apikey: "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",
 		temperature: 0.9,
 		frequency_penalty: 0.2,
 		max_tokens: 500,
 		extra_parameters: {},
+		ambient_on: false,
 	},
 	image: {},
 })
 /* AI MOD - Initialize Metadata - END */
 console.log(setup.aiconfig)
+
+window.ambientEnabled = function() {
+	console.log(setup.aiconfig)
+	return setup.aiconfig.text.ambient_on;
+}
 
 
 // Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
@@ -2987,24 +2993,22 @@ window.setAmbientText = function() {
 
 	State.variables.ambientPrompts = {
 		centralTown: `
-		Generate an ambient scene text output for a fantasy adventure game. The scene should be set in a world of anthropomorphic characters called "furs". The furs live in a state of excessive gluttony. This output text will be shown when the player is passing time in town. Include diverse scenarios, focusing on characters and the ambiance of the town. Keep the descriptions imaginative, aligning with the theme of fantasy and indulgence.
+			Prompt:
+			Create an ambient scene text for a fantasy adventure game set in a world of anthropomorphic characters, known as "furs", characterized by their excessive gluttony. This scene will be part of the game's narrative when the player spends time in a town. 
+			
+			Ensure the text:
+			Features diverse scenarios involving characters from the following species: wolf, fox, hawk, owl, penguin, dolphin, coyote, lion, cheetah, tiger, dragon, deer, pig, ferret, raccoon, rhino, panda, and hippo.
+			Captures the essence of a town bustling with these characters, highlighting their indulgent lifestyles.
+			Aligns with the fantasy theme, emphasizing imaginative and indulgent details.
+			Is concise, sticking to sentence count guidelines provided.
 
-		STRICTLY follow any sentence count guidelines in the prompt.
-
-		Available species are: wolf, fox, hawk, owl, penguin, dolphin, coyote, lion, cheetah, tiger, dragon, deer, pig, ferret, raccoon, rhino, panda, hippo
-
-		Example ambient scene text outputs:
-		"A very overweight fox waddles her way down the street with several bags of food under each arm."
-
-		"Between a rare cart or a lone rider passing across it, the square is largely empty at the moment, allowing the birds to be heard above the subdued din of the working city."
-
-		"There is a sense of sun-baked contentment in the almost empty square, but even with the lack of ruckus nearby, a low hum of busy life permeates the city, accentuated every now and then by a loud call, a door getting bashed shut, a sound of explosion from one of the hospital wards or a satisfied belch from one of the restaurant regulars."
-
-		"A lean rabbit reaches for a shiny berry at the fruit stand. Upon taking a bite, he suddenly begins to puff up, his shirt buttons popping off as his stomach expands rapidly. Surprised and a bit amused, he chuckles, patting his newly rounded belly, now the size of a large watermelon. He pays the stand owner and waddles away with his newfound heft."
-
-		"Amid the bustling town square, a rotund rhino, fattened to an almost comical size, is being wheeled around in a specially designed cart. Children giggle and point as he cheerfully waves, his belly jiggling like a bowl full of jelly with every movement."
-
-		"A small group of furs gather near a quaint bakery. Their attention is fixed on a ferret customer devouring a mountainous tower of pastries. As the ferret's enjoyment intensifies, an extraordinary phenomenon unfolds before your eyes, her once slender form starts to rapidly expand, rounding out like a balloon of fat. You watch in awe as the ferret's size grows with each bite. The wicker chair snaps under the ferret's increasing weight, sending her tumbling. Soon, the portly ferret finds herself immobilized, her plump belly resting on the cobblestone ground, unable to move."
+			Example Scenes:
+			"An overweight fox with multiple food bags shuffles down the street."
+			"The town square, usually quiet, lets the birdsong overlay the subtle buzz of the city."
+			"In the sun-warmed square, a low hum of activity persists, punctuated by occasional loud sounds from the city."
+			"A rabbit swells comically after eating a magical berry, laughing as he waddles away."
+			"A rotund rhino, in a large cart, joyfully waves to giggling children."
+			"A ferret at a bakery swells rapidly while eating pastries, eventually becoming immobile on the cobblestones."
 		`,
 	}
 }
@@ -3027,34 +3031,33 @@ window.getAmbientText = function(area){
 
 window.generateAmbientText = async function(area) {
 	// Generate another output for the queue on every request
-	let promptText = '';
+	let promptText = `Describe in four sentences a scene where a character experiences sudden and dramatic weight gain. Focus on the character's physical transformation and immediate reaction, set in a nighttime setting.`;
 	const sentenceCount = getRandomInt(3); // 2,3,4
 
 	// 20% chance for a special response
-	switch (getRandomInt(1)) {
-		case 1:
-			// Special response
-			console.log('Special response', sentenceCount + 3);
-
-			switch (getRandomInt(3)) {
-				case 1:
-				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who starts bloating up from something.`;
-				break;
-				case 2:
-				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who suddenly fattens up.`;
-				break;
-				default:
-				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 3} sentences about a fur who's belly inflates and they panic while floating away.`;
-				break;
-			}
-			break;
-		default:
-			// Basic response
-			console.log('Basic response', sentenceCount);
-			promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount} sentences.`;
-			break;
+	// switch (getRandomInt(5)) {
+	// 	case 1:
+	// 		// Special response
+	// 		console.log('Special response', sentenceCount + 3);
+	// 		switch (getRandomInt(4)) {
+	// 			case 1:
+	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who starts bloating up from something.`;
+	// 				break;
+	// 			case 2:
+	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 3} sentences about a fur who's belly inflates and they panic while floating away.`;
+	// 				break;
+	// 			default:
+	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who suddenly fattens up.`;
+	// 				break;
+	// 		}
+	// 		break;
+	// 	default:
+	// 		// Basic response
+	// 		console.log('Basic response', sentenceCount);
+	// 		promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount} sentences.`;
+	// 		break;
 	
-	}
+	// }
 
 	const data = await window.makeAIStoryRequest({
 		systemText: State.variables.ambientPrompts[area], 
@@ -3069,7 +3072,7 @@ window.generateAmbientText = async function(area) {
 
 /* Provide an output for evening in exactly 6 sentences, about a fur who suddenly fattens up so much they become a massive blob */
 /* Provide an output for daytime about a fur who starts bloating up from something. Describe their expansion in detail as they panic and burp. */
-/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -20233,7 +20236,9 @@ Behind the door labelled &quot;Destructatorium&quot;, you can hear explosions an
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;action &quot;sw&quot; &quot;leave&quot; &quot;Mage&#39;s Guild&quot;&gt;&gt;&lt;&lt;set $travel = 1&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="190" name="Ambient city" tags="" position="2625,1500" size="100,100">&lt;&lt;set $windowText = &quot;&quot;&gt;&gt;
 &lt;&lt;script&gt;&gt;
-	State.variables.windowText = getAmbientText(&quot;centralTown&quot;);
+	if (ambientEnabled()) {
+		State.variables.windowText = getAmbientText(&quot;centralTown&quot;);
+	}
 &lt;&lt;/script&gt;&gt;
 
 &lt;&lt;if $windowText !== &quot;&quot; &amp;&amp; $windowText !== undefined &amp;&amp; $windowText !== null&gt;&gt;
@@ -20373,7 +20378,9 @@ A $npc1.species sits on a bench outside the grocery store and $npc1.he&#39;s bus
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;script&gt;&gt;
-	generateAmbientText(&quot;centralTown&quot;);
+	if (ambientEnabled()) {
+		generateAmbientText(&quot;centralTown&quot;);
+	}
 &lt;&lt;/script&gt;&gt;
 
 /*===Random fight===*/
@@ -43080,6 +43087,10 @@ Include the URL (and optional API key) of the service to use for text generation
 &lt;u&gt;Additional Parameters&lt;/u&gt;&lt;br&gt;
 Enter additional API parameters here in the form of JSON Object.&lt;br&gt;
 &lt;&lt;textarea &quot;_aiconfig.text.extra_parameters&quot; _aiconfig.text.extra_parameters&gt;&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;label&gt;Generate Ambient Text: &lt;&lt;checkbox &quot;_aiconfig.text.ambient_on&quot; false true autocheck&gt;&gt;&lt;/label&gt;&lt;br&gt;
+&lt;div&gt;This enables the generation of text for ambient scene descriptions, such as when resting in town&lt;/div&gt;
 
 
 &lt;&lt;script&gt;&gt;
@@ -43091,7 +43102,7 @@ function onTextStandardChanged(key, newValue, elementId) {
         	newValue = Math.clamp(newValue, 0, 2);
             break;
         case &quot;frequency_penalty&quot;:
-        	newValue = Math.clamp(newValue, -2, 2);
+        	newValue = Math.clamp(newValue, 0, 2);
             break;
         default:
         	break;
