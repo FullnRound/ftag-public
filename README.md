@@ -1,5 +1,5 @@
-This project is for the development of a version of noone's Fatty Text Adventure Game. This is designed for VS Code with the T3LT and twee3-sugarcube2 extensions.
-The game is the html file within the Output folder. When the twee files are all compiled together, they are pushed into one html file so that they can run on any browser easily.
+- This project is for the development of a version of noone's Fatty Text Adventure Game. This is designed for VS Code with the T3LT and twee3-sugarcube2 extensions.
+- The game is the html file within the Output folder. When the twee files are all compiled together, they are pushed into one html file so that they can run on any browser easily.
 
 # Startup 
 
