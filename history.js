@@ -45,7 +45,7 @@
     },
     {
         "role": "user",
-        "content": "I lean in and breath in some of the gas. A strong bloating feeling builds in my stomach immediately. (Describe my expansion in detail)"
+        "content": "I accidentally breath in some of the gas. A strong bloating feeling builds in my stomach immediately. (Describe my expansion in detail)"
     },
     {
         "role": "assistant",
