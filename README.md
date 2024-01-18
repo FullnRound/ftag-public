@@ -1,3 +1,5 @@
+This project is for the development of a version of noone's Fatty Text Adventure Game. This is designed for VS Code with the T3LT and twee3-sugarcube2 extensions.
+
 # Startup 
 
 * If you have added any new .tw files, Run the twList.js script to get an output list of all .tw files. This list will be placed into twFilesList.txt.
