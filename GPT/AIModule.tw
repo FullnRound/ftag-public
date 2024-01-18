@@ -8,7 +8,7 @@ setup.aiconfig = recall('aiconfig', {
 	text: {
 		url: "https://api.openai.com/v1/chat/completions",
 		model: "gpt-3.5-turbo",
-		apikey: "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",
+		apikey: "YOUR-KEY-HERE",
 		temperature: 0.9,
 		frequency_penalty: 0.2,
 		max_tokens: 500,
