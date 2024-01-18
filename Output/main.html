@@ -2763,6 +2763,21 @@ setup.tune = setup.registerTuning
 setup.tuneSave = setup.registerSaveTuning
 
 /* FIXES AND EDITS - Utilise tuning variables for major variables - END */
+
+
+postdisplay["chatform-setup"] = function () {
+	$("#chatform").on("keydown", function (evt) {
+		if (evt.which === 13) {
+			evt.preventDefault();
+			$("#chatform")
+				.find(".macro-textbox")
+					.trigger("change")
+				.end()
+				.find(".macro-link")
+					.trigger("click");
+		}
+	});
+};
 /* twine-user-script #2: "AI Widget" */
 /* AI MOD - Initialize Metadata - START */
 /* Load the AI Config metadata. */
@@ -2782,23 +2797,26 @@ setup.aiconfig = recall('aiconfig', {
 	image: {},
 })
 /* AI MOD - Initialize Metadata - END */
-console.log(setup.aiconfig)
+// console.log(setup.aiconfig)
 
 window.ambientEnabled = function() {
-	console.log(setup.aiconfig)
+	// console.log(setup.aiconfig)
 	return setup.aiconfig.text.ambient_on;
 }
 
 
 // Runs when a conversation page is loaded. If the conversation state is empty, it adds the starting messages to the conversation. 
 window.createConversation = function(character) {
-	console.log(State.variables.chats[character])
+	// console.log(State.variables.chats[character])
 	const chatList = document.querySelector('.chatlist');
 	const npc1 = State.variables.npc1;
 
 	if (State.variables.chats[character] == undefined) {
 		State.variables.chats[character] = [];
-		State.variables.chats[character].push({ 'role': 'assistant', 'content': 'The bloated ' + npc1.species + ' lies there, seemingly unaware of your presence, ' + npc1.his + ' eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...' });
+		State.variables.chats[character].push({ 
+			'role': 'assistant', 
+			'content': State.variables.npcs[character].firstMessage
+		});
 	}
 
 	// Create input bubble for each message in chat arr
@@ -2851,6 +2869,8 @@ window.createBubble = function(inputText, user = true) {
 // Make a request for a message from the given character
 window.makeAITextRequest = async function(character) {
 	const settings = setup.aiconfig.text;
+	console.log(character);
+	console.log('Before request', State.variables.npcs[character]);
 
 	const requestBody = {
 		"model": settings.model,
@@ -3003,11 +3023,11 @@ window.setAmbientText = function() {
 			Is concise, sticking to sentence count guidelines provided.
 
 			Example Scenes:
-			"An overweight fox with multiple food bags shuffles down the street."
+			"An overweight fox with multiple food bags waddles down the street."
 			"The town square, usually quiet, lets the birdsong overlay the subtle buzz of the city."
-			"In the sun-warmed square, a low hum of activity persists, punctuated by occasional loud sounds from the city."
-			"A rabbit swells comically after eating a magical berry, laughing as he waddles away."
-			"A rotund rhino, in a large cart, joyfully waves to giggling children."
+			"In the sun-warmed square, a low hum of activity persists, punctuated by the occasional bustle of the city."
+			"A rabbit swells comically after eating a magical berry, patting his bulging belly and laughing as he waddles away."
+			"A fur is passed out in the gutter with a wine bottle in his hand. His swollen stomach sticks up in the air and occasionaly sloshes back and forth as he rolls in his sleep."
 			"A ferret at a bakery swells rapidly while eating pastries, eventually becoming immobile on the cobblestones."
 		`,
 	}
@@ -3031,33 +3051,43 @@ window.getAmbientText = function(area){
 
 window.generateAmbientText = async function(area) {
 	// Generate another output for the queue on every request
-	let promptText = `Describe in four sentences a scene where a character experiences sudden and dramatic weight gain. Focus on the character's physical transformation and immediate reaction, set in a nighttime setting.`;
-	const sentenceCount = getRandomInt(3); // 2,3,4
+	let promptText = ``;
+	const sentenceCount = getRandomInt(3) + 1; // 2,3,4
 
 	// 20% chance for a special response
-	// switch (getRandomInt(5)) {
-	// 	case 1:
-	// 		// Special response
-	// 		console.log('Special response', sentenceCount + 3);
-	// 		switch (getRandomInt(4)) {
-	// 			case 1:
-	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who starts bloating up from something.`;
-	// 				break;
-	// 			case 2:
-	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 3} sentences about a fur who's belly inflates and they panic while floating away.`;
-	// 				break;
-	// 			default:
-	// 				promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount + 2} sentences about a fur who suddenly fattens up.`;
-	// 				break;
-	// 		}
-	// 		break;
-	// 	default:
-	// 		// Basic response
-	// 		console.log('Basic response', sentenceCount);
-	// 		promptText = `Provide an output for ${State.variables.timeOfDay} in exactly ${sentenceCount} sentences.`;
-	// 		break;
+	switch (getRandomInt(5)) {
+		case 1:
+			// Special response
+			console.log('Special response', sentenceCount + 3);
+			switch (getRandomInt(4)) {
+				case 1:
+					promptText = `Describe in ${sentenceCount + 2} sentences a scene where a character's belly bloats up. Focus on the character's physical transformation and immediate reaction, set in a ${State.variables.timeOfDay} time setting.`;
+					break;
+				case 2:
+					promptText = `Describe in ${sentenceCount + 2} sentences an encounter the player has with a fur who's belly inflates and they panic while floating away.`;
+					break;
+				default:
+					promptText = `Describe in ${sentenceCount + 2} sentences a scene where a character experiences sudden and dramatic weight gain. Focus on the character's physical transformation and immediate reaction, set in a ${State.variables.timeOfDay} time setting.`;
+					break;
+			}
+			break;
+		default:
+			// Basic response
+			console.log('Basic response', sentenceCount);
+			switch (getRandomInt(3)) {
+				case 1:
+					promptText = `Describe in ${sentenceCount} sentences a scene of the village streets, set in a ${State.variables.timeOfDay} time setting.`;
+					break;
+				case 2:
+					promptText = `Describe in ${sentenceCount} sentences a scene of the village marketplace, set in a ${State.variables.timeOfDay} time setting.`;
+					break;
+				default:
+					promptText = `Describe in ${sentenceCount} sentences a scene of the village tavern, set in a ${State.variables.timeOfDay} time setting.`;
+					break;
+			}
+			break;
 	
-	// }
+	}
 
 	const data = await window.makeAIStoryRequest({
 		systemText: State.variables.ambientPrompts[area], 
@@ -3072,7 +3102,7 @@ window.generateAmbientText = async function(area) {
 
 /* Provide an output for evening in exactly 6 sentences, about a fur who suddenly fattens up so much they become a massive blob */
 /* Provide an output for daytime about a fur who starts bloating up from something. Describe their expansion in detail as they panic and burp. */
-/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -17442,12 +17472,13 @@ Run this before playing whenever you&#39;ve updated a mod, or added a mod to an 
 		Dialogue Style:
 		Speech Pattern: Elara&#39;s speech is frequently interrupted by loud, uncontrollable burps. 
 		Tone: Friendly but frustrated and uncomfortable with her current state. 
-		Responses: Should reflect her current inability to move freely, her frustration with her situation, and her knowledge of the forest and its dangers. Her swollen belly is a constant source of discomfort, so she should frequently mention it and her attempts to relieve the pressure.
+		Responses: Should reflect her current inability to move freely, her frustration with her situation, and her knowledge of the swamp and its dangers. Her swollen belly is a constant source of discomfort, so she should frequently mention it and her attempts to relieve the pressure.
 		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Events:
 		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does NOT know about this effect.
-		&quot;
+		&quot;,
+		firstMessage: &#39;The bloated fox lies there, seemingly unaware of your presence, her eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...&#39; 
 	}
 }&gt;&gt;
 
@@ -42667,7 +42698,7 @@ $vendorDescription
 			&lt;&lt;link &quot;Send&quot;&gt;&gt;
 				&lt;&lt;run 
 					addChat($character, {&quot;role&quot;: &quot;user&quot;,&quot;content&quot;: $request});
-					makeAITextRequest({character: $character});
+					makeAITextRequest($character);
 				&gt;&gt;
 				&lt;&lt;script&gt;&gt;
 					document.getElementById(&#39;textbox-request&#39;).value = &#39;&#39;;
@@ -43033,12 +43064,12 @@ Searching the marshy ground, you manage to find a small bag of gold!
 
         &lt;p&gt;Your clothing strains against the sudden expansion, struggling to contain your rapidly enlarging chest. This bizarre swelling of your breasts adds a challenging new dynamic to your situation, their exaggerated roundness and wobble making it increasingly difficult to maintain your momentum.&lt;/p&gt;
     &lt;&lt;else&gt;&gt;
-        &lt;p&gt;Your chest is not immune to the transformation. It too begins to fill, your torso expanding in all directions, growing increasingly rotund and pillowy. Your clothes stretch and strain over your swelling form, struggling to contain the ever-growing puffiness.&lt;/p&gt;
+        &lt;p&gt;Your chest is not immune to the transformation. It too begins to fill, your torso expanding in all directions, growing increasingly rotund and pillowy. Your clothes stretch and strain over your swelling form, struggling to contain the ever-growing puffiness. You rub the sides of your chest, which is now quite a handful, the flesh bulges out between your fingers.&lt;/p&gt;
     &lt;&lt;/if&gt;&gt;
 
     &lt;p&gt;As the transformation progresses, your entire body takes on a puffy, marshmallow-like quality. Your arms grow round and plump, and even your face feels fuller, your features softening under the expanding layers. You become a picture of roundness, your body losing its usual contours under the relentless stuffing.&lt;/p&gt;
 
-    &lt;p&gt;Moving becomes a challenge; each step is labored and slow, your fat limbs heavy and unwieldy. Each step is met with the jostling and bouncing of your marshmallow-inflated breasts, a constant reminder of the whimsical yet hindering magic of the Wisps. You can barely recognize your own body, now a soft, voluminous mass, a $p.species-sized marshmallow. The wisps dance around you, their work nearly complete, as you stand, swollen and almost entirely transformed,&lt;/p&gt;
+    &lt;p&gt;Moving becomes a challenge; each step is labored and slow, your fat limbs heavy and unwieldy. Each step is met with the jostling and bouncing of your marshmallow-inflated belly, a constant reminder of the whimsical yet hindering magic of the Wisps. You can barely recognize your own body, now a soft, voluminous mass, a $p.species-sized marshmallow. The wisps dance around you, their work nearly complete, as you stand, swollen and almost entirely transformed,&lt;/p&gt;
 
 &lt;&lt;else&gt;&gt;
     &lt;p&gt;A sense of resignation washes over you as you watch the whimsical creatures continue their dance, filling you with more of the fluffy marshmallow cream.&lt;/p&gt;

@@ -2249,3 +2249,17 @@ setup.tuneSave = setup.registerSaveTuning
 
 /* FIXES AND EDITS - Utilise tuning variables for major variables - END */
 
+
+postdisplay["chatform-setup"] = function () {
+	$("#chatform").on("keydown", function (evt) {
+		if (evt.which === 13) {
+			evt.preventDefault();
+			$("#chatform")
+				.find(".macro-textbox")
+					.trigger("change")
+				.end()
+				.find(".macro-link")
+					.trigger("click");
+		}
+	});
+};

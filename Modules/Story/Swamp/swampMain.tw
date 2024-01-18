@@ -65,7 +65,7 @@
 			<<link "Send">>
 				<<run 
 					addChat($character, {"role": "user","content": $request});
-					makeAITextRequest({character: $character});
+					makeAITextRequest($character);
 				>>
 				<<script>>
 					document.getElementById('textbox-request').value = '';
@@ -87,6 +87,7 @@ postdisplay['createConversation'] = function (taskName) {
 <</script>>
 
 <<action "4" "swamp" "Return to Swamp" "Swamp">><</action>>
+
 
 :: Ambient swamp [nobr swamp] {"position":"3675,1675"}
 <<switch $daytime>>
