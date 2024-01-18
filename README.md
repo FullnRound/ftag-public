@@ -13,6 +13,8 @@ When the twee files are all compiled together, they are pushed into one html fil
 * After setting up your connection, you can adjust the output settings of any requests with the "Settings" and "Additional Parameters" sections. (The default values should be fine if you don't want to bother messing with these.)
 * The "Generate Ambient Text" setting will generate random scene text when resting in the town, this is the only place it is active at the moment.
 
+* (Currently the only character that chat interaction is enabled for is Elara, who you find when you first enter the swamp. The swamp is very unfinished btw) 
+
 
 # Compiling the Output/main.html File
 * If you have added any new .tw files, Run the twList.js script to get an output list of all .tw files. This list will be placed into twFilesList.txt.  
