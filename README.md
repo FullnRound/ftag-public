@@ -1,8 +1,9 @@
 This project is for the development of a version of noone's Fatty Text Adventure Game. This is designed for VS Code with the T3LT and twee3-sugarcube2 extensions.   
 
 # Game Startup 
-The game is the html file within the Output folder. 
-When the twee files are all compiled together, they are pushed into one html file so that they can run on any browser easily.  
+When the twee files are all compiled together, they are pushed into one html file so that they can run on any browser easily. This file can be run locally offline, you only need internet if you want to connect Text Generation capabillities.
+The game itself is the html file within the Output folder. You will need the images and icons within that folder as well. You can download that folder below if you don't care about adding or compiling anything.
+Download current build: 
 
 # AI Chat and Ambient Text Generation
 * When you open the game, create a character to access the "AI settings" button.
