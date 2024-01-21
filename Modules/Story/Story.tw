@@ -4536,7 +4536,7 @@ $itemUsed.itemUse
 	minor: 0,
 	minorRate: 2,
 }>>
-<<set $swampSpecialRandomization = [0,0,0,0]>>
+<<set $swampSpecialRandomization = [0]>>
 
 
 <<set $grasslandsRandomization = {
@@ -5977,6 +5977,7 @@ Status effects:
 <<set $spells = []>>
 <<set $quests = []>>
 <<set $chats = {}>>
+<<set $chatids = {}>>
 <<set $ambientText = {}>>
 <<set $ambientPrompts = {}>>
 

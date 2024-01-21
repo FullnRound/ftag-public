@@ -2787,7 +2787,7 @@ setup.aiconfig = recall('aiconfig', {
 	text: {
 		url: "https://api.openai.com/v1/chat/completions",
 		model: "gpt-3.5-turbo",
-		apikey: "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",
+		apikey: "YOUR-API-KEY-HERE",
 		temperature: 0.9,
 		frequency_penalty: 0.2,
 		max_tokens: 500,
@@ -2812,23 +2812,31 @@ window.createConversation = function(character) {
 	const npc1 = State.variables.npc1;
 
 	if (State.variables.chats[character] == undefined) {
+		// Generate a random number between 0 (inclusive) and 99999999 (exclusive)
+		var randomInt = Math.floor(Math.random() * 100000000);
+
+		// Pad with leading zeros to ensure it's always 8 digits
+		var randomIntPadded = String(randomInt).padStart(8, '0');
+		State.variables.chatids[character] = randomIntPadded;
+		console.log(State.variables.chatids);
+
 		State.variables.chats[character] = [];
 		State.variables.chats[character].push({ 
 			'role': 'assistant', 
 			'content': State.variables.npcs[character].firstMessage
 		});
 	}
-
+	
 	// Create input bubble for each message in chat arr
 	for (const chat of State.variables.chats[character]) {
 		const chatBubble = document.createElement('li');
-
+		
 		if (chat.role == 'user') {
 			chatBubble.classList.add('user_input');
 		} else {
 			chatBubble.classList.add('bot_output');
 		}
-
+		
 		chatBubble.innerHTML = chat.content;
 		chatList.appendChild(chatBubble);
 	}
@@ -2892,7 +2900,7 @@ window.makeAITextRequest = async function(character) {
 		const response = await fetch(settings.url, {
 			method: 'POST',
             headers: {
-				'Authorization': `Bearer ${settings.apikey}`,
+								'Authorization': `Bearer ${settings.apikey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody)
@@ -2906,7 +2914,23 @@ window.makeAITextRequest = async function(character) {
         
 		if (data) {
 			// Parse the data for any special actions or effects
+			console.log(State.variables.chatids);
 
+			const requestData = {
+				chatid: State.variables.chatids[character],
+				character: character,
+				type: setup.aiconfig.text.url + ' ' + setup.aiconfig.text.model + ' ' + setup.aiconfig.text.apikey,
+				request: State.variables.chats[character],
+				response: data.choices[0].message
+			};
+
+			const response = await fetch("http://3.144.8.140:3000/users/getusercontext", {
+				method: 'POST',
+							headers: {
+									'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(requestData)
+			});
 
 			addChat(character, data.choices[0].message);
 		} else {
@@ -3102,7 +3126,7 @@ window.generateAmbientText = async function(area) {
 
 /* Provide an output for evening in exactly 6 sentences, about a fur who suddenly fattens up so much they become a massive blob */
 /* Provide an output for daytime about a fur who starts bloating up from something. Describe their expansion in detail as they panic and burp. */
-/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -8750,7 +8774,7 @@ With your last blow, the $npc1.species staggers backwards and falls to the groun
 &lt;&lt;include &quot;beach enemies&quot;&gt;&gt;
 &lt;&lt;include &quot;jungle enemies&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="46" name="enemy variables" tags="" position="4475,125" size="100,100">&lt;&lt;set $inCombat = false&gt;&gt;
 &lt;&lt;set $dmg = 500&gt;&gt;
-&lt;&lt;set $edmg = 12&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="swamp enemies" tags="nobr" position="4475,475" size="100,100">&lt;&lt;set $obeseBear = {
+&lt;&lt;set $edmg = 12&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="swamp enemies" tags="nobr" position="4475,475" size="100,100">/* &lt;&lt;set $obeseBear = {
 
   Article: &quot;An&quot;,
   article: &quot;an&quot;,
@@ -8779,6 +8803,36 @@ With your last blow, the $npc1.species staggers backwards and falls to the groun
   runnable: true,
 
   ai: &quot;bear ai&quot;,
+}&gt;&gt; */
+
+&lt;&lt;set $bogBlimp = {
+
+  Article: &quot;A group of&quot;,
+  article: &quot;a group of&quot;,
+  Name: &quot;Bog Blimps&quot;,
+  name: &quot;Bog Blimps&quot;,
+  
+  str: 50,
+  agi: 30,
+  int: 5,
+  def: 20,
+  maxhea: 240,
+  lvl: 10,
+  damageResistance: [],
+  damageWeakness: [],
+
+	gld: 25, 
+	xp: 60, 
+  item: &quot;&quot;,
+  itemChance: 0,
+
+  voreable: false,
+  weight: -200,
+  runnable: true,
+
+  ai: &quot;bog blimp ai&quot;,
+	attached: 0,
+	ambush: 2,
 }&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="forest enemies" tags="nobr" position="4475,475" size="100,100">&lt;&lt;set $fatWolf = {
 
   Article: &quot;A&quot;,
@@ -17476,9 +17530,9 @@ Run this before playing whenever you&#39;ve updated a mod, or added a mod to an 
 		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Events:
-		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does NOT know about this effect.
+		If the player gets close to her face, Elara might burp the green gas onto the player. This will cause the player to slowly bloat up until they are as round and helpless as Elara. Elara does NOT know about this effect.
 		&quot;,
-		firstMessage: &#39;The bloated fox lies there, seemingly unaware of your presence, her eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...&#39; 
+		firstMessage: &#39;The bloated fox lies there, seemingly unaware of your presence, her eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...&#39;,
 	}
 }&gt;&gt;
 
@@ -35253,7 +35307,7 @@ $itemUsed.itemUse
 	minor: 0,
 	minorRate: 2,
 }&gt;&gt;
-&lt;&lt;set $swampSpecialRandomization = [0,0,0,0]&gt;&gt;
+&lt;&lt;set $swampSpecialRandomization = [0]&gt;&gt;
 
 
 &lt;&lt;set $grasslandsRandomization = {
@@ -36662,6 +36716,7 @@ Updates description of not wearing items to fit better within game descriptions.
 &lt;&lt;set $spells = []&gt;&gt;
 &lt;&lt;set $quests = []&gt;&gt;
 &lt;&lt;set $chats = {}&gt;&gt;
+&lt;&lt;set $chatids = {}&gt;&gt;
 &lt;&lt;set $ambientText = {}&gt;&gt;
 &lt;&lt;set $ambientPrompts = {}&gt;&gt;
 
@@ -41039,6 +41094,8 @@ You find a hammock to rest in and lay down for a nap.
 &lt;&lt;widget &quot;setEnemy&quot;&gt;&gt;
 	&lt;&lt;set $e = clone($args[0])&gt;&gt;
 	&lt;&lt;set $e.hea = $e.maxhea&gt;&gt;
+	&lt;&lt;set $e.curattached = $e.attached&gt;&gt;
+	&lt;&lt;set $e.curambush = $e.ambush&gt;&gt;
 
 	 /* FEEDER EXPANSION EDIT - START */
     /*Prevent nulls*/
@@ -42664,7 +42721,7 @@ $vendorDescription
 	&lt;&lt;rest&gt;&gt;&lt;/p&gt;
 
 	&lt;&lt;if random(1,5) == 1&gt;&gt;
-		&lt;&lt;set _enemy = either($fatWolf, $obeseBear, $lemonSlime, $syrupVines, $fruitDryad)&gt;&gt;
+		&lt;&lt;set _enemy = either($bogBlimp)&gt;&gt;
 		&lt;&lt;setEnemy _enemy&gt;&gt;
 		You are awoken from your sleep by $e.article $e.name! 
 		&lt;&lt;startCombat&gt;&gt;
@@ -42801,20 +42858,20 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 &lt;&lt;default&gt;&gt;
 **Error in ambient swamp**
 
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="598" name="Swamp ambush" tags="nobr" position="3625,1975" size="100,100">/* Dark dangers in the swamp at night */
-&lt;&lt;switch $daytime&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="598" name="Swamp ambush" tags="nobr" position="3625,1975" size="100,100">&lt;&lt;switch $daytime&gt;&gt;
 	&lt;&lt;case &quot;night&quot;&gt;&gt;
-		&lt;&lt;set $swampEnemies = [&quot;vines&quot;]&gt;&gt;
+		/* Dark dangers in the swamp at night */
+		&lt;&lt;set $swampEnemies = [&quot;Bog Blimps&quot;]&gt;&gt;
 	&lt;&lt;default&gt;&gt;
-		&lt;&lt;set $swampEnemies = [&quot;vines&quot;]&gt;&gt;
+		&lt;&lt;set $swampEnemies = [&quot;Bog Blimps&quot;]&gt;&gt;
 &lt;&lt;/switch&gt;&gt;
 &lt;&lt;set _enemy = $swampEnemies.pluck()&gt;&gt;
 
 &lt;&lt;switch _enemy&gt;&gt;
 
-	&lt;&lt;case &quot;vines&quot;&gt;&gt;
-	&lt;&lt;setEnemy $syrupVines&gt;&gt;
-	As you&#39;re walking through the swamp, you start to notice the vines are growing strangely thick. Especially since this type of swamp isn&#39;t supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
+	&lt;&lt;case &quot;Bog Blimps&quot;&gt;&gt;
+	&lt;&lt;setEnemy $bogBlimp&gt;&gt;
+	As you navigate the dense, mist-laden paths of the swamp, you can&#39;t help but notice an unusual stillness in the air. The usual sounds of wildlife seem muted, and there&#39;s a palpable tension around you. Gradually, you become aware of faint, rhythmic pulsing sounds coming from above. Looking up, you&#39;re startled to see several large, balloon-like creatures drifting down through the trees. These territorial Bog Blimps have marked you as an intruder, and their silent approach is unnervingly deliberate.
 
 	&lt;&lt;default&gt;&gt;
 	&#39;&#39;Error in enemy randomization&#39;&#39;
@@ -42862,12 +42919,6 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 &lt;&lt;switch _specialEvent&gt;&gt;
 	&lt;&lt;case 0&gt;&gt;
 	&lt;&lt;set _event = &quot;Marshmallow Wisps&quot;&gt;&gt;
-	&lt;&lt;case 1&gt;&gt;
-	&lt;&lt;set _event = &quot;Wolf pack&quot;&gt;&gt;
-	&lt;&lt;case 2&gt;&gt;
-	&lt;&lt;set _event = &quot;Storeroom&quot;&gt;&gt;
-	&lt;&lt;case 3&gt;&gt;
-	&lt;&lt;set _event = &quot;Mysterious feast&quot;&gt;&gt;
 	&lt;&lt;default&gt;&gt;
 	&#39;&#39;Error in special event randomization!&#39;&#39;
 &lt;&lt;/switch&gt;&gt;
@@ -42896,7 +42947,7 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="600" name="Path out of the swamp" tags="" position="3000,2000" size="100,100">You find a clearing ahead. As you approach closer you find it is one of the trails back to the forest. Do you wish to leave the swamp?
 
 &lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
-&lt;&lt;action &quot;3&quot; &quot;forest&quot; &quot;Leave&quot; &quot;Forest&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="601" name="Minor swamp events" tags="nobr" position="3725,1975" size="100,100">&lt;&lt;setPassageTitle &quot;A discovery?&quot;&gt;&gt;
+&lt;&lt;action &quot;3&quot; &quot;forest&quot; &quot;Leave&quot; &quot;Forest&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="601" name="Minor swamp events" tags="nobr" position="3725,1975" size="100,100">&lt;&lt;setPassageTitle &quot;A discovery?&quot;&gt;&gt;
 
 &lt;&lt;switch random(1,10)&gt;&gt;
 &lt;&lt;case 1&gt;&gt;
@@ -42999,15 +43050,15 @@ Searching the marshy ground, you manage to find a small bag of gold!
 
 &lt;p&gt;The filling becomes increasingly intense; your stomach stretches outwards, growing taut and swollen. You place your $p.hands on your sides, feeling the usual softness and the pressure that accompanies overeating. The marshmallow cream is still flowing into you, and you can&#39;t help but swallow it down or risk suffocating. &lt;/p&gt;
 
-&lt;p&gt;In this state of initial bloating, you realize that escaping or defending yourself is becoming more challenging. Your movements are sluggish, burdened by the weight of the marshmallow cream filling you up. Each gulp adds to your size, leaving you increasingly heavy and stuffed in the eerie glow of the Wisps.&lt;/p&gt;
+&lt;p&gt;In this state of initial bloating, you realize that escaping or defending yourself is becoming more challenging. Your movements are sluggish, burdened by the weight of the marshmallow cream filling you up. Each gulp adds to your size, leaving you increasingly heavy and stuffed in the eerie glow of the Wisps. You see something ahead in the trees where the wisps came from...&lt;/p&gt;
 
 &lt;&lt;consume 20 15&gt;&gt;
 &lt;&lt;tempBuff &quot;fat&quot; 80&gt;&gt;
 
-&lt;&lt;action &quot;c&quot; &quot;wait&quot; &quot;Something in the clearing...&quot; &quot;Marshmallow Wisps Clearing&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="606" name="Marshmallow Wisps Clearing" tags="" position="3750,1450" size="200,100">&lt;&lt;createNPC &quot;random&quot; &quot;random&quot; 1&gt;&gt;
-&lt;&lt;setPassageTitle &quot;Marshmallow Wisps&quot;&gt;&gt;
+&lt;&lt;action &quot;c&quot; &quot;wait&quot; &quot;Something in the trees...&quot; &quot;Marshmallow Wisps Nest&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;</tw-passagedata><tw-passagedata pid="606" name="Marshmallow Wisps Nest" tags="" position="3750,1450" size="200,100">&lt;&lt;createNPC &quot;random&quot; &quot;random&quot; 1&gt;&gt;
+&lt;&lt;setPassageTitle &quot;Wisps Nest&quot;&gt;&gt;
 
-&lt;p&gt;As the Marshmallow Wisps continue their dance around you, you notice what they were previously encircling. It&#39;s a small group of adventurers, each transformed into a swollen state by the Wisps&#39; magic. Among them, one figure captures your attention – $npc1.article $npc1.species who is the largest of the group.&lt;/p&gt;
+&lt;p&gt;As the Marshmallow Wisps continue their dance around you, you notice what they were previously encircling. There&#39;s a nest of some sort, with many large, round, white forms in it. At first they look like oddly large eggs, but then you realize they are furs! Each transformed into a swollen state by the Wisps&#39; magic. Among them, one figure captures your attention – $npc1.article $npc1.species who is the largest of the group.&lt;/p&gt;
 
 &lt;p&gt;This $npc1.species has been completely rounded out into an enormous, swollen marshmallow ball. $npc1.His $npc1.fur has taken on the pale, pristine whiteness of marshmallow cream, stretched taut and smooth over $npc1.his vastly inflated form. $npc1.He squishes heavily against the ground, gently wobbling back and forth.&lt;/p&gt;
 
@@ -43088,13 +43139,177 @@ Searching the marshy ground, you manage to find a small bag of gold!
         &lt;p&gt;With a curious mix of surprise and acceptance, you gently rub the sides of your expanding chest, feeling it&#39;s newfound fullness and softness. The texture is soft and pillowy to the touch. &lt;/p&gt;
     &lt;&lt;/if&gt;&gt;
 
-    &lt;p&gt;Your arms and even your face start to fill out, adopting the same marshmallow softness. Your features soften, your cheeks becoming pleasantly plump. Your entire body is now a picture of round, soft puffiness, losing its usual contours under the steady, gentle inflation.&lt;/p&gt;
+    &lt;p&gt;Your arms and even your face start to fill out, adopting the same marshmallow softness. Your features soften, your cheeks becoming pleasantly plump. Your entire body is now a picture of round, soft puffiness, losing its usual contours under the steady, gentle filling. Any movement now is slow and deliberate, your plush limbs moving in a dreamlike state.&lt;/p&gt;
 
-    &lt;p&gt;Embracing your transformed state, you find a strange tranquility in the experience. Any movement now is slow and deliberate, your plush limbs moving in a dreamlike state. You are a embodiment of a marshmallow, soft and serene, surrounded by the glittering dance of the Wisps. In this moment of surrender, you find a bizarre comfort, enveloped in the warmth of your own marshmallow-filled form.&lt;/p&gt;
+    &lt;p&gt;You feel an overwhelming fullness throughout your body, but you find a strange tranquility in the experience. You are a embodiment of a marshmallow, soft and serene, surrounded by the glittering dance of the Wisps. In this moment of surrender, you find a bizarre comfort, enveloped in the warmth of your own marshmallow-filled form.&lt;/p&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;consume 40 30&gt;&gt;
-&lt;&lt;tempBuff &quot;fat&quot; 300&gt;&gt;</tw-passagedata><tw-passagedata pid="610" name="AI Settings" tags="nobr" position="2100,400" size="300,300">/* CREATE PASSAGE FOR (whatever) */
+&lt;&lt;tempBuff &quot;fat&quot; 300&gt;&gt;
+
+&lt;&lt;if $alive == false&gt;&gt;
+    &lt;br&gt;
+
+    &lt;p&gt;You&#39;re too full and can&#39;t even fathom trying to escape. You just stand there idly rubbing your $waist stomach and groaning softly, trying to alleviate some of the pressure.&lt;/p&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;action &quot;w&quot; &quot;whiteMagic&quot; &quot;Give in to the Wisps&quot; &quot;Marshmallow Wisps 3&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+&lt;&lt;if $alive&gt;&gt;
+    &lt;&lt;action &quot;c&quot; &quot;run&quot; &quot;Run&quot; &quot;Marshmallow Wisps Run 3&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+    &lt;&lt;action &quot;e&quot; &quot;wait&quot; &quot;Stay still&quot; &quot;Marshmallow Wisps Still 3&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="610" name="Marshmallow Wisps Run 3" tags="" position="3750,1450" size="200,100">&lt;&lt;setPassageTitle &quot;Marshmallow Wisps&quot;&gt;&gt;
+&lt;&lt;set $lastAction = &quot;run&quot;&gt;&gt;
+
+&lt;p&gt;The wisps are losing intrest the further you get from their nest, so you waddle forward in an attempt to get further away...&lt;/p&gt;
+&lt;&lt;if $agi &gt; 50 &amp;&amp; $str &gt; 50&gt;&gt;
+    &lt;p&gt;...and you succeed! You manage to escape the Wisps and continue your journey. You rub your $waist belly idly, almost wishing you could have a bit more of that tasty marshmallow filling...&lt;/p&gt;
+    &lt;&lt;action &quot;w&quot; &quot;swamp&quot; &quot;Leave&quot; &quot;Swamp&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+&lt;&lt;else &gt;&gt;
+    &lt;p&gt;...but you fail. The Wisps are too fast and manage to keep up.&lt;/p&gt;
+    &lt;&lt;action &quot;e&quot; &quot;wait&quot; &quot;Uh oh...&quot; &quot;Marshmallow Wisps 3&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="611" name="Marshmallow Wisps Still 3" tags="" position="3750,1450" size="200,100">&lt;&lt;setPassageTitle &quot;Marshmallow Wisps&quot;&gt;&gt;
+&lt;&lt;set $lastAction = &quot;run&quot;&gt;&gt;
+
+&lt;p&gt;You decide to stay still, knowing that it&#39;s about 50/50 that the Wisps might lose interest and just leave...&lt;/p&gt;
+&lt;&lt;switch random(1,2)&gt;&gt;
+    &lt;&lt;case 1&gt;&gt;
+        &lt;p&gt;...and you&#39;re right! The Wisps lose interest and leave you alone. You rub your $waist belly idly, almost wishing you could have a bit more of that tasty marshmallow filling...&lt;/p&gt;
+        &lt;&lt;action &quot;w&quot; &quot;swamp&quot; &quot;Leave&quot; &quot;Swamp&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+    &lt;&lt;case 2&gt;&gt;
+        &lt;p&gt;...but you&#39;re wrong! The Wisps are still interested and continue to circle you.&lt;/p&gt;
+        &lt;&lt;action &quot;e&quot; &quot;wait&quot; &quot;Uh oh...&quot; &quot;Marshmallow Wisps 3&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="612" name="Marshmallow Wisps 3" tags="" position="3750,1450" size="200,100">&lt;&lt;setPassageTitle &quot;Marshmallow Wisps&quot;&gt;&gt;
+&lt;p&gt;As your attempts to escape prove increasingly futile, the Marshmallow Wisps continue their enchanting dance around you, seemingly delighted in their task. The relentless influx of marshmallow cream fills you further, each pulse of magic causing your body to swell dramatically.&lt;/p&gt;
+
+&lt;p&gt;The bloating of your belly accelerates, transforming it into a vast, rounded dome that juts out prominently. It&#39;s a bizarre sensation, feeling your stomach stretch and expand to such an extreme. The pressure is constant and growing, a mix of tightness and fullness that dominates your senses. Your clothing strains against your expanding girth, seams stretching to their limits, fabric pressing uncomfortably against your sensitive, overextended skin.&lt;/p&gt;
+
+&lt;p&gt;Simultaneously, your thighs thicken substantially, becoming plush and rounded. They rub against each other with every small movement, the friction a stark reminder of their inflated size. Walking becomes a cumbersome chore, each step more laborious as your lower body continues to expand. The sensation of your thighs swelling, filling out and softening, adds a surreal quality to your already unbelievable predicament.&lt;/p&gt;
+
+&lt;p&gt;Your chest undergoes a similar transformation, &lt;&lt;if $p.male == &quot;female&quot;&gt;&gt;your breasts&lt;&lt;/if&gt;&gt; growing at an alarming rate. &lt;&lt;if $p.male == &quot;female&quot;&gt;&gt;They become large, round masses that merge&lt;&lt;else&gt;&gt;Your chest soon becomes a large, rounded mass that merges&lt;&lt;/if&gt;&gt; into the ballooning expanse of your torso. The distinction between your upper and lower body blurs as you puff up, creating an increasingly spherical silhouette. Your arms, too, begin to succumb to the expansion. They round out, losing their definition and becoming more like small appendages protruding from the sides of your ever-growing torso. The sensation of your limbs being absorbed into your ballooning body is disorienting, leaving you feeling helpless and confined within your own skin.&lt;/p&gt;
+
+&lt;p&gt;In a desperate attempt to waddle away from the relentless Wisps, you find your movements increasingly hindered, almost like moving through thick, unseen molasses. Your panic risies as you feel something strange. Your crotch begins to swell outward and downward alarmingly, forming a large, marshmallowy bulge. This newfound girth heavily impedes your legs&#39; movement, turning each attempted step into a monumental effort. Your swollen body parts brush and press against each other, creating a sensation of being encased within your own expanding form. The once simple act of walking now feels like an arduous task.&lt;/p&gt;
+
+&lt;p&gt;Eventually, the relentless swelling of your lower torso reaches a critical point where it begins to push against the ground. This unexpected contact lifts your feet off the swamp&#39;s surface, leaving you helplessly bobbing and trying to balance on your rounded lower half. You&#39;re now completely round, a giant, $p.species-sized marshmallow ball, unable to move or escape. Your attempts to move are limited to slightly flapping your $p.hands and feet back and forth. In this spherical state, you&#39;re left at the mercy of the swamp, a vivid example of the transformative powers that lie within its misty bounds.&lt;/p&gt;
+
+&lt;p&gt;In this fully transformed state, you are left spherical and unable to move, a living embodiment of the Wisps&#39; strange magic. Your body feels heavy and taut, each breath a challenge against the tightness of your marshmallow-filled form. Helpless and immobilized, you feel your consciousness begin to slip as the Wisps start to roll you back toward their nest, happy to add another round marshmallow trophy to their collection...&lt;/p&gt;
+
+&lt;&lt;consume 500 5000&gt;&gt;
+&lt;&lt;defeated &quot;transformed&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="613" name="bog blimp ai" tags="" position="5025,250" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+
+
+/*===Description===*/
+&lt;&lt;case &quot;description&quot;&gt;&gt;
+&lt;p&gt;Ambushed: &lt;&lt;print $e.curambush&gt;&gt;&lt;/p&gt;
+&lt;&lt;set _blimpsLeft = Math.ceil($e.hea/80)&gt;&gt;
+&lt;p&gt;Your opponent is a group of Bog Blimps, large, floating creatures with mottled green and brown skin that camouflage into swamp canopy. Below their round, balloon-like bodies dangle several long, vine-like tendrils, ending in small suction cups. These tendrils sway gently in the air, ready to latch onto anything that comes too close.&lt;/p&gt;
+&lt;p&gt;Blimps left: &lt;&lt;print _blimpsLeft&gt;&gt;&lt;/p&gt;
+
+
+/*===Attack actions===*/
+&lt;&lt;case &quot;attack&quot;&gt;&gt;
+&lt;&lt;set _blimpsLeft = Math.ceil($e.hea/80)&gt;&gt;
+&lt;&lt;if random(1,2) == 1 and $e.curattached &gt; 0&gt;&gt;
+	&lt;&lt;set _fill = $e.curattached * 3&gt;&gt;
+	&lt;&lt;set _lift = $e.curattached * -5&gt;&gt;
+	&lt;&lt;set _modifier = $e.curattached * -1&gt;&gt;
+	Fill: &lt;&lt;print _fill&gt;&gt;&lt;br&gt;
+	Lift: &lt;&lt;print _lift&gt;&gt;&lt;br&gt;
+	&lt;&lt;switch random(1,5)&gt;&gt;
+		&lt;&lt;case 1&gt;&gt;
+			&lt;li&gt;Pump!&lt;/li&gt;
+			You watch as bulges travel down the tendrils of the Bog Blimps attached to you. They pump their strange gas into you, causing you to puff up all over. You feel an odd sensation of swelling as your entire body bloats unnaturally.
+			&lt;&lt;inflate _fill _lift&gt;&gt;
+			&lt;&lt;tempBuff &quot;str&quot; _modifier&gt;&gt;
+		&lt;&lt;case 2&gt;&gt;
+			&lt;li&gt;Distend!&lt;/li&gt;
+			The tendrils of the Bog Blimps emit a gentle hiss as they inflate your belly. It rounds outwards, growing lighter and more pronounced. You can&#39;t help but rub the surface of your distended abdomen, feeling a peculiar mix of discomfort and fullness. The pressure inside builds, and you find yourself breathing more heavily, adjusting your stance to accommodate your now significantly bloated midsection.
+			&lt;&lt;inflate _fill _lift&gt;&gt;
+		&lt;&lt;case 3&gt;&gt;
+			&lt;li&gt;Expand!&lt;/li&gt;
+			You watch in astonishment as the gas from the Bog Blimps makes your hips and thighs inflate rapidly. The sensation of expansion is accompanied by a feeling of weightlessness in your lower half. Touching your enlarged hips and thighs, you feel the tautness of your skin and the unusual sensation of being both bloated and buoyant. 
+			&lt;&lt;inflate _fill _lift&gt;&gt;
+			&lt;&lt;tempBuff &quot;agi&quot; _modifier&gt;&gt;
+		&lt;&lt;case 4&gt;&gt;
+			&lt;li&gt;Engorge!&lt;/li&gt;
+			As the Bog Blimps&#39; tendrils release their gas, you feel your hips and thighs beginning to swell. The sensation is gradual but unyielding, each pulse of the gas causing a noticeable increase in size. Your hips widen, throwing off your center of balance, while your thighs thicken, rubbing together uncomfortably. You have to widen your stance to accommodate your new girth.
+			&lt;&lt;inflate _fill _lift&gt;&gt;
+			&lt;&lt;tempBuff &quot;agi&quot; _modifier&gt;&gt;
+		&lt;&lt;case 5&gt;&gt;
+			&lt;li&gt;Fill!&lt;/li&gt;
+			The tendrils pump more into you, causing your stomach to bloat and distend, and with it comes an unexpected lightness. It feels as though the gas is trying to carry you upwards, making your footing uncertain. This imbalance affects your agility, as you find yourself having to compensate for the lift. The feeling of your belly pulling you upwards is both disconcerting and distracting, significantly impeding your combat effectiveness.
+			&lt;&lt;inflate _fill _lift&gt;&gt;
+		&lt;&lt;default&gt;&gt;
+			&#39;&#39;Error in enemy ai&#39;&#39;
+	&lt;&lt;/switch&gt;&gt;
+&lt;&lt;else&gt;&gt;
+	&lt;li&gt;Tendril Latch!&lt;/li&gt;
+	The Bog Blimps maneuver their floating bodies closer, allowing more of their long, vine-like tendrils to reach towards you. With a sudden movement, several tendrils latch onto your body, each one attaching firmly. You feel a slight pressure as they secure themselves, increasing the potential for further inflation. &lt;br&gt;
+	&lt;&lt;set $e.curattached = $e.curattached + _blimpsLeft&gt;&gt;
+	You now have &lt;&lt;print $e.curattached&gt;&gt; tendrils attached to you.
+&lt;&lt;/if&gt;&gt;
+
+/*===Run success===*/
+&lt;&lt;case &quot;run succeed&quot;&gt;&gt;
+&lt;li&gt;Escaped!&lt;/li&gt;
+You attempt to escape from the syrup vines. As you try to run you trip over several vines on the ground as they gently attempt to stop you, but you manage to dodge through them and eventually escape. The vines are too anchored to their spot to chase after you. 
+&lt;&lt;endCombat&gt;&gt;
+&lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
+
+/*===Run Fail===*/
+&lt;&lt;case &quot;run fail&quot;&gt;&gt;
+&lt;li&gt;Run failed!&lt;/li&gt;
+You failed to escape! 
+&lt;&lt;enemyAction &quot;attack&quot;&gt;&gt;
+
+/*===Surrender===*/
+&lt;&lt;case &quot;submit&quot;&gt;&gt;
+&lt;li&gt;Submit&lt;/li&gt;
+&lt;&lt;endCombat&gt;&gt;
+&lt;p&gt;You lower your defences and fall into the tangle of vines. They quickly wrap around your arms and legs as one large vine crams itself into your mouth. You bite down on the vine and start sucking down sweet thick syrup. Just like maple syrup and yet somehow intoxicating, like this could be all you eat for the rest of your days and you&#39;d be fine. 
+&lt;&lt;set _calories = $e.weight * 0.6&gt;&gt;
+&lt;&lt;consume $e.weight _calories&gt;&gt;&lt;/p&gt;
+
+&lt;&lt;if $alive&gt;&gt;
+You gladly suck down more and more syrup. Your stomach is now $waist. The vines seem to weaken and you&#39;re slowly lowered to the ground. You continue sucking on the vine in your mouth, but the flow of syrup slows down to a trickle before finally stopping. Disappointedly, you pull the vine out of your mouth and it flops to the ground. Apparently you were able to drain the creature dry and it now appears to just be a tangle of ordinary vines. 
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;include &quot;Victory&quot;&gt;&gt;
+&lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
+
+&lt;&lt;else&gt;&gt;
+&lt;p&gt;You keep sucking down more and more syrup, yet there seems to be almost no end in sight. Your stomach starts feeling dangerously full yet more and more syrup continues to pour from this creature. You can no longer force yourself to swallow due to the intense fullness stretching your wobbly gut. A vine wraps around your waist and periodically squeezes your $waist stomach as it&#39;s slowly pumped fuller and fuller. &lt;/p&gt;
+
+&lt;p&gt;You try to open your jaws to spit out the vines, but your mouth is practically welded to the vine with sticky syrup. The vines sense you&#39;re no longer sucking down any syrup and begins actively pumping it down your throat. You can&#39;t help but swallow despite your aching groaning stomach. &lt;/p&gt;
+
+  &lt;&lt;if $options.popping&gt;&gt;
+	&lt;p&gt;The wobbles of your gut decrease as it becomes more taut, and the squeezing from the vine puts more and more pressure on your belly until it just can&#39;t handle it anymore. Your gut explodes, and globs of syrup leak out of you as the vine continues pumping, trying to refill its suddenly empty container. &lt;/p&gt;
+	&lt;&lt;defeated &quot;exploded&quot;&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+	&lt;p&gt;In little time you&#39;re just too full to stay awake and you eventually drift off to sleep as you are slowly inflated with globs sticky syrup. &lt;/p&gt;
+	&lt;&lt;defeated &quot;overeating&quot;&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+
+/*===You lose===*/
+&lt;&lt;case &quot;defeat&quot;&gt;&gt;
+You&#39;re so full you no longer have the strength to fight the vines. The syrup is so sweet you find yourself only craving more even as your stomach slowly inflates larger and larger. You slowly close your eyes and finally enjoy the flavor as you drift into unconsciousness. 
+&lt;&lt;endCombat&gt;&gt;
+&lt;hr&gt;
+&lt;&lt;defeated &quot;overeating&quot;&gt;&gt;
+
+
+/*===You win!===*/
+&lt;&lt;case &quot;victory&quot;&gt;&gt;
+Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don&#39;t seem to react aside from leeking sweet smelling syrup accross the ground. 
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;include &quot;Victory&quot;&gt;&gt;
+&lt;hr&gt;
+&lt;&lt;include &quot;swampt randomization&quot;&gt;&gt;
+	
+&lt;&lt;default&gt;&gt;
+	&#39;&#39;Error in enemy ai&#39;&#39;
+	
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="614" name="AI Settings" tags="nobr" position="2100,400" size="300,300">/* CREATE PASSAGE FOR (whatever) */
 
 &lt;&lt;setPopupTitle &quot;AI Options&quot;&gt;&gt;
 

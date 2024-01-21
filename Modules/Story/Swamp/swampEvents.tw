@@ -50,20 +50,20 @@ As you make your way through the dense, foggy swamp, a soft, sweet aroma tickles
 
 <p>The filling becomes increasingly intense; your stomach stretches outwards, growing taut and swollen. You place your $p.hands on your sides, feeling the usual softness and the pressure that accompanies overeating. The marshmallow cream is still flowing into you, and you can't help but swallow it down or risk suffocating. </p>
 
-<p>In this state of initial bloating, you realize that escaping or defending yourself is becoming more challenging. Your movements are sluggish, burdened by the weight of the marshmallow cream filling you up. Each gulp adds to your size, leaving you increasingly heavy and stuffed in the eerie glow of the Wisps.</p>
+<p>In this state of initial bloating, you realize that escaping or defending yourself is becoming more challenging. Your movements are sluggish, burdened by the weight of the marshmallow cream filling you up. Each gulp adds to your size, leaving you increasingly heavy and stuffed in the eerie glow of the Wisps. You see something ahead in the trees where the wisps came from...</p>
 
 <<consume 20 15>>
 <<tempBuff "fat" 80>>
 
-<<action "c" "wait" "Something in the clearing..." "Marshmallow Wisps Clearing">><</action>>
+<<action "c" "wait" "Something in the trees..." "Marshmallow Wisps Nest">><</action>>
 
 
 
-:: Marshmallow Wisps Clearing {"position":"3750,1450","size":"200,100"}
+:: Marshmallow Wisps Nest {"position":"3750,1450","size":"200,100"}
 <<createNPC "random" "random" 1>>
-<<setPassageTitle "Marshmallow Wisps">>
+<<setPassageTitle "Wisps Nest">>
 
-<p>As the Marshmallow Wisps continue their dance around you, you notice what they were previously encircling. It's a small group of adventurers, each transformed into a swollen state by the Wisps' magic. Among them, one figure captures your attention – $npc1.article $npc1.species who is the largest of the group.</p>
+<p>As the Marshmallow Wisps continue their dance around you, you notice what they were previously encircling. There's a nest of some sort, with many large, round, white forms in it. At first they look like oddly large eggs, but then you realize they are furs! Each transformed into a swollen state by the Wisps' magic. Among them, one figure captures your attention – $npc1.article $npc1.species who is the largest of the group.</p>
 
 <p>This $npc1.species has been completely rounded out into an enormous, swollen marshmallow ball. $npc1.His $npc1.fur has taken on the pale, pristine whiteness of marshmallow cream, stretched taut and smooth over $npc1.his vastly inflated form. $npc1.He squishes heavily against the ground, gently wobbling back and forth.</p>
 
@@ -158,10 +158,73 @@ As you make your way through the dense, foggy swamp, a soft, sweet aroma tickles
         <p>With a curious mix of surprise and acceptance, you gently rub the sides of your expanding chest, feeling it's newfound fullness and softness. The texture is soft and pillowy to the touch. </p>
     <</if>>
 
-    <p>Your arms and even your face start to fill out, adopting the same marshmallow softness. Your features soften, your cheeks becoming pleasantly plump. Your entire body is now a picture of round, soft puffiness, losing its usual contours under the steady, gentle inflation.</p>
+    <p>Your arms and even your face start to fill out, adopting the same marshmallow softness. Your features soften, your cheeks becoming pleasantly plump. Your entire body is now a picture of round, soft puffiness, losing its usual contours under the steady, gentle filling. Any movement now is slow and deliberate, your plush limbs moving in a dreamlike state.</p>
 
-    <p>Embracing your transformed state, you find a strange tranquility in the experience. Any movement now is slow and deliberate, your plush limbs moving in a dreamlike state. You are a embodiment of a marshmallow, soft and serene, surrounded by the glittering dance of the Wisps. In this moment of surrender, you find a bizarre comfort, enveloped in the warmth of your own marshmallow-filled form.</p>
+    <p>You feel an overwhelming fullness throughout your body, but you find a strange tranquility in the experience. You are a embodiment of a marshmallow, soft and serene, surrounded by the glittering dance of the Wisps. In this moment of surrender, you find a bizarre comfort, enveloped in the warmth of your own marshmallow-filled form.</p>
 <</if>>
 
 <<consume 40 30>>
 <<tempBuff "fat" 300>>
+
+<<if $alive == false>>
+    <br>
+
+    <p>You're too full and can't even fathom trying to escape. You just stand there idly rubbing your $waist stomach and groaning softly, trying to alleviate some of the pressure.</p>
+<</if>>
+
+<<action "w" "whiteMagic" "Give in to the Wisps" "Marshmallow Wisps 3">><</action>>
+<<if $alive>>
+    <<action "c" "run" "Run" "Marshmallow Wisps Run 3">><</action>>
+    <<action "e" "wait" "Stay still" "Marshmallow Wisps Still 3">><</action>>
+<</if>>
+
+
+:: Marshmallow Wisps Run 3 {"position":"3750,1450","size":"200,100"}
+<<setPassageTitle "Marshmallow Wisps">>
+<<set $lastAction = "run">>
+
+<p>The wisps are losing intrest the further you get from their nest, so you waddle forward in an attempt to get further away...</p>
+<<if $agi > 50 && $str > 50>>
+    <p>...and you succeed! You manage to escape the Wisps and continue your journey. You rub your $waist belly idly, almost wishing you could have a bit more of that tasty marshmallow filling...</p>
+    <<action "w" "swamp" "Leave" "Swamp">><</action>>
+<<else >>
+    <p>...but you fail. The Wisps are too fast and manage to keep up.</p>
+    <<action "e" "wait" "Uh oh..." "Marshmallow Wisps 3">><</action>>
+<</if>>
+
+
+
+:: Marshmallow Wisps Still 3 {"position":"3750,1450","size":"200,100"}
+<<setPassageTitle "Marshmallow Wisps">>
+<<set $lastAction = "run">>
+
+<p>You decide to stay still, knowing that it's about 50/50 that the Wisps might lose interest and just leave...</p>
+<<switch random(1,2)>>
+    <<case 1>>
+        <p>...and you're right! The Wisps lose interest and leave you alone. You rub your $waist belly idly, almost wishing you could have a bit more of that tasty marshmallow filling...</p>
+        <<action "w" "swamp" "Leave" "Swamp">><</action>>
+    <<case 2>>
+        <p>...but you're wrong! The Wisps are still interested and continue to circle you.</p>
+        <<action "e" "wait" "Uh oh..." "Marshmallow Wisps 3">><</action>>
+<</switch>>
+
+
+
+:: Marshmallow Wisps 3 {"position":"3750,1450","size":"200,100"}
+<<setPassageTitle "Marshmallow Wisps">>
+<p>As your attempts to escape prove increasingly futile, the Marshmallow Wisps continue their enchanting dance around you, seemingly delighted in their task. The relentless influx of marshmallow cream fills you further, each pulse of magic causing your body to swell dramatically.</p>
+
+<p>The bloating of your belly accelerates, transforming it into a vast, rounded dome that juts out prominently. It's a bizarre sensation, feeling your stomach stretch and expand to such an extreme. The pressure is constant and growing, a mix of tightness and fullness that dominates your senses. Your clothing strains against your expanding girth, seams stretching to their limits, fabric pressing uncomfortably against your sensitive, overextended skin.</p>
+
+<p>Simultaneously, your thighs thicken substantially, becoming plush and rounded. They rub against each other with every small movement, the friction a stark reminder of their inflated size. Walking becomes a cumbersome chore, each step more laborious as your lower body continues to expand. The sensation of your thighs swelling, filling out and softening, adds a surreal quality to your already unbelievable predicament.</p>
+
+<p>Your chest undergoes a similar transformation, <<if $p.male == "female">>your breasts<</if>> growing at an alarming rate. <<if $p.male == "female">>They become large, round masses that merge<<else>>Your chest soon becomes a large, rounded mass that merges<</if>> into the ballooning expanse of your torso. The distinction between your upper and lower body blurs as you puff up, creating an increasingly spherical silhouette. Your arms, too, begin to succumb to the expansion. They round out, losing their definition and becoming more like small appendages protruding from the sides of your ever-growing torso. The sensation of your limbs being absorbed into your ballooning body is disorienting, leaving you feeling helpless and confined within your own skin.</p>
+
+<p>In a desperate attempt to waddle away from the relentless Wisps, you find your movements increasingly hindered, almost like moving through thick, unseen molasses. Your panic risies as you feel something strange. Your crotch begins to swell outward and downward alarmingly, forming a large, marshmallowy bulge. This newfound girth heavily impedes your legs' movement, turning each attempted step into a monumental effort. Your swollen body parts brush and press against each other, creating a sensation of being encased within your own expanding form. The once simple act of walking now feels like an arduous task.</p>
+
+<p>Eventually, the relentless swelling of your lower torso reaches a critical point where it begins to push against the ground. This unexpected contact lifts your feet off the swamp's surface, leaving you helplessly bobbing and trying to balance on your rounded lower half. You're now completely round, a giant, $p.species-sized marshmallow ball, unable to move or escape. Your attempts to move are limited to slightly flapping your $p.hands and feet back and forth. In this spherical state, you're left at the mercy of the swamp, a vivid example of the transformative powers that lie within its misty bounds.</p>
+
+<p>In this fully transformed state, you are left spherical and unable to move, a living embodiment of the Wisps' strange magic. Your body feels heavy and taut, each breath a challenge against the tightness of your marshmallow-filled form. Helpless and immobilized, you feel your consciousness begin to slip as the Wisps start to roll you back toward their nest, happy to add another round marshmallow trophy to their collection...</p>
+
+<<consume 500 5000>>
+<<defeated "transformed">>

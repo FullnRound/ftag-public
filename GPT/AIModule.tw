@@ -1,5 +1,4 @@
 :: AI Widget [script startup]
-
 /* AI MOD - Initialize Metadata - START */
 /* Load the AI Config metadata. */
 /* This will also establish the defaults if used for the first time */
@@ -8,7 +7,7 @@ setup.aiconfig = recall('aiconfig', {
 	text: {
 		url: "https://api.openai.com/v1/chat/completions",
 		model: "gpt-3.5-turbo",
-		apikey: "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",
+		apikey: "YOUR-API-KEY-HERE",
 		temperature: 0.9,
 		frequency_penalty: 0.2,
 		max_tokens: 500,
@@ -33,23 +32,31 @@ window.createConversation = function(character) {
 	const npc1 = State.variables.npc1;
 
 	if (State.variables.chats[character] == undefined) {
+		// Generate a random number between 0 (inclusive) and 99999999 (exclusive)
+		var randomInt = Math.floor(Math.random() * 100000000);
+
+		// Pad with leading zeros to ensure it's always 8 digits
+		var randomIntPadded = String(randomInt).padStart(8, '0');
+		State.variables.chatids[character] = randomIntPadded;
+		console.log(State.variables.chatids);
+
 		State.variables.chats[character] = [];
 		State.variables.chats[character].push({ 
 			'role': 'assistant', 
 			'content': State.variables.npcs[character].firstMessage
 		});
 	}
-
+	
 	// Create input bubble for each message in chat arr
 	for (const chat of State.variables.chats[character]) {
 		const chatBubble = document.createElement('li');
-
+		
 		if (chat.role == 'user') {
 			chatBubble.classList.add('user_input');
 		} else {
 			chatBubble.classList.add('bot_output');
 		}
-
+		
 		chatBubble.innerHTML = chat.content;
 		chatList.appendChild(chatBubble);
 	}
@@ -113,7 +120,7 @@ window.makeAITextRequest = async function(character) {
 		const response = await fetch(settings.url, {
 			method: 'POST',
             headers: {
-				'Authorization': `Bearer ${settings.apikey}`,
+								'Authorization': `Bearer ${settings.apikey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody)
@@ -127,7 +134,7 @@ window.makeAITextRequest = async function(character) {
         
 		if (data) {
 			// Parse the data for any special actions or effects
-
+			console.log(State.variables.chatids);
 
 			addChat(character, data.choices[0].message);
 		} else {

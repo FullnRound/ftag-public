@@ -224,7 +224,7 @@
 
 :: swamp enemies [nobr] {"position":"4475,475","size":"100,100"}
 
-<<set $obeseBear = {
+/* <<set $obeseBear = {
 
   Article: "An",
   article: "an",
@@ -253,7 +253,38 @@
   runnable: true,
 
   ai: "bear ai",
+}>> */
+
+<<set $bogBlimp = {
+
+  Article: "A group of",
+  article: "a group of",
+  Name: "Bog Blimps",
+  name: "Bog Blimps",
+  
+  str: 50,
+  agi: 30,
+  int: 5,
+  def: 20,
+  maxhea: 240,
+  lvl: 10,
+  damageResistance: [],
+  damageWeakness: [],
+
+	gld: 25, 
+	xp: 60, 
+  item: "",
+  itemChance: 0,
+
+  voreable: false,
+  weight: -200,
+  runnable: true,
+
+  ai: "bog blimp ai",
+	attached: 0,
+	ambush: 2,
 }>>
+
 
 :: forest enemies [nobr] {"position":"4475,475","size":"100,100"}
 <<set $fatWolf = {

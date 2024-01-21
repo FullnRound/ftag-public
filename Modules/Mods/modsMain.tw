@@ -5873,9 +5873,9 @@ Run this before playing whenever you've updated a mod, or added a mod to an exis
 		She is constantly burping up green gas, each burp causing her to deflate slightly. 
 
 		Events:
-		If the player gets too close to her face, Elara might burp the green gas onto them, causing the player to slowly bloat up until they are as big as Elara is. Elara does NOT know about this effect.
+		If the player gets close to her face, Elara might burp the green gas onto the player. This will cause the player to slowly bloat up until they are as round and helpless as Elara. Elara does NOT know about this effect.
 		",
-		firstMessage: 'The bloated fox lies there, seemingly unaware of your presence, her eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...' 
+		firstMessage: 'The bloated fox lies there, seemingly unaware of your presence, her eyes half-closed as if in a daze. As you draw nearer, you contemplate your next move. You could introduce yourself or maybe you want to do something else...',
 	}
 }>>
 

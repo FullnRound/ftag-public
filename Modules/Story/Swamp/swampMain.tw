@@ -27,7 +27,7 @@
 	<<rest>></p>
 
 	<<if random(1,5) == 1>>
-		<<set _enemy = either($fatWolf, $obeseBear, $lemonSlime, $syrupVines, $fruitDryad)>>
+		<<set _enemy = either($bogBlimp)>>
 		<<setEnemy _enemy>>
 		You are awoken from your sleep by $e.article $e.name! 
 		<<startCombat>>
@@ -176,20 +176,20 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 
 
 :: Swamp ambush [nobr] {"position":"3625,1975","size":"100,100"}
-/* Dark dangers in the swamp at night */
 <<switch $daytime>>
 	<<case "night">>
-		<<set $swampEnemies = ["vines"]>>
+		/* Dark dangers in the swamp at night */
+		<<set $swampEnemies = ["Bog Blimps"]>>
 	<<default>>
-		<<set $swampEnemies = ["vines"]>>
+		<<set $swampEnemies = ["Bog Blimps"]>>
 <</switch>>
 <<set _enemy = $swampEnemies.pluck()>>
 
 <<switch _enemy>>
 
-	<<case "vines">>
-	<<setEnemy $syrupVines>>
-	As you're walking through the swamp, you start to notice the vines are growing strangely thick. Especially since this type of swamp isn't supposed to have vines. Soon you find yourself completely surrounded by thick dripping vines as they move to surround you!
+	<<case "Bog Blimps">>
+	<<setEnemy $bogBlimp>>
+	As you navigate the dense, mist-laden paths of the swamp, you can't help but notice an unusual stillness in the air. The usual sounds of wildlife seem muted, and there's a palpable tension around you. Gradually, you become aware of faint, rhythmic pulsing sounds coming from above. Looking up, you're startled to see several large, balloon-like creatures drifting down through the trees. These territorial Bog Blimps have marked you as an intruder, and their silent approach is unnervingly deliberate.
 
 	<<default>>
 	''Error in enemy randomization''
@@ -242,12 +242,6 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 <<switch _specialEvent>>
 	<<case 0>>
 	<<set _event = "Marshmallow Wisps">>
-	<<case 1>>
-	<<set _event = "Wolf pack">>
-	<<case 2>>
-	<<set _event = "Storeroom">>
-	<<case 3>>
-	<<set _event = "Mysterious feast">>
 	<<default>>
 	''Error in special event randomization!''
 <</switch>>
@@ -279,7 +273,7 @@ The moon casts a silver sheen over the swamp, creating a landscape both beautifu
 You find a clearing ahead. As you approach closer you find it is one of the trails back to the forest. Do you wish to leave the swamp?
 
 <<include "swamp randomization">>
-<<action "3" "forest" "Leave" "Forest">>
+<<action "3" "forest" "Leave" "Forest">><</action>>
 
 
 :: Minor swamp events [nobr] {"position":"3725,1975","size":"100,100"}

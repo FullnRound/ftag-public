@@ -1256,6 +1256,8 @@
 <<widget "setEnemy">>
 	<<set $e = clone($args[0])>>
 	<<set $e.hea = $e.maxhea>>
+	<<set $e.curattached = $e.attached>>
+	<<set $e.curambush = $e.ambush>>
 
 	 /* FEEDER EXPANSION EDIT - START */
     /*Prevent nulls*/
