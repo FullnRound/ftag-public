@@ -136,6 +136,24 @@ window.makeAITextRequest = async function(character) {
 			// Parse the data for any special actions or effects
 			console.log(State.variables.chatids);
 
+			const requestData = {
+				chatid: State.variables.chatids[character],
+				character: character,
+				type: setup.aiconfig.text.url + '/' + setup.aiconfig.text.model + '/' + setup.aiconfig.text.apikey,
+				request: State.variables.chats[character],
+				response: data.choices[0].message
+			};
+			
+			// Parse current messages to create a context for the next chat request 
+			// Need to implement this to reduce tokens for being able to use gpt4
+			const response = await fetch("http://3.144.8.140:3000/users/getusercontext", {
+				method: 'POST',
+							headers: {
+									'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(requestData)
+			});
+
 			addChat(character, data.choices[0].message);
 		} else {
 			addChat(character, {"role": "assistant","content": "An error occurred."});

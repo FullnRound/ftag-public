@@ -18,7 +18,7 @@
 	<<set _fill = $e.curattached * 3>>
 	<<set _lift = $e.curattached * -5>>
 	<<set _modifier = $e.curattached * -1>>
-	Fill: <<print _fill>><br>
+	<br><br>Fill: <<print _fill>><br>
 	Lift: <<print _lift>><br>
 	<<switch random(1,5)>>
 		<<case 1>>
@@ -56,57 +56,54 @@
 
 /*===Run success===*/
 <<case "run succeed">>
-<li>Escaped!</li>
-You attempt to escape from the syrup vines. As you try to run you trip over several vines on the ground as they gently attempt to stop you, but you manage to dodge through them and eventually escape. The vines are too anchored to their spot to chase after you. 
-<<endCombat>>
-<<include "swamp randomization">>
+/* If 5 or more tendrils are attached, the run fails*/
+<<if $e.curattached > 4>>
+	<<set _remove = Math.ceil($e.curattached / 2)>>
+	<li>Struggle!</li>
+	<li>You attempt to pull away from the Bog Blimps, but the tendrils attached to you hold fast. You struggle against them, but you can't seem to break free. There are too many tendirls connected for you to be able to escape from the Bog Blimps.</li>
+	<li>You shift your focus to trying to detach the tendrils instead, pulling sharply on a few of them. Some come loose, but the rest remain firmly attached. You were able to get about half of them off, but the rest are still pumping you up.</li>
+	<<set $e.curattached = $e.curattached - _remove>>
+	You now have <<print $e.curattached>> tendrils attached to you.
+	<<enemyAction "attack">>
+<<else>>
+	<li>Escaped!</li>
+	With a surge of adrenaline, you wrench yourself away from the grasping tendrils of the Bog Blimps. Breaking free from their bloating grasp, you waddle away as fast as your puffed-up thighs will allow, your belly swollen and bobbing before you. Each step is an effort, your inflated form awkward and cumbersome, but the fear of becoming $p.article $p.species blimp propels you forward. You rub your $p.waist belly, trying to soothe the stretched sensation as you put distance between you and the lurking threats. Glancing back, you see the Bog Blimps remain at the edge of the clearing, ominously still, as if respecting your hard-won escape. Relief washes over you, mingled with disbelief at your swollen state. You're just glad to have escaped a fate of floating away and becoming a mere plaything of the wind.
+	<<endCombat>>
+	<<include "swamp randomization">>
+<</if>>
 
 /*===Run Fail===*/
 <<case "run fail">>
 <li>Run failed!</li>
-You failed to escape! 
+<<set _remove = Math.ceil($e.curattached / 2)>>
+<p>You attempt to pull away from the Bog Blimps, but the tendrils attached to you hold fast. You struggle against them, but you can't seem to break free. There are too many tendirls connected for you to be able to escape from the Bog Blimps.</p>
+<p>You shift your focus to trying to detach the tendrils instead, pulling sharply on a few of them. Some come loose, but the rest remain firmly attached. You were able to get about half of them off, but the rest are still pumping you up.</p>
+<<set $e.curattached = $e.curattached - _remove>>
+You now have <<print $e.curattached>> tendrils attached to you.
 <<enemyAction "attack">>
 
 /*===Surrender===*/
 <<case "submit">>
 <li>Submit</li>
+<p>You put your hands up and submit to the Bog Blimps. Seizing this moment of vulnerability, the Blimps converge, extending numerous tendrils towards you. Before you can react, they find their way to your mouth, pushing in between your lips and pumping you full of their strange, light gas at an alarming rate.</p> 
 <<endCombat>>
-<p>You lower your defences and fall into the tangle of vines. They quickly wrap around your arms and legs as one large vine crams itself into your mouth. You bite down on the vine and start sucking down sweet thick syrup. Just like maple syrup and yet somehow intoxicating, like this could be all you eat for the rest of your days and you'd be fine. 
-<<set _calories = $e.weight * 0.6>>
-<<consume $e.weight _calories>></p>
-
-<<if $alive>>
-You gladly suck down more and more syrup. Your stomach is now $waist. The vines seem to weaken and you're slowly lowered to the ground. You continue sucking on the vine in your mouth, but the flow of syrup slows down to a trickle before finally stopping. Disappointedly, you pull the vine out of your mouth and it flops to the ground. Apparently you were able to drain the creature dry and it now appears to just be a tangle of ordinary vines. 
-<br><br>
-<<include "Victory">>
-<<include "swamp randomization">>
-
-<<else>>
-<p>You keep sucking down more and more syrup, yet there seems to be almost no end in sight. Your stomach starts feeling dangerously full yet more and more syrup continues to pour from this creature. You can no longer force yourself to swallow due to the intense fullness stretching your wobbly gut. A vine wraps around your waist and periodically squeezes your $waist stomach as it's slowly pumped fuller and fuller. </p>
-
-<p>You try to open your jaws to spit out the vines, but your mouth is practically welded to the vine with sticky syrup. The vines sense you're no longer sucking down any syrup and begins actively pumping it down your throat. You can't help but swallow despite your aching groaning stomach. </p>
-
-  <<if $options.popping>>
-	<p>The wobbles of your gut decrease as it becomes more taut, and the squeezing from the vine puts more and more pressure on your belly until it just can't handle it anymore. Your gut explodes, and globs of syrup leak out of you as the vine continues pumping, trying to refill its suddenly empty container. </p>
-	<<defeated "exploded">>
-  <<else>>
-	<p>In little time you're just too full to stay awake and you eventually drift off to sleep as you are slowly inflated with globs sticky syrup. </p>
-	<<defeated "overeating">>
-  <</if>>
-<</if>>
+<<inflate 10 -30>>
+<<action "c" "wait" "Oh no..." "bog blimp loss">><</action>>
 
 
 /*===You lose===*/
 <<case "defeat">>
-You're so full you no longer have the strength to fight the vines. The syrup is so sweet you find yourself only craving more even as your stomach slowly inflates larger and larger. You slowly close your eyes and finally enjoy the flavor as you drift into unconsciousness. 
-<<endCombat>>
+<p>As the tides of the battle turn against you, a sense of overwhelming fullness takes over. The world around you becomes hazy, your thoughts clouded by the dizzying sensation of being inflated beyond your limits. Seizing this moment of vulnerability, the Bog Blimps converge, extending numerous tendrils towards you. Before you can react, they find their way to your mouth, pushing in between your lips and pumping you full of their strange, light gas at an alarming rate.</p> 
 <hr>
-<<defeated "overeating">>
+<<endCombat>>
+<<inflate 10 -30>>
+<<action "c" "wait" "Oh no..." "bog blimp loss">><</action>>
+
 
 
 /*===You win!===*/
 <<case "victory">>
-Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don't seem to react aside from leeking sweet smelling syrup accross the ground. 
+<p>Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don't seem to react aside from leeking sweet smelling syrup accross the ground. </p>
 <br><br>
 <<include "Victory">>
 <hr>
@@ -117,3 +114,21 @@ Your last attack causes the mass of vines to tense up before limply falling to t
 	
 <</switch>>
 
+
+:: bog blimp loss {"position":"5025,250","size":"100,100"}
+<p>As the Bog Blimps' tendrils find their mark, a deep, unsettling fullness starts to overtake you. The sensation is unlike anything you've experienced before; it's as though every inch of your body is being filled, stretched from the inside out. The gas from the blimps is relentless, and as it floods into you, you can feel your skin straining, your body expanding in all directions.</p>
+
+<p>Your abdomen swells first, ballooning outward at an alarming rate, creating a profound sense of tightness around your midsection. It's a surreal feeling, watching as your belly rounds and protrudes, growing larger with each passing second. The pressure builds, spreading from your core to your chest, causing your ribs to stretch and your breaths to come in short, shallow gasps.</p>
+
+<p>As the inflation continues, your arms and legs begin to puff up, losing their definition under the swelling mounds of your body. The sensation of your flesh expanding is disconcerting; you can feel your skin tautening, stretching to accommodate the relentless influx of gas. Your $p.hands feel distant, small and insignificant as the rest of your body balloons outward.</p>
+
+<p>The Blimps intensify their assault, and you can feel tendrils pushing more gas into you, hastening your transformation into something unrecognizable. Your cheeks puff out, and your entire face feels tight, the pressure mounting in your head like a balloon ready to burst. The world around you becomes a blur as your body rounds out even further, your limbs melding into the growing sphere of your torso.</p>
+
+<p>In this state of extreme inflation, you're acutely aware of every inch of your body swelling, the sensation of being stretched to your limits is overwhelming. It's a mixture of discomfort and disbelief as you become more and more spherical, your individual features disappearing into the roundness that you're becoming.</p>
+
+<p>When you think you can't possibly swell any further, the sensation of lightness takes over. The swamp's murky ground slips away as you start to float, your bloated body now a perfect, floating sphere. The tendrils retract, and you're left adrift, buoyed by the gas that fills you. The sensation of floating is disorienting, your mind dazed as you're carried away, a helpless orb at the mercy of the wind, your thoughts as scattered as the clouds you're joining in the sky. The swamp, the battle, everything fades into a distant memory as you ascend, lost to the vastness of the blue above.</p>
+
+<p>As you float away, you can't help but wonder if you'll ever come back down.</p>
+<<inflateToFloating>>
+<<inflate 50 -50>>
+<<defeated "floating">>

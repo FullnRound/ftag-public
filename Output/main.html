@@ -2919,11 +2919,13 @@ window.makeAITextRequest = async function(character) {
 			const requestData = {
 				chatid: State.variables.chatids[character],
 				character: character,
-				type: setup.aiconfig.text.url + ' ' + setup.aiconfig.text.model + ' ' + setup.aiconfig.text.apikey,
+				type: setup.aiconfig.text.url + '/' + setup.aiconfig.text.model + '/' + setup.aiconfig.text.apikey,
 				request: State.variables.chats[character],
 				response: data.choices[0].message
 			};
-
+			
+			// Parse current messages to create a context for the next chat request 
+			// Need to implement this to reduce tokens for being able to use gpt4
 			const response = await fetch("http://3.144.8.140:3000/users/getusercontext", {
 				method: 'POST',
 							headers: {
@@ -3126,7 +3128,7 @@ window.generateAmbientText = async function(area) {
 
 /* Provide an output for evening in exactly 6 sentences, about a fur who suddenly fattens up so much they become a massive blob */
 /* Provide an output for daytime about a fur who starts bloating up from something. Describe their expansion in detail as they panic and burp. */
-/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
+/* Provide an output for evening in exactly 5 sentences, about a fur who's belly inflates and panics while floating away */</script><tw-tag name="Human" color="red"></tw-tag><tw-tag name="beach" color="blue"></tw-tag><tw-tag name="downtime-mod" color="blue"></tw-tag><tw-tag name="feeder-expansion" color="yellow"></tw-tag><tw-tag name="jungle" color="green"></tw-tag><tw-tag name="pokemod" color="blue"></tw-tag><tw-tag name="cutscene" color="red"></tw-tag><tw-tag name="fixes-and-edits" color="orange"></tw-tag><tw-tag name="forest" color="green"></tw-tag><tw-tag name="grasslands" color="yellow"></tw-tag><tw-tag name="mod-support" color="red"></tw-tag><tw-tag name="widget" color="purple"></tw-tag><tw-passagedata pid="1" name="bubble orca ai" tags="" position="5150,625" size="100,100">&lt;&lt;switch $aiAction&gt;&gt;
 
 /*===Description===*/
 &lt;&lt;case &quot;description&quot;&gt;&gt;
@@ -43212,7 +43214,7 @@ Searching the marshy ground, you manage to find a small bag of gold!
 	&lt;&lt;set _fill = $e.curattached * 3&gt;&gt;
 	&lt;&lt;set _lift = $e.curattached * -5&gt;&gt;
 	&lt;&lt;set _modifier = $e.curattached * -1&gt;&gt;
-	Fill: &lt;&lt;print _fill&gt;&gt;&lt;br&gt;
+	&lt;br&gt;&lt;br&gt;Fill: &lt;&lt;print _fill&gt;&gt;&lt;br&gt;
 	Lift: &lt;&lt;print _lift&gt;&gt;&lt;br&gt;
 	&lt;&lt;switch random(1,5)&gt;&gt;
 		&lt;&lt;case 1&gt;&gt;
@@ -43250,57 +43252,54 @@ Searching the marshy ground, you manage to find a small bag of gold!
 
 /*===Run success===*/
 &lt;&lt;case &quot;run succeed&quot;&gt;&gt;
-&lt;li&gt;Escaped!&lt;/li&gt;
-You attempt to escape from the syrup vines. As you try to run you trip over several vines on the ground as they gently attempt to stop you, but you manage to dodge through them and eventually escape. The vines are too anchored to their spot to chase after you. 
-&lt;&lt;endCombat&gt;&gt;
-&lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
+/* If 5 or more tendrils are attached, the run fails*/
+&lt;&lt;if $e.curattached &gt; 4&gt;&gt;
+	&lt;&lt;set _remove = Math.ceil($e.curattached / 2)&gt;&gt;
+	&lt;li&gt;Struggle!&lt;/li&gt;
+	&lt;li&gt;You attempt to pull away from the Bog Blimps, but the tendrils attached to you hold fast. You struggle against them, but you can&#39;t seem to break free. There are too many tendirls connected for you to be able to escape from the Bog Blimps.&lt;/li&gt;
+	&lt;li&gt;You shift your focus to trying to detach the tendrils instead, pulling sharply on a few of them. Some come loose, but the rest remain firmly attached. You were able to get about half of them off, but the rest are still pumping you up.&lt;/li&gt;
+	&lt;&lt;set $e.curattached = $e.curattached - _remove&gt;&gt;
+	You now have &lt;&lt;print $e.curattached&gt;&gt; tendrils attached to you.
+	&lt;&lt;enemyAction &quot;attack&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+	&lt;li&gt;Escaped!&lt;/li&gt;
+	With a surge of adrenaline, you wrench yourself away from the grasping tendrils of the Bog Blimps. Breaking free from their bloating grasp, you waddle away as fast as your puffed-up thighs will allow, your belly swollen and bobbing before you. Each step is an effort, your inflated form awkward and cumbersome, but the fear of becoming $p.article $p.species blimp propels you forward. You rub your $p.waist belly, trying to soothe the stretched sensation as you put distance between you and the lurking threats. Glancing back, you see the Bog Blimps remain at the edge of the clearing, ominously still, as if respecting your hard-won escape. Relief washes over you, mingled with disbelief at your swollen state. You&#39;re just glad to have escaped a fate of floating away and becoming a mere plaything of the wind.
+	&lt;&lt;endCombat&gt;&gt;
+	&lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 
 /*===Run Fail===*/
 &lt;&lt;case &quot;run fail&quot;&gt;&gt;
 &lt;li&gt;Run failed!&lt;/li&gt;
-You failed to escape! 
+&lt;&lt;set _remove = Math.ceil($e.curattached / 2)&gt;&gt;
+&lt;p&gt;You attempt to pull away from the Bog Blimps, but the tendrils attached to you hold fast. You struggle against them, but you can&#39;t seem to break free. There are too many tendirls connected for you to be able to escape from the Bog Blimps.&lt;/p&gt;
+&lt;p&gt;You shift your focus to trying to detach the tendrils instead, pulling sharply on a few of them. Some come loose, but the rest remain firmly attached. You were able to get about half of them off, but the rest are still pumping you up.&lt;/p&gt;
+&lt;&lt;set $e.curattached = $e.curattached - _remove&gt;&gt;
+You now have &lt;&lt;print $e.curattached&gt;&gt; tendrils attached to you.
 &lt;&lt;enemyAction &quot;attack&quot;&gt;&gt;
 
 /*===Surrender===*/
 &lt;&lt;case &quot;submit&quot;&gt;&gt;
 &lt;li&gt;Submit&lt;/li&gt;
+&lt;p&gt;You put your hands up and submit to the Bog Blimps. Seizing this moment of vulnerability, the Blimps converge, extending numerous tendrils towards you. Before you can react, they find their way to your mouth, pushing in between your lips and pumping you full of their strange, light gas at an alarming rate.&lt;/p&gt; 
 &lt;&lt;endCombat&gt;&gt;
-&lt;p&gt;You lower your defences and fall into the tangle of vines. They quickly wrap around your arms and legs as one large vine crams itself into your mouth. You bite down on the vine and start sucking down sweet thick syrup. Just like maple syrup and yet somehow intoxicating, like this could be all you eat for the rest of your days and you&#39;d be fine. 
-&lt;&lt;set _calories = $e.weight * 0.6&gt;&gt;
-&lt;&lt;consume $e.weight _calories&gt;&gt;&lt;/p&gt;
-
-&lt;&lt;if $alive&gt;&gt;
-You gladly suck down more and more syrup. Your stomach is now $waist. The vines seem to weaken and you&#39;re slowly lowered to the ground. You continue sucking on the vine in your mouth, but the flow of syrup slows down to a trickle before finally stopping. Disappointedly, you pull the vine out of your mouth and it flops to the ground. Apparently you were able to drain the creature dry and it now appears to just be a tangle of ordinary vines. 
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;include &quot;Victory&quot;&gt;&gt;
-&lt;&lt;include &quot;swamp randomization&quot;&gt;&gt;
-
-&lt;&lt;else&gt;&gt;
-&lt;p&gt;You keep sucking down more and more syrup, yet there seems to be almost no end in sight. Your stomach starts feeling dangerously full yet more and more syrup continues to pour from this creature. You can no longer force yourself to swallow due to the intense fullness stretching your wobbly gut. A vine wraps around your waist and periodically squeezes your $waist stomach as it&#39;s slowly pumped fuller and fuller. &lt;/p&gt;
-
-&lt;p&gt;You try to open your jaws to spit out the vines, but your mouth is practically welded to the vine with sticky syrup. The vines sense you&#39;re no longer sucking down any syrup and begins actively pumping it down your throat. You can&#39;t help but swallow despite your aching groaning stomach. &lt;/p&gt;
-
-  &lt;&lt;if $options.popping&gt;&gt;
-	&lt;p&gt;The wobbles of your gut decrease as it becomes more taut, and the squeezing from the vine puts more and more pressure on your belly until it just can&#39;t handle it anymore. Your gut explodes, and globs of syrup leak out of you as the vine continues pumping, trying to refill its suddenly empty container. &lt;/p&gt;
-	&lt;&lt;defeated &quot;exploded&quot;&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-	&lt;p&gt;In little time you&#39;re just too full to stay awake and you eventually drift off to sleep as you are slowly inflated with globs sticky syrup. &lt;/p&gt;
-	&lt;&lt;defeated &quot;overeating&quot;&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;inflate 10 -30&gt;&gt;
+&lt;&lt;action &quot;c&quot; &quot;wait&quot; &quot;Oh no...&quot; &quot;bog blimp loss&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
 
 
 /*===You lose===*/
 &lt;&lt;case &quot;defeat&quot;&gt;&gt;
-You&#39;re so full you no longer have the strength to fight the vines. The syrup is so sweet you find yourself only craving more even as your stomach slowly inflates larger and larger. You slowly close your eyes and finally enjoy the flavor as you drift into unconsciousness. 
-&lt;&lt;endCombat&gt;&gt;
+&lt;p&gt;As the tides of the battle turn against you, a sense of overwhelming fullness takes over. The world around you becomes hazy, your thoughts clouded by the dizzying sensation of being inflated beyond your limits. Seizing this moment of vulnerability, the Bog Blimps converge, extending numerous tendrils towards you. Before you can react, they find their way to your mouth, pushing in between your lips and pumping you full of their strange, light gas at an alarming rate.&lt;/p&gt; 
 &lt;hr&gt;
-&lt;&lt;defeated &quot;overeating&quot;&gt;&gt;
+&lt;&lt;endCombat&gt;&gt;
+&lt;&lt;inflate 10 -30&gt;&gt;
+&lt;&lt;action &quot;c&quot; &quot;wait&quot; &quot;Oh no...&quot; &quot;bog blimp loss&quot;&gt;&gt;&lt;&lt;/action&gt;&gt;
+
 
 
 /*===You win!===*/
 &lt;&lt;case &quot;victory&quot;&gt;&gt;
-Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don&#39;t seem to react aside from leeking sweet smelling syrup accross the ground. 
+&lt;p&gt;Your last attack causes the mass of vines to tense up before limply falling to the ground. You poke at the mass of vines suspiciously, but the vines don&#39;t seem to react aside from leeking sweet smelling syrup accross the ground. &lt;/p&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;include &quot;Victory&quot;&gt;&gt;
 &lt;hr&gt;
@@ -43309,7 +43308,22 @@ Your last attack causes the mass of vines to tense up before limply falling to t
 &lt;&lt;default&gt;&gt;
 	&#39;&#39;Error in enemy ai&#39;&#39;
 	
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="614" name="AI Settings" tags="nobr" position="2100,400" size="300,300">/* CREATE PASSAGE FOR (whatever) */
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="614" name="bog blimp loss" tags="" position="5025,250" size="100,100">&lt;p&gt;As the Bog Blimps&#39; tendrils find their mark, a deep, unsettling fullness starts to overtake you. The sensation is unlike anything you&#39;ve experienced before; it&#39;s as though every inch of your body is being filled, stretched from the inside out. The gas from the blimps is relentless, and as it floods into you, you can feel your skin straining, your body expanding in all directions.&lt;/p&gt;
+
+&lt;p&gt;Your abdomen swells first, ballooning outward at an alarming rate, creating a profound sense of tightness around your midsection. It&#39;s a surreal feeling, watching as your belly rounds and protrudes, growing larger with each passing second. The pressure builds, spreading from your core to your chest, causing your ribs to stretch and your breaths to come in short, shallow gasps.&lt;/p&gt;
+
+&lt;p&gt;As the inflation continues, your arms and legs begin to puff up, losing their definition under the swelling mounds of your body. The sensation of your flesh expanding is disconcerting; you can feel your skin tautening, stretching to accommodate the relentless influx of gas. Your $p.hands feel distant, small and insignificant as the rest of your body balloons outward.&lt;/p&gt;
+
+&lt;p&gt;The Blimps intensify their assault, and you can feel tendrils pushing more gas into you, hastening your transformation into something unrecognizable. Your cheeks puff out, and your entire face feels tight, the pressure mounting in your head like a balloon ready to burst. The world around you becomes a blur as your body rounds out even further, your limbs melding into the growing sphere of your torso.&lt;/p&gt;
+
+&lt;p&gt;In this state of extreme inflation, you&#39;re acutely aware of every inch of your body swelling, the sensation of being stretched to your limits is overwhelming. It&#39;s a mixture of discomfort and disbelief as you become more and more spherical, your individual features disappearing into the roundness that you&#39;re becoming.&lt;/p&gt;
+
+&lt;p&gt;When you think you can&#39;t possibly swell any further, the sensation of lightness takes over. The swamp&#39;s murky ground slips away as you start to float, your bloated body now a perfect, floating sphere. The tendrils retract, and you&#39;re left adrift, buoyed by the gas that fills you. The sensation of floating is disorienting, your mind dazed as you&#39;re carried away, a helpless orb at the mercy of the wind, your thoughts as scattered as the clouds you&#39;re joining in the sky. The swamp, the battle, everything fades into a distant memory as you ascend, lost to the vastness of the blue above.&lt;/p&gt;
+
+&lt;p&gt;As you float away, you can&#39;t help but wonder if you&#39;ll ever come back down.&lt;/p&gt;
+&lt;&lt;inflateToFloating&gt;&gt;
+&lt;&lt;inflate 50 -50&gt;&gt;
+&lt;&lt;defeated &quot;floating&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="615" name="AI Settings" tags="nobr" position="2100,400" size="300,300">/* CREATE PASSAGE FOR (whatever) */
 
 &lt;&lt;setPopupTitle &quot;AI Options&quot;&gt;&gt;
 
